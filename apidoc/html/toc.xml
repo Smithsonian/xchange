@@ -60,6 +60,8 @@
           <topic label="FALSE" href="xchange_8h.html#aa93f0eb578d23995850d61f7d61c55c1"/>
           <topic label="MAX_DEBUG_ERROR_COUNT" href="xchange_8h.html#a73012d5991cc49ef05bf1d621a1cde55"/>
           <topic label="NAN" href="xchange_8h.html#a8abfcc76130f3f991d124dd22d7e69bc"/>
+          <topic label="str_1" href="xchange_8h.html#a1f298f5039a547cea57a36c2ef616522"/>
+          <topic label="str_2" href="xchange_8h.html#a03b3076533e6967aaa48dcccf9ded4a0"/>
           <topic label="TRUE" href="xchange_8h.html#aa8cecfc5c5c054d2875c03e77b7be15d"/>
           <topic label="X_ALREADY_OPEN" href="xchange_8h.html#a9e947ab368178c7e248b3cf8b26defa1"/>
           <topic label="X_BOOLEAN" href="xchange_8h.html#abe0465f7669775b6129551a7ef3300bc"/>
@@ -103,6 +105,11 @@
           <topic label="X_TIMESTAMP_LENGTH" href="xchange_8h.html#a867ae02d3e93665fa1b7c3c39534d692"/>
           <topic label="X_TYPE_INVALID" href="xchange_8h.html#aecc19edf892709b39a9c0d3d944f8f9a"/>
           <topic label="X_UNKNOWN" href="xchange_8h.html#a1f2359ea36bfcb29d936b1eef60a53a3"/>
+          <topic label="XCHANGE_MAJOR_VERSION" href="xchange_8h.html#a13ea68e798d0cd9cab06667707737055"/>
+          <topic label="XCHANGE_MINOR_VERSION" href="xchange_8h.html#a52519844e66bcff3ed17e4feaab76b2f"/>
+          <topic label="XCHANGE_PATCHLEVEL" href="xchange_8h.html#aef108c611a8388c435502dfd89c41a5f"/>
+          <topic label="XCHANGE_RELEASE_STRING" href="xchange_8h.html#a1cda2967190e2d61c5560bf6b43d930d"/>
+          <topic label="XCHANGE_VERSION_STRING" href="xchange_8h.html#a2e8ac004db0f6cb82e1b7a13b79380c5"/>
           <topic label="xdprintf" href="xchange_8h.html#a2b0edfea798e9e08122f09dba5f189f8"/>
           <topic label="xvprintf" href="xchange_8h.html#a1f038bf7ddb58819805cfc44162cb403"/>
           <topic label="boolean" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e"/>
@@ -134,7 +141,6 @@
           <topic label="xGetSubstruct" href="xchange_8h.html#a97a58e33c4730e272af459dfb7f016f9"/>
           <topic label="xIsCharSequence" href="xchange_8h.html#adcc86baacb3ddebcc529e269223274b8"/>
           <topic label="xIsFieldValid" href="xchange_8h.html#aec6e78e07733ca246ca485b0fcf02d21"/>
-          <topic label="xIsVerbose" href="xchange_8h.html#a46a6c2d802ebadd46ffcfdde7fb438b8"/>
           <topic label="xLastSeparator" href="xchange_8h.html#ab9a9fbc1235164bfeed5fbba1f7d8692"/>
           <topic label="xMatchNextID" href="xchange_8h.html#a90aae0dafd1d461877eef63c9c730592"/>
           <topic label="xNextIDToken" href="xchange_8h.html#af436eb535b32fa88ab4e600c0a37c19d"/>
@@ -149,7 +155,6 @@
           <topic label="xRemoveField" href="xchange_8h.html#aec9f913cdb79d8653668a5d9bdda6ab1"/>
           <topic label="xSetField" href="xchange_8h.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4"/>
           <topic label="xSetSubstruct" href="xchange_8h.html#ad84cbb4639f2fbfb604b698a86caf944"/>
-          <topic label="xSetVerbose" href="xchange_8h.html#afbe85067ddbc92577cd00ac8f6e3026f"/>
           <topic label="xSplitID" href="xchange_8h.html#acd6af91336f4b5501d0a0e3d5cf88ad3"/>
           <topic label="xStringCopyOf" href="xchange_8h.html#a01d730a1a98963816de2dd73e72957a5"/>
           <topic label="xStringElementSizeOf" href="xchange_8h.html#a8816199a4473325a942e14057dcd9ab8"/>

@@ -84,13 +84,13 @@ shows the (`XType`) types recognised by the library and their C equivalents etc.
  | `X_DOUBLE`       | `double`                 | `1`, `1.0`, `-1.2345678901234567e-111`                   |
  | `X_STRING`       | `char *`    	       | `Hello world!`, `line1\nline2\n` (0-terminated)          |
  | `X_CHARS(n) `    | `char[n]`                | Fixed-length character arrays (also w/o termination)     |
- | `X_STRUCT`       | `XStructure`             | structured data in __xchange__                           |
+ | `X_STRUCT`       | `XStructure`             | substructure                                             |
 
 <sup>*</sup> The `boolean` type is defined in `xchange.h`.
 
-The `[...]_HEX` types are meaningful only for ASCII serialization implementations, and are otherwise equivalent to the
-corresponding regular integer-types of the same width. They are meant only as a way to explicitly define whether or 
-not an integer value is to be represented in hexadecimal format rather than the default decimal format.
+The `[...]_HEX` types are meaningful only for ASCII representations, and are otherwise equivalent to the corresponding 
+regular integer-types of the same width. They are meant only as a way to explicitly define whether or not an integer 
+value is to be represented in hexadecimal format rather than the default decimal format.
 
 <a name="strings"></a>
 #### Strings
@@ -274,8 +274,8 @@ Once you have an `XStructure` data object, you can easily convert it to a JSON s
   char *json = xjsonToString(s);
 ```
 
-Or, you can do the reverse and create an `XStructure` from its JSON representation, either as a string (a `char` 
-array):
+Or, you can do the reverse and create an `XStructure` from its JSON representation, either from a string (a 
+0-terminated `char` array):
 
 ```c
   int lineNumber = 0;
@@ -300,8 +300,9 @@ or from a file, e.g. specified by the file name/path that contains a JSON defini
 <a name="error-handling"></a>
 ## Error handling
 
-The functions that can encounter an error will return either one of the error codes defined in `xchange.h`, or NULL
-pointers. String descriptions for the error codes can be produced by `xErrorDescription(int)`. For example,
+The functions that can encounter an error will return either one of the error codes defined in `xchange.h`, or 
+`NULL` pointers. String descriptions for the error codes can be produced by `xErrorDescription(int)`. For 
+example,
 
 ```c
   char *text = ...
@@ -322,11 +323,12 @@ The JSON parser emitter can also sink its error messages to a designated file or
 ## Debugging support
 
 The __xchange__ library provides two macros: `xvprintf()` and `xdprintf()`, for printing verbose and debug messages
-to stderr. Both work just like printf, but they are conditional on verbosity being enabled via `xSetVerbose(boolean)`
-and the global variable `xDebug` being `TRUE` (non-zero), respectively. Applications using __xchange__ may use these
-macros to produce their own verbose and/or debugging outputs conditional on the same global settings. 
+to `stderr`. Both work just like `printf()`, but they are conditional on verbosity being enabled via 
+`xSetVerbose(boolean)` and the global variable `xDebug` being `TRUE` (non-zero), respectively. Applications using 
+__xchange__ may use these macros to produce their own verbose and/or debugging outputs conditional on the same global 
+settings. 
 
-You can also turn debug messages by setting the `DEBUG` constant to 1 at compile time, e.g. by adding `-DDEBUG=1` to 
+You can also turn debug messages by defining the `DEBUG` constant for the compiler, e.g. by adding `-DDEBUG` to 
 `CFLAGS` prior to calling `make`. 
 
 

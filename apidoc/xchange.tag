@@ -36,6 +36,20 @@
     </member>
     <member kind="define">
       <type>#define</type>
+      <name>str_1</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a1f298f5039a547cea57a36c2ef616522</anchor>
+      <arglist>(s)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>str_2</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a03b3076533e6967aaa48dcccf9ded4a0</anchor>
+      <arglist>(s)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>TRUE</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>aa8cecfc5c5c054d2875c03e77b7be15d</anchor>
@@ -337,6 +351,41 @@
     </member>
     <member kind="define">
       <type>#define</type>
+      <name>XCHANGE_MAJOR_VERSION</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a13ea68e798d0cd9cab06667707737055</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>XCHANGE_MINOR_VERSION</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a52519844e66bcff3ed17e4feaab76b2f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>XCHANGE_PATCHLEVEL</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>aef108c611a8388c435502dfd89c41a5f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>XCHANGE_RELEASE_STRING</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a1cda2967190e2d61c5560bf6b43d930d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>XCHANGE_VERSION_STRING</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a2e8ac004db0f6cb82e1b7a13b79380c5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>xdprintf</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>a2b0edfea798e9e08122f09dba5f189f8</anchor>
@@ -553,13 +602,6 @@
       <arglist>(const XField *f)</arglist>
     </member>
     <member kind="function">
-      <type>boolean</type>
-      <name>xIsVerbose</name>
-      <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>a46a6c2d802ebadd46ffcfdde7fb438b8</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
       <type>char *</type>
       <name>xLastSeparator</name>
       <anchorfile>xchange_8h.html</anchorfile>
@@ -656,13 +698,6 @@
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>ad84cbb4639f2fbfb604b698a86caf944</anchor>
       <arglist>(XStructure *s, const char *name, XStructure *substruct)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>xSetVerbose</name>
-      <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>afbe85067ddbc92577cd00ac8f6e3026f</anchor>
-      <arglist>(boolean value)</arglist>
     </member>
     <member kind="function">
       <type>int</type>

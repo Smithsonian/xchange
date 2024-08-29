@@ -38,6 +38,14 @@ include/xchange.h
 .br
 .RI "Not-a-number in case it's not already defined in math\&.h\&. "
 .ti -1c
+.RI "#define \fBstr_1\fP(s)   #s"
+.br
+.RI "Stringify level 1 macro\&. "
+.ti -1c
+.RI "#define \fBstr_2\fP(s)   \fBstr_1\fP(s)"
+.br
+.RI "Stringify level 2 macro\&. "
+.ti -1c
 .RI "#define \fBTRUE\fP   1"
 .br
 .RI "Boolean 'true' value, if not already defined\&. "
@@ -208,6 +216,26 @@ include/xchange.h
 .br
 .RI "Unknown XType (default) "
 .ti -1c
+.RI "#define \fBXCHANGE_MAJOR_VERSION\fP   0"
+.br
+.RI "API major version\&. "
+.ti -1c
+.RI "#define \fBXCHANGE_MINOR_VERSION\fP   9"
+.br
+.RI "API minor version\&. "
+.ti -1c
+.RI "#define \fBXCHANGE_PATCHLEVEL\fP   0"
+.br
+.RI "Integer sub version of the release\&. "
+.ti -1c
+.RI "#define \fBXCHANGE_RELEASE_STRING\fP   '\-devel'"
+.br
+.RI "Additional release information in version, e\&.g\&. '-1', or '-rc1'\&. "
+.ti -1c
+.RI "#define \fBXCHANGE_VERSION_STRING\fP"
+.br
+.RI "The version string for this library\&. "
+.ti -1c
 .RI "#define \fBxdprintf\fP   if(\fBxDebug\fP) printf"
 .br
 .RI "Use for generating debug output\&. "
@@ -313,9 +341,6 @@ include/xchange.h
 .RI "\fBboolean\fP \fBxIsFieldValid\fP (const \fBXField\fP *f)"
 .br
 .ti -1c
-.RI "\fBboolean\fP \fBxIsVerbose\fP ()"
-.br
-.ti -1c
 .RI "char * \fBxLastSeparator\fP (const char *id)"
 .br
 .ti -1c
@@ -356,9 +381,6 @@ include/xchange.h
 .br
 .ti -1c
 .RI "\fBXField\fP * \fBxSetSubstruct\fP (\fBXStructure\fP *s, const char *name, \fBXStructure\fP *substruct)"
-.br
-.ti -1c
-.RI "void \fBxSetVerbose\fP (\fBboolean\fP value)"
 .br
 .ti -1c
 .RI "int \fBxSplitID\fP (char *id, char **pKey)"
@@ -402,13 +424,29 @@ Mar 14, 2019
 Attila Kovacs
 .RE
 .PP
-A Basic set of utilities to allow platform-independent structured data exchange from C/C++\&. It also includes a JSON parser and emitter implementation\&. 
+A Basic set of utilities to allow platform-independent structured data exchange from C/C++\&. It also includes a JSON parser and emitter implementation\&.
+.PP
+\fBVersion\fP
+.RS 4
+0\&.9\&.0 
+.RE
+.PP
+
 .SH "Macro Definition Documentation"
 .PP 
 .SS "#define X_FIELD_INIT   {NULL}"
 Static initializer for the \fBXField\fP data structure\&. 
 .SS "#define X_STRUCT_INIT   {NULL}"
 Static initializer for an \fBXStructure\fP data structure\&. 
+.SS "#define XCHANGE_VERSION_STRING"
+\fBValue:\fP.PP
+.nf
+                                  str_2(XCHANGE_MAJOR_VERSION) "\&." str_2(XCHANGE_MINOR_VERSION) \\
+                                  "\&." str_2(XCHANGE_PATCHLEVEL) XCHANGE_RELEASE_STRING
+.fi
+
+.PP
+The version string for this library\&. 
 .SH "Function Documentation"
 .PP 
 .SS "void * xAlloc (\fBXType\fP type, int count)"
@@ -903,22 +941,6 @@ TRUE is the field seems to contain valid data, otherwise FALSE\&.
 
 .PP
 References \fBFALSE\fP, \fBXField::name\fP, \fBXField::ndim\fP, \fBXField::sizes\fP, \fBTRUE\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, \fBxElementSizeOf()\fP, and \fBxLastSeparator()\fP\&.
-.SS "\fBboolean\fP xIsVerbose ()"
-Checks if verbosity is enabled for the xchange library\&.
-.PP
-\fBReturns\fP
-.RS 4
-TRUE (1) if verbosity is enabled, or else FALSE (0)\&.
-.RE
-.PP
-\fBSee also\fP
-.RS 4
-setVerbose() 
-.RE
-.PP
-
-.PP
-References \fBxVerbose\fP\&.
 .SS "char * xLastSeparator (const char * id)"
 Returns the string pointer to the begining of the last separator in the ID\&.
 .PP
@@ -1195,22 +1217,6 @@ return The prior field stored under the same name or NULL\&. If there is an erro
 
 .PP
 References \fBXStructure::parent\fP, \fBX_INCOMPLETE\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxCreateScalarField()\fP, \fBxError()\fP, and \fBxSetField()\fP\&.
-.SS "void xSetVerbose (\fBboolean\fP value)"
-Sets verbose output for the xchange library\&.
-.PP
-\fBParameters\fP
-.RS 4
-\fIvalue\fP TRUE (non-zero) to enable verbose output, or else FALSE (0)\&.
-.RE
-.PP
-\fBSee also\fP
-.RS 4
-\fBxIsVerbose()\fP 
-.RE
-.PP
-
-.PP
-References \fBFALSE\fP, \fBTRUE\fP, and \fBxVerbose\fP\&.
 .SS "int xSplitID (char * id, char ** pKey)"
 Splits the id into two strings (sharing the same input buffer): (1) the id of the embedding structure, and (2) the embedded field name\&. The original input id is string terminated after the table name\&. And the pointer to the key part that follows after the last separator is returned in the second (optional argument)\&.
 .PP
