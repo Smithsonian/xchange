@@ -42,8 +42,8 @@
 #define WARNING_PREFIX  "WARNING! XJSON "
 
 
-#define Error(format, ARGS...)      fprintf(xerr, ERROR_PREFIX format, ##ARGS)
-#define Warning(format, ARGS...)    fprintf(xerr, WARNING_PREFIX format, ##ARGS)
+#define Error(format, ARGS...)      fprintf(xerr ? xerr : stderr, ERROR_PREFIX format, ##ARGS)
+#define Warning(format, ARGS...)    fprintf(xerr ? xerr : stderr, WARNING_PREFIX format, ##ARGS)
 /// \endcond
 
 static XStructure *ParseObject(char **pos, int *lineNumber);
@@ -63,7 +63,7 @@ static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const
 static int PrintPrimitive(const void *ptr, XType type, char *str);
 static int PrintString(const char *src, int maxLength, char *json);
 
-static FILE *xerr = stderr;     ///< File / stream, which errors are printed to.
+static FILE *xerr;     ///< File / stream, which errors are printed to. A NULL will print to stderr
 
 static char *indent = XJSON_INDENT;
 static int ilen = sizeof(XJSON_INDENT) - 1;

@@ -169,6 +169,8 @@ extern boolean xDebug;          ///< Switch to enable debugging (very verbose) o
 #define xdprintf if(xDebug) printf          ///< Use for generating debug output
 
 // In xutil.c ------------------------------------------------>
+boolean xIsVerbose();
+void xSetVerbose(boolean value);
 int xError(const char *func, int errorCode);    // TODO...
 const char *xErrorDescription(int code);
 
