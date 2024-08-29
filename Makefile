@@ -102,9 +102,8 @@ help:
 	@echo
 	@echo "The following targets are available:"
 	@echo
-	@echo "  shared        Builds the shared 'libsupernovas.so', 'libsolsys1.so', and" 
-	@echo "                'libsolsys2.so' libraries (linked to versioned ones)."
-	@echo "  static        Builds the static 'lib/libsupernovas.a' library."
+	@echo "  shared        Builds the shared 'libxchange.so' (linked to versioned)."
+	@echo "  static        Builds the static 'lib/libxchange.a' library."
 	@echo "  local-dox     Compiles local HTML API documentation using 'doxygen'."
 	@echo "  check         Performs static analysis with 'cppcheck'."
 	@echo "  all           All of the above."
