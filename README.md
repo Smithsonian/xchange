@@ -47,8 +47,8 @@ then, the API may undergo slight changes and tweaks. Use the repository as is at
 
 Some related links:
 
- - [Project page](https://smithsonian.github.io/xchange) on github.io, including 
- - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html).
+ - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html)
+ - [Project page](https://smithsonian.github.io/xchange) on github.io
 
 <a name="data-types"></a>
 ## Basic data types
