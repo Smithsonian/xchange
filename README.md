@@ -14,7 +14,7 @@
 
 # xchange 
 
-Platform-agnostic data exchange framework for C/C++.
+Platform-agnostic data exchange framework for C/C++ with built-in JSON parser/emitter support.
 
 ## Table of Contents
 
@@ -41,6 +41,11 @@ light-weight and fast package.
 The __xchange__ library was created, and is maintained, by Attila Kovács at the Center for Astrophysics \| Harvard 
 &amp; Smithsonian, and it is available through the [Smithsonian/xchange](https://github.com/Smithsonian/xchange) 
 repository on GitHub. 
+
+There are no official releases of __xchange__ yet. An initial 1.0.0 release is to be expected in late 2024. Before 
+then, the API may undergo slight changes and tweaks. Use the repository as is at your own risk for now.
+
+Some related links:
 
  - [Project page](https://smithsonian.github.io/xchange) on github.io, including 
  - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html).
