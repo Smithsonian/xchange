@@ -327,10 +327,10 @@ pointers. String descriptions for the error codes can be produced by `xErrorDesc
   }
 ```
 
------------------------------------------------------------------------------
-
 The JSON parser emitter can also sink its error messages to a designated file or stream, which can be set by 
 `xjsonSetErrorStream(FILE *)`.
+ 
+ -----------------------------------------------------------------------------
  
 <a name="debugging-support"></a>
 ## Debugging support
