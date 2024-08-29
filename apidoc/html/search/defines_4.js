@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['helioc_0',['HELIOC',['../novas_8h.html#a5414c24d23ad004a73ec69b1aad9f3e2',1,'novas.h']]]
+  ['nan_0',['NAN',['../xchange_8h.html#a8abfcc76130f3f991d124dd22d7e69bc',1,'xchange.h']]],
+  ['nulldev_1',['NULLDEV',['../xjson_8h.html#a5a5c8657f14c4fe6dc43c552af88d65d',1,'xjson.h']]]
 ];

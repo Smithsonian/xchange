@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
-<tagfile doxygen_version="1.10.0" doxygen_gitid="GIT-NOTFOUND">
+<tagfile doxygen_version="1.9.8">
   <compound kind="file">
     <name>xchange.h</name>
     <path>include/</path>
@@ -1331,14 +1331,14 @@
     <filename>index.html</filename>
     <docanchor file="index.html">md_README-orig</docanchor>
     <docanchor file="index.html">introduction</docanchor>
+    <docanchor file="index.html">structured-data</docanchor>
     <docanchor file="index.html">data-types</docanchor>
     <docanchor file="index.html">strings</docanchor>
-    <docanchor file="index.html">structured-data</docanchor>
-    <docanchor file="index.html">xstructure-type</docanchor>
+    <docanchor file="index.html">scalars</docanchor>
     <docanchor file="index.html">arrays</docanchor>
-    <docanchor file="index.html">creating-structured-data</docanchor>
+    <docanchor file="index.html">creating-structure</docanchor>
     <docanchor file="index.html">aggregate-ids</docanchor>
-    <docanchor file="index.html">accessing-data-in-xstructures</docanchor>
+    <docanchor file="index.html">accessing-data</docanchor>
     <docanchor file="index.html">json-interchange</docanchor>
     <docanchor file="index.html">error-handling</docanchor>
     <docanchor file="index.html">debugging-support</docanchor>
