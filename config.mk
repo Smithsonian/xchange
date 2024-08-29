@@ -48,7 +48,7 @@ ifeq ($(BUILD_MODE),debug)
 endif
 
 # Search for files in the designated locations
-vpath %.h $(INCLUDE)
+vpath %.h $(INC)
 vpath %.c $(SRC)
 vpath %.o $(OBJ)
 vpath %.d dep 
