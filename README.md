@@ -24,6 +24,9 @@ Platform-agnostic data exchange framework for C/C++ with built-in JSON parser/em
  - [Error handling](#error-handling)
  - [Debugging support](#debugging-support)
 
+
+-----------------------------------------------------------------------------
+
 <a name="introduction"></a>
 ## Introduction
 
@@ -49,6 +52,7 @@ Some related links:
  - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html)
  - [Project page](https://smithsonian.github.io/xchange) on github.io
 
+-----------------------------------------------------------------------------
 
 <a name="structured-data"></a>
 ## Structured data
@@ -58,7 +62,7 @@ Some related links:
  - [Arrays](#arrays)
  - [Creating structure](#creating-structured-data)
  - [Aggregate IDs](#aggregate-ids)
- - [Accessing data in XStructures](#accessing-data-in-xstructures)
+ - [Accessing substructures and elements](#accessing-data)
 
 
 The __xchange__ library defines the `XStructure` type to represent structured data. It is defined in `xchange.h`, but 
@@ -227,8 +231,8 @@ level. The `xGetAggregateID()` function is provided to construct such aggregate 
 trailing component.
 
 
-<a name="accessing-data-in-xstructures"></a>
-### Accessing data in XStructures
+<a name="accessing-data"></a>
+### Accessing substructures and elements
 
 Once a structure is populated -- either by having constructed it programatically, or e.g. by parsing a JSON definition
 of it from a string or file -- you can access its content and/or modify it.
@@ -272,7 +276,7 @@ You can also remove existing fields from structures using `xRemoveField()`, e.g.
   xDestroyField(xRemoveField(s, "blah"));
 ```
 
-
+-----------------------------------------------------------------------------
 
 <a name="json-interchange"></a>
 ## JSON parser and emitter
@@ -305,6 +309,8 @@ or from a file, e.g. specified by the file name/path that contains a JSON defini
 ```
 
 
+-----------------------------------------------------------------------------
+
 <a name="error-handling"></a>
 ## Error handling
 
@@ -320,6 +326,8 @@ pointers. String descriptions for the error codes can be produced by `xErrorDesc
     ...
   }
 ```
+
+-----------------------------------------------------------------------------
 
 The JSON parser emitter can also sink its error messages to a designated file or stream, which can be set by 
 `xjsonSetErrorStream(FILE *)`.
