@@ -5,7 +5,7 @@
  * @author Attila Kovacs
  *
  * \brief
- *      A collection of commonly used functions for data exchange for scalars and arrays, and
+ *      A collection of commonly used functions for standard data exchange for scalars and arrays, and
  *      ASCII representations.
  *
  */

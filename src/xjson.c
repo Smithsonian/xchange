@@ -63,7 +63,7 @@ static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const
 static int PrintPrimitive(const void *ptr, XType type, char *str);
 static int PrintString(const char *src, int maxLength, char *json);
 
-static FILE *xerr;     ///< File which errors are printed to.
+static FILE *xerr = stderr;     ///< File / stream, which errors are printed to.
 
 static char *indent = XJSON_INDENT;
 static int ilen = sizeof(XJSON_INDENT) - 1;
@@ -209,6 +209,8 @@ XStructure *xjsonParseFilename(const char *fileName, int *lineNumber) {
     errno = EINVAL;
     return NULL;
   }
+
+  if(xIsVerbose()) fprintf(stderr, "XJSON: Parsing %s.\n", fileName);
 
   fp = fopen(fileName, "r");
   if(!fp) {

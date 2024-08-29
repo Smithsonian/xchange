@@ -6,12 +6,46 @@
  *
  *   A Basic set of utilities to allow platform-independent structured data exchange from C/C++.
  *   It also includes a JSON parser and emitter implementation.
+ *
+ * @version 0.9.0
  */
 
 #ifndef XCHANGE_H_
 #define XCHANGE_H_
 
-#include <math.h>
+
+/// API major version
+#define XCHANGE_MAJOR_VERSION  0
+
+/// API minor version
+#define XCHANGE_MINOR_VERSION  9
+
+/// Integer sub version of the release
+#define XCHANGE_PATCHLEVEL     0
+
+/// Additional release information in version, e.g. "-1", or "-rc1".
+#define XCHANGE_RELEASE_STRING "-devel"
+
+
+#ifdef str_2
+#  undef str_2
+#endif
+
+/// Stringify level 2 macro
+#define str_2(s) str_1(s)
+
+#ifdef str_1
+#  undef str_1
+#endif
+
+/// Stringify level 1 macro
+#define str_1(s) #s
+
+
+/// The version string for this library
+#define XCHANGE_VERSION_STRING str_2(XCHANGE_MAJOR_VERSION) "." str_2(XCHANGE_MINOR_VERSION) \
+                                  "." str_2(XCHANGE_PATCHLEVEL) XCHANGE_RELEASE_STRING
+
 
 #ifndef TRUE
 #define TRUE    1           ///< Boolean 'true' value, if not already defined.
@@ -135,8 +169,6 @@ extern boolean xDebug;          ///< Switch to enable debugging (very verbose) o
 #define xdprintf if(xDebug) printf          ///< Use for generating debug output
 
 // In xutil.c ------------------------------------------------>
-boolean xIsVerbose();
-void xSetVerbose(boolean value);
 int xError(const char *func, int errorCode);    // TODO...
 const char *xErrorDescription(int code);
 
