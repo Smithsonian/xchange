@@ -1,13 +1,19 @@
-# Load the common Makefile definitions...
-include $(GLOBALINC)/setup.mk
+INC = ../include
 
-IFLAGS += -I../include
-CFLAGS0 += -g
+include ../config.mk
 
-all: $(BIN)/test-json
+CFLAGS += -g
 
-$(BIN)/test-json: $(OBJ)/test-json.o $(XJSON) $(XSTRUCT) $(XCHANGE)
+.PHONY: all
+all: bin/test-json
 
+bin/test-json: test-json.c ../lib/libxchange.a
 
-# Finally, the standard generic rules and targets...
-include $(GLOBALINC)/recipes.mk
+../lib/libxchange.a: 
+	@make -C .. static
+	
+
+bin/%: | bin
+	$(CC) -o $@ $(CPPFLAGS) $(CFLAGS) $^ $(LDFLAGS)
+
+include ../build.mk
