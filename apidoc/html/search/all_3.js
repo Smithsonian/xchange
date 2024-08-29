@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['changelog_0',['Changelog',['../md_CHANGELOG.html',1,'']]],
-  ['contents_1',['Table of Contents',['../index.html#autotoc_md2',1,'']]],
-  ['creating_20structured_20data_2',['Creating structured data',['../index.html#autotoc_md10',1,'']]]
+  ['3_201_0',['Compatibility with NOVAS C 3.1',['../index.html#autotoc_md37',1,'']]],
+  ['3_201_20issues_1',['Fixed NOVAS C 3.1 issues',['../index.html#autotoc_md35',1,'']]],
+  ['3_20explicit_20linking_20of_20custom_20ephemeris_20functions_2',['3. Explicit linking of custom ephemeris functions',['../index.html#autotoc_md69',1,'']]]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['name_0',['name',['../structXField.html#a5ac083a645d964373f022d03df4849c8',1,'XField']]],
-  ['ndim_1',['ndim',['../structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1',1,'XField']]],
-  ['next_2',['next',['../structXField.html#ae1ebaf87eb62e6266b14908eee28e565',1,'XField']]]
+  ['c_0',['C',['../novascon_8c.html#a9e8a46a0e00368ad98642587ca4ebdbe',1,'C:&#160;novascon.c'],['../novascon_8h.html#a9e8a46a0e00368ad98642587ca4ebdbe',1,'C:&#160;novascon.c']]],
+  ['c_5fauday_1',['C_AUDAY',['../novascon_8c.html#a55379c7fece80070614c09bb218275b6',1,'C_AUDAY:&#160;novascon.c'],['../novascon_8h.html#a55379c7fece80070614c09bb218275b6',1,'C_AUDAY:&#160;novascon.c']]],
+  ['catalog_2',['catalog',['../structcat__entry.html#a128c876f7e50045e1c469dbabb400c58',1,'cat_entry']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['eixplicit_5fparse_5fspecial_5fdoubles_0',['EIXPLICIT_PARSE_SPECIAL_DOUBLES',['../xchange_8c.html#acc843123b41c0889b5b328a538b8c6ca',1,'xchange.c']]]
+  ['baryc_0',['BARYC',['../novas_8h.html#a0c92a54a656043a455ea8ae0ace6c57e',1,'novas.h']]]
 ];

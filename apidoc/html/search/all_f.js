@@ -1,8 +1,16 @@
 var searchData=
 [
-  ['table_20of_20contents_0',['Table of Contents',['../index.html#autotoc_md2',1,'']]],
-  ['true_1',['TRUE',['../xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d',1,'TRUE:&#160;xjson.c'],['../xchange_8h.html#aa8cecfc5c5c054d2875c03e77b7be15d',1,'TRUE:&#160;xchange.h']]],
-  ['type_2',['type',['../structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9',1,'XField']]],
-  ['type_3',['XStructure type',['../index.html#autotoc_md7',1,'']]],
-  ['types_4',['Basic data types',['../index.html#autotoc_md4',1,'']]]
+  ['l_0',['l',['../structnovas__delaunay__args.html#a59e80b8ba32c12c6d0a868f17a19ae48',1,'novas_delaunay_args']]],
+  ['l1_1',['l1',['../structnovas__delaunay__args.html#ad7a541093aca44890413459c6248db6c',1,'novas_delaunay_args']]],
+  ['latitude_2',['latitude',['../structon__surface.html#a76714bdbc5c536fa77dfb14533ff82a9',1,'on_surface']]],
+  ['light_5ftime_3',['light_time',['../novas_8c.html#ac37988ea091479b766590e472293439b',1,'light_time(double jd_tdb, const object *body, const double *pos_obs, double tlight0, enum novas_accuracy accuracy, double *pos_src_obs, double *tlight):&#160;novas.c'],['../novas_8h.html#ac37988ea091479b766590e472293439b',1,'light_time(double jd_tdb, const object *body, const double *pos_obs, double tlight0, enum novas_accuracy accuracy, double *pos_src_obs, double *tlight):&#160;novas.c']]],
+  ['light_5ftime2_4',['light_time2',['../novas_8c.html#a8a93137b6201bedd8d47cc954684ebe3',1,'light_time2(double jd_tdb, const object *body, const double *pos_obs, double tlight0, enum novas_accuracy accuracy, double *p_src_obs, double *v_ssb, double *tlight):&#160;novas.c'],['../novas_8h.html#ac800815a32e81e7befdb828c29d1efcc',1,'light_time2(double jd_tdb, const object *body, const double *pos_obs, double tlight0, enum novas_accuracy accuracy, double *pos_src_obs, double *v_ssb, double *tlight):&#160;novas.c']]],
+  ['limb_5fangle_5',['limb_angle',['../novas_8c.html#a0e4364546c40854eb63211bd6cd0e70b',1,'limb_angle(const double *pos_src, const double *pos_obs, double *limb_ang, double *nadir_ang):&#160;novas.c'],['../novas_8h.html#a0e4364546c40854eb63211bd6cd0e70b',1,'limb_angle(const double *pos_src, const double *pos_obs, double *limb_ang, double *nadir_ang):&#160;novas.c']]],
+  ['linking_20of_20custom_20ephemeris_20functions_6',['3. Explicit linking of custom ephemeris functions',['../index.html#autotoc_md69',1,'']]],
+  ['list_7',['Deprecated List',['../deprecated.html',1,'']]],
+  ['local_5fplanet_8',['local_planet',['../novas_8c.html#ac036606c424c30a5600049b0cd38d868',1,'local_planet(double jd_tt, const object *ss_body, double ut1_to_tt, const on_surface *position, enum novas_accuracy accuracy, double *ra, double *dec, double *dis):&#160;novas.c'],['../novas_8h.html#ac036606c424c30a5600049b0cd38d868',1,'local_planet(double jd_tt, const object *ss_body, double ut1_to_tt, const on_surface *position, enum novas_accuracy accuracy, double *ra, double *dec, double *dis):&#160;novas.c']]],
+  ['local_5fstar_9',['local_star',['../novas_8c.html#a0f24eef523d0a8e3252002654389bd5c',1,'local_star(double jd_tt, double ut1_to_tt, const cat_entry *star, const on_surface *position, enum novas_accuracy accuracy, double *ra, double *dec):&#160;novas.c'],['../novas_8h.html#a0f24eef523d0a8e3252002654389bd5c',1,'local_star(double jd_tt, double ut1_to_tt, const cat_entry *star, const on_surface *position, enum novas_accuracy accuracy, double *ra, double *dec):&#160;novas.c']]],
+  ['location_10',['Location',['../md_LEGACY.html#autotoc_md29',1,'B. Azimuth and elevation angles at the observing location'],['../index.html#autotoc_md50',1,'Calculate azimuth and elevation angles at the observing location'],['../md_LEGACY.html#autotoc_md24',1,'Spefify the observer location'],['../index.html#autotoc_md46',1,'Spefify the observer location']]],
+  ['longitude_11',['longitude',['../structon__surface.html#ac155e35fdeebafc89723a51520fb9fe6',1,'on_surface']]],
+  ['lpt_12',['LPT',['../eph__manager_8c.html#ad0644039a2a0b1fcf47bf8f97af4d537',1,'eph_manager.c']]]
 ];

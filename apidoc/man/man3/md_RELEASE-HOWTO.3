@@ -1,0 +1,76 @@
+.TH "md_RELEASE-HOWTO" 3 "Version v1.2" "SuperNOVAS" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+md_RELEASE-HOWTO \- SuperNOVAS release checklist 
+.PP
+ 
+.SH "Preparation"
+.PP
+.SS "Version update"
+.IP "\(bu" 2
+In \fR\fBnovas\&.h\fP\fP:
+.IP "  \(bu" 4
+change doxygen \fR@version\fP in top description (also in \fR\fBnovas\&.c\fP\fP)\&.
+.IP "  \(bu" 4
+change version constants (below imports), including release string!
+.PP
+
+.IP "\(bu" 2
+README\&.md: version statement near the top of the document\&.
+.IP "\(bu" 2
+In Doxyfile: (API version w/o patchlevel)
+.IP "\(bu" 2
+CHANGELOG\&.md: \fR[Unreleased]\fP to \fR[1\&.x\&.x] -- YYYY-MM-dd\fP
+.PP
+.SS "Check CHANGELOG"
+.IP "\(bu" 2
+Check for completeness
+.IP "\(bu" 2
+Check that changes are listed in the most appropriate section
+.IP "\(bu" 2
+Check for language, spelling, typos
+.PP
+.SS "Check build"
+.PP
+.nf
+$ make all
+.fi
+.PP
+.PP
+then
+.PP
+.PP
+.nf
+$ make distclean
+.fi
+.PP
+.PP
+Check build on LynxOS PowerPCs also!
+.SS "Commit and push"
+Commit message is version \fRv1\&.x\&.x\fP, e\&.g\&. \fRv1\&.1\&.0\fP or \fRv1\&.1\&.0-rc2\fP\&.
+.SH "Release"
+.PP
+.SS "GitHub"
+.IP "\(bu" 2
+Create a new release\&. Copy/paste section from \fRCHANGELOG\&.md\fP as the release description\&.
+.IP "\(bu" 2
+Close Milestone (and create next Milestone(s) as appropriate)\&.
+.IP "\(bu" 2
+Unpin any closed issues\&.
+.IP "\(bu" 2
+In Discussions, unpin prior release(s), also from Announcements, and pin current release\&. Close discussions relating to prior releases\&.
+.PP
+.SS "Back to devel"
+.IP "\(bu" 2
+Bump version in \fR\fBnovas\&.h\fP\fP for next releaze, and set release string to \fR-devel\fP\&. Commit and push to \fRmain\fP\&.
+.PP
+.SS "Social"
+.IP "\(bu" 2
+Post release blob to Bluesky, with site link and \fR#astronomy\fP tag\&.
+.IP "\(bu" 2
+Also to LinkedIn, and Facebook (Astronomer's group)\&. Use \fR#astronomy\fP tag as appropriate\&.
+.IP "\(bu" 2
+Post on CfA Slack\&. 
+.PP
+

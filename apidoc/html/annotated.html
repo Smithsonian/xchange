@@ -2,36 +2,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=X-XXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'X-XXXXXXX');
-</script>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta charset="utf-8"/>
-<meta name="description" content="Structured data exchange for C/C++"/>
-<meta name="keywords" content="structured data, data exchange, C, C++, library"/>
+<meta name="description" content="SuperNOVAS C/C++ astrometry library"/>
+<meta name="keywords" content="astronomy, astrometry, C, C++, library, NOVAS"/>
 <meta name="author" content="Attila Kovacs"/>
 <meta name="copyright" content="(C)2024 Attila Kovacs" />
 <meta name="robots" content="index,follow"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<script async src="https://www.googletagmanager.com/gtag/js?id=X-XXXXXXXXXXX"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HLFWKSM8V9"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'X-XXXXXXXX');
+  gtag('config', 'G-HLFWKSM8V9');
 </script>
-<link rel="shortcut icon" type="image/x-icon" href="/xchange/resources/favicon.ico" />
-<link rel="icon" type="image/png" sizes="192x192" href="/xchange/resources/android-chrome-192x192.png" />
-<link rel="icon" type="image/png" sizes="512x512" href="/xchange/resources/android-chrome-512x512.png" />
-<link rel="apple-touch-icon" type="image/png" href="/xchange/resources/apple-touch-icon.png" />
-<title>xchange: Data Structures</title>
+<link rel="shortcut icon" type="image/x-icon" href="/SuperNOVAS/resources/favicon.ico" />
+<link rel="icon" type="image/png" sizes="192x192" href="/SuperNOVAS/resources/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/SuperNOVAS/resources/android-chrome-512x512.png" />
+<link rel="apple-touch-icon" type="image/png" href="/SuperNOVAS/resources/apple-touch-icon.png" />
+<title>SuperNOVAS: Data Structures</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -55,9 +47,9 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="smithsonian-logo-55x55.png"/></td>
   <td id="projectalign">
-   <div id="projectname">xchange<span id="projectnumber">&#160;v0.9</span>
+   <div id="projectname">SuperNOVAS<span id="projectnumber">&#160;v1.2</span>
    </div>
-   <div id="projectbrief">Structured data exchange for C/C++</div>
+   <div id="projectbrief">The NOVAS C library, made better</div>
   </td>
  </tr>
  </tbody>
@@ -125,8 +117,19 @@ $(function(){initNavTree('annotated.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock">Here are the data structures with brief descriptions:</div><div class="directory">
 <table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structXField.html" target="_self">XField</a></td><td class="desc">An SMA-X field, typically as part of an <a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a>. A field may be a reference to a nested <a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a> itself </td></tr>
-<tr id="row_1_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structXStructure.html" target="_self">XStructure</a></td><td class="desc">SMA-X structure object, containing a linked-list of <a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a> elements </td></tr>
+<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structcat__entry.html" target="_self">cat_entry</a></td><td class="desc"></td></tr>
+<tr id="row_1_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structin__space.html" target="_self">in_space</a></td><td class="desc"></td></tr>
+<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structnovas__delaunay__args.html" target="_self">novas_delaunay_args</a></td><td class="desc"></td></tr>
+<tr id="row_3_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structnovas__frame.html" target="_self">novas_frame</a></td><td class="desc"></td></tr>
+<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structnovas__matrix.html" target="_self">novas_matrix</a></td><td class="desc"></td></tr>
+<tr id="row_5_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structnovas__planet__bundle.html" target="_self">novas_planet_bundle</a></td><td class="desc"></td></tr>
+<tr id="row_6_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structnovas__timespec.html" target="_self">novas_timespec</a></td><td class="desc"></td></tr>
+<tr id="row_7_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structnovas__transform.html" target="_self">novas_transform</a></td><td class="desc"></td></tr>
+<tr id="row_8_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structobject.html" target="_self">object</a></td><td class="desc"></td></tr>
+<tr id="row_9_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structobserver.html" target="_self">observer</a></td><td class="desc"></td></tr>
+<tr id="row_10_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structon__surface.html" target="_self">on_surface</a></td><td class="desc"></td></tr>
+<tr id="row_11_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structra__of__cio.html" target="_self">ra_of_cio</a></td><td class="desc"></td></tr>
+<tr id="row_12_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structsky__pos.html" target="_self">sky_pos</a></td><td class="desc"></td></tr>
 </table>
 </div><!-- directory -->
 </div><!-- contents -->

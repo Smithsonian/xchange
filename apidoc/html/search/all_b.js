@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['name_0',['name',['../structXField.html#a5ac083a645d964373f022d03df4849c8',1,'XField']]],
-  ['nan_1',['NAN',['../xchange_8h.html#a8abfcc76130f3f991d124dd22d7e69bc',1,'xchange.h']]],
-  ['ndim_2',['ndim',['../structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1',1,'XField']]],
-  ['next_3',['next',['../structXField.html#ae1ebaf87eb62e6266b14908eee28e565',1,'XField']]],
-  ['nulldev_4',['NULLDEV',['../xjson_8h.html#a5a5c8657f14c4fe6dc43c552af88d65d',1,'xjson.h']]]
+  ['height_0',['height',['../structon__surface.html#a89f6abd564014faeff7cd20c340a9c7d',1,'on_surface']]],
+  ['helioc_1',['HELIOC',['../novas_8h.html#a5414c24d23ad004a73ec69b1aad9f3e2',1,'novas.h']]],
+  ['hor_5fto_5fitrs_2',['hor_to_itrs',['../super_8c.html#ad290005b13558de3927e455775b32e0f',1,'hor_to_itrs(const on_surface *location, double az, double za, double *itrs):&#160;super.c'],['../novas_8h.html#ad290005b13558de3927e455775b32e0f',1,'hor_to_itrs(const on_surface *location, double az, double za, double *itrs):&#160;super.c']]],
+  ['humidity_3',['humidity',['../structon__surface.html#a987616dbcfdfc936af3e5874ef5a41e7',1,'on_surface']]]
 ];

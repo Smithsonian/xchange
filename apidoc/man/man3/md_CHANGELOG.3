@@ -1,12 +1,309 @@
-.TH "md_CHANGELOG" 3 "Version v0.9" "xchange" \" -*- nroff -*-
+.TH "md_CHANGELOG" 3 "Version v1.2" "SuperNOVAS" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 md_CHANGELOG \- Changelog 
 .PP
- All notable changes to the xchange library will be documented in this file\&.
+ All notable changes to the SuperNOVAS library will be documented in this file\&.
 .PP
 The format is based on \fRKeep a Changelog\fP, and this project adheres to \fRSemantic Versioning\fP\&.
+.SH "[Unreleased - 1\&.2\&.0]"
+.PP
+Changes expected for the next bug-fix release, expected around 1 December 2024\&.
+.SH "Added"
+.PP
+.IP "\(bu" 2
+#57: New \fRnovas_make_redshifted_object()\fP to simplify the creation of distant catalog sources that are characterized with a redshift measure rather than a radial velocity value\&.
+.IP "\(bu" 2
+#57: New generic redshift-handling functions \fR\fBnovas_v2z()\fP\fP, \fR\fBnovas_z2v()\fP\fP,
+.IP "\(bu" 2
+#58: New functions to calculate and apply additional gravitational redshift corrections for light that originates near massive gravitating bodies (other than major planets, or Sun or Moon), or for observers located near massive gravitating bodies (other than the Sun and Earth)\&. The added functions are \fR\fBgrav_redshift()\fP\fP, \fRredhift_vrad()\fP, \fR\fBunredshift_vrad()\fP\fP, \fR\fBnovas_z_add()\fP\fP, and \fR\fBnovas_z_inv()\fP\fP\&.
+.PP
 .SH "[Unreleased]"
 .PP
-Initial public release\&. 
+Changes expected for the next bug-fix release, expected around 1 December 2024\&.
+.SS "Fixed"
+.IP "\(bu" 2
+#55: Relativistic corrections to radial velocity were still not applied correctly\&. The revised calculation now uses the actual relativistic velocity differential between the source and observer to apply the appropriate time dilation factor, and applies graviational corrections for Sun and Earth consistently at source and observer alike\&.
+.IP "\(bu" 2
+#55: Use relativistic formulae to add/difference velocities (i\&.e\&. change velocity reference frame)\&.
+.PP
+.SS "Added"
+.SS "Changed"
+.IP "\(bu" 2
+#59: For major planets (and Sun and Moon) \fR\fBrad_vel()\fP\fP, \fR\fBrad_vel2()\fP\fP, \fR\fBplace()\fP\fP, and \fR\fBnovas_sky_pos()\fP\fP will include gravitational corrections to radial velocity for light originating at the surface, and observed near Earth or else at a large distance away\&. The corrections can be skipped for \fR\fBrad_vel()\fP\fP / \fR\fBrad_vel2()\fP\fP by setting \fRd_src_sun\fP negative\&.
+.IP "\(bu" 2
+#60: Moved SuperNOVAS-only functions to a separate \fR\fBsuper\&.c\fP\fP module to alleviate the bloating of \fR\fBnovas\&.c\fP\fP, which can still be used as a self-contained, standalone, NOVAS C replacement for legacy applications if need be\&.
+.PP
+.SH "[1\&.1\&.0] - 2024-08-04"
+.PP
+Feature release\&. Introducing a more efficient and elegant approach to position and velocity calculations using observer frames; versatile handling of astronomical timescales; and support for further observer locations, coordinate reference systems, and atmospheric refraction models\&. The release also fixes a number of bugs, of varying severity, which affected prior SuperNOVAS releases\&.
+.SS "Fixed"
+.IP "\(bu" 2
+#29: Fix portability to non-Intel platforms\&. Previously, SuperNOVAS used \fRchar\fP for storing small integer coefficients, assuming \fRchar\fP was signed\&. However, on some platforms like ARM and PowerPC \fRchar\fP is unsigned, which broke calculations badly\&. As of now, we use the explicit platform independent signed \fRint8_t\fP storage type for these coefficients\&.
+.IP "\(bu" 2
+#38: \fR\fBgcrs_to_j2000()\fP\fP transformed in the wrong direction in v1\&.0\&.
+.IP "\(bu" 2
+#39: \fR\fBtod_to_itrs()\fP\fP used wrong Earth rotation measure (\fRNOVAS_ERA\fP instead of \fRNOVAS_GST\fP) in v1\&.0\&.
+.IP "\(bu" 2
+#45: \fR\fBcel2ter()\fP\fP invalid output in v1\&.0 with CIRS input coordinates (\fRerot\fP = \fREROT_ERA\fP and \fRclass\fP = \fRNOVAS_DYNAMICAL_CLASS\fP) if output vector was distinct from input vector\&. Affects \fR\fBcirs_to_itrs()\fP\fP also\&.
+.IP "\(bu" 2
+#36: \fR\fBtt2tdb()\fP\fP Had a wrong scaling in sinusoidal period in v1\&.0, resulting in an error of up to +/- 1\&.7 ms\&.
+.IP "\(bu" 2
+#37: \fR\fBgcrs_to_cirs()\fP\fP did not handle well if input and output vectors were the same in v1\&.0\&.
+.IP "\(bu" 2
+#28: Division by zero bug in \fR\fBd_light()\fP\fP (since NOVAS C 3\&.1) if the first position argument is the ephemeris reference position (e\&.g\&. the Sun for \fR\fBsolsys3\&.c\fP\fP)\&. The bug affects for example \fR\fBgrav_def()\fP\fP, where it effectively results in the gravitational deflection due to the Sun being skipped\&. See Issue #28\&.
+.IP "\(bu" 2
+#41: \fR\fBgrav_def()\fP\fP gravitating body position antedated somewhat incorrectly (in v1\&.0) when observed source is a Solar-system object between the observer and the gravitating body\&. The resulting positional error is typically small at below 10 uas\&.
+.IP "\(bu" 2
+#50: The NOVAS C 3\&.1 implementation of \fR\fBrad_vel()\fP\fP applied relativistic corrections for a moving observer conditional on applying relativistic gravitational corrections (for Sun and/or Earth potential) for the observer\&. However, it seems more reasonable that the corrections for a moving observer should be applied always and independently of the (optional) gravitational corrections\&.
+.IP "\(bu" 2
+#34: \fR\fBplace()\fP\fP radial velocities were not quite correct in prior SuperNOVAS releases\&. The radial velocity calculation now precedes aberration, since the radial velocity that is observed is in the geometric direction towards the source (unaffected by aberration)\&. As for gravitational deflection, the geometric direction is the correct direction in which light was emitted from the source for sidereal objects\&. For Solar system sources we now reverse trace the deflected light to calculate the direction in which it was emitted from the source\&. As such, the radial velocities calculated should now be precise under all conditions\&. The typical errors of the old calculations were up to tens of m/s because of aberration, and a few m/s due to the wrong gravitational deflection calculation\&.
+.IP "\(bu" 2
+#24: Bungled definition of \fRSUPERNOVAS_VERSION_STRING\fP in \fR\fBnovas\&.h\fP\fP in v1\&.0\&.
+.IP "\(bu" 2
+Bungled definition of \fRNOVAS_OBSERVER_PLACES\fP in \fR\fBnovas\&.h\fP\fP in v1\&.0\&.
+.PP
+.SS "Added"
+.IP "\(bu" 2
+#33: New observing-frame based approach for calculations (\fR\fBframes\&.c\fP\fP)\&. A \fR\fBnovas_frame\fP\fP object uniquely defines both the place and time of observation, with a set of pre-calculated transformations and constants\&. Once the frame is defined it can be used very efficiently to calculate positions for multiple celestial objects with minimum additional computational cost\&. The frames API is also more elegant and more versatile than the low-level NOVAS C approach for performing the same kind of calculations\&. And, frames are inherently thread-safe since post-creation their internal state is never modified during the calculations\&. The following new functions were added: \fR\fBnovas_make_frame()\fP\fP, \fR\fBnovas_change_observer()\fP\fP, \fR\fBnovas_geom_posvel()\fP\fP, \fR\fBnovas_geom_to_app()\fP\fP, \fR\fBnovas_sky_pos()\fP\fP, \fR\fBnovas_app_to_hor()\fP\fP, \fR\fBnovas_app_to_geom()\fP\fP, \fR\fBnovas_hor_to_app()\fP\fP\&.
+.IP "\(bu" 2
+#33: New coordinate system transformations via the \fR\fBnovas_transform\fP\fP structure\&. You may use these transforms to express position / velocity vectors, calculated for a given observer and time, in the coordinate reference system of choice\&.The following new functions were added: \fR\fBnovas_make_transform()\fP\fP, \fR\fBnovas_invert_transform()\fP\fP, \fR\fBnovas_transform_vector()\fP\fP, and \fR\fBnovas_transform_sky_pos()\fP\fP\&.
+.IP "\(bu" 2
+#33: New \fR\fBnovas_timespec\fP\fP structure for the self-contained definition of precise astronomical time (\fR\fBtimescale\&.c\fP\fP)\&. You can set the time via \fR\fBnovas_set_time()\fP\fP or \fR\fBnovas_set_split_time()\fP\fP to a JD date in the timescale of choice (UTC, UT1, GPS, TAI, TT, TCG, TDB, or TCB), or to a UNIX time with \fR\fBnovas_set_unix_time()\fP\fP\&. Once set, you can obtain an expression of that time in any timescale of choice via \fR\fBnovas_get_time()\fP\fP, \fR\fBnovas_get_split_time()\fP\fP or \fR\fBnovas_get_unix_time()\fP\fP\&. And, you can create a new time specification by incrementing an existing one, using \fRnovas_increment_time()\fP, or measure time differences via \fR\fBnovas_diff_time()\fP\fP, \fR\fBnovas_diff_tcg()\fP\fP, or \fR\fBnovas_diff_tcb()\fP\fP\&.
+.IP "\(bu" 2
+Added \fR\fBnovas_planet_bundle\fP\fP structure to handle planet positions and velocities more elegantly (e\&.g\&. for gravitational deflection calculations)\&.
+.IP "\(bu" 2
+#32: Added \fR\fBgrav_undef()\fP\fP to undo gravitational bending of the observed light to obtain geometric positions from observed ones\&.
+.IP "\(bu" 2
+Added \fR\fBobs_posvel()\fP\fP to calculate the observer position and velocity relative to the Solar System Barycenter (SSB)\&.
+.IP "\(bu" 2
+Added \fR\fBobs_planets()\fP\fP to calculate apparent planet positions (relative to observer) and velocities (w\&.r\&.t\&. SSB)\&.
+.IP "\(bu" 2
+Added new observer locations \fRNOVAS_AIRBORNE_OBSERVER\fP for an observer moving relative to the surface of Earth e\&.g\&. in an aircraft or balloon based telescope platform, and \fRNOVAS_SOLAR_SYSTEM_OBSERVER\fP for spacecraft orbiting the Sun\&. Both of these use the \fR\fBobserver\&.near_earth\fP\fP strcture to define (positions and) velocities as appropriate\&. Hence the \fR'near_earth\fP name is a bit misleading, but remains for back compatibility\&.
+.IP "\(bu" 2
+Added coordinate reference systems \fRNOVAS_MOD\fP (Mean of Date) which includes precession by not nutation and \fRNOVAS_J2000\fP for the J2000 dynamical reference system\&.
+.IP "\(bu" 2
+New observer locations \fRNOVAS_AIRBORNE_OBSERVER\fP and \fRNOVAS_SOLAR_SYSTEM_OBSERVER\fP, and corresponding \fR\fBmake_airborne_observer()\fP\fP and \fR\fBmake_solar_system_observer()\fP\fP functions\&. Airborne observers have an Earth-fixed momentary location, defined by longitude, latitude, and altitude, the same way as for a stationary observer on Earth, but are moving relative to the surface, such as in an aircraft or balloon based observatory\&. Solar-system observers are similar to observers in Earth-orbit but their momentary position and velocity is defined relative to the Solar System Barycenter (SSB), instead of the geocenter\&.
+.IP "\(bu" 2
+Added humidity field to \fR\fBon_surface\fP\fP structure, e\&.g\&. for refraction calculations at radio wavelengths\&. The \fR\fBmake_on_surface()\fP\fP function will set humidity to 0\&.0, but the user can set the field appropriately afterwards\&.
+.IP "\(bu" 2
+New set of built-in refraction models to use with the frame-based \fR\fBnovas_app_to_hor()\fP\fP / \fR\fBnovas_hor_to_app()\fP\fP functions\&. The models \fR\fBnovas_standard_refraction()\fP\fP and \fR\fBnovas_optical_refraction()\fP\fP implement the same refraction model as \fR\fBrefract()\fP\fP in NOVAS C 3\&.1, with \fRNOVAS_STANDARD_ATMOSPHERE\fP and \fRNOVAS_WEATHER_AT_LOCATION\fP respectively, including the reversed direction provided by \fR\fBrefract_astro()\fP\fP\&. The user may supply their own custom refraction also, and may make use of the generic reversal function \fR\fBnovas_inv_refract()\fP\fP to calculate refraction in the reverse direction (observer vs astrometric elevations) as needed\&.
+.IP "\(bu" 2
+Added radio refraction model \fR\fBnovas_radio_refraction()\fP\fP based on the formulae by Berman & Rockwell 1976\&.
+.IP "\(bu" 2
+Added \fR\fBcirs_to_tod()\fP\fP and \fR\fBtod_to_cirs()\fP\fP functions for efficient tranformation between True of Date (TOD) and Celestial Intermediate Reference System (CIRS), and vice versa\&.
+.IP "\(bu" 2
+Added \fR\fBmake_cat_object()\fP\fP function to create a NOVAS celestial \fRobject\fP structure from existing \fR\fBcat_entry\fP\fP data\&.
+.IP "\(bu" 2
+Added \fR\fBrad_vel2()\fP\fP to calculate radial velocities precisely in the presense of gravitational deflection i\&.e\&., when the direction in which light was emitted is different from the direction it is detected by the observer\&. This new function is now used by both \fR\fBplace()\fP\fP and \fR\fBnovas_sky_pos()\fP\fP\&.
+.IP "\(bu" 2
+\fRmake help\fP to provide a brief list and explanation of the available build targets\&. (Thanks to \fR@teuben\fP for suggesting this\&.)
+.IP "\(bu" 2
+Added GitHub CI regression testing for non-x86 platforms: \fRarmv7\fP, \fRaarch64\fP, \fRriscv64\fP, \fRppc64le\fP\&. Thus, we should avoid misphaps, like the platform specific bug Issue #29, in the future\&.
+.PP
+.SS "Changed"
+.IP "\(bu" 2
+#42: \fR\fBcio_array()\fP\fP can now parse the original ASCII CIO locator data file (\fRdata/CIO_RA\&.TXT\fP) efficiently also, thus no longer requiring a platform-specific binary translation via the \fRcio_file\fP tool\&.
+.IP "\(bu" 2
+#51: The NOVAS C implementation of \fR\fBrad_vel()\fP\fP has ignored this redshifting when the Sun was being observed\&. From now on, we shall gravitationally reference radial velocities when observing the Sun to its photosphere\&.
+.IP "\(bu" 2
+\fRcio_file\fP tool parses interval from header rather than the less precise differencing of the first two record timestamps\&. This leads to \fR\fBcio_array()\fP\fP being more accurately centered on matching date entries, e\&.g\&. J2000\&.
+.IP "\(bu" 2
+\fR\fBgrav_def()\fP\fP estimation of light time to where light passes nearest to gravitating body is improved by starting with the body position already antedated for light-time for the gravitating mass\&. The change typically improves the grativational deflection calculations at the few uas level\&.
+.IP "\(bu" 2
+\fR\fBgrav_def()\fP\fP is simplified\&. It no longer uses the location type argument\&. Instead it will skip deflections due to any body, if the observer is within ~1500 km of its center\&.
+.IP "\(bu" 2
+\fR\fBplace()\fP\fP now returns an error 3 if and only if the observer is at (or very close, to within ~1\&.5m) of the observed Solar-system object\&.
+.IP "\(bu" 2
+Improved precision of some calculations, like \fR\fBera()\fP\fP, \fR\fBfund_args()\fP\fP, and \fR\fBplanet_lon()\fP\fP by being more careful about the order in which terms are accumulated and combined, resulting in a small improvement on the few uas (micro-arcsecond) level\&.
+.IP "\(bu" 2
+\fR\fBvector2radec()\fP\fP: \fRra\fP or \fRdec\fP arguments may now be NULL if not required\&.
+.IP "\(bu" 2
+\fR\fBtt2tdb()\fP\fP Now uses the same, slightly more precise series as the original NOVAS C \fR\fBtdb2tt()\fP\fP\&.
+.IP "\(bu" 2
+\fR\fBrad_vel()\fP\fP You can use negative values for the distances to skip particular gravitational corrections to the radial velocity measure\&. The value 0\&.0 also continues to have the same effect as before, except if the observed source is the Sun\&. Then \fRd_src_sun\fP being 0\&.0 takes on a different meaning than before: rather than skipping gravitational redshift corrections for the Solar potential (as before) we will apply gravitational corrections for light originating at the Sun's photosphere\&.
+.IP "\(bu" 2
+\fRPSI_COR\fP and \fREPS_COR\fP made globally visible again, thus improving NOVAS C 3\&.1 compatibility\&.
+.IP "\(bu" 2
+Convergent inverse calculations now use the \fRnovas_inv_max_iter\fP variable declared in \fR\fBnovas\&.c\fP\fP to specify the maximum number of iterations before inverse functions return with an error (with errno set to \fRECANCELED\fP)\&. Users may adjust this limit, if they prefer some other maximum value\&.
+.IP "\(bu" 2
+Adjusted regression testing to treat \fRnan\fP and \fR-nan\fP effectively the same\&. They both represent an equally invalid result regardless of the sign\&.
+.IP "\(bu" 2
+The default make target is now \fRdistro\fP\&. It's similar to the deprecated \fRapi\fP target from before except that it skips building \fRstatic\fP libraries and \fRcio_ra\&.bin\fP\&.
+.IP "\(bu" 2
+\fRmake\fP now generates \fR\&.so\fP shared libraries with \fRSONAME\fP set to \fRlib<name>\&.so\&.1\fP where the \fR\&.1\fP indicates that it is major version 1 of the \fRABI\fP\&. All 1\&.x\&.x releases are expected to be ABI compatible with earlier releases\&.
+.IP "\(bu" 2
+\fRlib/*\&.so\fP files are now just symlinks to the actual versioned libraries \fRlib/*\&.so\&.1\fP\&. This conforms more closely to what Linux distros expect\&.
+.IP "\(bu" 2
+Default \fRmake\fP skips \fRlocal-dox\fP target unless \fRdoxygen\fP is available (either in the default \fRPATH\fP or else specified via the \fRDOXYGEN\fP variable, e\&.g\&. in \fRconfig\&.mk\fP)\&. This way the default build does not have unexpected dependencies\&. (see Issue #22, thanks to \fR@teuben\fP)\&.
+.IP "\(bu" 2
+\fRmake\fP can be configured without editing \fRconfig\&.mk\fP simply by setting the appropriate shell variables (the same ones as in \fRconfig\&.mk\fP) prior to invoking \fRmake\fP\&. Standard \fRCC\fP, \fRCPPFLAGS\fP, \fRCFLAGS\fP and \fRLDFLAGS\fP will also be used if defined externally\&.
+.IP "\(bu" 2
+\fRmake shared\fP now also builds \fRlib/libsolsys1\&.so\&.1\fP and \fRlib/libsolsys2\&.so\&.1\fP shared libraries that can be used by programs that need solsys1 (via \fReph_manager\fP) or solsys2 (via \fRjplint\fP) functionality\&.
+.IP "\(bu" 2
+\fRmake solsys\fP now generates only the \fR\fBsolarsystem()\fP\fP implementation objects that are external (not built in)\&.
+.IP "\(bu" 2
+Eliminate unchecked return value compiler warnings from \fRcio_file\fP (used typically at build time only to generate \fRcio_ra\&.bin\fP)\&.
+.IP "\(bu" 2
+\fRjplint\&.f\fP is moved to \fRexamples/\fP since it provides only a default implementation that typically needs to be tweaked for the particualr JPL PLEPH library one intends to use\&.
+.IP "\(bu" 2
+Doxygen tag file renamed to \fRsupernovas\&.tag\fP for consistency\&.
+.IP "\(bu" 2
+Initialize test variables for reproducibility
+.PP
+.SH "[1\&.0\&.1] - 2024-05-13"
+.PP
+Bug fix release with minor changes\&.
+.SS "Fixed"
+.IP "\(bu" 2
+\fR\fBcirs_to_itrs()\fP\fP, \fR\fBitrs_to_cirs()\fP\fP, \fR\fBtod_to_itrs()\fP\fP, and \fR\fBitrs_to_tod()\fP\fP all had a unit conversion bug in using the \fRut1_to_tt\fP argument [s] when converting TT-based Julian date to UT1-based JD [day] internally\&.
+.IP "\(bu" 2
+Fixed errors in \fRexample\&.c\fP [by hannorein]\&.
+.PP
+.SS "Added"
+.IP "\(bu" 2
+Added \fR\fBcirs_to_app_ra()\fP\fP and \fR\fBapp_to_cirs_ra()\fP\fP for convenience to convert between right ascensions measured from the CIO (for CIRS) vs measured from the true equinox of date, on the same true equator of date\&.
+.PP
+.SS "Changed"
+.IP "\(bu" 2
+Changed definition of \fRNOVAS_AU\fP to the IAU definition of exactly 1\&.495978707e+11 m\&. The old definition is also available as \fRDE405_AU\fP\&.
+.IP "\(bu" 2
+Various corrections and changes to documentation\&.
+.PP
+.SH "[1\&.0\&.0] - 2024-03-01"
+.PP
+This is the initial release of the SuperNOVAS library\&. Changes are indicated w\&.r\&.t\&. the upstream NOVAS C 3\&.1 library from which SuperNOVAS is forked from\&.
+.SS "Fixed"
+.IP "\(bu" 2
+Fixes the NOVAS C 3\&.1 \fRsidereal_time bug\fP, whereby the \fR\fBsidereal_time()\fP\fP function had an incorrect unit cast\&.
+.IP "\(bu" 2
+Fixes antedating velocities and distances for light travel time in NOVAS C 3\&.1 \fR\fBephemeris()\fP\fP\&. When getting positions and velocities for Solar-system sources, it is important to use the values from the time light originated from the observed body rather than at the time that light arrives to the observer\&. This correction was done properly for positions, but not for velocities or distances, resulting in incorrect observed radial velocities or apparent distances being reported for spectroscopic observations or for angular-physical size conversions\&.
+.IP "\(bu" 2
+Fixes NOVAS C 3\&.1 bug in \fR\fBira_equinox()\fP\fP which may return the result for the wrong type of equinox (mean vs\&. true) if the \fRequinox\fP argument was changing from 1 to 0, and back to 1 again with the date being held the same\&. This affected NOVAS C 3\&.1 routines downstream also, such as \fR\fBsidereal_time()\fP\fP\&.
+.IP "\(bu" 2
+Fixes NOVAS C 3\&.1 accuracy switching bug in \fR\fBcio_basis()\fP\fP, \fR\fBcio_location()\fP\fP, \fR\fBecl2equ()\fP\fP, \fR\fBequ2ecl_vec()\fP\fP, \fR\fBecl2equ_vec()\fP\fP, \fR\fBgeo_posvel()\fP\fP, \fR\fBplace()\fP\fP, and \fR\fBsidereal_time()\fP\fP\&. All these functions returned a cached value for the other accuracy if the other input parameters are the same as a prior call, except the accuracy\&.
+.IP "\(bu" 2
+Fixes multiple NOVAS C 3\&.1 bugs related to using cached values in \fR\fBcio_basis()\fP\fP with alternating CIO location reference systems\&. This affected many CIRS-based position calculations downstream\&.
+.IP "\(bu" 2
+Fixes NOVAS C 3\&.1 bug in \fR\fBequ2ecl_vec()\fP\fP and \fR\fBecl2equ_vec()\fP\fP whereby a query with \fRcoord_sys = 2\fP (GCRS) has overwritten the cached mean obliquity value for \fRcoord_sys = 0\fP (mean equinox of date)\&. As a result, a subsequent call with \fRcoord_sys = 0\fP and the same date as before would return the results GCRS coordinates instead of the requested mean equinox of date coordinates\&.
+.IP "\(bu" 2
+Some remainder calculations in NOVAS C 3\&.1 used the result from \fRfmod()\fP unchecked, which resulted in angles outside of the expected [0:2] range and was also the reason why \fR\fBcal_date()\fP\fP did not work for negative JD values\&.
+.IP "\(bu" 2
+Fixes NOVAS C 3\&.1 \fR\fBaberration()\fP\fP returning NaN vectors if the \fRve\fP argument is 0\&. It now returns the unmodified input vector appropriately instead\&.
+.IP "\(bu" 2
+Fixes unpopulated \fRaz\fP output value in \fR\fBequ2hor()\fP\fP at zenith in NOVAS C 3\&.1\&. While any azimuth is acceptable really, it results in unpredictable behavior\&. Hence, we set \fRaz\fP to 0\&.0 for zenith to be consistent\&.
+.IP "\(bu" 2
+Fixes potential NOVAS C 3\&.1 string overflows and eliminates associated compiler warnings\&.
+.IP "\(bu" 2
+Fixes the NOVAS C 3\&.1 \fRephem_close bug\fP, whereby \fR\fBephem_close()\fP\fP in \fR\fBeph_manager\&.c\fP\fP did not reset the \fREPHFILE\fP pointer to NULL\&.
+.IP "\(bu" 2
+Supports calculations in parallel threads by making cached results thread-local\&.
+.PP
+.SS "Added"
+.IP "\(bu" 2
+New debug mode and error traces\&. Simply call \fRnovas_debug(NOVAS_DEBUG_ON)\fP or \fRnovas_debug(NOVAS_DEBUG_EXTRA)\fP to enable\&. When enabled, any error conditions (such as NULL pointer arguments, or invalid input values etc\&.) will be reported to the standard error, complete with call tracing within the SuperNOVAS library, s\&.t\&. users can have a better idea of what exactly did not go to plan (and where)\&. The debug messages can be disabled by passing \fRNOVAS_DEBUF_OFF\fP (0) as the argument to the same call\&.
+.IP "\(bu" 2
+Added Doxygen markup of source code and header\&.
+.IP "\(bu" 2
+Added Makefile for GNU make\&.
+.IP "\(bu" 2
+Added continuous integration on GitHub, including regression testing, static analysis, and doxygen validation\&.
+.IP "\(bu" 2
+Added an number of precompiler constants and enums in \fR\fBnovas\&.h\fP\fP to promote consistent usage and easier to read code\&.
+.IP "\(bu" 2
+New runtime configurability:
+.IP "  \(bu" 4
+The planet position calculator function used by \fR\fBephemeris()\fP\fP can be set at runtime via \fR\fBset_planet_provider()\fP\fP, and \fR\fBset_planet_provider_hp()\fP\fP (for high precision calculations)\&. Similarly, if \fR\fBplanet_ephem_provider()\fP\fP or \fR\fBplanet_ephem_provider_hp()\fP\fP (defined in \fR\fBsolsys-ephem\&.c\fP\fP) are set as the planet calculator functions, then \fR\fBset_ephem_provider()\fP\fP can set the user-specified function to use with these to actually read ephemeris data (e\&.g\&. from a JPL ephemeris file)\&.
+.IP "  \(bu" 4
+If CIO locations vs GCRS are important to the user, the user may call \fR\fBset_cio_locator_file()\fP\fP at runtime to specify the location of the binary CIO interpolation table (e\&.g\&. \fRcio_ra\&.bin\fP) to use, even if the library was compiled with the different default CIO locator path\&.
+.IP "  \(bu" 4
+The default low-precision nutation calculator \fR\fBnu2000k()\fP\fP can be replaced by another suitable IAU 2006 nutation approximation via \fR\fBset_nutation_lp_provider()\fP\fP\&. For example, the user may want to use the \fR\fBiau2000b()\fP\fP model instead or some custom algorithm instead\&.
+.PP
+
+.IP "\(bu" 2
+New intutitive XYZ coordinate conversion functions:
+.IP "  \(bu" 4
+for GCRS - CIRS - ITRS (IAU 2000 standard): \fR\fBgcrs_to_cirs()\fP\fP, \fR\fBcirs_to_itrs()\fP\fP, and \fR\fBitrs_to_cirs()\fP\fP, \fR\fBcirs_to_gcrs()\fP\fP\&.
+.IP "  \(bu" 4
+for GCRS - J2000 - TOD - ITRS (old methodology): \fR\fBgcrs_to_j2000()\fP\fP, \fR\fBj2000_to_tod()\fP\fP, \fR\fBtod_to_itrs()\fP\fP, and \fR\fBitrs_to_tod()\fP\fP, \fR\fBtod_to_j2000()\fP\fP, \fR\fBj2000_to_gcrs()\fP\fP\&.
+.PP
+
+.IP "\(bu" 2
+New \fR\fBitrs_to_hor()\fP\fP and \fR\fBhor_to_itrs()\fP\fP functions to convert Earth-fixed ITRS coordinates to astrometric azimuth and elevation or back\&. Whereas \fR\fBtod_to_itrs()\fP\fP followed by \fR\fBitrs_to_hor()\fP\fP is effectively a just a more explicit 2-step version of the existing \fR\fBequ2hor()\fP\fP for converting from TOD to to local horizontal (old methodology), the \fR\fBcirs_to_itrs()\fP\fP followed by \fR\fBitrs_to_hor()\fP\fP does the same from CIRS (new IAU standard methodology), and had no prior equivalent in NOVAS C 3\&.1\&.
+.IP "\(bu" 2
+New \fR\fBecl2equ()\fP\fP for converting ecliptic coordinates to equatorial, complementing existing \fR\fBequ2ecl()\fP\fP\&.
+.IP "\(bu" 2
+New \fR\fBgal2equ()\fP\fP for converting galactic coordinates to ICRS equatorial, complementing existing \fR\fBequ2gal()\fP\fP\&.
+.IP "\(bu" 2
+New \fR\fBrefract_astro()\fP\fP complements the existing \fR\fBrefract()\fP\fP but takes an unrefracted (astrometric) zenith angle as its argument\&.
+.IP "\(bu" 2
+New convenience functions to wrap \fR\fBplace()\fP\fP for simpler specific use: \fR\fBplace_star()\fP\fP, \fR\fBplace_icrs()\fP\fP, \fR\fBplace_gcrs()\fP\fP, \fR\fBplace_cirs()\fP\fP, and \fR\fBplace_tod()\fP\fP\&.
+.IP "\(bu" 2
+New \fR\fBradec_star()\fP\fP and \fR\fBradec_planet()\fP\fP as the common point for existing functions such as \fR\fBastro_star()\fP\fP \fR\fBlocal_star()\fP\fP, \fR\fBvirtual_planet()\fP\fP, \fR\fBtopo_planet()\fP\fP etc\&.
+.IP "\(bu" 2
+New time conversion utilities \fR\fBtt2tdb()\fP\fP, \fR\fBget_utc_to_tt()\fP\fP, and \fR\fBget_ut1_to_tt()\fP\fP make it simpler to convert between UTC, UT1, TT, and TDB time scales, and to supply \fRut1_to_tt\fP arguments to \fR\fBplace()\fP\fP or topocentric calculations\&.
+.IP "\(bu" 2
+Co-existing \fR\fBsolarsystem()\fP\fP variants\&. It is possible to use the different \fR\fBsolarsystem()\fP\fP implementations provided by \fR\fBsolsys1\&.c\fP\fP, \fR\fBsolsys2\&.c\fP\fP, \fR\fBsolsys3\&.c\fP\fP and/or \fR\fBsolsys-ephem\&.c\fP\fP side-by-side, as they define their functionalities with distinct, non-conflicting names, e\&.g\&. \fR\fBearth_sun_calc()\fP\fP vs \fR\fBplanet_jplint()\fP\fP vs \fRplanet_eph_manager\fP vs \fR\fBplanet_ephem_provider()\fP\fP\&.
+.IP "\(bu" 2
+New \fR\fBnovas_case_sensitive(int)\fP\fP to enable (or disable) case-sensitive processing of object names\&. (By default NOVAS \fRobject\fP names are converted to upper-case, making them effectively case-insensitive\&.)
+.IP "\(bu" 2
+New \fR\fBmake_planet()\fP\fP and \fR\fBmake_ephem_object()\fP\fP to make it simpler to configure Solar-system objects\&.
+.PP
+.SS "Changed"
+.IP "\(bu" 2
+Changed to support for calculations in parallel threads by making cached results thread-local (as opposed to the globally cached values in NOVAS C 3\&.1)\&. This works using the C11 standard \fR_Thread_local\fP or else the earlier GNU C >= 3\&.3 standard \fR__thread\fP modifier\&. You can also set the preferred thread-local keyword for your compiler by passing it via \fR-DTHREAD_LOCAL=\&.\&.\&.\fP in \fRconfig\&.mk\fP to ensure that your build is thread-safe\&. And, if your compiler has no support whatsoever for thread_local variables, then SuperNOVAS will not be thread-safe, just as NOVAS C isn't\&.
+.IP "\(bu" 2
+SuperNOVAS functions take \fRenum\fPs as their option arguments instead of the raw integers in NOVAS C 3\&.1\&. These enums are defined in \fR\fBnovas\&.h\fP\fP\&. The same header also defines a number of useful constants\&. The enums allow for some compiler checking, and make for more readable code that is easier to debug\&. They also make it easy to see what choices are available for each function argument, without having to consult the documentation each and every time\&.
+.IP "\(bu" 2
+All SuperNOVAS functions check for the basic validity of the supplied arguments (Such as NULL pointers or illegal duplicate arguments) and will return -1 (with \fRerrno\fP set, usually to \fREINVAL\fP) if the arguments supplied are invalid (unless the NOVAS C API already defined a different return value for specific cases\&. If so, the NOVAS C error code is returned for compatibility)\&. There were no such checks performed in NOVAS C 3\&.1\&.
+.IP "\(bu" 2
+All erroneous returns now set \fRerrno\fP so that users can track the source of the error in the standard C way and use functions such as \fRperror()\fP and \fRstrerror()\fP to print human-readable error messages\&. (NOVAS C 3\&.1 did not set \fRerrno\fP)\&.
+.IP "\(bu" 2
+Many output values supplied via pointers are set to clearly invalid values in case of erroneous returns, such as \fRNAN\fP so that even if the caller forgets to check the error code, it becomes obvious that the values returned should not be used as if they were valid\&. (No more sneaky silent errors, which were common in NOVAS C 3\&.1\&.)
+.IP "\(bu" 2
+Many SuperNOVAS functions allow \fRNULL\fP arguments (unlike NOVAS C 3\&.1), both for optional input values as well as outputs that are not required (see the \fRAPI Documentation\fP for specifics)\&. This eliminates the need to declare dummy variables in your application code for quantities you do not require\&.
+.IP "\(bu" 2
+All SuperNOVAS functions that take an input vector to produce an output vector allow the output vector argument be the same as the input vector argument (unlike in NOVAS C 3\&.1 where this was not consistently implented)\&. For example, \fRframe_tie(pos, J2000_TO_ICRS, pos)\fP using the same \fRpos\fP vector both as the input and the output\&. In this case the \fRpos\fP vector is modified in place by the call\&. This can greatly simplify usage, and can eliminate extraneous declarations, when intermediates are not required\&.
+.IP "\(bu" 2
+SuperNOVAS declares function pointer arguments as \fRconst\fP whenever the function does not modify the data content being referenced\&. This supports better programming practices that generally aim to avoid unintended data modifications\&. (The passing of \fRconst\fP arguments to NOVAS C 3\&.1 calls would result in compiler warnings\&.)
+.IP "\(bu" 2
+Catalog names can be up to 6 bytes (including termination), up from 4 in NOVAS C 3\&.1, while keeping \fRstruct\fP layouts the same as NOVAS C thanks to alignment, thus allowing cross-compatible binary exchange of \fR\fBcat_entry\fP\fP records with NOVAS C 3\&.1\&.
+.IP "\(bu" 2
+Object ID numbers are \fRlong\fP instead of \fRshort\fP (in NOVAS C 3\&.1) to accommodate NAIF IDs, which require minimum 32-bit integers\&.
+.IP "\(bu" 2
+\fR\fBprecession()\fP\fP can now take arbitrary input and output epochs\&. Unlike NOVAS C 3\&.1, it is not required that either of those epochs be J2000\&.
+.IP "\(bu" 2
+\fR\fBcel2ter()\fP\fP and \fR\fBter2cel()\fP\fP can now process 'option'/'class' = 1 (\fRNOVAS_REFERENCE_CLASS\fP) regardless of the methodology (\fREROT_ERA\fP or \fREROT_GST\fP) used to input or output coordinates in GCRS (unlike in NOVAS C 3\&.1)\&.
+.IP "\(bu" 2
+Changed \fR\fBmake_object()\fP\fP to retain the specified number argument (which can be different from the \fRstarnumber\fP value in the supplied \fR\fBcat_entry\fP\fP structure), in contrast to NOVAS C 3\&.1, which set \fRobject->number\fP to 0 for \fR\fBcat_entry\fP\fP arguments\&.
+.IP "\(bu" 2
+\fR\fBcio_location()\fP\fP will always return a valid value as long as neither output pointer argument is NULL\&. (NOVAS C 3\&.1 would return an error if a CIO locator file was previously opened but cannot provide the data for whatever reason)\&.
+.IP "\(bu" 2
+\fR\fBsun_eph()\fP\fP in \fRsolsysl3\&.c\fP evaluates the series in reverse order compared to NOVAS C 3\&.1, accumulating the least significant terms first, and thus resulting in higher precision result in the end\&.
+.IP "\(bu" 2
+Changed \fR\fBvector2radec()\fP\fP to return NAN values if the input is a null-vector (i\&.e\&. all components are zero), as opposed to NOVAS C 3\&.1, which left the input vector argument unchanged\&.
+.IP "\(bu" 2
+IAU 2000A nutation model uses higher-order Delaunay arguments provided by \fR\fBfund_args()\fP\fP, instead of the linear model in NOVAS C 3\&.1\&.
+.IP "\(bu" 2
+IAU 2000 nutation made a bit faster vs NOVAS C 3\&.1, via reducing the the number of floating-point multiplications necessary by skipping terms that do not contribute\&. Its coefficients are also packed more frugally in memory, resulting in a smaller footprint than in NOVAS C 3\&.1\&.
+.IP "\(bu" 2
+More efficient paging (cache management) for \fR\fBcio_array()\fP\fP vs NOVAS C 3\&.1, including I/O error checking\&.
+.IP "\(bu" 2
+Changed the standard atmospheric model for (optical) refraction calculation to include a simple model for the annual average temperature at the site (based on latitude and elevation)\&. This results is a slightly more educated guess of the actual refraction than the global fixed temperature of 10 C assumed by NOVAC C 3\&.1 regardless of observing location\&.
+.PP
+.SS "Deprecated"
+.IP "\(bu" 2
+\fR\fBnovascon\&.h\fP\fP / \fR\fBnovascon\&.c\fP\fP: These definitions of constants in NOVAS C 3\&.1 was troublesome for two reasons: (1) They were primarily meant for use internally within the library itself\&. As the library clearly defines in what units input and output quantities are expressed, the user code can apply its own appropriate conversions that need not match the internal system used by the library\&. Hence exposing these constants to users was half baked\&. (2) The naming of constants was too simplistic (with names such as \fRC\fP or \fRF\fP) that it was rather prone to naming conflicts in user code\&. As a result, the constants have been moved to \fBnovas\&.h\fP with more unique names (such as \fRNOVAS_C\fP and \fRNOVAS_EARTH_FLATTENING\fP\&. New code should rely on these definitions instead of the troubled constants of \fR\fBnovascon\&.c\fP\fP / \fR\&.h\fP if at all necessary\&.
+.IP "\(bu" 2
+\fR\fBequ2hor()\fP\fP: It's name does not make it clear that this function is suitable only for converting TOD (old methodology) to horizontal but not CIRS to horizontal (IAU 2000 standard)\&. You should use the equivalent but more specific \fR\fBtod_to_itrs()\fP\fP or the newly added \fR\fBcirs_to_itrs()\fP\fP, followed by \fR\fBitrs_to_hor()\fP\fP instead\&.
+.IP "\(bu" 2
+\fR\fBcel2ter()\fP\fP / \fR\fBter2cel()\fP\fP: These NOVAS C 3\&.1 function can be somewhat confusing to use\&. You are likely better off with \fR\fBtod_to_itrs()\fP\fP and \fR\fBcirs_to_itrs()\fP\fP instead, and possibly followed by further conversions if desired\&.
+.IP "\(bu" 2
+\fR\fBapp_star()\fP\fP, \fR\fBapp_planet()\fP\fP, \fR\fBtopo_star()\fP\fP and \fR\fBtopo_planet()\fP\fP: These NOVAS C 3\&.1 function use the old (pre IAU 2000) methodology, which isn't clear from their naming\&. Use \fR\fBplace()\fP\fP or \fR\fBplace_star()\fP\fP with \fRNOVAS_TOD\fP or \fRNOVAS_CIRS\fP as the system instead, as appropriate\&.
+.IP "\(bu" 2
+\fR\fBreadeph()\fP\fP: This NOVAS C 3\&.1 function is prone to memory leaks, and not flexible with its origin (necessarily at the barycenter)\&. Instead, use a similar \fRnovas_ephem_provider\fP implementation and \fR\fBset_ephem_provider()\fP\fP for a more flexible and less troublesome equivalent, which also does not need to be baked into the library and can be configured at runtime\&.
+.IP "\(bu" 2
+\fR\fBtdb2tt()\fP\fP\&. Use \fR\fBtt2tdb()\fP\fP instead\&. It's both more intuitive to use (returning the time difference as a double) and faster to calculate than the NOVAS C function, not to mention that it implements the more standard approach\&. 
+.PP
+
