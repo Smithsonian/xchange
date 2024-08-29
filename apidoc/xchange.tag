@@ -602,6 +602,13 @@
       <arglist>(const XField *f)</arglist>
     </member>
     <member kind="function">
+      <type>boolean</type>
+      <name>xIsVerbose</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a46a6c2d802ebadd46ffcfdde7fb438b8</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
       <type>char *</type>
       <name>xLastSeparator</name>
       <anchorfile>xchange_8h.html</anchorfile>
@@ -698,6 +705,13 @@
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>ad84cbb4639f2fbfb604b698a86caf944</anchor>
       <arglist>(XStructure *s, const char *name, XStructure *substruct)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>xSetVerbose</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>afbe85067ddbc92577cd00ac8f6e3026f</anchor>
+      <arglist>(boolean value)</arglist>
     </member>
     <member kind="function">
       <type>int</type>

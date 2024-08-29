@@ -341,6 +341,9 @@ include/xchange.h
 .RI "\fBboolean\fP \fBxIsFieldValid\fP (const \fBXField\fP *f)"
 .br
 .ti -1c
+.RI "\fBboolean\fP \fBxIsVerbose\fP ()"
+.br
+.ti -1c
 .RI "char * \fBxLastSeparator\fP (const char *id)"
 .br
 .ti -1c
@@ -381,6 +384,9 @@ include/xchange.h
 .br
 .ti -1c
 .RI "\fBXField\fP * \fBxSetSubstruct\fP (\fBXStructure\fP *s, const char *name, \fBXStructure\fP *substruct)"
+.br
+.ti -1c
+.RI "void \fBxSetVerbose\fP (\fBboolean\fP value)"
 .br
 .ti -1c
 .RI "int \fBxSplitID\fP (char *id, char **pKey)"
@@ -941,6 +947,22 @@ TRUE is the field seems to contain valid data, otherwise FALSE\&.
 
 .PP
 References \fBFALSE\fP, \fBXField::name\fP, \fBXField::ndim\fP, \fBXField::sizes\fP, \fBTRUE\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, \fBxElementSizeOf()\fP, and \fBxLastSeparator()\fP\&.
+.SS "\fBboolean\fP xIsVerbose ()"
+Checks if verbosity is enabled for the xchange library\&.
+.PP
+\fBReturns\fP
+.RS 4
+TRUE (1) if verbosity is enabled, or else FALSE (0)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+setVerbose() 
+.RE
+.PP
+
+.PP
+References \fBxVerbose\fP\&.
 .SS "char * xLastSeparator (const char * id)"
 Returns the string pointer to the begining of the last separator in the ID\&.
 .PP
@@ -1217,6 +1239,22 @@ return The prior field stored under the same name or NULL\&. If there is an erro
 
 .PP
 References \fBXStructure::parent\fP, \fBX_INCOMPLETE\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxCreateScalarField()\fP, \fBxError()\fP, and \fBxSetField()\fP\&.
+.SS "void xSetVerbose (\fBboolean\fP value)"
+Sets verbose output for the xchange library\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP TRUE (non-zero) to enable verbose output, or else FALSE (0)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxIsVerbose()\fP 
+.RE
+.PP
+
+.PP
+References \fBFALSE\fP, \fBTRUE\fP, and \fBxVerbose\fP\&.
 .SS "int xSplitID (char * id, char ** pKey)"
 Splits the id into two strings (sharing the same input buffer): (1) the id of the embedding structure, and (2) the embedded field name\&. The original input id is string terminated after the table name\&. And the pointer to the key part that follows after the last separator is returned in the second (optional argument)\&.
 .PP

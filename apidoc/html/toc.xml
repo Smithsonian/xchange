@@ -141,6 +141,7 @@
           <topic label="xGetSubstruct" href="xchange_8h.html#a97a58e33c4730e272af459dfb7f016f9"/>
           <topic label="xIsCharSequence" href="xchange_8h.html#adcc86baacb3ddebcc529e269223274b8"/>
           <topic label="xIsFieldValid" href="xchange_8h.html#aec6e78e07733ca246ca485b0fcf02d21"/>
+          <topic label="xIsVerbose" href="xchange_8h.html#a46a6c2d802ebadd46ffcfdde7fb438b8"/>
           <topic label="xLastSeparator" href="xchange_8h.html#ab9a9fbc1235164bfeed5fbba1f7d8692"/>
           <topic label="xMatchNextID" href="xchange_8h.html#a90aae0dafd1d461877eef63c9c730592"/>
           <topic label="xNextIDToken" href="xchange_8h.html#af436eb535b32fa88ab4e600c0a37c19d"/>
@@ -155,6 +156,7 @@
           <topic label="xRemoveField" href="xchange_8h.html#aec9f913cdb79d8653668a5d9bdda6ab1"/>
           <topic label="xSetField" href="xchange_8h.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4"/>
           <topic label="xSetSubstruct" href="xchange_8h.html#ad84cbb4639f2fbfb604b698a86caf944"/>
+          <topic label="xSetVerbose" href="xchange_8h.html#afbe85067ddbc92577cd00ac8f6e3026f"/>
           <topic label="xSplitID" href="xchange_8h.html#acd6af91336f4b5501d0a0e3d5cf88ad3"/>
           <topic label="xStringCopyOf" href="xchange_8h.html#a01d730a1a98963816de2dd73e72957a5"/>
           <topic label="xStringElementSizeOf" href="xchange_8h.html#a8816199a4473325a942e14057dcd9ab8"/>
