@@ -1,0 +1,30 @@
+name: Build
+
+on: 
+  push:
+    paths:
+      - 'src/**'
+      - 'include/**'
+      - 'Makefile'
+      - '*.mk'
+      - '.github/workflows/build.yml'
+
+jobs:
+
+  build:
+    name: Build library
+
+    runs-on: ubuntu-latest
+    env:
+      CC: gcc
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build static library
+      run: make static
+      
+    - name: Build shared library
+      run: make shared   
+
+      
+   
