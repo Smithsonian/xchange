@@ -3,6 +3,9 @@
 <a href="https://smithsonian.github.io/SuperNOVAS/apidoc/html/files.html">
  ![API documentation](https://github.com/Smithsonian/SuperNOVAS/actions/workflows/dox.yml/badge.svg)
 </a>
+<a href="https://smithsonian.github.io/SuperNOVAS/index.html">
+ ![Project page](https://github.com/Smithsonian/xchange/actions/workflows/pages/pages-build-deployment/badge.svg)
+</a>
 
 <picture>
   <source srcset="resources/CfA-logo-dark.png" alt="CfA logo" media="(prefers-color-scheme: dark)"/>
