@@ -24,8 +24,8 @@ This site contains various online resources that support the library:
 __Downloads__
 
  - [Releases](https://github.com/Smithsonian/xchange/releases) from GitHub
- - Doxygen [tag file](apidoc/doxygen.tag) (`novas.tag`) for linking 
-   your [Doxygen](https://www.doxygen.nl/) documentation to that of SuperNOVAS
+ - Doxygen [tag file](apidoc/doxygen.tag) (`xchange.tag`) for linking 
+   your [Doxygen](https://www.doxygen.nl/) documentation to that of __xchange__
 
 
 __Documentation__
