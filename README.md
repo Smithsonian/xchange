@@ -44,8 +44,8 @@ The __xchange__ library was created, and is maintained, by Attila Kovács at the
 &amp; Smithsonian, and it is available through the [Smithsonian/xchange](https://github.com/Smithsonian/xchange) 
 repository on GitHub. 
 
-There are no official releases of __xchange__ yet. An initial 1.0.0 release is to be expected in late 2024. Before 
-then, the API may undergo slight changes and tweaks. Use the repository as is at your own risk for now.
+There are no official releases of __xchange__ yet. An initial 1.0.0 release is expected in late 2024. Before then the 
+API may undergo slight changes and tweaks. Use the repository as is at your own risk for now.
 
 Some related links:
 
