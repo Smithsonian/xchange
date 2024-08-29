@@ -60,7 +60,7 @@ Some related links:
  - [Basic data types](#data-types)
  - [Scalars](#scalars)
  - [Arrays](#arrays)
- - [Creating structure](#creating-structured-data)
+ - [Creating structure](#creating-structure)
  - [Aggregate IDs](#aggregate-ids)
  - [Accessing substructures and elements](#accessing-data)
 
