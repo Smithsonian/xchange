@@ -5,7 +5,8 @@
  * @author Attila Kovacs
  *
  * \brief
- *      A collection of commonly used functions for standard ASCII string based data exchange.
+ *      A collection of commonly used functions for data exchange for scalars and arrays, and
+ *      ASCII representations.
  *
  */
 
@@ -21,21 +22,42 @@
 
 #include "xchange.h"
 
-// Check if we need to parse special floating point values, such as 'nan', 'infinity' or 'inf'...
-// These were added in the C99 standard, at the same time as the constant INFINITY was added.
 #ifndef INFINITY
-#define EXPLCIT_PARSE_SPECIAL_DOUBLES   TRUE
+/// Check if we need to parse special floating point values, such as 'nan', 'infinity' or 'inf'...
+/// These were added in the C99 standard, at the same time as the constant INFINITY was added.
+#define EIXPLICIT_PARSE_SPECIAL_DOUBLES   TRUE
 #else
-#define EXPLCIT_PARSE_SPECIAL_DOUBLES   FALSE
+/// Check if we need to parse special floating point values, such as 'nan', 'infinity' or 'inf'...
+/// These were added in the C99 standard, at the same time as the constant INFINITY was added.
+#define EIXPLICIT_PARSE_SPECIAL_DOUBLES   FALSE
 #endif
 
 boolean xVerbose;
-boolean xDebug;
 
+#ifdef DEBUG
+boolean xDebug = TRUE;
+#else
+boolean xDebug = FALSE;
+#endif
+
+/**
+ * Checks if verbosity is enabled for the xchange library.
+ *
+ * @return    TRUE (1) if verbosity is enabled, or else FALSE (0).
+ *
+ * @sa setVerbose()
+ */
 boolean xIsVerbose() {
   return xVerbose;
 }
 
+/**
+ * Sets verbose output for the xchange library.
+ *
+ * @param value   TRUE (non-zero) to enable verbose output, or else FALSE (0).
+ *
+ * @sa xIsVerbose()
+ */
 void xSetVerbose(boolean value) {
   xVerbose = value ? TRUE : FALSE;
 }
@@ -82,9 +104,13 @@ int xStringElementSizeOf(XType type) {
   return (l+1); // with terminating '\0'
 }
 
-
 /**
  * Returns the storage byte size of a single element of a given type.
+ *
+ * @param type    The data type, as defined in 'xchange.h'
+ *
+ * @return [bytes] the native storage size of a single element of that type. E.g. for X_CHAR(20) it will
+ *         return 20. X_DOUBLE will return 8, etc. Unrecognised types will return 0.
  *
  */
 int xElementSizeOf(XType type) {
@@ -108,36 +134,14 @@ int xElementSizeOf(XType type) {
   return 0;
 }
 
-
-
 /**
- * Returns the XType for a given case-sensitive type string. For example "float" -> X_FLOAT. The value "raw" will
- * return X_RAW.
+ * Returns the character of the field type. For X_CHAR types it returns 'C' (without the length
+ * specification), and for all other
+ * types it returns the constant XType value itself.
  *
- * \param type      String type, e.g. "struct".
- *
- * \return          Corresponding XType, e.g. X_STRUCT. (The default return value is X_RAW, since all Redis
- *                  values can be represented as raw strings.)
- *
+ * @param type    The single-character IF of the field type.
+ * @return        A character that represented the type.
  */
-XType xTypeForString(const char *type) {
-  if(!type) return X_RAW;
-  if(!strcmp("int", type) || !strcmp("integer", type)) return X_INT;
-  if(!strcmp("boolean", type) || !strcmp("bool", type)) return X_BOOLEAN;
-  if(!strcmp("int8", type)) return X_BYTE;
-  if(!strcmp("int16", type)) return X_SHORT;
-  if(!strcmp("int32", type)) return X_INT;
-  if(!strcmp("int64", type)) return X_LONG;
-  if(!strcmp("float", type)) return X_FLOAT;
-  if(!strcmp("float32", type)) return X_FLOAT;
-  if(!strcmp("float64", type)) return X_DOUBLE;
-  if(!strcmp("double", type)) return X_DOUBLE;
-  if(!strcmp("string", type) || !strcmp("str", type)) return X_STRING;
-  if(!strcmp("struct", type)) return X_STRUCT;
-  if(!strcmp("raw", type)) return X_RAW;
-  return X_UNKNOWN;
-}
-
 char xTypeChar(XType type) {
   if(type < 0) return 'C';
   if(type < 0x20) return '?';
@@ -245,7 +249,6 @@ void *xAlloc(XType type, int count) {
   return calloc(eSize, count);
 }
 
-
 /**
  * Zeroes out the contents of an SMA-X buffer.
  *
@@ -261,197 +264,6 @@ void xZero(void *buf, XType type, int count) {
   memset(buf, 0, eSize * count);
 }
 
-
-/**
- * Returns a pointer to the beginning of the next component in a compound ID. Leading ID separators are ignored.
- *
- * @param id    Aggregate X ID.
- * @return      Pointer to the start of the next compound ID token, or NULL if there is no more components in the ID.
- */
-char *xNextIDToken(const char *id) {
-  char *next;
-
-  if(!id) return NULL;
-
-  // Ignore leading separator.
-  if(!strncmp(id, X_SEP, X_SEP_LENGTH)) id += X_SEP_LENGTH;
-
-  next = strstr(id, X_SEP);
-  return next ? next + X_SEP_LENGTH : NULL;
-}
-
-/**
- * Returns a copy of the next next component in a compound ID. Leading ID separators are ignored.
- *
- * @param id    Aggregate X ID.
- * @return      Pointer to the start of the next compound ID token, or NULL if there is no more components in the ID.
- */
-char *xCopyIDToken(const char *id) {
-  const char *next;
-  char *token;
-  int l;
-
-  if(!id) return NULL;
-
-  // Ignore leading separator.
-  if(!strncmp(id, X_SEP, X_SEP_LENGTH)) id += X_SEP_LENGTH;
-
-  next = xNextIDToken(id);
-  if(next) l = next - id - X_SEP_LENGTH;
-  else l = strlen(id);
-
-  token = malloc(l+1);
-  if(!token) return NULL;
-
-  memcpy(token, id, l);
-  token[l] = '\0';
-
-  return token;
-}
-
-/**
- * Checks if the next component in a compound id matches a given token.
- *
- * @param token     Full token to check for
- * @param id        Compount X ID.
- * @return          X_SUCCESS if it's a match. Otherwise X_FAILURE or another X error if the
- *                  arguments are invalid.
- */
-int xMatchNextID(const char *token, const char *id) {
-  int L;
-
-  if(!token) return X_NULL;
-  if(!id) return X_NULL;
-  if(*token == '\0') return X_NAME_INVALID;
-  if(*id == '\0') return X_GROUP_INVALID;
-
-
-  L = strlen(token);
-  if(strncmp(id, token, L)) return X_FAILURE;
-
-  if(id[L] == '\0') return X_SUCCESS;
-
-  if(strlen(id) < L + X_SEP_LENGTH) return X_FAILURE;
-  if(strncmp(id + L, X_SEP, X_SEP_LENGTH)) return X_FAILURE;
-
-  return X_SUCCESS;
-}
-
-
-/**
- * Returns the aggregated (hierarchical) &lt;table&gt;:&lt;key&gt; ID. The caller is responsible for calling free()
- * on the returned string after use.
- *
- * \param table     SMA-X hastable name
- * \param key       The lower-level id to concatenate.
- *
- * \return          The aggregated ID, or NULL if both arguments were NULL themselves.
- *
- */
-char *xGetAggregateID(const char *table, const char *key) {
-  char *id;
-
-  if(table == NULL && key == NULL) return NULL;
-
-  if(table == NULL) return xStringCopyOf(key);
-  if(key == NULL) return xStringCopyOf(table);
-
-  id = (char *) malloc(strlen(table) + strlen(key) + X_SEP_LENGTH + 1); // <group>:<key>
-  if(!id) return NULL;
-  sprintf(id, "%s" X_SEP "%s", table, key);
-
-  return id;
-}
-
-/**
- * Returns the string pointer to the begining of the last separator in the ID.
- *
- * @param id    Compound SMA-X ID.
- * @return      Pointer to the beginning of the last separator in the ID, or NULL if the ID does not contain a separator.
- */
-char *xLastSeparator(const char *id) {
-  int l = strlen(id);
-
-  while(--l >= 0) if(id[l] == X_SEP[0]) if(!strncmp(&id[l], X_SEP, X_SEP_LENGTH)) return (char *) &id[l];
-  return NULL;
-}
-
-
-/**
- * Returns the string type for a given XType argument as a constant expression. For examples X_LONG -> "int64".
- *
- * \param type      SMA-X type, e.g. X_FLOAT
- *
- * \return          Corresponding string type, e.g. "float". (Default is "string" -- since typically
- *                  anything can be represented as strings.)
- *
- */
-char *xStringType(XType type) {
-  if(type < 0) return "string";         // X_CHAR(n), legacy fixed size strings.
-
-  switch(type) {
-    case X_BOOLEAN: return "boolean";
-    case X_BYTE:
-    case X_BYTE_HEX: return "int8";
-    case X_SHORT:
-    case X_SHORT_HEX: return "int16";
-    case X_INT:
-    case X_INT_HEX: return "int32";
-    case X_LONG:
-    case X_LONG_HEX: return "int64";
-    case X_FLOAT: return "float";
-    case X_DOUBLE: return "double";
-    case X_STRING: return "string";
-    case X_RAW: return "raw";
-    case X_STRUCT: return "struct";
-    case X_UNKNOWN:
-    default: return "unknown";
-  }
-}
-
-
-
-/**
- * Returns an array of dynamically allocated strings from a packed buffer of consecutive 0-terminated
- * or '\r'-separated string elements.
- *
- * \param[in]   data      Pointer to the packed string data buffer.
- * \param[in]   len       length of packed string (excl. termination).
- * \param[in]   count     Number of string elements expected. If fewer than that are found
- *                        in the packed data, then the returned array of pointers will be
- *                        padded with NULL.
- * \param[out]  dst       An array of string pointers (of size 'count') which will point to
- *                        dynamically allocated string (char*) elements. The array is assumed
- *                        to be uninitialized, and elements will be allocated as necessary.
- *
- * \return                X_SUCCESS (0) if successful, or else X_NULL if one of the argument pointers is NULL
- */
-int xUnpackStrings(const char *data, int len, int count, char **dst) {
-  int i, offset = 0;
-
-  if(!data || !dst) return X_NULL;
-
-  // Make sure the data has proper string termination at its end, so we don't overrun...
-  //data[len] = '\0';
-
-  for(i=0; i<count && offset < len; i++) {
-    const char *from = &data[offset];
-    int l;
-
-    for(l=0; from[l] && offset + l < len; l++) if(from[l] == '\r') break;
-
-    dst[i] = (char *) malloc(l+1);
-    if(!dst[i]) return X_INCOMPLETE;
-    memcpy(dst[i], from, l);
-    dst[i][l] = '\0'; // termination...
-
-    offset += l;
-  }
-
-  return X_SUCCESS;
-}
-
-
 /**
  * Returns a freshly allocated string with the same content as the argument.
  *
@@ -463,8 +275,6 @@ int xUnpackStrings(const char *data, int len, int count, char **dst) {
 char *xStringCopyOf(const char *str) {
   return str ? strdup(str) : NULL;
 }
-
-
 
 static int TokenMatch(char *a, char *b) {
   // Check characters...
@@ -581,7 +391,6 @@ double xParseDouble(const char *str, char **tail) {
   return strtod(str, tail);
 }
 
-
 /**
  * Prints a double precision number, restricted to IEEE double-precision range. If the native
  * value has abolute value smaller than the smallest non-zero value, then 0 will printed instead.
@@ -621,7 +430,6 @@ int xPrintFloat(char *str, float value) {
 
   return sprintf(str, "%.8g", value);
 }
-
 
 /**
  * Prints a descriptive error message to stderr, and returns the error code.

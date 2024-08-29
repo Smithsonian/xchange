@@ -1,10 +1,10 @@
 /**
- * -file
+ * @file
  *
  * @date Oct 25, 2020
  * @author Attila Kovacs
  *
- * @brief   A simple library for parsing and creating JSON description of data.
+ * @brief   A set of functions for parsing and creating JSON description of data.
  *
  */
 
@@ -41,8 +41,9 @@
 #define ERROR_PREFIX    "ERROR! XJSON "
 #define WARNING_PREFIX  "WARNING! XJSON "
 
-#define Error(format, ARGS...)      fprintf(xerr, ( ERROR_PREFIX format), ##ARGS)
-#define Warning(format, ARGS...)    fprintf(xerr, ( WARNING_PREFIX format), ##ARGS)
+
+#define Error(format, ARGS...)      fprintf(xerr, ERROR_PREFIX format, ##ARGS)
+#define Warning(format, ARGS...)    fprintf(xerr, WARNING_PREFIX format, ##ARGS)
 /// \endcond
 
 static XStructure *ParseObject(char **pos, int *lineNumber);
@@ -64,6 +65,39 @@ static int PrintString(const char *src, int maxLength, char *json);
 
 static FILE *xerr;     ///< File which errors are printed to.
 
+static char *indent = XJSON_INDENT;
+static int ilen = sizeof(XJSON_INDENT) - 1;
+
+/**
+ * Sets the number of spaces per indentation when emitting JSON formatted output.
+ *
+ * @param nchars    (bytes) the new number of white space character of indentation to use. Negative values
+ *                  map to 0.
+ *
+ * @sa xjsonGetIndent()
+ * @sa xjsonToString()
+ */
+void xjsonSetIndent(int nchars) {
+  if(nchars < 0) nchars = 0;
+
+  indent = (char *) malloc(nchars + 1);
+  memset(indent, ' ', nchars);
+  indent[nchars] = '\0';
+
+  ilen = nchars;
+}
+
+/**
+ * Returns the number of spaces per indentation when emitting JSON formatted output.
+ *
+ * @return    (bytes) the number of white space character of indentation used.
+ *
+ * @sa xjsonSetIndent()
+ * @sa xjsonToString()
+ */
+int xjsonGetIndent() {
+  return ilen;
+}
 
 /**
  * Converts structured data into its JSON representation. Conversion errors are reported to stderr
@@ -72,8 +106,10 @@ static FILE *xerr;     ///< File which errors are printed to.
  * @param s     Pointer to structured data
  * @return      String JSON representation, or NULL if there was an error (errno set to EINVAL).
  *
+ * @sa xjsonSetIndent()
  * @sa xjsonParseAt()
  * @sa xjsonParseFile()
+ * @sa xjsonParseFilename()
  */
 char *xjsonToString(const XStructure *s) {
   char *str;
@@ -129,6 +165,7 @@ char *xjsonToString(const XStructure *s) {
  *
  * @sa xjsonToString()
  * @sa xjsonParseFile()
+ * @sa xjsonParseFileName()
  */
 XStructure *xjsonParseAt(char **pos, int *lineNumber) {
   int n;
@@ -159,26 +196,19 @@ XStructure *xjsonParseAt(char **pos, int *lineNumber) {
  * @return     Structured data created from the JSON description, or NULL if there was an error parsing the data
  *             (errno is set to EINVAL). The lineNumber argument can be used to determine where the error occurred).
  *
+ * @sa xjsonParseFile()
  * @sa xjsonParseAt()
  * @sa xjsonToString()
  */
-XStructure *xjsonParseFile(char *fileName, int *lineNumber) {
+XStructure *xjsonParseFilename(const char *fileName, int *lineNumber) {
   FILE *fp;
-  XStructure *s;
   struct stat st;
-  int n, L;
-  char *str;
-  volatile char *pos;
+  XStructure *s;
 
   if(!fileName) {
     errno = EINVAL;
     return NULL;
   }
-
-  if(!xerr) xerr = stderr;
-
-  if(!lineNumber) lineNumber = &n;
-  *lineNumber = 1;      // Start at line 1...
 
   fp = fopen(fileName, "r");
   if(!fp) {
@@ -188,36 +218,78 @@ XStructure *xjsonParseFile(char *fileName, int *lineNumber) {
   }
 
   stat(fileName, &st);
-  L = st.st_size;
+  s = xjsonParseFile(fp, st.st_size, lineNumber);
 
-  pos = str = malloc(L+1);
+  fclose(fp);
+
+  return s;
+}
+
+
+/**
+ * Parses a JSON object from the current position in a file, returning the described structured data.
+ * Parse errors are reported to stderr or the alternate stream set by xSetErrorStream().
+ *
+ *
+ * @param[in]  fp           File pointer, opened with read permission ("r").
+ * @param[in]  length       [bytes] The number of bytes to parse / available, or 0 to read to the end
+ *                          of the file. (In the latter case the file must support fseek with SEEK_END to automatically
+ *                          determine the length, or else this function will return NULL).
+ * @param[out] lineNumber   Optional pointer that holds a line number of the parse position, or NULL if not required.
+ *                          Line numbers may be useful to report where the parser run into an error if the parsing failed.
+ *                          Line numbers start at 1, and are counted from the initial parse position.
+ *
+ * @return     Structured data created from the JSON description, or NULL if there was an error parsing the data
+ *             (errno is set to EINVAL). The lineNumber argument can be used to determine where the error occurred).
+ *
+ * @sa xjsonParseFilename()
+ * @sa xjsonParseAt()
+ * @sa xjsonToString()
+ */
+XStructure *xjsonParseFile(FILE *fp, size_t length, int *lineNumber) {
+  XStructure *s;
+  int n;
+  long L;
+  char *str;
+  volatile char *pos;
+
+  if(!xerr) xerr = stderr;
+
+  if(length == 0) {
+    long p = ftell(fp);
+    if(fseek(fp, 0, SEEK_END) != 0) return NULL;
+    length = ftell(fp) - p;
+    if(fseek(fp, p, SEEK_SET) != 0) return NULL;
+  }
+
+  if(!lineNumber) lineNumber = &n;
+  *lineNumber = 1;      // Start at line 1...
+
+  pos = str = malloc(length + 1);
   if(!str){
-    Error("Out of memory (read %ld bytes).\n", (long) (L+1));
+    Error("Out of memory (read %ld bytes).\n", (long) (length + 1));
     fclose(fp);
     *lineNumber = -1;
     return NULL;
   }
 
-
-  for(L=0; L < st.st_size; L++) {
+  for(L=0; L < length; L++) {
     int m = fread(str, L, 1, fp);
 
     if(m < 0) {
-      Error("Read error: %s (pos = %d).\n", strerror(errno), L);
+      Error("Read error: %s (pos = %ld).\n", strerror(errno), L);
       L = -1;
       break;
     }
 
     if(!m) {
-      Error("Incomplete read (%d of %d bytes).\n", L, (int) st.st_size);
+      Error("Incomplete read (%ld of %ld bytes).\n", L, (long) length);
       L = -1;
       break;
     }
 
     L += m;
   }
-
-  fclose(fp);
 
   if(L < 0) {
     free(str);
@@ -240,7 +312,7 @@ XStructure *xjsonParseFile(char *fileName, int *lineNumber) {
  *
  * @param fp    File to which to write errors or NULL to suppress errors.
  */
-void xSetErrorStream(FILE *fp) {
+void xjsonSetErrorStream(FILE *fp) {
   static int local;     // If using a file opened by this call...
 
   if(local) {
@@ -397,16 +469,16 @@ static XStructure *ParseObject(char **pos, int *lineNumber) {
 
 static char UnescapedChar(char c) {
   switch(c) {
-      case '\\': return '\\';
-      case '"': return '\"';
-      case '/': return '/';
-      case 'b': return '\b';
-      case 'f': return '\f';
-      case 'n': return '\n';
-      case 't': return '\t';
-      case 'r': return '\r';
-    }
-    return c;
+    case '\\': return '\\';
+    case '"': return '\"';
+    case '/': return '/';
+    case 'b': return '\b';
+    case 'f': return '\f';
+    case 'n': return '\n';
+    case 't': return '\t';
+    case 'r': return '\r';
+  }
+  return c;
 }
 
 
@@ -736,7 +808,7 @@ static int GetObjectStringSize(int prefixSize, const XStructure *s) {
   n = prefixSize + 4;       // "{\n" + .... + <prefix> + "}\n";
 
   for(f = s->firstField; f != NULL; f = f->next) {
-    int m = GetFieldStringSize(prefixSize + JSON_INDENT_LEN, f);
+    int m = GetFieldStringSize(prefixSize + ilen, f);
     if(m < 0) return m;
     n += m;
   }
@@ -756,13 +828,13 @@ static int PrintObject(const char *prefix, const XStructure *s, char *str, boole
 
   if(!s->firstField) return sprintf(&str[n], "{ }");
 
-  fieldPrefix = malloc(strlen(prefix) + JSON_INDENT_LEN + 1);
+  fieldPrefix = malloc(strlen(prefix) + ilen + 1);
   if(!fieldPrefix) {
     Error("Out of memory (field prefix).\n");
     return X_INCOMPLETE;
   }
 
-  sprintf(fieldPrefix, "%s" JSON_INDENT, prefix);
+  sprintf(fieldPrefix, "%s%s", prefix, indent);
 
   n += sprintf(str, asArray ? "[\n" : "{\n");
 
@@ -878,9 +950,9 @@ static int GetArrayStringSize(int prefixSize, char *ptr, XType type, int ndim, c
     if(newLine) n += prefixSize << 1;    // Indentations if on new lines
 
     for(k = 0; k < N; k++, ptr += rowSize) {
-      int m = GetArrayStringSize(prefixSize + JSON_INDENT_LEN, ptr, type, ndim-1, &sizes[1]);
+      int m = GetArrayStringSize(prefixSize + ilen, ptr, type, ndim-1, &sizes[1]);
       if(m < 0) return m;   // Error code
-      if(newLine) n += prefixSize + JSON_INDENT_LEN;
+      if(newLine) n += prefixSize + ilen;
       n += m + 3; // + " , " or " ,\n"
     }
     return n;
@@ -907,8 +979,8 @@ static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const
     char *rowPrefix;
 
     // Indentation for elements...
-    rowPrefix = malloc(strlen(prefix) + JSON_INDENT_LEN + 1);
-    sprintf(rowPrefix, "%s" JSON_INDENT, prefix);
+    rowPrefix = malloc(strlen(prefix) + ilen + 1);
+    sprintf(rowPrefix, "%s%s", prefix, indent);
 
     // Special case: empty array
     if(N == 0) {
@@ -1052,4 +1124,51 @@ static int PrintString(const char *src, int maxLength, char *json) {
   *(next++) = '\0';
 
   return next - json - 1;
+}
+
+
+/**
+ * Converts a native string to its JSON representation.
+ *
+ * @param src           Pointer to the native (unescaped) string, which may contain special characters.
+ * @param maxLength     The number of characters in the input string if not terminated, or &lt;=0
+ *                      if always teminated arbitrary length string.
+ * @return              The JSON representation of the original string, in which special characters
+ *                      appear in escaped form (without the surrounding double quotes).
+ *
+ * @sa xjsonUnescapeString()
+ */
+char *xjsonEscapeString(const char *src, int maxLength) {
+  int size;
+  char *json;
+
+  if(!src) {
+    errno = EINVAL;
+    return NULL;
+  }
+
+  size = GetJsonStringSize(src, maxLength);
+  json = malloc(size + 1);
+  if(!json) return NULL;
+
+  if(PrintString(src, maxLength, json) != X_SUCCESS) {
+    free(json);
+    return NULL;
+  }
+
+  return json;
+}
+
+/**
+ * Converts a an escaped string in JSON representation to a native string
+ *
+ * @param str     The JSON representation of the string, in which special characters
+ *                appear in escaped form (without the surrounding double quotes).
+ * @return        The native string, which may contain special characters.
+ *
+ * @sa xjsonEscapeString()
+ */
+char *xjsonUnescapeString(const char *str) {
+  int lineNumber = 0;
+  return ParseString((char **) &str, &lineNumber);
 }

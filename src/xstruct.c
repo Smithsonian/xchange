@@ -168,7 +168,11 @@ XField *xCopyOfField(const XField *f) {
  * \param s     Structure from which to retrieve a given field.
  * \param id    Name or aggregate ID of the field to retrieve
  *
- * \return      Matching field from the structure or NULL if there is no match or one of the arguments is NULL.
+ * \return      Matching field from the structure or NULL if there is no match or one of
+ *              the arguments is NULL.
+ *
+ * \sa xSetField()
+ * \sa xGetSubstruct()
  */
 XField *xGetField(const XStructure *s, const char *id) {
   XField *e;
@@ -188,11 +192,32 @@ XField *xGetField(const XStructure *s, const char *id) {
 }
 
 /**
+ * Returns a substructure by the specified name, or NULL if no such sub-structure exists.
+ *
+ * \param s   Structure from which to retrieve a given sub-structure.
+ * \param id  Name or aggregate ID of the substructure to retrieve
+ * \return    Matching sub-structure from the structure or NULL if there is no match or one of
+ *            the arguments is NULL.
+ *
+ * \sa xSetSubstruct()
+ * \sa xGetField()
+ */
+XStructure *xGetSubstruct(const XStructure *s, const char *id) {
+  const XField *f = xGetField(s, id);
+
+  if(f && f->type == X_STRUCT)
+    return (XStructure *) f->value;
+
+  errno = ENOENT;
+  return NULL;
+}
+
+/**
  * Creates a generic field of a given name and type and dimensions using a copy of the specified native array,
  * unless type is X_STRUCT in which case the value is referenced directly inside the field. For X_STRING
  * and X_RAW only the array references to the underlying string/byte buffers are copied into the field.
  *
- * \param name      Field name
+ * \param name      Field name (it may not contain a separator X_SEP)
  * \param type      Storage type, e.g. X_INT.
  * \param ndim      Number of dimensionas (1:20). If ndim < 1, it will be reinterpreted as ndim=1, size[0]=1;
  * \param sizes     Array of sizes along each dimensions, with at least ndim elements, or NULL with ndim<1.
@@ -206,6 +231,12 @@ XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, c
   int n;
 
   if(!name) {
+    xError(funcName, X_NAME_INVALID);
+    return NULL;
+  }
+
+  if(xLastSeparator(name)) {
+    // name contains a separator
     xError(funcName, X_NAME_INVALID);
     return NULL;
   }
@@ -234,15 +265,21 @@ XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, c
   }
 
   n = xGetElementCount(ndim, sizes) * xElementSizeOf(type);
-  f->value = malloc(n);
 
-  if(!f->value) {
-    xDestroyField(f);
-    xError(funcName, X_NULL);
-    return NULL;
+  if(type == X_STRUCT) {
+    f->value = (char *) value;
   }
+  else {
+    f->value = malloc(n);
 
-  memcpy(f->value, value, n);
+    if(!f->value) {
+      xDestroyField(f);
+      xError(funcName, X_NULL);
+      return NULL;
+    }
+
+    memcpy(f->value, value, n);
+  }
 
   return f;
 }
@@ -252,7 +289,7 @@ XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, c
  * Creates a generic scalar field of a given name and native value. The structure will hold a copy
  * of the value that is pointed at.
  *
- * \param name      Field name
+ * \param name      Field name (it may not contain a separator X_SEP)
  * \param type      Storage type, e.g. X_INT.
  * \param value     Pointer to the native data location in memory.
  *
@@ -263,9 +300,25 @@ XField *xCreateScalarField(const char *name, XType type, const void *value) {
 }
 
 /**
+ * Creates a generic field for a 1D array of a given name and native data. The structure will hold a
+ * copy of the value that is pointed at.
+ *
+ * \param name      Field name (it may not contain a separator X_SEP)
+ * \param type      Storage type, e.g. X_INT.
+ * \param count     Number of elements in array
+ * \param values    Pointer to an array of native values.
+ *
+ * \return          A newly created field with the supplied data, or NULL if there was an error.
+ */
+XField *xCreate1DField(const char *name, XType type, int count, const void *values) {
+  const int sizes[] = { count };
+  return xCreateField(name, type, 1, sizes, values);
+}
+
+/**
  * Creates a field holding a single double-precision value value.
  *
- * \param name      Field name
+ * \param name      Field name (it may not contain a separator X_SEP)
  * \param value     Associated value
  *
  * \return          A newly created field with the supplied data, or NULL if there was an error.
@@ -278,7 +331,7 @@ XField *xCreateDoubleField(const char *name, double value) {
 /**
  * Creates a field holding a single ineger value value.
  *
- * \param name      Field name
+ * \param name      Field name (it may not contain a separator X_SEP)
  * \param value     Associated value
  *
  * \return          A newly created field with the supplied data, or NULL if there was an error.
@@ -292,7 +345,7 @@ XField *xCreateIntField(const char *name, int value) {
 /**
  * Creates a field holding a single ineger value value.
  *
- * \param name      Field name
+ * \param name      Field name (it may not contain a separator X_SEP)
  * \param value     Associated value
  *
  * \return          A newly created field with the supplied data, or NULL if there was an error.
@@ -307,7 +360,7 @@ XField *xCreateLongField(const char *name, long long value) {
 /**
  * Creates a field holding a single boolean value value.
  *
- * \param name      Field name
+ * \param name      Field name (it may not contain a separator X_SEP)
  * \param value     Associated value
  *
  * \return          A newly created field with the supplied data, or NULL if there was an error.
@@ -320,13 +373,14 @@ XField *xCreateBooleanField(const char *name, boolean value) {
 /**
  * Creates a field holding a single string value.
  *
- * \param name      Field name
- * \param value     Associated value
+ * \param name      Field name (it may not contain a separator X_SEP)
+ * \param value     Associated value. NULL values will be treated as empty strings.
  *
  * \return          A newly created field referencing the supplied string, or NULL if there was an error.
  */
 XField *xCreateStringField(const char *name, const char *value) {
-  return xCreateScalarField(name, X_STRING, &value);
+  const char *empty = "";
+  return xCreateScalarField(name, X_STRING, value ? &value : &empty);
 }
 
 
@@ -340,6 +394,7 @@ XField *xCreateStringField(const char *name, const char *value) {
  */
 boolean xIsFieldValid(const XField *f) {
   if(f->name == NULL) return FALSE;
+  if(xLastSeparator(f->name)) return FALSE;
   if(f->value == NULL) return FALSE;
   if(f->type == X_STRUCT) return TRUE;
   if(xElementSizeOf(f->type) <= 0) return FALSE;
@@ -363,13 +418,18 @@ int xGetFieldCount(const XField *f) {
  * Inserts a structure within a parent structure, returning the old field that may have existed under
  * the requested name before.
  *
+ * The name may not contain a compound ID. To add the structure to embedded sub-structures, you may want to
+ * use xGetSubstruct() first to add the new structure directly to the relevant embedded component.
+ *
  * \param s         Pointer to the parent structure
  * \param name      Name of the sub-structure
- * \param substruct Pointer to the sub-structure
+ * \param substruct Pointer to the sub-structure. It is added directly as a reference, without making a copy.
  *
  * return           The prior field stored under the same name or NULL. If there is an error
  *                  then NULL is returned and errno is set to indicate the nature of the issue.
  *                  (a message is also printed to stderr if xDebug is enabled.)
+ *
+ * \sa xGetSubstruct()
  */
 XField *xSetSubstruct(XStructure *s, const char *name, XStructure *substruct) {
   const char *funcName = "smaxSetSubstruct()";
@@ -408,7 +468,6 @@ XField *xSetSubstruct(XStructure *s, const char *name, XStructure *substruct) {
   return xSetField(s, f);
 }
 
-
 /**
  * Removes as field from the structure, returning it if found.
  *
@@ -439,7 +498,7 @@ XField *xRemoveField(XStructure *s, const char *name) {
     return NULL;
   }
 
-  for(e = s->firstField; e != NULL; e=e->next) {
+  for(e = s->firstField; e != NULL; e = e->next) {
     if(!strcmp(name, e->name)) {
       if(last) last->next = e->next;
       else s->firstField = e->next;
@@ -457,11 +516,13 @@ XField *xRemoveField(XStructure *s, const char *name) {
   return NULL;
 }
 
-
 /**
  * Adds or replaces a field in the structure with the specified field value, returning the previous value for the same field.
  * It is up to the caller whether or not the old value should be destoyed or kept. Note though that you should check first to
  * see if the replaced field is the same as the new one before attempting to destroy...
+ *
+ * The field's name may not contain a compound ID. To add fields to embedded sub-structures, you may want to use
+ * xGetSubstruct() first to add the field directly to the relevant embedded component.
  *
  * A note of caution: There is no safeguard against adding the same field to more than one structure, which will result in
  * a corruption of the affected structures, since both structures would link to the field, but the field links to only
@@ -471,7 +532,11 @@ XField *xRemoveField(XStructure *s, const char *name) {
  * \param s     Structure to which to add the field
  * \param f     Field to be added.
  *
- * \return      Previous field by the same name, or NULL if the field is new...
+ * \return      Previous field by the same name, or NULL if the field is new or if there was an error
+ *              (errno will be set to EINVAL)
+ *
+ * \sa xSetSubstruct()
+ * \sa xGetSubstruct()
  */
 XField *xSetField(XStructure *s, XField *f) {
   const char *funcName = "smaxSetField()";
@@ -480,11 +545,26 @@ XField *xSetField(XStructure *s, XField *f) {
 
   if(!s) {
     xError(funcName, X_STRUCT_INVALID);
+    errno = EINVAL;
     return NULL;
   }
 
   if(!f) {
     xError(funcName, X_NULL);
+    errno = EINVAL;
+    return NULL;
+  }
+
+  if(!f->name) {
+    xError(funcName, X_NAME_INVALID);
+    errno = EINVAL;
+    return NULL;
+  }
+
+  if(xLastSeparator(f->name)) {
+    // The field name contains a separator
+    xError(funcName, X_NAME_INVALID);
+    errno = EINVAL;
     return NULL;
   }
 
@@ -592,9 +672,9 @@ void xClearStruct(XStructure *s) {
 }
 
 /**
- * Reduces the dimensions by eliminating axes that contain a singular elements. Thus a size of {1, 3, 1, 5} will reduce to
- * {3, 5} containing the same number of elements, in fewer dimensions. If any of the dimensions are zero then it
- * reduces to { 0 }.
+ * Reduces the dimensions by eliminating axes that contain a singular elements. Thus a size of {1, 3, 1, 5}
+ * will reduce to {3, 5} containing the same number of elements, in fewer dimensions. If any of the dimensions
+ * are zero then it reduces to { 0 }.
  *
  *
  * @param[in, out] ndim     Pointer to the dimensions (will be updated in situ)
@@ -680,4 +760,159 @@ int xReduceAllDims(XStructure *s) {
 
   return 0;
 }
+
+
+
+/**
+ * Returns a pointer to the beginning of the next component in a compound ID. Leading ID separators are ignored.
+ *
+ * @param id    Aggregate X ID.
+ * @return      Pointer to the start of the next compound ID token, or NULL if there is no more components in the ID.
+ */
+char *xNextIDToken(const char *id) {
+  char *next;
+
+  if(!id) return NULL;
+
+  // Ignore leading separator.
+  if(!strncmp(id, X_SEP, X_SEP_LENGTH)) id += X_SEP_LENGTH;
+
+  next = strstr(id, X_SEP);
+  return next ? next + X_SEP_LENGTH : NULL;
+}
+
+/**
+ * Returns a copy of the next next component in a compound ID. Leading ID separators are ignored.
+ *
+ * @param id    Aggregate X ID.
+ * @return      Pointer to the start of the next compound ID token, or NULL if there is no more components in the ID.
+ */
+char *xCopyIDToken(const char *id) {
+  const char *next;
+  char *token;
+  int l;
+
+  if(!id) return NULL;
+
+  // Ignore leading separator.
+  if(!strncmp(id, X_SEP, X_SEP_LENGTH)) id += X_SEP_LENGTH;
+
+  next = xNextIDToken(id);
+  if(next) l = next - id - X_SEP_LENGTH;
+  else l = strlen(id);
+
+  token = malloc(l+1);
+  if(!token) return NULL;
+
+  memcpy(token, id, l);
+  token[l] = '\0';
+
+  return token;
+}
+
+/**
+ * Checks if the next component in a compound id matches a given token.
+ *
+ * @param token     Full token to check for
+ * @param id        Compount X ID.
+ * @return          X_SUCCESS if it's a match. Otherwise X_FAILURE or another X error if the
+ *                  arguments are invalid.
+ */
+int xMatchNextID(const char *token, const char *id) {
+  int L;
+
+  if(!token) return X_NULL;
+  if(!id) return X_NULL;
+  if(*token == '\0') return X_NAME_INVALID;
+  if(*id == '\0') return X_GROUP_INVALID;
+
+
+  L = strlen(token);
+  if(strncmp(id, token, L)) return X_FAILURE;
+
+  if(id[L] == '\0') return X_SUCCESS;
+
+  if(strlen(id) < L + X_SEP_LENGTH) return X_FAILURE;
+  if(strncmp(id + L, X_SEP, X_SEP_LENGTH)) return X_FAILURE;
+
+  return X_SUCCESS;
+}
+
+
+/**
+ * Returns the aggregated (hierarchical) &lt;table&gt;:&lt;key&gt; ID. The caller is responsible for calling free()
+ * on the returned string after use.
+ *
+ * \param table     SMA-X hastable name
+ * \param key       The lower-level id to concatenate.
+ *
+ * \return          The aggregated ID, or NULL if both arguments were NULL themselves.
+ *
+ * \sa xSplitID()
+ */
+char *xGetAggregateID(const char *table, const char *key) {
+  char *id;
+
+  if(table == NULL && key == NULL) return NULL;
+
+  if(table == NULL) return xStringCopyOf(key);
+  if(key == NULL) return xStringCopyOf(table);
+
+  id = (char *) malloc(strlen(table) + strlen(key) + X_SEP_LENGTH + 1); // <group>:<key>
+  if(!id) return NULL;
+  sprintf(id, "%s" X_SEP "%s", table, key);
+
+  return id;
+}
+
+/**
+ * Returns the string pointer to the begining of the last separator in the ID.
+ *
+ * @param id    Compound SMA-X ID.
+ * @return      Pointer to the beginning of the last separator in the ID, or NULL if the ID does not contain a separator.
+ *
+ * @sa xSplitID()
+ */
+char *xLastSeparator(const char *id) {
+  int l = strlen(id);
+
+  while(--l >= 0) if(id[l] == X_SEP[0]) if(!strncmp(&id[l], X_SEP, X_SEP_LENGTH)) return (char *) &id[l];
+  return NULL;
+}
+
+/**
+ * Splits the id into two strings (sharing the same input buffer): (1) the id of the embedding structure, and
+ * (2) the embedded field name. The original input id is string terminated after the table name. And the pointer to the key
+ * part that follows after the last separator is returned in the second (optional argument).
+ *
+ * \param[in,out] id        String containing an aggregate ID, which will be terminated after the last substructure.
+ * \param[out] pKey         Returned pointer to the second component after the separator within the same buffer. This is
+ *                          not an independent pointer. Use xStringCopyOf() if you need an idependent string
+ *                          on which free() can be called! The returned value pointed to may be NULL if the ID
+ *                          could not be split. The argument may also be null, in which case the input string is
+ *                          just terminated at the stem, without returning the second part.
+ *
+ * \return      X_SUCCESS (0)       if the ID was successfully split into two components.
+ *              X_NULL              if the id argument is NULL.
+ *              X_NAME_INVALID      if no separator was found
+ *
+ * \sa xGetAggregateID()
+ * \sa xLastSeparator()
+ */
+int xSplitID(char *id, char **pKey) {
+  if(id == NULL) return X_NULL;
+
+  // Default NULL return for the second component.
+  if(pKey) *pKey = NULL;
+
+  id = xLastSeparator(id);
+  if(id) *id = '\0';
+  else return X_NAME_INVALID;
+
+  if(pKey) *pKey = id + X_SEP_LENGTH;
+
+  return X_SUCCESS;
+}
+
+
 

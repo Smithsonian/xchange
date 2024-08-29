@@ -3,6 +3,9 @@
  *
  * \date Mar 14, 2019
  * \author Attila Kovacs
+ *
+ *   A Basic set of utilities to allow platform-independent structured data exchange from C/C++.
+ *   It also includes a JSON parser and emitter implementation.
  */
 
 #ifndef XCHANGE_H_
@@ -94,7 +97,7 @@ typedef int boolean;               ///< boolean TRUE/FALSE data type.
  * \sa smaxShareField()
  */
 typedef struct XField {
-  char *name;               ///< Pointer to a designated local name buffer
+  char *name;               ///< Pointer to a designated local name buffer. It may not contain a separator (see X_SEP).
   char *value;              ///< Pointer to designated local string content (or structure)...
   XType type;               ///< The underlyng data type
   int ndim;                 ///< The dimensionality of the data
@@ -103,6 +106,9 @@ typedef struct XField {
   struct XField *next;      ///< Pointer to the next linked element (if inside an XStructure).
 } XField;
 
+/**
+ * Static initializer for the XField data structure.
+  */
 #define X_FIELD_INIT        {NULL}
 
 /**
@@ -117,6 +123,9 @@ typedef struct XStructure {
   struct XStructure *parent;    ///< Reference to parent structure (if any)
 } XStructure;
 
+/**
+ * Static initializer for an XStructure data structure.
+ */
 #define X_STRUCT_INIT       {NULL}
 
 extern boolean xVerbose;        ///< Switch to enable verbose console output for XChange operations.
@@ -146,6 +155,7 @@ XField *xRemoveField(XStructure *s, const char *name);
 boolean xIsFieldValid(const XField *f);
 int xGetFieldCount(const XField *f);
 int xCountFields(const XStructure *s);
+XStructure *xGetSubstruct(const XStructure *s, const char *id);
 XField *xSetSubstruct(XStructure *s, const char *name, XStructure *substruct);
 int xReduceDims(int *ndim, int *sizes);
 int xReduceAllDims(XStructure *s);
@@ -156,6 +166,7 @@ XField *xCreateIntField(const char *name, int value);
 XField *xCreateLongField(const char *name, long long value);
 XField *xCreateBooleanField(const char *name, boolean value);
 XField *xCreateStringField(const char *name, const char *value);
+XField *xCreate1DField(const char *name, XType type, int count, const void *values);
 
 // Parsers / formatters
 boolean xParseBoolean(char *str, char **end);
@@ -173,15 +184,13 @@ char *xNextIDToken(const char *id);
 char *xCopyIDToken(const char *id);
 int xMatchNextID(const char *token, const char *id);
 char *xGetAggregateID(const char *group, const char *key);
+int xSplitID(char *id, char **pKey);
 int xElementSizeOf(XType type);
 int xStringElementSizeOf(XType type);
 int xGetElementCount(int ndim, const int *sizes);
 void *xAlloc(XType type, int count);
 void xZero(void *buf, XType type, int count);
-char *xStringType(XType type);
-XType xTypeForString(const char *type);
 char *xStringCopyOf(const char *str);
-int xUnpackStrings(const char *data, int bytes, int count, char **dst);
 
 
 #endif /* XCHANGE_H_ */
