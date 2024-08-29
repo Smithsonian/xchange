@@ -19,7 +19,6 @@ Platform-agnostic data exchange framework for C/C++ with built-in JSON parser/em
 ## Table of Contents
 
  - [Introduction](#introduction)
- - [Basic data types](#data-types)
  - [Structured data](#structured-data)
  - [JSON parser and emitter](#json-interchange)
  - [Error handling](#error-handling)
@@ -50,8 +49,30 @@ Some related links:
  - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html)
  - [Project page](https://smithsonian.github.io/xchange) on github.io
 
+
+<a name="structured-data"></a>
+## Structured data
+
+ - [Basic data types](#data-types)
+ - [Scalars](#scalars)
+ - [Arrays](#arrays)
+ - [Creating structure](#creating-structured-data)
+ - [Aggregate IDs](#aggregate-ids)
+ - [Accessing data in XStructures](#accessing-data-in-xstructures)
+
+
+The __xchange__ library defines the `XStructure` type to represent structured data. It is defined in `xchange.h`, but 
+as a user you really do not need to know much about its layout, as you probably want to avoid low-level direct access 
+to its elements. Rather, you should be using the functions of the __xchange__ API to create, modify, or access data 
+within.
+
+Under the hood, the `XStructure` contains a linked list of fields, each an `XField` data type to represent a single 
+element, or an array of elements, of the above mentioned types, including embedded `Xstructure`s. In this way, an 
+`Xstructure` can easily represent a multi-level hierarchy of a composite data object. Each `XField` has a name/ID, an 
+associated data type, a dimensionality, a shape (for multidimensional arrays).
+
 <a name="data-types"></a>
-## Basic data types
+### Basic data types
 
  - [Strings](#strings)
 
@@ -82,7 +103,7 @@ corresponding regular integer-types of the same width. They are meant only as a 
 not an integer value is to be represented in hexadecimal format rather than the default decimal format.
 
 <a name="strings"></a>
-### Strings
+#### Strings
 
 Strings can be either fixed-length or else a 0-terminated sequence of ASCII characters. At its basic level the library 
 does not impose any restriction of what ASCII characters may be used. However, we recommend that users stick to the 
@@ -95,28 +116,33 @@ Fixed-length strings of up to _n_ characters are represented internally as the `
 0-terminated as appropriate, or else represent exactly _n_ ASCII characters without explicit termination. 
 Alternatively, the `X_STRING` type represents ASCII strings of arbitrary length, up to the 0-termination character.
 
+<a name="scalars"></a>
+### Scalar values
 
-<a name="structured-data"></a>
-## Structured data
+You can create scalar fields easily, e.g.:
 
- - [XStructure type](#xstructure-type)
- - [Arrays](#arrays)
- - [Creating structured data](#creating-structured-data)
- - [Aggregate IDs](#aggregate-ids)
- - [Accessing data in XStructures](#accessing-data-in-xstructures)
+```c
+  // Create "is_ok" as a boolean field with TRUE
+  XField *fb = xCreateBooleanField("is_ok", TRUE);
 
-<a name="xstructure-type"></a>
-### XStructure type
+  // Create "serial-number" field with an integer value
+  XField *fi = xCreateIntField("serial-number", 1001);
 
-The __xchange__ library defines the `XStructure` type to represent structured data. It is defined in `xchange.h`, but 
-as a user you really do not need to know much about its layout, as you probably want to avoid low-level direct access 
-to its elements. Rather, you should be using the functions of the __xchange__ API to create, modify, or access data 
-within.
+  // Create "my measurement" as a double-precision value 1.04
+  XField *fd = xCreateDoubleField("my-measurement", 1.04);
+  
+  // Create "description" as a string
+  XField *fs = xCreateStringField("description", "blah-blah-blah");
+```
 
-Under the hood, the `XStructure` contains a linked list of fields, each an `XField` data type to represent a single 
-element, or an array of elements, of the above mentioned types, including embedded `Xstructure`s. In this way, an 
-`Xstructure` can easily represent a multi-level hierarchy of a composite data object. Each `XField` has a name/ID, an 
-associated data type, a dimensionality, a shape (for multidimensional arrays).
+Under the hood, scalar values are a special case of arrays containing a single element. Scalars have dimension zero 
+i.e., a shape defined by an empty integer array, e.g. `int shape[0]` in a corresponding `XField` element. 
+
+In this way scalars are distinsguished from true arrays containing just a single elements, which have dimensionality 
+&lt;=1 and shapes e.g., `int shape[1] = {1}` or `shape[2] = {1, 1}`. The difference, while subtle, becomes more 
+obvious when serializing the array, e.g. to JSON. A scalar floating point value of 1.04, for example, will appear as 
+`1.04` in JSON, whereas the 1D and 2D single-element arrays will be serialized as `{ 1.04 }` or `{{ 1.04 }}`, 
+respectively.
 
 
 <a name="arrays"></a>
@@ -138,19 +164,10 @@ field. We could have declared `data` as a 1D array `double data[2 * 3 * 4] = ...
 containing doubles with storage for at least 24 elements. It is the `sizes` array, along with the dimensionality,
 which together define the shape of the field for __xchange__.
 
-### Scalar values
 
-Scalar values are a special case of arrays containing a single element. Scalars have dimension zero i.e., a shape 
-defined by an empty integer array, e.g. `int shape[0]` in a corresponding `XField` element. 
 
-In this way scalars are distinsguished from true arrays containing just a single elements, which have dimensionality 
-&lt;=1 and shapes e.g., `int shape[1] = {1}` or `shape[2] = {1, 1}`. The difference, while subtle, becomes more 
-obvious when serializing the array, e.g. to JSON. A scalar floating point value of 1.04, for example, will appear as 
-`1.04` in JSON, whereas the 1D and 2D single-element arrays will be serialized as `{ 1.04 }` or `{{ 1.04 }}`, 
-respectively.
-
-<a name="creating-structured-data"></a>
-### Creating structured data
+<a name="creating-structure"></a>
+### Creating structure
 
 Structures should always be created by calling `xCreateStruct()` (or else by an appropriate de-serialization 
 function such as `xjsonParseAt()`, or as a copy via `xCopyStruct()`). Once the structure is no longer used it should be 
