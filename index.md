@@ -24,7 +24,7 @@ This site contains various online resources that support the library:
 __Downloads__
 
  - [Releases](https://github.com/Smithsonian/xchange/releases) from GitHub
- - Doxygen [tag file](apidoc/doxygen.tag) (`xchange.tag`) for linking 
+ - Doxygen [tag file](apidoc/xchange.tag) (`xchange.tag`) for linking 
    your [Doxygen](https://www.doxygen.nl/) documentation to that of __xchange__
 
 
