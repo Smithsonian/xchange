@@ -1,0 +1,1300 @@
+.TH "include/xchange.h" 3 "Version v0.9" "xchange" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/xchange.h
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBXField\fP"
+.br
+.RI "An SMA-X field, typically as part of an \fBXStructure\fP\&. A field may be a reference to a nested \fBXStructure\fP itself\&. "
+.ti -1c
+.RI "struct \fBXStructure\fP"
+.br
+.RI "SMA-X structure object, containing a linked-list of \fBXField\fP elements\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_TYPEDEF_BOOLEAN\fP"
+.br
+.RI "Precompiler constant to indicate if boolean was defined\&. "
+.ti -1c
+.RI "#define \fBFALSE\fP   0"
+.br
+.RI "Boolean 'false' value, if not already defined\&. "
+.ti -1c
+.RI "#define \fBMAX_DEBUG_ERROR_COUNT\fP   100"
+.br
+.RI "Stop reporting errors if the number of them exceeds this count\&. "
+.ti -1c
+.RI "#define \fBNAN\fP   (0\&.0/0\&.0)"
+.br
+.RI "Not-a-number in case it's not already defined in math\&.h\&. "
+.ti -1c
+.RI "#define \fBTRUE\fP   1"
+.br
+.RI "Boolean 'true' value, if not already defined\&. "
+.ti -1c
+.RI "#define \fBX_ALREADY_OPEN\fP   (\-2)"
+.br
+.RI "can't open the device twice "
+.ti -1c
+.RI "#define \fBX_BOOLEAN\fP"
+.br
+.RI "boolean XType "
+.ti -1c
+.RI "#define \fBX_BYTE\fP"
+.br
+.RI "single byte XType "
+.ti -1c
+.RI "#define \fBX_BYTE_HEX\fP"
+.br
+.RI "single byte XType in dexadecimal representation "
+.ti -1c
+.RI "#define \fBX_CHARS\fP(length)"
+.br
+.RI "A fixed-size character sequence of 'length' bytes\&. "
+.ti -1c
+.RI "#define \fBX_DOUBLE\fP"
+.br
+.RI "double-precision (64) bit floating point XType "
+.ti -1c
+.RI "#define \fBX_FAILURE\fP   (\-1)"
+.br
+.RI "didn't quite work "
+.ti -1c
+.RI "#define \fBX_FIELD_INIT\fP   {NULL}"
+.br
+.ti -1c
+.RI "#define \fBX_FLOAT\fP"
+.br
+.RI "32-bit floating point XType "
+.ti -1c
+.RI "#define \fBX_GROUP_INVALID\fP   (\-20)"
+.br
+.RI "there's no such variable group or hash table "
+.ti -1c
+.RI "#define \fBX_INCOMPLETE\fP   (\-9)"
+.br
+.RI "incomplete data transfer "
+.ti -1c
+.RI "#define \fBX_INT\fP"
+.br
+.RI "native int XType (usually 16-bits) "
+.ti -1c
+.RI "#define \fBX_INT_HEX\fP"
+.br
+.RI "native int XType in hexadecimal representation "
+.ti -1c
+.RI "#define \fBX_INTERRUPTED\fP   (\-8)"
+.br
+.RI "a waiting call interrupted by user "
+.ti -1c
+.RI "#define \fBX_LONG\fP"
+.br
+.RI "64-bit int XType "
+.ti -1c
+.RI "#define \fBX_LONG_HEX\fP"
+.br
+.RI "64-bit int XType in hexadecimal representation "
+.ti -1c
+.RI "#define \fBX_MAX_DIMS\fP   20"
+.br
+.RI "Maximum number of dimensionas (2^20 -> 1 million points)\&. "
+.ti -1c
+.RI "#define \fBX_MAX_ELEMENTS\fP"
+.br
+.RI "Maximum number of array elements (~1 million)\&. "
+.ti -1c
+.RI "#define \fBX_MAX_STRING_DIMS\fP"
+.br
+.RI "Maximum length of string representation of dimensions\&. "
+.ti -1c
+.RI "#define \fBX_NAME_INVALID\fP   (\-21)"
+.br
+.RI "invalid field/key name "
+.ti -1c
+.RI "#define \fBX_NO_BLOCKED_READ\fP   (\-5)"
+.br
+.RI "there are no blocked read calls "
+.ti -1c
+.RI "#define \fBX_NO_INIT\fP   (\-3)"
+.br
+.RI "must initialize first "
+.ti -1c
+.RI "#define \fBX_NO_PIPELINE\fP   (\-6)"
+.br
+.RI "pipelining is not configured or supported "
+.ti -1c
+.RI "#define \fBX_NO_SERVICE\fP   (\-4)"
+.br
+.RI "no connection to server "
+.ti -1c
+.RI "#define \fBX_NOT_ENOUGH_TOKENS\fP   (\-12)"
+.br
+.RI "number of components fewer than expected "
+.ti -1c
+.RI "#define \fBX_NULL\fP   (\-10)"
+.br
+.RI "something essential is NULL "
+.ti -1c
+.RI "#define \fBX_PARSE_ERROR\fP   (\-11)"
+.br
+.RI "parsing failure "
+.ti -1c
+.RI "#define \fBX_RAW\fP"
+.br
+.RI "raw Redis (string) value XType, as stored in database "
+.ti -1c
+.RI "#define \fBX_SEP\fP   ':'"
+.br
+.RI "sepatator for patterning of notification channels, e\&.g\&. 'changed:<table>:<key>' "
+.ti -1c
+.RI "#define \fBX_SEP_LENGTH\fP   (sizeof(\fBX_SEP\fP) \- 1)"
+.br
+.RI "String length of hierarchical separator\&. "
+.ti -1c
+.RI "#define \fBX_SHORT\fP"
+.br
+.RI "native short XType (usually 16-bits) "
+.ti -1c
+.RI "#define \fBX_SHORT_HEX\fP"
+.br
+.RI "native short XType in hexadecimal representation "
+.ti -1c
+.RI "#define \fBX_SIZE_INVALID\fP   (\-23)"
+.br
+.RI "invalid data size "
+.ti -1c
+.RI "#define \fBX_STRING\fP"
+.br
+.RI "a terminated string XType "
+.ti -1c
+.RI "#define \fBX_STRUCT\fP"
+.br
+.RI "An \fBXStructure\fP XType\&. "
+.ti -1c
+.RI "#define \fBX_STRUCT_INIT\fP   {NULL}"
+.br
+.ti -1c
+.RI "#define \fBX_STRUCT_INVALID\fP   (\-24)"
+.br
+.RI "invalid data structure "
+.ti -1c
+.RI "#define \fBX_SUCCESS\fP   0"
+.br
+.RI "hooray! "
+.ti -1c
+.RI "#define \fBX_TIMEDOUT\fP   (\-7)"
+.br
+.RI "the operation timed out\&. "
+.ti -1c
+.RI "#define \fBX_TIMESTAMP_LENGTH\fP   18"
+.br
+.RI "Characters in timestamp, 10 + 6 + 2 = 18 including termination\&. "
+.ti -1c
+.RI "#define \fBX_TYPE_INVALID\fP   (\-22)"
+.br
+.RI "invalid data type "
+.ti -1c
+.RI "#define \fBX_UNKNOWN\fP   0"
+.br
+.RI "Unknown XType (default) "
+.ti -1c
+.RI "#define \fBxdprintf\fP   if(\fBxDebug\fP) printf"
+.br
+.RI "Use for generating debug output\&. "
+.ti -1c
+.RI "#define \fBxvprintf\fP   if(\fBxVerbose\fP) printf"
+.br
+.RI "Use for generating verbose output\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef int \fBboolean\fP"
+.br
+.RI "boolean TRUE/FALSE data type\&. "
+.ti -1c
+.RI "typedef int \fBXType\fP"
+.br
+.RI "SMA-X data type\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void * \fBxAlloc\fP (\fBXType\fP type, int count)"
+.br
+.ti -1c
+.RI "void \fBxClearStruct\fP (\fBXStructure\fP *s)"
+.br
+.ti -1c
+.RI "char * \fBxCopyIDToken\fP (const char *id)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCopyOfField\fP (const \fBXField\fP *f)"
+.br
+.ti -1c
+.RI "\fBXStructure\fP * \fBxCopyOfStruct\fP (const \fBXStructure\fP *s)"
+.br
+.ti -1c
+.RI "int \fBxCountFields\fP (const \fBXStructure\fP *s)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCreate1DField\fP (const char *name, \fBXType\fP type, int count, const void *values)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCreateBooleanField\fP (const char *name, \fBboolean\fP value)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCreateDoubleField\fP (const char *name, double value)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCreateField\fP (const char *name, \fBXType\fP type, int ndim, const int *sizes, const void *value)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCreateIntField\fP (const char *name, int value)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCreateLongField\fP (const char *name, long long value)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCreateScalarField\fP (const char *name, \fBXType\fP type, const void *value)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCreateStringField\fP (const char *name, const char *value)"
+.br
+.ti -1c
+.RI "\fBXStructure\fP * \fBxCreateStruct\fP ()"
+.br
+.ti -1c
+.RI "void \fBxDestroyField\fP (\fBXField\fP *f)"
+.br
+.ti -1c
+.RI "void \fBxDestroyStruct\fP (\fBXStructure\fP *s)"
+.br
+.ti -1c
+.RI "int \fBxElementSizeOf\fP (\fBXType\fP type)"
+.br
+.ti -1c
+.RI "int \fBxError\fP (const char *func, int errorCode)"
+.br
+.ti -1c
+.RI "const char * \fBxErrorDescription\fP (int code)"
+.br
+.ti -1c
+.RI "char * \fBxGetAggregateID\fP (const char *group, const char *key)"
+.br
+.ti -1c
+.RI "int \fBxGetElementCount\fP (int ndim, const int *sizes)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxGetField\fP (const \fBXStructure\fP *s, const char *name)"
+.br
+.ti -1c
+.RI "int \fBxGetFieldCount\fP (const \fBXField\fP *f)"
+.br
+.ti -1c
+.RI "\fBXStructure\fP * \fBxGetSubstruct\fP (const \fBXStructure\fP *s, const char *id)"
+.br
+.ti -1c
+.RI "\fBboolean\fP \fBxIsCharSequence\fP (\fBXType\fP type)"
+.br
+.ti -1c
+.RI "\fBboolean\fP \fBxIsFieldValid\fP (const \fBXField\fP *f)"
+.br
+.ti -1c
+.RI "\fBboolean\fP \fBxIsVerbose\fP ()"
+.br
+.ti -1c
+.RI "char * \fBxLastSeparator\fP (const char *id)"
+.br
+.ti -1c
+.RI "int \fBxMatchNextID\fP (const char *token, const char *id)"
+.br
+.ti -1c
+.RI "char * \fBxNextIDToken\fP (const char *id)"
+.br
+.ti -1c
+.RI "\fBboolean\fP \fBxParseBoolean\fP (char *str, char **end)"
+.br
+.ti -1c
+.RI "int \fBxParseDims\fP (const char *src, int *sizes)"
+.br
+.ti -1c
+.RI "double \fBxParseDouble\fP (const char *str, char **tail)"
+.br
+.ti -1c
+.RI "int \fBxPrintDims\fP (char *dst, int ndim, const int *sizes)"
+.br
+.ti -1c
+.RI "int \fBxPrintDouble\fP (char *str, double value)"
+.br
+.ti -1c
+.RI "int \fBxPrintFloat\fP (char *str, float value)"
+.br
+.ti -1c
+.RI "int \fBxReduceAllDims\fP (\fBXStructure\fP *s)"
+.br
+.ti -1c
+.RI "int \fBxReduceDims\fP (int *ndim, int *sizes)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxRemoveField\fP (\fBXStructure\fP *s, const char *name)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxSetField\fP (\fBXStructure\fP *s, \fBXField\fP *f)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxSetSubstruct\fP (\fBXStructure\fP *s, const char *name, \fBXStructure\fP *substruct)"
+.br
+.ti -1c
+.RI "void \fBxSetVerbose\fP (\fBboolean\fP value)"
+.br
+.ti -1c
+.RI "int \fBxSplitID\fP (char *id, char **pKey)"
+.br
+.ti -1c
+.RI "char * \fBxStringCopyOf\fP (const char *str)"
+.br
+.ti -1c
+.RI "int \fBxStringElementSizeOf\fP (\fBXType\fP type)"
+.br
+.ti -1c
+.RI "char \fBxTypeChar\fP (\fBXType\fP type)"
+.br
+.ti -1c
+.RI "void \fBxZero\fP (void *buf, \fBXType\fP type, int count)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBboolean\fP \fBxDebug\fP"
+.br
+.RI "Switch to enable debugging (very verbose) output for XChange operations\&. "
+.ti -1c
+.RI "\fBboolean\fP \fBxVerbose\fP"
+.br
+.RI "Switch to enable verbose console output for XChange operations\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBDate\fP
+.RS 4
+Mar 14, 2019 
+.RE
+.PP
+\fBAuthor\fP
+.RS 4
+Attila Kovacs
+.RE
+.PP
+A Basic set of utilities to allow platform-independent structured data exchange from C/C++\&. It also includes a JSON parser and emitter implementation\&. 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define X_FIELD_INIT   {NULL}"
+Static initializer for the \fBXField\fP data structure\&. 
+.SS "#define X_STRUCT_INIT   {NULL}"
+Static initializer for an \fBXStructure\fP data structure\&. 
+.SH "Function Documentation"
+.PP 
+.SS "void * xAlloc (\fBXType\fP type, int count)"
+Allocates a buffer for a given SMA-X type and element count\&. The buffer is initialized with zeroes\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP SMA-X type 
+.br
+\fIcount\fP number of elements\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Pointer to the initialized buffer or NULL if there was an error (errno will be set accordingly)\&. 
+.RE
+.PP
+
+.PP
+References \fBxElementSizeOf()\fP\&.
+.SS "void xClearStruct (\fBXStructure\fP * s)"
+Destroys the contents of an X structure, leaving the structure empty\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Pointer to the structure to be cleared\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+smaDestroyStruct() 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::next\fP, and \fBxDestroyField()\fP\&.
+.SS "char * xCopyIDToken (const char * id)"
+Returns a copy of the next next component in a compound ID\&. Leading ID separators are ignored\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIid\fP Aggregate X ID\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Pointer to the start of the next compound ID token, or NULL if there is no more components in the ID\&. 
+.RE
+.PP
+
+.PP
+References \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBxNextIDToken()\fP\&.
+.SS "\fBXField\fP * xCopyOfField (const \fBXField\fP * f)"
+Returns a deep copy of the supplied field\&. The returned copy is a standalone field, unlinked to another to avoid corrupting any structure in which the original field may reside in\&. Note, that this only works with vanilla xchange structures with native storage fields\&. For example, SMA-X structures store data in serialized forms, and therefore it needs its own implementation for making deep copies of fields!
+.PP
+\fBParameters\fP
+.RS 4
+\fIf\fP Pointer to the original field or NULL\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A fully independent (deep) copy of the argument or NULL if the input field is NULL\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCopyOfStruct()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::isSerialized\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, \fBxCopyOfStruct()\fP, \fBxElementSizeOf()\fP, \fBxGetFieldCount()\fP, \fBxStringCopyOf()\fP, and \fBxTypeChar()\fP\&.
+.SS "\fBXStructure\fP * xCopyOfStruct (const \fBXStructure\fP * s)"
+Returns a deep copy of the supplied structure\&. Note that this only works with vanilla xchange structures with native storage fields\&. For example, SMA-X structures store data in serialized forms, and therefore it needs its own implementation for making deep copies of structs!
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Pointer to the original structure or NULL\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A fully independent (deep) copy of the argument or NULL if the input structure is NULL\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCopyOfField()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, \fBxCopyOfField()\fP, \fBxCreateStruct()\fP, and \fBxGetFieldCount()\fP\&.
+.SS "int xCountFields (const \fBXStructure\fP * s)"
+Returns the number of fields contained inside the structure\&. It is not recursive\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Pointer to the structure to investigate 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+the number of fields cotnained in the structure (but not counting fields in sub-structures)\&. 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, and \fBXField::next\fP\&.
+.SS "\fBXField\fP * xCreate1DField (const char * name, \fBXType\fP type, int count, const void * values)"
+Creates a generic field for a 1D array of a given name and native data\&. The structure will hold a copy of the value that is pointed at\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP Field name (it may not contain a separator X_SEP) 
+.br
+\fItype\fP Storage type, e\&.g\&. X_INT\&. 
+.br
+\fIcount\fP Number of elements in array 
+.br
+\fIvalues\fP Pointer to an array of native values\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A newly created field with the supplied data, or NULL if there was an error\&. 
+.RE
+.PP
+
+.PP
+References \fBxCreateField()\fP\&.
+.SS "\fBXField\fP * xCreateBooleanField (const char * name, \fBboolean\fP value)"
+Creates a field holding a single boolean value value\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP Field name (it may not contain a separator X_SEP) 
+.br
+\fIvalue\fP Associated value
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A newly created field with the supplied data, or NULL if there was an error\&. 
+.RE
+.PP
+
+.PP
+References \fBX_BOOLEAN\fP, and \fBxCreateScalarField()\fP\&.
+.SS "\fBXField\fP * xCreateDoubleField (const char * name, double value)"
+Creates a field holding a single double-precision value value\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP Field name (it may not contain a separator X_SEP) 
+.br
+\fIvalue\fP Associated value
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A newly created field with the supplied data, or NULL if there was an error\&. 
+.RE
+.PP
+
+.PP
+References \fBX_DOUBLE\fP, and \fBxCreateScalarField()\fP\&.
+.SS "\fBXField\fP * xCreateField (const char * name, \fBXType\fP type, int ndim, const int * sizes, const void * value)"
+Creates a generic field of a given name and type and dimensions using a copy of the specified native array, unless type is X_STRUCT in which case the value is referenced directly inside the field\&. For X_STRING and X_RAW only the array references to the underlying string/byte buffers are copied into the field\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP Field name (it may not contain a separator X_SEP) 
+.br
+\fItype\fP Storage type, e\&.g\&. X_INT\&. 
+.br
+\fIndim\fP Number of dimensionas (1:20)\&. If ndim < 1, it will be reinterpreted as ndim=1, size[0]=1; 
+.br
+\fIsizes\fP Array of sizes along each dimensions, with at least ndim elements, or NULL with ndim<1\&. 
+.br
+\fIvalue\fP Pointer to the native data location in memory, or NULL to leave unassigned for now\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A newly created field with the copy of the supplied data, or NULL if there was an error\&. 
+.RE
+.PP
+
+.PP
+References \fBXField::name\fP, \fBXField::ndim\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_MAX_DIMS\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_SIZE_INVALID\fP, \fBX_STRUCT\fP, \fBxDestroyField()\fP, \fBxElementSizeOf()\fP, \fBxError()\fP, \fBxGetElementCount()\fP, \fBxLastSeparator()\fP, and \fBxStringCopyOf()\fP\&.
+.SS "\fBXField\fP * xCreateIntField (const char * name, int value)"
+Creates a field holding a single ineger value value\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP Field name (it may not contain a separator X_SEP) 
+.br
+\fIvalue\fP Associated value
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A newly created field with the supplied data, or NULL if there was an error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCreateLongField()\fP 
+.RE
+.PP
+
+.PP
+References \fBX_INT\fP, and \fBxCreateScalarField()\fP\&.
+.SS "\fBXField\fP * xCreateLongField (const char * name, long long value)"
+Creates a field holding a single ineger value value\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP Field name (it may not contain a separator X_SEP) 
+.br
+\fIvalue\fP Associated value
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A newly created field with the supplied data, or NULL if there was an error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCreateIntField()\fP 
+.RE
+.PP
+
+.PP
+References \fBX_LONG\fP, and \fBxCreateScalarField()\fP\&.
+.SS "\fBXField\fP * xCreateScalarField (const char * name, \fBXType\fP type, const void * value)"
+Creates a generic scalar field of a given name and native value\&. The structure will hold a copy of the value that is pointed at\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP Field name (it may not contain a separator X_SEP) 
+.br
+\fItype\fP Storage type, e\&.g\&. X_INT\&. 
+.br
+\fIvalue\fP Pointer to the native data location in memory\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A newly created field with the supplied data, or NULL if there was an error\&. 
+.RE
+.PP
+
+.PP
+References \fBxCreateField()\fP\&.
+.SS "\fBXField\fP * xCreateStringField (const char * name, const char * value)"
+Creates a field holding a single string value\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP Field name (it may not contain a separator X_SEP) 
+.br
+\fIvalue\fP Associated value\&. NULL values will be treated as empty strings\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A newly created field referencing the supplied string, or NULL if there was an error\&. 
+.RE
+.PP
+
+.PP
+References \fBX_STRING\fP, and \fBxCreateScalarField()\fP\&.
+.SS "\fBXStructure\fP * xCreateStruct ()"
+Creates a new empty \fBXStructure\fP\&.
+.PP
+\fBSee also\fP
+.RS 4
+smaxDestroyStruct() 
+.RE
+.PP
+
+.SS "void xDestroyField (\fBXField\fP * f)"
+Destroys an X structure field, freeing up resources used\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIf\fP Pointer to the field to be destroyed\&. 
+.RE
+.PP
+
+.PP
+References \fBXField::isSerialized\fP, \fBXField::name\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, \fBxClearStruct()\fP, and \fBxGetFieldCount()\fP\&.
+.SS "void xDestroyStruct (\fBXStructure\fP * s)"
+Destroys an X structure, freeing up resources used by name and value\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Pointer to the structure to be destroyed\&. 
+.RE
+.PP
+
+.PP
+References \fBxClearStruct()\fP\&.
+.SS "int xElementSizeOf (\fBXType\fP type)"
+Returns the storage byte size of a single element of a given type\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP The data type, as defined in '\fBxchange\&.h\fP'
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+[bytes] the native storage size of a single element of that type\&. E\&.g\&. for X_CHAR(20) it will return 20\&. X_DOUBLE will return 8, etc\&. Unrecognised types will return 0\&. 
+.RE
+.PP
+
+.PP
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_SHORT_HEX\fP, \fBX_STRING\fP, and \fBX_STRUCT\fP\&.
+.SS "int xError (const char * func, int errorCode)"
+Prints a descriptive error message to stderr, and returns the error code\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIfunc\fP String that describes the function or location where the error occurred\&. 
+.br
+\fIerrorCode\fP Error code that describes the failure\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Same error code as specified on input\&. 
+.RE
+.PP
+
+.PP
+References \fBxDebug\fP, and \fBxErrorDescription()\fP\&.
+.SS "const char * xErrorDescription (int code)"
+Returns a string description for one of the standard X-change error codes, and sets errno as appropriate also\&. (The mapping to error codes is not one-to-one\&. The same errno may be used to describe different X-change errors\&. Nevertheless, it is a guide that can be used when the X-change error is not directtly available, e\&.g\&. because it is not returned by a given function\&.)
+.PP
+\fBParameters\fP
+.RS 4
+\fIcode\fP One of the error codes defined in '\fBxchange\&.h\fP'
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A constant string with the error description\&. 
+.RE
+.PP
+
+.PP
+References \fBX_ALREADY_OPEN\fP, \fBX_FAILURE\fP, \fBX_GROUP_INVALID\fP, \fBX_INCOMPLETE\fP, \fBX_INTERRUPTED\fP, \fBX_NAME_INVALID\fP, \fBX_NO_BLOCKED_READ\fP, \fBX_NO_INIT\fP, \fBX_NO_PIPELINE\fP, \fBX_NO_SERVICE\fP, \fBX_NOT_ENOUGH_TOKENS\fP, \fBX_NULL\fP, \fBX_PARSE_ERROR\fP, \fBX_SIZE_INVALID\fP, \fBX_SUCCESS\fP, \fBX_TIMEDOUT\fP, and \fBX_TYPE_INVALID\fP\&.
+.SS "char * xGetAggregateID (const char * table, const char * key)"
+Returns the aggregated (hierarchical) <table>:<key> ID\&. The caller is responsible for calling free() on the returned string after use\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItable\fP SMA-X hastable name 
+.br
+\fIkey\fP The lower-level id to concatenate\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The aggregated ID, or NULL if both arguments were NULL themselves\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxSplitID()\fP 
+.RE
+.PP
+
+.PP
+References \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBxStringCopyOf()\fP\&.
+.SS "int xGetElementCount (int ndim, const int * sizes)"
+Returns the total element count specified by along a number of dimensions\&. It ignores dimensions that have size components <= 0;
+.PP
+\fBParameters\fP
+.RS 4
+\fIndim\fP Number of dimensions 
+.br
+\fIsizes\fP Sizes along each dimension\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Total element count specified by the dimensions\&. Defaults to 1\&. 
+.RE
+.PP
+
+.PP
+References \fBX_MAX_DIMS\fP\&.
+.SS "\fBXField\fP * xGetField (const \fBXStructure\fP * s, const char * id)"
+Return the field by the specified name, or NULL if no such field exists\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Structure from which to retrieve a given field\&. 
+.br
+\fIid\fP Name or aggregate ID of the field to retrieve
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Matching field from the structure or NULL if there is no match or one of the arguments is NULL\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxSetField()\fP 
+.PP
+\fBxGetSubstruct()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxGetField()\fP, \fBxMatchNextID()\fP, and \fBxNextIDToken()\fP\&.
+.SS "int xGetFieldCount (const \fBXField\fP * f)"
+Returns the total number of primitive elements in a field\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIf\fP The field 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The total number of primitive elements contained in the field\&. 
+.RE
+.PP
+
+.PP
+References \fBXField::ndim\fP, \fBXField::sizes\fP, and \fBxGetElementCount()\fP\&.
+.SS "\fBXStructure\fP * xGetSubstruct (const \fBXStructure\fP * s, const char * id)"
+Returns a substructure by the specified name, or NULL if no such sub-structure exists\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Structure from which to retrieve a given sub-structure\&. 
+.br
+\fIid\fP Name or aggregate ID of the substructure to retrieve 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Matching sub-structure from the structure or NULL if there is no match or one of the arguments is NULL\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxSetSubstruct()\fP 
+.PP
+\fBxGetField()\fP 
+.RE
+.PP
+
+.PP
+References \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, and \fBxGetField()\fP\&.
+.SS "\fBboolean\fP xIsCharSequence (\fBXType\fP type)"
+Checks if the type represents a (fixed size) character sequence\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP X-Change type to check\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+TRUE if it is a type for a (fixed size) character array, otherwise FALSE\&. 
+.RE
+.PP
+
+.SS "\fBboolean\fP xIsFieldValid (const \fBXField\fP * f)"
+Checks if a given field has valid data\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIf\fP Pointer to the field to check\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+TRUE is the field seems to contain valid data, otherwise FALSE\&. 
+.RE
+.PP
+
+.PP
+References \fBFALSE\fP, \fBXField::name\fP, \fBXField::ndim\fP, \fBXField::sizes\fP, \fBTRUE\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, \fBxElementSizeOf()\fP, and \fBxLastSeparator()\fP\&.
+.SS "\fBboolean\fP xIsVerbose ()"
+Checks if verbosity is enabled for the xchange library\&.
+.PP
+\fBReturns\fP
+.RS 4
+TRUE (1) if verbosity is enabled, or else FALSE (0)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+setVerbose() 
+.RE
+.PP
+
+.PP
+References \fBxVerbose\fP\&.
+.SS "char * xLastSeparator (const char * id)"
+Returns the string pointer to the begining of the last separator in the ID\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIid\fP Compound SMA-X ID\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Pointer to the beginning of the last separator in the ID, or NULL if the ID does not contain a separator\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxSplitID()\fP 
+.RE
+.PP
+
+.PP
+References \fBX_SEP\fP, and \fBX_SEP_LENGTH\fP\&.
+.SS "int xMatchNextID (const char * token, const char * id)"
+Checks if the next component in a compound id matches a given token\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItoken\fP Full token to check for 
+.br
+\fIid\fP Compount X ID\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+X_SUCCESS if it's a match\&. Otherwise X_FAILURE or another X error if the arguments are invalid\&. 
+.RE
+.PP
+
+.PP
+References \fBX_FAILURE\fP, \fBX_GROUP_INVALID\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBX_SUCCESS\fP\&.
+.SS "char * xNextIDToken (const char * id)"
+Returns a pointer to the beginning of the next component in a compound ID\&. Leading ID separators are ignored\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIid\fP Aggregate X ID\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Pointer to the start of the next compound ID token, or NULL if there is no more components in the ID\&. 
+.RE
+.PP
+
+.PP
+References \fBX_SEP\fP, and \fBX_SEP_LENGTH\fP\&.
+.SS "\fBboolean\fP xParseBoolean (char * str, char ** end)"
+Parses a boolean value, either as a zero/non-zero number or as a case-insensitive match to the next token to one of the recognized boolean terms, such as 'true'/'false', 'on'/'off', 'yes'/'no', 't'/'f', 'y'/'n', 'enabled'/'disabled' or 'active'/'inactive'\&. If a boolean value cannot be matched, FALSE is returned, and errno is set to ERANGE\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIstr\fP Pointer to the string token\&. 
+.br
+\fIend\fP Where the pointer to after the successfully parsed token is returned, on NULL\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+TRUE (1) or FALSE (0)\&. 
+.RE
+.PP
+
+.PP
+References \fBFALSE\fP, and \fBTRUE\fP\&.
+.SS "int xParseDims (const char * src, int * sizes)"
+Deserializes the sizes from a multi-dimensional specification\&. The parsing will terminate at the first non integer value or the end of string, whichever comes first\&. Integer values <= 0 are ignored\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIsrc\fP Pointer to a string buffer that contains the serialized dimensions, as a list of space separated integers\&. 
+.br
+\fIsizes\fP Pointer to an array of ints (usually of X_MAX_DIMS size) to which the valid dimensions are deserialized\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Number of valid (i\&.e\&. positive) dimensions parsed\&. 
+.RE
+.PP
+
+.PP
+References \fBX_MAX_DIMS\fP\&.
+.SS "double xParseDouble (const char * str, char ** tail)"
+Same as strtod() on C99, but with explicit parsing of NaN and Infinity values on older platforms also\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIstr\fP String to parse floating-point value from 
+.br
+\fItail\fP (optional) reference to pointed in which to return the parse position after successfully parsing a floating-point value\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+the floating-point value at the head of the string\&. 
+.RE
+.PP
+
+.PP
+References \fBNAN\fP\&.
+.SS "int xPrintDims (char * dst, int ndim, const int * sizes)"
+Serializes the dimensions to a string\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIdst\fP Pointer to a string buffer with at least X_MAX_STRING_DIMS bytes size\&. 
+.br
+\fIndim\fP Number of dimensions 
+.br
+\fIsizes\fP Sizes along each dimension\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Number of characters written into the destonation buffer, not counting the string termination\&. 
+.RE
+.PP
+
+.PP
+References \fBX_MAX_DIMS\fP\&.
+.SS "int xPrintDouble (char * str, double value)"
+Prints a double precision number, restricted to IEEE double-precision range\&. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead\&. For values that exceed the IEEE double precision range, 'nan' will be printed\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIstr\fP Pointer to buffer for printed value\&. 
+.br
+\fIvalue\fP Value to print\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Number of characters printed into the buffer\&. 
+.RE
+.PP
+
+.SS "int xPrintFloat (char * str, float value)"
+Prints a single-precision number, restricted to IEEE single-precision range\&. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead\&. For values that exceed the IEEE double precision range, 'nan' will be printed\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIstr\fP Pointer to buffer for printed value\&. 
+.br
+\fIvalue\fP Value to print\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Number of characters printed into the buffer\&. 
+.RE
+.PP
+
+.SS "int xReduceAllDims (\fBXStructure\fP * s)"
+Recursively eliminates unneccessary embedding of singular structures inside a structure as well as reduces the dimension of all array fields with \fBxReduceDims()\fP\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Pointer to a structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+X_SUCCESS (0) if successful or else X_STRUCT_INVALID if the argument is NULL (errno is also set to EINVAL)
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxReduceDims()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::ndim\fP, \fBXField::next\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxGetFieldCount()\fP, \fBxReduceAllDims()\fP, and \fBxReduceDims()\fP\&.
+.SS "int xReduceDims (int * ndim, int * sizes)"
+Reduces the dimensions by eliminating axes that contain a singular elements\&. Thus a size of {1, 3, 1, 5} will reduce to {3, 5} containing the same number of elements, in fewer dimensions\&. If any of the dimensions are zero then it reduces to { 0 }\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIndim\fP Pointer to the dimensions (will be updated in situ) 
+.br
+\fIsizes\fP Array of sizes along the dimensions (will be updated in situ) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+X_SUCCESS (0) if successful or else X_SIZE_INVALID if the ndim argument is NULL, or if it is greater than zero but the sizes argument is NULL (errno set to EINVAL in both cases)
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxReduceAllDims()\fP 
+.RE
+.PP
+
+.PP
+References \fBX_SIZE_INVALID\fP, and \fBX_SUCCESS\fP\&.
+.SS "\fBXField\fP * xRemoveField (\fBXStructure\fP * s, const char * name)"
+Removes as field from the structure, returning it if found\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Pointer to structure 
+.br
+\fIname\fP Name of field to remove
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Pointer to the removed field or else NULL if the was an error or if no matching field existed in the structure\&. 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_NAME_INVALID\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxError()\fP, and \fBxGetFieldCount()\fP\&.
+.SS "\fBXField\fP * xSetField (\fBXStructure\fP * s, \fBXField\fP * f)"
+Adds or replaces a field in the structure with the specified field value, returning the previous value for the same field\&. It is up to the caller whether or not the old value should be destoyed or kept\&. Note though that you should check first to see if the replaced field is the same as the new one before attempting to destroy\&.\&.\&.
+.PP
+The field's name may not contain a compound ID\&. To add fields to embedded sub-structures, you may want to use \fBxGetSubstruct()\fP first to add the field directly to the relevant embedded component\&.
+.PP
+A note of caution: There is no safeguard against adding the same field to more than one structure, which will result in a corruption of the affected structures, since both structures would link to the field, but the field links to only one specific successive element\&. Therefore, the user is responsible to ensure that fields are assigned to structures uniquely, and if necessary remove the field from one structure before assigning it to another\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Structure to which to add the field 
+.br
+\fIf\fP Field to be added\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Previous field by the same name, or NULL if the field is new or if there was an error (errno will be set to EINVAL)
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxSetSubstruct()\fP 
+.PP
+\fBxGetSubstruct()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_STRUCT_INVALID\fP, \fBxError()\fP, and \fBxLastSeparator()\fP\&.
+.SS "\fBXField\fP * xSetSubstruct (\fBXStructure\fP * s, const char * name, \fBXStructure\fP * substruct)"
+Inserts a structure within a parent structure, returning the old field that may have existed under the requested name before\&.
+.PP
+The name may not contain a compound ID\&. To add the structure to embedded sub-structures, you may want to use \fBxGetSubstruct()\fP first to add the new structure directly to the relevant embedded component\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Pointer to the parent structure 
+.br
+\fIname\fP Name of the sub-structure 
+.br
+\fIsubstruct\fP Pointer to the sub-structure\&. It is added directly as a reference, without making a copy\&.
+.RE
+.PP
+return The prior field stored under the same name or NULL\&. If there is an error then NULL is returned and errno is set to indicate the nature of the issue\&. (a message is also printed to stderr if xDebug is enabled\&.)
+.PP
+\fBSee also\fP
+.RS 4
+\fBxGetSubstruct()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::parent\fP, \fBX_INCOMPLETE\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxCreateScalarField()\fP, \fBxError()\fP, and \fBxSetField()\fP\&.
+.SS "void xSetVerbose (\fBboolean\fP value)"
+Sets verbose output for the xchange library\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP TRUE (non-zero) to enable verbose output, or else FALSE (0)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxIsVerbose()\fP 
+.RE
+.PP
+
+.PP
+References \fBFALSE\fP, \fBTRUE\fP, and \fBxVerbose\fP\&.
+.SS "int xSplitID (char * id, char ** pKey)"
+Splits the id into two strings (sharing the same input buffer): (1) the id of the embedding structure, and (2) the embedded field name\&. The original input id is string terminated after the table name\&. And the pointer to the key part that follows after the last separator is returned in the second (optional argument)\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIid\fP String containing an aggregate ID, which will be terminated after the last substructure\&. 
+.br
+\fIpKey\fP Returned pointer to the second component after the separator within the same buffer\&. This is not an independent pointer\&. Use \fBxStringCopyOf()\fP if you need an idependent string on which free() can be called! The returned value pointed to may be NULL if the ID could not be split\&. The argument may also be null, in which case the input string is just terminated at the stem, without returning the second part\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+X_SUCCESS (0) if the ID was successfully split into two components\&. X_NULL if the id argument is NULL\&. X_NAME_INVALID if no separator was found
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxGetAggregateID()\fP 
+.PP
+\fBxLastSeparator()\fP 
+.RE
+.PP
+
+.PP
+References \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_SEP_LENGTH\fP, \fBX_SUCCESS\fP, and \fBxLastSeparator()\fP\&.
+.SS "char * xStringCopyOf (const char * str)"
+Returns a freshly allocated string with the same content as the argument\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIstr\fP Pointer to string we want to copy\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A copy of the supplied string, or NULL if the argument itself was NULL\&. 
+.RE
+.PP
+
+.SS "int xStringElementSizeOf (\fBXType\fP type)"
+Returns the number of characters, including a '\\0' termination that a single element of the might be expected to fill\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP X-Change type to check\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Number of characters (including termination) required for the string representation of an element of the given variable, or 0 if the variable is of unknown type\&. 
+.RE
+.PP
+
+.PP
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_SHORT\fP, and \fBX_SHORT_HEX\fP\&.
+.SS "char xTypeChar (\fBXType\fP type)"
+Returns the character of the field type\&. For X_CHAR types it returns 'C' (without the length specification), and for all other types it returns the constant XType value itself\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP The single-character IF of the field type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A character that represented the type\&. 
+.RE
+.PP
+
+.SS "void xZero (void * buf, \fBXType\fP type, int count)"
+Zeroes out the contents of an SMA-X buffer\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIbuf\fP Pointer to the buffer to fill with zeroes\&. 
+.br
+\fItype\fP SMA-X type 
+.br
+\fIcount\fP number of elements\&. 
+.RE
+.PP
+
+.PP
+References \fBxElementSizeOf()\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for xchange from the source code\&.

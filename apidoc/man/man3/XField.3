@@ -1,0 +1,67 @@
+.TH "XField" 3 "Version v0.9" "xchange" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+XField \- An SMA-X field, typically as part of an \fBXStructure\fP\&. A field may be a reference to a nested \fBXStructure\fP itself\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <xchange\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBboolean\fP \fBisSerialized\fP"
+.br
+.RI "Whether the fields is stored in serialized (string) format\&. "
+.ti -1c
+.RI "char * \fBname\fP"
+.br
+.RI "Pointer to a designated local name buffer\&. It may not contain a separator (see X_SEP)\&. "
+.ti -1c
+.RI "int \fBndim\fP"
+.br
+.RI "The dimensionality of the data\&. "
+.ti -1c
+.RI "struct \fBXField\fP * \fBnext\fP"
+.br
+.RI "Pointer to the next linked element (if inside an \fBXStructure\fP)\&. "
+.ti -1c
+.RI "int \fBsizes\fP [\fBX_MAX_DIMS\fP]"
+.br
+.RI "The sizes along each dimension\&. "
+.ti -1c
+.RI "\fBXType\fP \fBtype\fP"
+.br
+.RI "The underlyng data type\&. "
+.ti -1c
+.RI "char * \fBvalue\fP"
+.br
+.RI "Pointer to designated local string content (or structure)\&.\&.\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+An SMA-X field, typically as part of an \fBXStructure\fP\&. A field may be a reference to a nested \fBXStructure\fP itself\&. 
+
+
+.PP
+\fBSee also\fP
+.RS 4
+smaxCreateField() 
+.PP
+smaxCreateScalarField() 
+.PP
+smaxCreate1DField() 
+.PP
+smaxDestroyField() 
+.PP
+smaxShareField() 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for xchange from the source code\&.

@@ -1,0 +1,265 @@
+.TH "src/xjson.c" 3 "Version v0.9" "xchange" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/xjson.c \- A set of functions for parsing and creating JSON description of data\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBFALSE\fP   0"
+.br
+.RI "Boolean 'false' in case it isn't already defined\&. "
+.ti -1c
+.RI "#define \fBTRUE\fP   1"
+.br
+.RI "Boolean 'true' in case it isn't already defined\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "char * \fBxjsonEscapeString\fP (const char *src, int maxLength)"
+.br
+.ti -1c
+.RI "int \fBxjsonGetIndent\fP ()"
+.br
+.ti -1c
+.RI "\fBXStructure\fP * \fBxjsonParseAt\fP (char **pos, int *lineNumber)"
+.br
+.ti -1c
+.RI "\fBXStructure\fP * \fBxjsonParseFile\fP (FILE *fp, size_t length, int *lineNumber)"
+.br
+.ti -1c
+.RI "\fBXStructure\fP * \fBxjsonParseFilename\fP (const char *fileName, int *lineNumber)"
+.br
+.ti -1c
+.RI "void \fBxjsonSetErrorStream\fP (FILE *fp)"
+.br
+.ti -1c
+.RI "void \fBxjsonSetIndent\fP (int nchars)"
+.br
+.ti -1c
+.RI "char * \fBxjsonToString\fP (const \fBXStructure\fP *s)"
+.br
+.ti -1c
+.RI "char * \fBxjsonUnescapeString\fP (const char *str)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A set of functions for parsing and creating JSON description of data\&. 
+
+
+.PP
+\fBDate\fP
+.RS 4
+Oct 25, 2020 
+.RE
+.PP
+\fBAuthor\fP
+.RS 4
+Attila Kovacs
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "char * xjsonEscapeString (const char * src, int maxLength)"
+Converts a native string to its JSON representation\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIsrc\fP Pointer to the native (unescaped) string, which may contain special characters\&. 
+.br
+\fImaxLength\fP The number of characters in the input string if not terminated, or <=0 if always teminated arbitrary length string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The JSON representation of the original string, in which special characters appear in escaped form (without the surrounding double quotes)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxjsonUnescapeString()\fP 
+.RE
+.PP
+
+.PP
+References \fBX_SUCCESS\fP\&.
+.SS "int xjsonGetIndent ()"
+Returns the number of spaces per indentation when emitting JSON formatted output\&.
+.PP
+\fBReturns\fP
+.RS 4
+(bytes) the number of white space character of indentation used\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxjsonSetIndent()\fP 
+.PP
+\fBxjsonToString()\fP 
+.RE
+.PP
+
+.SS "\fBXStructure\fP * xjsonParseAt (char ** pos, int * lineNumber)"
+Parses a JSON object from the given parse position, returning the structured data and updating the parse position\&. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream()\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIpos\fP Pointer to current parse position, which will be updated to point to after the last character consumed by the JSON parser\&. 
+.br
+\fIlineNumber\fP Optional pointer that holds a line number of the parse position, or NULL if not required\&. Line numbers may be useful to report where the parser run into an error if the parsing failed\&. Line numbers start at 1, and are counted from the initial parse position\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Structured data created from the JSON description, or NULL if there was an error parsing the data (errno is set to EINVAL)\&. The lineNumber argument can be used to determine where the error occurred\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxjsonToString()\fP 
+.PP
+\fBxjsonParseFile()\fP 
+.PP
+xjsonParseFileName() 
+.RE
+.PP
+
+.SS "\fBXStructure\fP * xjsonParseFile (FILE * fp, size_t length, int * lineNumber)"
+Parses a JSON object from the current position in a file, returning the described structured data\&. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream()\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIfp\fP File pointer, opened with read permission ('r')\&. 
+.br
+\fIlength\fP [bytes] The number of bytes to parse / available, or 0 to read to the end of the file\&. (In the latter case the file must support fseek with SEEK_END to automatically determine the length, or else this function will return NULL)\&. 
+.br
+\fIlineNumber\fP Optional pointer that holds a line number of the parse position, or NULL if not required\&. Line numbers may be useful to report where the parser run into an error if the parsing failed\&. Line numbers start at 1, and are counted from the initial parse position\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Structured data created from the JSON description, or NULL if there was an error parsing the data (errno is set to EINVAL)\&. The lineNumber argument can be used to determine where the error occurred)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxjsonParseFilename()\fP 
+.PP
+\fBxjsonParseAt()\fP 
+.PP
+\fBxjsonToString()\fP 
+.RE
+.PP
+
+.SS "\fBXStructure\fP * xjsonParseFilename (const char * fileName, int * lineNumber)"
+Parses a JSON object from the beginning of a file, returning the described structured data\&. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream()\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIfileName\fP File name/path to parse\&. 
+.br
+\fIlineNumber\fP Optional pointer that holds a line number of the parse position, or NULL if not required\&. Line numbers may be useful to report where the parser run into an error if the parsing failed\&. Line numbers start at 1, and are counted from the initial parse position\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Structured data created from the JSON description, or NULL if there was an error parsing the data (errno is set to EINVAL)\&. The lineNumber argument can be used to determine where the error occurred)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxjsonParseFile()\fP 
+.PP
+\fBxjsonParseAt()\fP 
+.PP
+\fBxjsonToString()\fP 
+.RE
+.PP
+
+.PP
+References \fBxjsonParseFile()\fP\&.
+.SS "void xjsonSetErrorStream (FILE * fp)"
+Change the file to which XJSON reports errors\&. By default it will use stderr\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIfp\fP File to which to write errors or NULL to suppress errors\&. 
+.RE
+.PP
+
+.PP
+References \fBFALSE\fP, \fBNULLDEV\fP, and \fBTRUE\fP\&.
+.SS "void xjsonSetIndent (int nchars)"
+Sets the number of spaces per indentation when emitting JSON formatted output\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fInchars\fP (bytes) the new number of white space character of indentation to use\&. Negative values map to 0\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxjsonGetIndent()\fP 
+.PP
+\fBxjsonToString()\fP 
+.RE
+.PP
+
+.SS "char * xjsonToString (const \fBXStructure\fP * s)"
+Converts structured data into its JSON representation\&. Conversion errors are reported to stderr or the altenate stream set by xSetErrorStream()\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Pointer to structured data 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+String JSON representation, or NULL if there was an error (errno set to EINVAL)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxjsonSetIndent()\fP 
+.PP
+\fBxjsonParseAt()\fP 
+.PP
+\fBxjsonParseFile()\fP 
+.PP
+\fBxjsonParseFilename()\fP 
+.RE
+.PP
+
+.PP
+References \fBFALSE\fP, and \fBxErrorDescription()\fP\&.
+.SS "char * xjsonUnescapeString (const char * str)"
+Converts a an escaped string in JSON representation to a native string
+.PP
+\fBParameters\fP
+.RS 4
+\fIstr\fP The JSON representation of the string, in which special characters appear in escaped form (without the surrounding double quotes)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The native string, which may contain special characters\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxjsonEscapeString()\fP 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for xchange from the source code\&.

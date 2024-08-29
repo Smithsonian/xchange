@@ -1,0 +1,43 @@
+.TH "XStructure" 3 "Version v0.9" "xchange" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+XStructure \- SMA-X structure object, containing a linked-list of \fBXField\fP elements\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <xchange\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBXField\fP * \fBfirstField\fP"
+.br
+.RI "Pointer to the first field in this structure or NULL if the structure is empty\&. "
+.ti -1c
+.RI "struct \fBXStructure\fP * \fBparent\fP"
+.br
+.RI "Reference to parent structure (if any) "
+.in -1c
+.SH "Detailed Description"
+.PP 
+SMA-X structure object, containing a linked-list of \fBXField\fP elements\&. 
+
+
+.PP
+\fBSee also\fP
+.RS 4
+smaxCreateStruct() 
+.PP
+smaxDestroyStruct() 
+.PP
+smaxShareStruct() 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for xchange from the source code\&.
