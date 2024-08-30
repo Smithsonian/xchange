@@ -1,19 +1,29 @@
+# Use the parent directories for libraries and headers.
+LIB = ../lib
 INC = ../include
 
+# Load the common Makefile definitions...
 include ../config.mk
 
 CFLAGS += -g
+export CFLAGS
 
-.PHONY: all
-all: bin/test-json
+all: $(BIN)/test-json $(BIN)/test-lookup
 
-bin/test-json: test-json.c ../lib/libxchange.a
+$(BIN)/test-%: $(OBJ)/test-%.o $(LIB)/libxchange.a | $(BIN)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
-../lib/libxchange.a: 
-	@make -C .. static
+$(LIB)/libxchange.a:
+	make -C .. static
 	
+$(BIN):
+	mkdir $(BIN)
 
-bin/%: | bin
-	$(CC) -o $@ $(CPPFLAGS) $(CFLAGS) $^ $(LDFLAGS)
+.PHONY: clean-test
+clean-test:
+	rm -rf bin
+	
+clean: clean-test
 
+# Finally, the standard generic rules and targets...
 include ../build.mk

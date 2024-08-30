@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "xchange.h"
 #include "xjson.h"
@@ -41,15 +42,19 @@ static XStructure *createStruct() {
 
 int main(int argc, char *argv[]) {
   XStructure *s = createStruct(), *s1;
-  char *str = xjsonToString(s), *next;
+  char *str = xjsonToString(s), *next, *str1;
 
   printf("%s\n\n", str);
 
   next = str;
   s1 = xjsonParseAt(&next, NULL);
 
-  printf("%s\n\n", xjsonToString(s1));
-
+  str1 = xjsonToString(s1);
+  if(strcmp(str1, str) != 0) {
+    fprintf(stderr, "ERROR! str1 != str:\n\n");
+    printf("%s\n\n", str1);
+    return 1;
+  }
 
   return 0;
 }

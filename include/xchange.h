@@ -158,6 +158,19 @@ typedef struct XStructure {
 } XStructure;
 
 /**
+ * A fast lookup table for fields in large XStructures.
+ *
+ * @sa xCreateLookup()
+ * @sa xLookupField()
+ * @sa xDestroyLookup()
+ */
+typedef struct {
+  void *priv;                   ///< Private data, not exposed to users
+} XLookupTable;
+
+
+
+/**
  * Static initializer for an XStructure data structure.
  */
 #define X_STRUCT_INIT       {NULL}
@@ -189,10 +202,16 @@ XField *xRemoveField(XStructure *s, const char *name);
 boolean xIsFieldValid(const XField *f);
 int xGetFieldCount(const XField *f);
 int xCountFields(const XStructure *s);
+long xDeepCountFields(const XStructure *s);
 XStructure *xGetSubstruct(const XStructure *s, const char *id);
 XField *xSetSubstruct(XStructure *s, const char *name, XStructure *substruct);
 int xReduceDims(int *ndim, int *sizes);
 int xReduceAllDims(XStructure *s);
+
+// Fast field lookup
+XLookupTable *xCreateLookup(const XStructure *s, boolean recursive);
+XField *xLookupField(const XLookupTable *tab, const char *id);
+void xDestroyLookup(XLookupTable *tab);
 
 // Convenience field creator methods
 XField *xCreateDoubleField(const char *name, double value);

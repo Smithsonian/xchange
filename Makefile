@@ -65,7 +65,7 @@ distclean: clean
 # The nitty-gritty stuff below
 # ----------------------------------------------------------------------------
 
-SOURCES = $(SRC)/xchange.c $(SRC)/xstruct.c $(SRC)/xjson.c
+SOURCES = $(SRC)/xchange.c $(SRC)/xstruct.c $(SRC)/xlookup.c $(SRC)/xjson.c
 
 # Generate a list of object (obj/*.o) files from the input sources
 OBJECTS := $(subst $(SRC),$(OBJ),$(SOURCES))

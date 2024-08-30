@@ -171,6 +171,7 @@ XField *xCopyOfField(const XField *f) {
  * \return      Matching field from the structure or NULL if there is no match or one of
  *              the arguments is NULL.
  *
+ * \sa xLookupField()
  * \sa xSetField()
  * \sa xGetSubstruct()
  */
@@ -597,6 +598,8 @@ XField *xSetField(XStructure *s, XField *f) {
  *
  * @param s     Pointer to the structure to investigate
  * @return      the number of fields cotnained in the structure (but not counting fields in sub-structures).
+ *
+ * @sa xDeepCountFields()
  */
 int xCountFields(const XStructure *s) {
   XField *f;
@@ -912,6 +915,39 @@ int xSplitID(char *id, char **pKey) {
   if(pKey) *pKey = id + X_SEP_LENGTH;
 
   return X_SUCCESS;
+}
+
+/**
+ * Counts the number of fields in a structure, including the field count for all embedded
+ * substructures also recursively.
+ *
+ * @param s           Pointer to a structure
+ * @return            The total number of fields present in the structure and all its sub-structures.
+ *
+ * @sa xCountFields()
+ *
+ */
+long xDeepCountFields(const XStructure *s) {
+  XField *f;
+  long n = 0;
+
+  if(!s) return 0;
+
+  for(f = s->firstField; f != NULL; f = f->next) {
+    n++;
+
+    if(f->type == X_STRUCT) {
+      XStructure *sub = (XStructure *) f->value;
+      int count = xGetFieldCount(f);
+      while(--count >= 0) {
+        long m = xDeepCountFields(&sub[count]);
+        if(m < 0) return -1;
+        n += m;
+      }
+    }
+  }
+
+  return n;
 }
 
 

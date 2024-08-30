@@ -279,6 +279,43 @@ You can also remove existing fields from structures using `xRemoveField()`, e.g.
   xDestroyField(xRemoveField(s, "blah"));
 ```
 
+#### Large structures
+
+The normal `xGetField()` and `xGetSubstruct()` functions have computational costs that scale linearly with the number 
+of direct fields in the structure. It is not much of an issue for structures that contain dozens of fields (per layer). 
+For much larger structures, which have a fixed layout, there is an option for significantly faster hash-based lookup
+also. E.g. instead of `xGetField()` you may use `xLookupField()`:
+
+```c
+  XStructure *s = ...
+  
+  // Let's create a lookup table for all fields of 's' and all its substructures.
+  XLookupTable *l = xCreateLookupTable(s, TRUE);
+  
+  XField *f = xLookupField(l, "subsystem:property");
+  ...
+  
+  // Once done with the lookup, destroy it.
+  xDestroyLookup(l);
+```
+
+#### Iterating over elements
+
+You can easily iterate over the elements also. This is one application where you may want to know the internal layout
+of `XStructure`, namely that it contains a simple linked-list of `XField` fields. One way to iterate over a strucures
+elements is with a `for` loop, e.g.:
+
+```c
+  XStructure *s = ...
+  XField *f;
+  
+  for (f = s->firstField; f != NULL; f = f->next) {
+    // Process each field 'f' here...
+    ...
+  }
+```
+
+
 -----------------------------------------------------------------------------
 
 <a name="json-interchange"></a>
