@@ -7,7 +7,7 @@
  *   A Basic set of utilities to allow platform-independent structured data exchange from C/C++.
  *   It also includes a JSON parser and emitter implementation.
  *
- * @version 0.9.0
+ * @version 0.9.1
  */
 
 #ifndef XCHANGE_H_
@@ -21,7 +21,7 @@
 #define XCHANGE_MINOR_VERSION  9
 
 /// Integer sub version of the release
-#define XCHANGE_PATCHLEVEL     0
+#define XCHANGE_PATCHLEVEL     1
 
 /// Additional release information in version, e.g. "-1", or "-rc1".
 #define XCHANGE_RELEASE_STRING "-devel"
