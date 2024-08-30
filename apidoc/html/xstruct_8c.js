@@ -14,6 +14,7 @@ var xstruct_8c =
     [ "xCreateScalarField", "xstruct_8c.html#a965f7e58fd1c10570c6f6a472599b08f", null ],
     [ "xCreateStringField", "xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6", null ],
     [ "xCreateStruct", "xstruct_8c.html#ab551d2db420303b4408064a66bbe3f1c", null ],
+    [ "xDeepCountFields", "xstruct_8c.html#a789489313df89d33aa50de911e1e42ff", null ],
     [ "xDestroyField", "xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad", null ],
     [ "xDestroyStruct", "xstruct_8c.html#a2e12d0147219f85a6ec012d7f475fe21", null ],
     [ "xGetAggregateID", "xstruct_8c.html#a2cbbd824406d862b2018e28a466ff318", null ],

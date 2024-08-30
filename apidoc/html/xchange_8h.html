@@ -127,6 +127,8 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structXField.html">XField</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An SMA-X field, typically as part of an <a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a>. A field may be a reference to a nested <a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a> itself.  <a href="structXField.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structXLookupTable.html">XLookupTable</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structXStructure.html">XStructure</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SMA-X structure object, containing a linked-list of <a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a> elements.  <a href="structXStructure.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -334,7 +336,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:a52519844e66bcff3ed17e4feaab76b2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">API minor version. <br /></td></tr>
 <tr class="separator:a52519844e66bcff3ed17e4feaab76b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef108c611a8388c435502dfd89c41a5f" id="r_aef108c611a8388c435502dfd89c41a5f"><td class="memItemLeft" align="right" valign="top"><a id="aef108c611a8388c435502dfd89c41a5f" name="aef108c611a8388c435502dfd89c41a5f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>XCHANGE_PATCHLEVEL</b>&#160;&#160;&#160;0</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>XCHANGE_PATCHLEVEL</b>&#160;&#160;&#160;1</td></tr>
 <tr class="memdesc:aef108c611a8388c435502dfd89c41a5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integer sub version of the release. <br /></td></tr>
 <tr class="separator:aef108c611a8388c435502dfd89c41a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cda2967190e2d61c5560bf6b43d930d" id="r_a1cda2967190e2d61c5560bf6b43d930d"><td class="memItemLeft" align="right" valign="top"><a id="a1cda2967190e2d61c5560bf6b43d930d" name="a1cda2967190e2d61c5560bf6b43d930d"></a>
@@ -390,14 +392,20 @@ Functions</h2></td></tr>
 <tr class="separator:aa4405d56659397e044b6d4fdda394dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4587dcd0157acce30373288e19f1237d" id="r_a4587dcd0157acce30373288e19f1237d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a4587dcd0157acce30373288e19f1237d">xCreateLongField</a> (const char *name, long long value)</td></tr>
 <tr class="separator:a4587dcd0157acce30373288e19f1237d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8bee9eeac947d7e36ea436252e8dc2d" id="r_af8bee9eeac947d7e36ea436252e8dc2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXLookupTable.html">XLookupTable</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#af8bee9eeac947d7e36ea436252e8dc2d">xCreateLookup</a> (const <a class="el" href="structXStructure.html">XStructure</a> *s, <a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a> recursive)</td></tr>
+<tr class="separator:af8bee9eeac947d7e36ea436252e8dc2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a965f7e58fd1c10570c6f6a472599b08f" id="r_a965f7e58fd1c10570c6f6a472599b08f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a965f7e58fd1c10570c6f6a472599b08f">xCreateScalarField</a> (const char *name, <a class="el" href="xchange_8h.html#a1c7e02eda23566a7891310fd09307a70">XType</a> type, const void *value)</td></tr>
 <tr class="separator:a965f7e58fd1c10570c6f6a472599b08f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9dc77bed0d8b738ba615019721a6a2b6" id="r_a9dc77bed0d8b738ba615019721a6a2b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a9dc77bed0d8b738ba615019721a6a2b6">xCreateStringField</a> (const char *name, const char *value)</td></tr>
 <tr class="separator:a9dc77bed0d8b738ba615019721a6a2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12112584a34e07f9ef7b08f6ef1bc865" id="r_a12112584a34e07f9ef7b08f6ef1bc865"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXStructure.html">XStructure</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a12112584a34e07f9ef7b08f6ef1bc865">xCreateStruct</a> ()</td></tr>
 <tr class="separator:a12112584a34e07f9ef7b08f6ef1bc865"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a789489313df89d33aa50de911e1e42ff" id="r_a789489313df89d33aa50de911e1e42ff"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a789489313df89d33aa50de911e1e42ff">xDeepCountFields</a> (const <a class="el" href="structXStructure.html">XStructure</a> *s)</td></tr>
+<tr class="separator:a789489313df89d33aa50de911e1e42ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0ce99c867b11bd14971031eec8ba4ad" id="r_ae0ce99c867b11bd14971031eec8ba4ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a> (<a class="el" href="structXField.html">XField</a> *f)</td></tr>
 <tr class="separator:ae0ce99c867b11bd14971031eec8ba4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02ea2d67e4c540ad706edcc1b3a0431e" id="r_a02ea2d67e4c540ad706edcc1b3a0431e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a02ea2d67e4c540ad706edcc1b3a0431e">xDestroyLookup</a> (<a class="el" href="structXLookupTable.html">XLookupTable</a> *tab)</td></tr>
+<tr class="separator:a02ea2d67e4c540ad706edcc1b3a0431e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe3fda2f392bae11e136e8c0c90f086d" id="r_afe3fda2f392bae11e136e8c0c90f086d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct</a> (<a class="el" href="structXStructure.html">XStructure</a> *s)</td></tr>
 <tr class="separator:afe3fda2f392bae11e136e8c0c90f086d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5ec26d18b20fc0da9ec9032af73fa9e" id="r_af5ec26d18b20fc0da9ec9032af73fa9e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#af5ec26d18b20fc0da9ec9032af73fa9e">xElementSizeOf</a> (<a class="el" href="xchange_8h.html#a1c7e02eda23566a7891310fd09307a70">XType</a> type)</td></tr>
@@ -424,6 +432,8 @@ Functions</h2></td></tr>
 <tr class="separator:a46a6c2d802ebadd46ffcfdde7fb438b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9a9fbc1235164bfeed5fbba1f7d8692" id="r_ab9a9fbc1235164bfeed5fbba1f7d8692"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#ab9a9fbc1235164bfeed5fbba1f7d8692">xLastSeparator</a> (const char *id)</td></tr>
 <tr class="separator:ab9a9fbc1235164bfeed5fbba1f7d8692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e3a316b7d0c5c40ed079f3df2d9fcc9" id="r_a5e3a316b7d0c5c40ed079f3df2d9fcc9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField</a> (const <a class="el" href="structXLookupTable.html">XLookupTable</a> *tab, const char *id)</td></tr>
+<tr class="separator:a5e3a316b7d0c5c40ed079f3df2d9fcc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90aae0dafd1d461877eef63c9c730592" id="r_a90aae0dafd1d461877eef63c9c730592"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a90aae0dafd1d461877eef63c9c730592">xMatchNextID</a> (const char *token, const char *id)</td></tr>
 <tr class="separator:a90aae0dafd1d461877eef63c9c730592"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af436eb535b32fa88ab4e600c0a37c19d" id="r_af436eb535b32fa88ab4e600c0a37c19d"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#af436eb535b32fa88ab4e600c0a37c19d">xNextIDToken</a> (const char *id)</td></tr>
@@ -478,7 +488,7 @@ Variables</h2></td></tr>
 <div class="textblock"><dl class="section date"><dt>Date</dt><dd>Mar 14, 2019 </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Attila Kovacs</dd></dl>
 <p>A Basic set of utilities to allow platform-independent structured data exchange from C/C++. It also includes a JSON parser and emitter implementation.</p>
-<dl class="section version"><dt>Version</dt><dd>0.9.0 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>0.9.1 </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="abf5d02e3f3ec45ae6fe1e6afd09690a5" name="abf5d02e3f3ec45ae6fe1e6afd09690a5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abf5d02e3f3ec45ae6fe1e6afd09690a5">&#9670;&#160;</a></span>X_FIELD_INIT</h2>
@@ -709,7 +719,8 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the number of fields cotnained in the structure (but not counting fields in sub-structures). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of fields cotnained in the structure (but not counting fields in sub-structures).</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff">xDeepCountFields()</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, and <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>.</p>
 
@@ -986,6 +997,50 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="af8bee9eeac947d7e36ea436252e8dc2d" name="af8bee9eeac947d7e36ea436252e8dc2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8bee9eeac947d7e36ea436252e8dc2d">&#9670;&#160;</a></span>xCreateLookup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structXLookupTable.html">XLookupTable</a> * xCreateLookup </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a>&#160;</td>
+          <td class="paramname"><em>recursive</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a fast name lookup table for the fields of structure, with or without including fields of embedded substructures also. For structures with a large number of fields, such a lookup can significantly improve access times for retrieving specific fields from a structure. However, the lookup will not track fields added or removed after its creation, and so it is suited for accessing structures with a fixed layout only.</p>
+<p>Since the lookup table contains references to the structure, you should not destroy the structure as long as the lookup table is used.</p>
+<p>Once the lookup table is no longer used, the caller should explicitly destroy it with <code><a class="el" href="xlookup_8c.html#a02ea2d67e4c540ad706edcc1b3a0431e">xDestroyLookup()</a></code></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Pointer to a structure, for which to create a field lookup. </td></tr>
+    <tr><td class="paramname">recursive</td><td>Whether to include fields from substructures recursively in the lookup. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The lookup table, or NULL if there was an error (errno will inform about the type of error).</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField()</a> </dd>
+<dd>
+<a class="el" href="xlookup_8c.html#a02ea2d67e4c540ad706edcc1b3a0431e">xDestroyLookup()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="xstruct_8c.html#af7447cdd983402a27a25a70cc7187275">xCountFields()</a>, and <a class="el" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff">xDeepCountFields()</a>.</p>
+
+</div>
+</div>
 <a id="a965f7e58fd1c10570c6f6a472599b08f" name="a965f7e58fd1c10570c6f6a472599b08f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a965f7e58fd1c10570c6f6a472599b08f">&#9670;&#160;</a></span>xCreateScalarField()</h2>
 
@@ -1090,6 +1145,35 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a789489313df89d33aa50de911e1e42ff" name="a789489313df89d33aa50de911e1e42ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a789489313df89d33aa50de911e1e42ff">&#9670;&#160;</a></span>xDeepCountFields()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long xDeepCountFields </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Counts the number of fields in a structure, including the field count for all embedded substructures also recursively.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Pointer to a structure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The total number of fields present in the structure and all its sub-structures.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#af7447cdd983402a27a25a70cc7187275">xCountFields()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff">xDeepCountFields()</a>, and <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>.</p>
+
+</div>
+</div>
 <a id="ae0ce99c867b11bd14971031eec8ba4ad" name="ae0ce99c867b11bd14971031eec8ba4ad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae0ce99c867b11bd14971031eec8ba4ad">&#9670;&#160;</a></span>xDestroyField()</h2>
 
@@ -1114,6 +1198,34 @@ Variables</h2></td></tr>
 </dl>
 
 <p class="reference">References <a class="el" href="structXField.html#aaa68a7e140a5370ed0eb52710744c341">XField::isSerialized</a>, <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#adb72c72467963a6ace1632638a8a6a7b">X_RAW</a>, <a class="el" href="xchange_8h.html#a2443dd783d2728a3559361fba845e533">X_STRING</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xstruct_8c.html#ae45c0a047c30a17aba84d2fc8c08a2dc">xClearStruct()</a>, and <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>.</p>
+
+</div>
+</div>
+<a id="a02ea2d67e4c540ad706edcc1b3a0431e" name="a02ea2d67e4c540ad706edcc1b3a0431e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02ea2d67e4c540ad706edcc1b3a0431e">&#9670;&#160;</a></span>xDestroyLookup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xDestroyLookup </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXLookupTable.html">XLookupTable</a> *&#160;</td>
+          <td class="paramname"><em>tab</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Destroys a lookup table, freeing up it's in-memory resources.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tab</td><td>Pointer to the lookup table to destroy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#af8bee9eeac947d7e36ea436252e8dc2d">xCreateLookup()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>.</p>
 
 </div>
 </div>
@@ -1352,7 +1464,9 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Matching field from the structure or NULL if there is no match or one of the arguments is NULL.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField()</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField()</a> </dd>
+<dd>
+<a class="el" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField()</a> </dd>
 <dd>
 <a class="el" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct()</a> </dd></dl>
 
@@ -1532,6 +1646,46 @@ Variables</h2></td></tr>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#acd6af91336f4b5501d0a0e3d5cf88ad3">xSplitID()</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="xchange_8h.html#a923cd66e2074f32817a3468c5617a440">X_SEP</a>, and <a class="el" href="xchange_8h.html#a28120364666ec6054159012a58ba27af">X_SEP_LENGTH</a>.</p>
+
+</div>
+</div>
+<a id="a5e3a316b7d0c5c40ed079f3df2d9fcc9" name="a5e3a316b7d0c5c40ed079f3df2d9fcc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e3a316b7d0c5c40ed079f3df2d9fcc9">&#9670;&#160;</a></span>xLookupField()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structXField.html">XField</a> * xLookupField </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structXLookupTable.html">XLookupTable</a> *&#160;</td>
+          <td class="paramname"><em>tab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns a named field from a lookup table.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tab</td><td>Pointer to the lookup table </td></tr>
+    <tr><td class="paramname">id</td><td>The aggregate ID of the field to find. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The corresponding field or NULL if no such field exists or tab was NULL.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#af8bee9eeac947d7e36ea436252e8dc2d">xCreateLookup()</a> </dd>
+<dd>
+<a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a> </dd></dl>
 
 </div>
 </div>

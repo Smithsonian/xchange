@@ -8,11 +8,14 @@
       <topic label="Arrays" href="index.html#autotoc_md10"/>
       <topic label="Creating structure" href="index.html#autotoc_md11"/>
       <topic label="Aggregate IDs" href="index.html#autotoc_md12"/>
-      <topic label="Accessing substructures and elements" href="index.html#autotoc_md13"/>
+      <topic label="Accessing substructures and elements" href="index.html#autotoc_md13">
+        <topic label="Large structures" href="index.html#autotoc_md14"/>
+        <topic label="Iterating over elements" href="index.html#autotoc_md15"/>
+      </topic>
     </topic>
-    <topic label="JSON parser and emitter" href="index.html#autotoc_md15"/>
-    <topic label="Error handling" href="index.html#autotoc_md17"/>
-    <topic label="Debugging support" href="index.html#autotoc_md19"/>
+    <topic label="JSON parser and emitter" href="index.html#autotoc_md17"/>
+    <topic label="Error handling" href="index.html#autotoc_md19"/>
+    <topic label="Debugging support" href="index.html#autotoc_md21"/>
   </topic>
   <topic label="Changelog" href="md_CHANGELOG.html">
     <topic label="[Unreleased]" href="md_CHANGELOG.html#autotoc_md1"/>
@@ -27,6 +30,9 @@
         <topic label="sizes" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d"/>
         <topic label="type" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9"/>
         <topic label="value" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61"/>
+      </topic>
+      <topic label="XLookupTable" href="structXLookupTable.html">
+        <topic label="priv" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa"/>
       </topic>
       <topic label="XStructure" href="structXStructure.html">
         <topic label="firstField" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc"/>
@@ -51,6 +57,9 @@
             <topic label="sizes" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d"/>
             <topic label="type" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9"/>
             <topic label="value" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61"/>
+          </topic>
+          <topic label="XLookupTable" href="structXLookupTable.html">
+            <topic label="priv" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa"/>
           </topic>
           <topic label="XStructure" href="structXStructure.html">
             <topic label="firstField" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc"/>
@@ -126,10 +135,13 @@
           <topic label="xCreateField" href="xchange_8h.html#a42e4e75cbf8f721ef4b251c692dcd7cb"/>
           <topic label="xCreateIntField" href="xchange_8h.html#aa4405d56659397e044b6d4fdda394dfa"/>
           <topic label="xCreateLongField" href="xchange_8h.html#a4587dcd0157acce30373288e19f1237d"/>
+          <topic label="xCreateLookup" href="xchange_8h.html#af8bee9eeac947d7e36ea436252e8dc2d"/>
           <topic label="xCreateScalarField" href="xchange_8h.html#a965f7e58fd1c10570c6f6a472599b08f"/>
           <topic label="xCreateStringField" href="xchange_8h.html#a9dc77bed0d8b738ba615019721a6a2b6"/>
           <topic label="xCreateStruct" href="xchange_8h.html#a12112584a34e07f9ef7b08f6ef1bc865"/>
+          <topic label="xDeepCountFields" href="xchange_8h.html#a789489313df89d33aa50de911e1e42ff"/>
           <topic label="xDestroyField" href="xchange_8h.html#ae0ce99c867b11bd14971031eec8ba4ad"/>
+          <topic label="xDestroyLookup" href="xchange_8h.html#a02ea2d67e4c540ad706edcc1b3a0431e"/>
           <topic label="xDestroyStruct" href="xchange_8h.html#afe3fda2f392bae11e136e8c0c90f086d"/>
           <topic label="xElementSizeOf" href="xchange_8h.html#af5ec26d18b20fc0da9ec9032af73fa9e"/>
           <topic label="xError" href="xchange_8h.html#a3fe612344032025068b6d32b16863d68"/>
@@ -143,6 +155,7 @@
           <topic label="xIsFieldValid" href="xchange_8h.html#aec6e78e07733ca246ca485b0fcf02d21"/>
           <topic label="xIsVerbose" href="xchange_8h.html#a46a6c2d802ebadd46ffcfdde7fb438b8"/>
           <topic label="xLastSeparator" href="xchange_8h.html#ab9a9fbc1235164bfeed5fbba1f7d8692"/>
+          <topic label="xLookupField" href="xchange_8h.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9"/>
           <topic label="xMatchNextID" href="xchange_8h.html#a90aae0dafd1d461877eef63c9c730592"/>
           <topic label="xNextIDToken" href="xchange_8h.html#af436eb535b32fa88ab4e600c0a37c19d"/>
           <topic label="xParseBoolean" href="xchange_8h.html#a994ae91adbbffc3b55b47b0219338282"/>
@@ -216,6 +229,11 @@
           <topic label="xjsonToString" href="xjson_8c.html#a53128045970e973134867c96a6465abc"/>
           <topic label="xjsonUnescapeString" href="xjson_8c.html#ae11aed18561818c2e39a5709a8e3374d"/>
         </topic>
+        <topic label="xlookup.c" href="xlookup_8c.html">
+          <topic label="xCreateLookup" href="xlookup_8c.html#af8bee9eeac947d7e36ea436252e8dc2d"/>
+          <topic label="xDestroyLookup" href="xlookup_8c.html#a02ea2d67e4c540ad706edcc1b3a0431e"/>
+          <topic label="xLookupField" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9"/>
+        </topic>
         <topic label="xstruct.c" href="xstruct_8c.html">
           <topic label="xClearStruct" href="xstruct_8c.html#ae45c0a047c30a17aba84d2fc8c08a2dc"/>
           <topic label="xCopyIDToken" href="xstruct_8c.html#ab20a0213369a947a7e48ff45aabee3c0"/>
@@ -231,6 +249,7 @@
           <topic label="xCreateScalarField" href="xstruct_8c.html#a965f7e58fd1c10570c6f6a472599b08f"/>
           <topic label="xCreateStringField" href="xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6"/>
           <topic label="xCreateStruct" href="xstruct_8c.html#ab551d2db420303b4408064a66bbe3f1c"/>
+          <topic label="xDeepCountFields" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff"/>
           <topic label="xDestroyField" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad"/>
           <topic label="xDestroyStruct" href="xstruct_8c.html#a2e12d0147219f85a6ec012d7f475fe21"/>
           <topic label="xGetAggregateID" href="xstruct_8c.html#a2cbbd824406d862b2018e28a466ff318"/>

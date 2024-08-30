@@ -5,6 +5,7 @@
     <path>include/</path>
     <filename>xchange_8h.html</filename>
     <class kind="struct">XField</class>
+    <class kind="struct">XLookupTable</class>
     <class kind="struct">XStructure</class>
     <member kind="define">
       <type>#define</type>
@@ -497,6 +498,13 @@
       <arglist>(const char *name, long long value)</arglist>
     </member>
     <member kind="function">
+      <type>XLookupTable *</type>
+      <name>xCreateLookup</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>af8bee9eeac947d7e36ea436252e8dc2d</anchor>
+      <arglist>(const XStructure *s, boolean recursive)</arglist>
+    </member>
+    <member kind="function">
       <type>XField *</type>
       <name>xCreateScalarField</name>
       <anchorfile>xchange_8h.html</anchorfile>
@@ -518,11 +526,25 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
+      <type>long</type>
+      <name>xDeepCountFields</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a789489313df89d33aa50de911e1e42ff</anchor>
+      <arglist>(const XStructure *s)</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>xDestroyField</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>ae0ce99c867b11bd14971031eec8ba4ad</anchor>
       <arglist>(XField *f)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>xDestroyLookup</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a02ea2d67e4c540ad706edcc1b3a0431e</anchor>
+      <arglist>(XLookupTable *tab)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -614,6 +636,13 @@
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>ab9a9fbc1235164bfeed5fbba1f7d8692</anchor>
       <arglist>(const char *id)</arglist>
+    </member>
+    <member kind="function">
+      <type>XField *</type>
+      <name>xLookupField</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a5e3a316b7d0c5c40ed079f3df2d9fcc9</anchor>
+      <arglist>(const XLookupTable *tab, const char *id)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -1083,6 +1112,33 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>xlookup.c</name>
+    <path>src/</path>
+    <filename>xlookup_8c.html</filename>
+    <includes id="xchange_8h" name="xchange.h" local="yes" import="no" module="no" objc="no">xchange.h</includes>
+    <member kind="function">
+      <type>XLookupTable *</type>
+      <name>xCreateLookup</name>
+      <anchorfile>xlookup_8c.html</anchorfile>
+      <anchor>af8bee9eeac947d7e36ea436252e8dc2d</anchor>
+      <arglist>(const XStructure *s, boolean recursive)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>xDestroyLookup</name>
+      <anchorfile>xlookup_8c.html</anchorfile>
+      <anchor>a02ea2d67e4c540ad706edcc1b3a0431e</anchor>
+      <arglist>(XLookupTable *tab)</arglist>
+    </member>
+    <member kind="function">
+      <type>XField *</type>
+      <name>xLookupField</name>
+      <anchorfile>xlookup_8c.html</anchorfile>
+      <anchor>a5e3a316b7d0c5c40ed079f3df2d9fcc9</anchor>
+      <arglist>(const XLookupTable *tab, const char *id)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>xstruct.c</name>
     <path>src/</path>
     <filename>xstruct_8c.html</filename>
@@ -1184,6 +1240,13 @@
       <anchorfile>xstruct_8c.html</anchorfile>
       <anchor>ab551d2db420303b4408064a66bbe3f1c</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>long</type>
+      <name>xDeepCountFields</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>a789489313df89d33aa50de911e1e42ff</anchor>
+      <arglist>(const XStructure *s)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -1348,6 +1411,17 @@
       <name>value</name>
       <anchorfile>structXField.html</anchorfile>
       <anchor>a4e9aec275e566b978a3ccb4e043d8c61</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>XLookupTable</name>
+    <filename>structXLookupTable.html</filename>
+    <member kind="variable">
+      <type>void *</type>
+      <name>priv</name>
+      <anchorfile>structXLookupTable.html</anchorfile>
+      <anchor>a8b6505c37d4ff95854b8b00527e4d9fa</anchor>
       <arglist></arglist>
     </member>
   </compound>

@@ -1,0 +1,109 @@
+.TH "src/xlookup.c" 3 "Version v0.9" "xchange" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/xlookup.c
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBXLookupTable\fP * \fBxCreateLookup\fP (const \fBXStructure\fP *s, \fBboolean\fP recursive)"
+.br
+.ti -1c
+.RI "void \fBxDestroyLookup\fP (\fBXLookupTable\fP *tab)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxLookupField\fP (const \fBXLookupTable\fP *tab, const char *id)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBDate\fP
+.RS 4
+Created on Aug 30, 2024 
+.RE
+.PP
+\fBAuthor\fP
+.RS 4
+Attila Kovacs
+.RE
+.PP
+Lookup table for faster field access in large fixed-layout structures\&. 
+.SH "Function Documentation"
+.PP 
+.SS "\fBXLookupTable\fP * xCreateLookup (const \fBXStructure\fP * s, \fBboolean\fP recursive)"
+Creates a fast name lookup table for the fields of structure, with or without including fields of embedded substructures also\&. For structures with a large number of fields, such a lookup can significantly improve access times for retrieving specific fields from a structure\&. However, the lookup will not track fields added or removed after its creation, and so it is suited for accessing structures with a fixed layout only\&.
+.PP
+Since the lookup table contains references to the structure, you should not destroy the structure as long as the lookup table is used\&.
+.PP
+Once the lookup table is no longer used, the caller should explicitly destroy it with \fC\fBxDestroyLookup()\fP\fP
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Pointer to a structure, for which to create a field lookup\&. 
+.br
+\fIrecursive\fP Whether to include fields from substructures recursively in the lookup\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The lookup table, or NULL if there was an error (errno will inform about the type of error)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxLookupField()\fP 
+.PP
+\fBxDestroyLookup()\fP 
+.RE
+.PP
+
+.PP
+References \fBxCountFields()\fP, and \fBxDeepCountFields()\fP\&.
+.SS "void xDestroyLookup (\fBXLookupTable\fP * tab)"
+Destroys a lookup table, freeing up it's in-memory resources\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to the lookup table to destroy\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCreateLookup()\fP 
+.RE
+.PP
+
+.PP
+References \fBXLookupTable::priv\fP\&.
+.SS "\fBXField\fP * xLookupField (const \fBXLookupTable\fP * tab, const char * id)"
+Returns a named field from a lookup table\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to the lookup table 
+.br
+\fIid\fP The aggregate ID of the field to find\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The corresponding field or NULL if no such field exists or tab was NULL\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCreateLookup()\fP 
+.PP
+\fBxGetField()\fP 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for xchange from the source code\&.

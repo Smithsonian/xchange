@@ -14,6 +14,9 @@ include/xchange.h
 .br
 .RI "An SMA-X field, typically as part of an \fBXStructure\fP\&. A field may be a reference to a nested \fBXStructure\fP itself\&. "
 .ti -1c
+.RI "struct \fBXLookupTable\fP"
+.br
+.ti -1c
 .RI "struct \fBXStructure\fP"
 .br
 .RI "SMA-X structure object, containing a linked-list of \fBXField\fP elements\&. "
@@ -224,7 +227,7 @@ include/xchange.h
 .br
 .RI "API minor version\&. "
 .ti -1c
-.RI "#define \fBXCHANGE_PATCHLEVEL\fP   0"
+.RI "#define \fBXCHANGE_PATCHLEVEL\fP   1"
 .br
 .RI "Integer sub version of the release\&. "
 .ti -1c
@@ -296,6 +299,9 @@ include/xchange.h
 .RI "\fBXField\fP * \fBxCreateLongField\fP (const char *name, long long value)"
 .br
 .ti -1c
+.RI "\fBXLookupTable\fP * \fBxCreateLookup\fP (const \fBXStructure\fP *s, \fBboolean\fP recursive)"
+.br
+.ti -1c
 .RI "\fBXField\fP * \fBxCreateScalarField\fP (const char *name, \fBXType\fP type, const void *value)"
 .br
 .ti -1c
@@ -305,7 +311,13 @@ include/xchange.h
 .RI "\fBXStructure\fP * \fBxCreateStruct\fP ()"
 .br
 .ti -1c
+.RI "long \fBxDeepCountFields\fP (const \fBXStructure\fP *s)"
+.br
+.ti -1c
 .RI "void \fBxDestroyField\fP (\fBXField\fP *f)"
+.br
+.ti -1c
+.RI "void \fBxDestroyLookup\fP (\fBXLookupTable\fP *tab)"
 .br
 .ti -1c
 .RI "void \fBxDestroyStruct\fP (\fBXStructure\fP *s)"
@@ -345,6 +357,9 @@ include/xchange.h
 .br
 .ti -1c
 .RI "char * \fBxLastSeparator\fP (const char *id)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxLookupField\fP (const \fBXLookupTable\fP *tab, const char *id)"
 .br
 .ti -1c
 .RI "int \fBxMatchNextID\fP (const char *token, const char *id)"
@@ -434,7 +449,7 @@ A Basic set of utilities to allow platform-independent structured data exchange 
 .PP
 \fBVersion\fP
 .RS 4
-0\&.9\&.0 
+0\&.9\&.1 
 .RE
 .PP
 
@@ -557,7 +572,12 @@ Returns the number of fields contained inside the structure\&. It is not recursi
 .PP
 \fBReturns\fP
 .RS 4
-the number of fields cotnained in the structure (but not counting fields in sub-structures)\&. 
+the number of fields cotnained in the structure (but not counting fields in sub-structures)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxDeepCountFields()\fP 
 .RE
 .PP
 
@@ -691,6 +711,35 @@ A newly created field with the supplied data, or NULL if there was an error\&.
 
 .PP
 References \fBX_LONG\fP, and \fBxCreateScalarField()\fP\&.
+.SS "\fBXLookupTable\fP * xCreateLookup (const \fBXStructure\fP * s, \fBboolean\fP recursive)"
+Creates a fast name lookup table for the fields of structure, with or without including fields of embedded substructures also\&. For structures with a large number of fields, such a lookup can significantly improve access times for retrieving specific fields from a structure\&. However, the lookup will not track fields added or removed after its creation, and so it is suited for accessing structures with a fixed layout only\&.
+.PP
+Since the lookup table contains references to the structure, you should not destroy the structure as long as the lookup table is used\&.
+.PP
+Once the lookup table is no longer used, the caller should explicitly destroy it with \fC\fBxDestroyLookup()\fP\fP
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Pointer to a structure, for which to create a field lookup\&. 
+.br
+\fIrecursive\fP Whether to include fields from substructures recursively in the lookup\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The lookup table, or NULL if there was an error (errno will inform about the type of error)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxLookupField()\fP 
+.PP
+\fBxDestroyLookup()\fP 
+.RE
+.PP
+
+.PP
+References \fBxCountFields()\fP, and \fBxDeepCountFields()\fP\&.
 .SS "\fBXField\fP * xCreateScalarField (const char * name, \fBXType\fP type, const void * value)"
 Creates a generic scalar field of a given name and native value\&. The structure will hold a copy of the value that is pointed at\&.
 .PP
@@ -738,6 +787,27 @@ smaxDestroyStruct()
 .RE
 .PP
 
+.SS "long xDeepCountFields (const \fBXStructure\fP * s)"
+Counts the number of fields in a structure, including the field count for all embedded substructures also recursively\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Pointer to a structure 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The total number of fields present in the structure and all its sub-structures\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCountFields()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, \fBxDeepCountFields()\fP, and \fBxGetFieldCount()\fP\&.
 .SS "void xDestroyField (\fBXField\fP * f)"
 Destroys an X structure field, freeing up resources used\&.
 .PP
@@ -749,6 +819,22 @@ Destroys an X structure field, freeing up resources used\&.
 
 .PP
 References \fBXField::isSerialized\fP, \fBXField::name\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, \fBxClearStruct()\fP, and \fBxGetFieldCount()\fP\&.
+.SS "void xDestroyLookup (\fBXLookupTable\fP * tab)"
+Destroys a lookup table, freeing up it's in-memory resources\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to the lookup table to destroy\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCreateLookup()\fP 
+.RE
+.PP
+
+.PP
+References \fBXLookupTable::priv\fP\&.
 .SS "void xDestroyStruct (\fBXStructure\fP * s)"
 Destroys an X structure, freeing up resources used by name and value\&.
 .PP
@@ -868,6 +954,8 @@ Matching field from the structure or NULL if there is no match or one of the arg
 .PP
 \fBSee also\fP
 .RS 4
+\fBxLookupField()\fP 
+.PP
 \fBxSetField()\fP 
 .PP
 \fBxGetSubstruct()\fP 
@@ -984,6 +1072,29 @@ Pointer to the beginning of the last separator in the ID, or NULL if the ID does
 
 .PP
 References \fBX_SEP\fP, and \fBX_SEP_LENGTH\fP\&.
+.SS "\fBXField\fP * xLookupField (const \fBXLookupTable\fP * tab, const char * id)"
+Returns a named field from a lookup table\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to the lookup table 
+.br
+\fIid\fP The aggregate ID of the field to find\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The corresponding field or NULL if no such field exists or tab was NULL\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCreateLookup()\fP 
+.PP
+\fBxGetField()\fP 
+.RE
+.PP
+
 .SS "int xMatchNextID (const char * token, const char * id)"
 Checks if the next component in a compound id matches a given token\&.
 .PP

@@ -151,6 +151,8 @@ Functions</h2></td></tr>
 <tr class="separator:a9dc77bed0d8b738ba615019721a6a2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab551d2db420303b4408064a66bbe3f1c" id="r_ab551d2db420303b4408064a66bbe3f1c"><td class="memItemLeft" align="right" valign="top">__inline__ <a class="el" href="structXStructure.html">XStructure</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#ab551d2db420303b4408064a66bbe3f1c">xCreateStruct</a> ()</td></tr>
 <tr class="separator:ab551d2db420303b4408064a66bbe3f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a789489313df89d33aa50de911e1e42ff" id="r_a789489313df89d33aa50de911e1e42ff"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff">xDeepCountFields</a> (const <a class="el" href="structXStructure.html">XStructure</a> *s)</td></tr>
+<tr class="separator:a789489313df89d33aa50de911e1e42ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0ce99c867b11bd14971031eec8ba4ad" id="r_ae0ce99c867b11bd14971031eec8ba4ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a> (<a class="el" href="structXField.html">XField</a> *f)</td></tr>
 <tr class="separator:ae0ce99c867b11bd14971031eec8ba4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e12d0147219f85a6ec012d7f475fe21" id="r_a2e12d0147219f85a6ec012d7f475fe21"><td class="memItemLeft" align="right" valign="top">__inline__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a2e12d0147219f85a6ec012d7f475fe21">xDestroyStruct</a> (<a class="el" href="structXStructure.html">XStructure</a> *s)</td></tr>
@@ -325,7 +327,8 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the number of fields cotnained in the structure (but not counting fields in sub-structures). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of fields cotnained in the structure (but not counting fields in sub-structures).</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff">xDeepCountFields()</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, and <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>.</p>
 
@@ -706,6 +709,35 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a789489313df89d33aa50de911e1e42ff" name="a789489313df89d33aa50de911e1e42ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a789489313df89d33aa50de911e1e42ff">&#9670;&#160;</a></span>xDeepCountFields()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long xDeepCountFields </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Counts the number of fields in a structure, including the field count for all embedded substructures also recursively.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Pointer to a structure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The total number of fields present in the structure and all its sub-structures.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#af7447cdd983402a27a25a70cc7187275">xCountFields()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff">xDeepCountFields()</a>, and <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>.</p>
+
+</div>
+</div>
 <a id="ae0ce99c867b11bd14971031eec8ba4ad" name="ae0ce99c867b11bd14971031eec8ba4ad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae0ce99c867b11bd14971031eec8ba4ad">&#9670;&#160;</a></span>xDestroyField()</h2>
 
@@ -834,7 +866,9 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Matching field from the structure or NULL if there is no match or one of the arguments is NULL.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField()</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField()</a> </dd>
+<dd>
+<a class="el" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField()</a> </dd>
 <dd>
 <a class="el" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct()</a> </dd></dl>
 

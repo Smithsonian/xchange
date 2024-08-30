@@ -36,11 +36,14 @@ var NAVTREE =
         [ "Arrays", "index.html#autotoc_md10", null ],
         [ "Creating structure", "index.html#autotoc_md11", null ],
         [ "Aggregate IDs", "index.html#autotoc_md12", null ],
-        [ "Accessing substructures and elements", "index.html#autotoc_md13", null ]
+        [ "Accessing substructures and elements", "index.html#autotoc_md13", [
+          [ "Large structures", "index.html#autotoc_md14", null ],
+          [ "Iterating over elements", "index.html#autotoc_md15", null ]
+        ] ]
       ] ],
-      [ "JSON parser and emitter", "index.html#autotoc_md15", null ],
-      [ "Error handling", "index.html#autotoc_md17", null ],
-      [ "Debugging support", "index.html#autotoc_md19", null ],
+      [ "JSON parser and emitter", "index.html#autotoc_md17", null ],
+      [ "Error handling", "index.html#autotoc_md19", null ],
+      [ "Debugging support", "index.html#autotoc_md21", null ],
       [ "[Unreleased]", "md_CHANGELOG.html#autotoc_md1", null ]
     ] ],
     [ "Data Structures", "annotated.html", [

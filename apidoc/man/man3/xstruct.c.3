@@ -53,6 +53,9 @@ src/xstruct.c \- A collection of commonly used functions for generic structured 
 .RI "__inline__ \fBXStructure\fP * \fBxCreateStruct\fP ()"
 .br
 .ti -1c
+.RI "long \fBxDeepCountFields\fP (const \fBXStructure\fP *s)"
+.br
+.ti -1c
 .RI "void \fBxDestroyField\fP (\fBXField\fP *f)"
 .br
 .ti -1c
@@ -204,7 +207,12 @@ Returns the number of fields contained inside the structure\&. It is not recursi
 .PP
 \fBReturns\fP
 .RS 4
-the number of fields cotnained in the structure (but not counting fields in sub-structures)\&. 
+the number of fields cotnained in the structure (but not counting fields in sub-structures)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxDeepCountFields()\fP 
 .RE
 .PP
 
@@ -385,6 +393,27 @@ smaxDestroyStruct()
 .RE
 .PP
 
+.SS "long xDeepCountFields (const \fBXStructure\fP * s)"
+Counts the number of fields in a structure, including the field count for all embedded substructures also recursively\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Pointer to a structure 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The total number of fields present in the structure and all its sub-structures\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCountFields()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, \fBxDeepCountFields()\fP, and \fBxGetFieldCount()\fP\&.
 .SS "void xDestroyField (\fBXField\fP * f)"
 Destroys an X structure field, freeing up resources used\&.
 .PP
@@ -447,6 +476,8 @@ Matching field from the structure or NULL if there is no match or one of the arg
 .PP
 \fBSee also\fP
 .RS 4
+\fBxLookupField()\fP 
+.PP
 \fBxSetField()\fP 
 .PP
 \fBxGetSubstruct()\fP 
