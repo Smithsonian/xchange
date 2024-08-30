@@ -118,7 +118,7 @@ static XLookupTable *xAllocLookup(int size) {
     return NULL;
   }
 
-  p->nBins = p->table ? n : 0;
+  p->nBins = n;
 
   tab = (XLookupTable *) calloc(1, sizeof(XLookupTable));
   tab->priv = p;
