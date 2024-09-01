@@ -772,9 +772,9 @@ int xReduceAllDims(XStructure *s) {
 
     s->firstField = sub->firstField;
     for(sf = s->firstField; sf; sf = sf->next) if(sf->type == X_STRUCT) {
-      XStructure *sub = (XStructure *) f;
-      int i = xGetFieldCount(f);
-      while(--i >= 0) sub[i].parent = s;
+      XStructure *ss = (XStructure *) f;
+      int i = xGetFieldCount(sf);
+      while(--i >= 0) ss[i].parent = s;
     }
 
     free(f);
@@ -1000,8 +1000,8 @@ int xSortFields(XStructure *s, int (*cmp)(const XField **f1, const XField **f2),
   for(n = 0, f = s->firstField; f != NULL; f = f->next, n++)
     if(f->type == X_STRUCT && recursive) {
       XStructure *sub = (XStructure *) f->value;
-      int i = xGetFieldCount(f);
-      while (--i >= 0) xSortFields(&sub[i], cmp, TRUE);
+      int k = xGetFieldCount(f);
+      while (--k >= 0) xSortFields(&sub[k], cmp, TRUE);
     }
 
   if(n < 2) return n;

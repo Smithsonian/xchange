@@ -330,6 +330,21 @@ elements is with a `for` loop, e.g.:
   }
 ```
 
+#### Sorting fields
+
+You can easily sort fields by name using `xSortFieldsByName()`, or with using a custom comparator function with 
+`xSortFields()`. You can also reverse the order with `xReverseFieldOrder()`. For example to sort fields in a 
+structure (and its substructures) in decending alphabetical order:
+
+```c
+  XStructure *s = ...
+  
+  // Sort in by names in ascending order, recursively
+  xSortFieldsByName(s, TRUE);
+
+  // Reverse the order, recursively
+  xReverseFieldOrder(s, TRUE);
+```
 
 -----------------------------------------------------------------------------
 
