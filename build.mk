@@ -12,10 +12,11 @@ $(OBJ)/%.o: %.c dep/%.d $(OBJ) Makefile
 
 # Share librarry recipe
 $(LIB)/%.so.$(SO_VERSION) : | $(LIB) Makefile
-	$(CC) -o $@ $(CPPFLAGS) $(CFLAGS) $^ -shared -fPIC -Wl,-soname,$(subst $(LIB)/,,$@) $(LD_FLAGS)
+	$(CC) -o $@ $(CPPFLAGS) $(CFLAGS) $^ -shared -fPIC -Wl,-soname,$(subst $(LIB)/,,$@) $(LDFLAGS)
 
 # Unversioned shared libs (for linking against)
 $(LIB)/lib%.so:
+	@rm -f $@
 	ln -sr $< $@
 
 # Static library: novas.a
