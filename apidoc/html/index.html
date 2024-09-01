@@ -149,6 +149,7 @@ Structured data</h2>
 <li><a class="el" href="index.html#creating-structure">Creating structure</a></li>
 <li><a class="el" href="index.html#aggregate-ids">Aggregate IDs</a></li>
 <li><a class="el" href="index.html#accessing-data">Accessing substructures and elements</a></li>
+<li><a class="el" href="index.html#sorting-fields">Sorting fields</a></li>
 </ul>
 <p>The <b>xchange</b> library defines the <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> type to represent structured data. It is defined in <code><a class="el" href="xchange_8h.html">xchange.h</a></code>, but as a user you really do not need to know much about its layout, as you probably want to avoid low-level direct access to its elements. Rather, you should be using the functions of the <b>xchange</b> API to create, modify, or access data within.</p>
 <p>Under the hood, the <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> contains a linked list of fields, each an <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> data type to represent a single element, or an array of elements, of the above mentioned types, including embedded <code>Xstructure</code>s. In this way, an <code>Xstructure</code> can easily represent a multi-level hierarchy of a composite data object. Each <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> has a name/ID, an associated data type, a dimensionality, a shape (for multidimensional arrays).</p>
@@ -331,8 +332,9 @@ Iterating over elements</h4>
 <div class="line">}</div>
 <div class="ttc" id="astructXField_html_ae1ebaf87eb62e6266b14908eee28e565"><div class="ttname"><a href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a></div><div class="ttdeci">struct XField * next</div><div class="ttdoc">Pointer to the next linked element (if inside an XStructure).</div><div class="ttdef"><b>Definition</b> xchange.h:140</div></div>
 <div class="ttc" id="astructXStructure_html_a501ae8af2201d9cfaa60e3af21ff58fc"><div class="ttname"><a href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a></div><div class="ttdeci">XField * firstField</div><div class="ttdoc">Pointer to the first field in this structure or NULL if the structure is empty.</div><div class="ttdef"><b>Definition</b> xchange.h:156</div></div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md16"></a>
-Sorting fields</h4>
+</div><!-- fragment --><p><a class="anchor" id="sorting-fields"></a> </p>
+<h3><a class="anchor" id="autotoc_md16"></a>
+Sorting fields</h3>
 <p>You can easily sort fields by name using <code><a class="el" href="xstruct_8c.html#a74d1f6b9b92ebe82353e75a3d7e9daae">xSortFieldsByName()</a></code>, or with using a custom comparator function with <code><a class="el" href="xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff">xSortFields()</a></code>. You can also reverse the order with <code><a class="el" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder()</a></code>. For example to sort fields in a structure (and its substructures) in decending alphabetical order:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s = ...</div>
 <div class="line"> </div>

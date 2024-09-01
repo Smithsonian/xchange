@@ -49,6 +49,7 @@ Some related links:
  - [Creating structure](#creating-structure)
  - [Aggregate IDs](#aggregate-ids)
  - [Accessing substructures and elements](#accessing-data)
+ - [Sorting fields](#sorting-fields)
 
 
 The __xchange__ library defines the `XStructure` type to represent structured data. It is defined in `xchange.h`, but 
@@ -313,7 +314,8 @@ elements is with a `for` loop, e.g.:
   }
 ```
 
-#### Sorting fields
+<a name="sorting-fields"></a>
+### Sorting fields
 
 You can easily sort fields by name using `xSortFieldsByName()`, or with using a custom comparator function with 
 `xSortFields()`. You can also reverse the order with `xReverseFieldOrder()`. For example to sort fields in a 

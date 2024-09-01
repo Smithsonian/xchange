@@ -11,8 +11,8 @@
       <topic label="Accessing substructures and elements" href="index.html#autotoc_md13">
         <topic label="Large structures" href="index.html#autotoc_md14"/>
         <topic label="Iterating over elements" href="index.html#autotoc_md15"/>
-        <topic label="Sorting fields" href="index.html#autotoc_md16"/>
       </topic>
+      <topic label="Sorting fields" href="index.html#autotoc_md16"/>
     </topic>
     <topic label="JSON parser and emitter" href="index.html#autotoc_md18"/>
     <topic label="Error handling" href="index.html#autotoc_md20"/>
