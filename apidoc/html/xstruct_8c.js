@@ -21,6 +21,7 @@ var xstruct_8c =
     [ "xGetField", "xstruct_8c.html#a442f155b0c6549549737510ce42bb66d", null ],
     [ "xGetFieldCount", "xstruct_8c.html#a1720e156de63fd0585224738ccbb5688", null ],
     [ "xGetSubstruct", "xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9", null ],
+    [ "xInsertField", "xstruct_8c.html#ad6249db6da0a1294d5621cd9fd829f7a", null ],
     [ "xIsFieldValid", "xstruct_8c.html#aec6e78e07733ca246ca485b0fcf02d21", null ],
     [ "xLastSeparator", "xstruct_8c.html#ab9a9fbc1235164bfeed5fbba1f7d8692", null ],
     [ "xMatchNextID", "xstruct_8c.html#a90aae0dafd1d461877eef63c9c730592", null ],
@@ -28,7 +29,10 @@ var xstruct_8c =
     [ "xReduceAllDims", "xstruct_8c.html#acc31fe75f06a6e0e469fba3a57c4fb25", null ],
     [ "xReduceDims", "xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987", null ],
     [ "xRemoveField", "xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1", null ],
+    [ "xReverseFieldOrder", "xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec", null ],
     [ "xSetField", "xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4", null ],
     [ "xSetSubstruct", "xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944", null ],
+    [ "xSortFields", "xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff", null ],
+    [ "xSortFieldsByName", "xstruct_8c.html#a74d1f6b9b92ebe82353e75a3d7e9daae", null ],
     [ "xSplitID", "xstruct_8c.html#acd6af91336f4b5501d0a0e3d5cf88ad3", null ]
 ];

@@ -258,29 +258,44 @@ of them if appropriate:
 You can also remove existing fields from structures using `xRemoveField()`, e.g.
 
 ```c
-  // Remove and then destroy the fiueld named "blah" in structure 's'.
+  // Remove and then destroy the field named "blah" in structure 's'.
   xDestroyField(xRemoveField(s, "blah"));
 ```
 
 #### Large structures
 
 The normal `xGetField()` and `xGetSubstruct()` functions have computational costs that scale linearly with the number 
-of direct fields in the structure. It is not much of an issue for structures that contain dozens of fields (per layer). 
-For much larger structures, which have a fixed layout, there is an option for significantly faster hash-based lookup
-also. E.g. instead of `xGetField()` you may use `xLookupField()`:
+of direct fields in the structure. It is not much of an issue for structures that contain dozens, or even hundreds, of 
+fields (per layer). For much larger structures, which have a fixed layout, there is an option for a potentially much 
+faster hash-based lookup also. E.g. instead of `xGetField()` you may use `xLookupField()`:
 
 ```c
   XStructure *s = ...
   
-  // Let's create a lookup table for all fields of 's' and all its substructures.
+  // Create a lookup table for all fields of 's' and all its substructures.
   XLookupTable *l = xCreateLookupTable(s, TRUE);
   
+  // Now use a hash-based lookup to locate the field by name
   XField *f = xLookupField(l, "subsystem:property");
+ 
   ...
   
   // Once done with the lookup, destroy it.
   xDestroyLookup(l);
 ```
+
+Note however, that preparing the lookup table has significant _O(N)_ computational cost also. Therefore, a lookup 
+table is practical only if you are going to use it repeatedly, many times over. As a rule of thumb, lookups may have 
+the advantage if accessing fields in a structure by name hundreds of times, or more.
+
+The same performance limitation also applies to building large structures, since the `xSetField()` and 
+`xSetSubstruct()` functions iterate over the existing fields to check if a prior field by the same name was already 
+present, and which should be removed before the new field is set (hence the time to build up a structure with _N_
+fields will scale as _O(N<sup>2</sup>)_ in general). The user may consider using `xInsertField()` instead, which is 
+much more scalable for building large structures, since it does not check for duplicates (hence scales as _O(N)_ 
+overall). However, `xInsertField()` also makes the ordering of fields less intuitive, and it is left up to the caller 
+to ensure that field names added this way are never duplicated.
+
 
 #### Iterating over elements
 
@@ -298,6 +313,21 @@ elements is with a `for` loop, e.g.:
   }
 ```
 
+#### Sorting fields
+
+You can easily sort fields by name using `xSortFieldsByName()`, or with using a custom comparator function with 
+`xSortFields()`. You can also reverse the order with `xReverseFieldOrder()`. For example to sort fields in a 
+structure (and its substructures) in decending alphabetical order:
+
+```c
+  XStructure *s = ...
+  
+  // Sort in by names in ascending order, recursively
+  xSortFieldsByName(s, TRUE);
+
+  // Reverse the order, recursively
+  xReverseFieldOrder(s, TRUE);
+```
 
 -----------------------------------------------------------------------------
 

@@ -11,11 +11,12 @@
       <topic label="Accessing substructures and elements" href="index.html#autotoc_md13">
         <topic label="Large structures" href="index.html#autotoc_md14"/>
         <topic label="Iterating over elements" href="index.html#autotoc_md15"/>
+        <topic label="Sorting fields" href="index.html#autotoc_md16"/>
       </topic>
     </topic>
-    <topic label="JSON parser and emitter" href="index.html#autotoc_md17"/>
-    <topic label="Error handling" href="index.html#autotoc_md19"/>
-    <topic label="Debugging support" href="index.html#autotoc_md21"/>
+    <topic label="JSON parser and emitter" href="index.html#autotoc_md18"/>
+    <topic label="Error handling" href="index.html#autotoc_md20"/>
+    <topic label="Debugging support" href="index.html#autotoc_md22"/>
   </topic>
   <topic label="Changelog" href="md_CHANGELOG.html">
     <topic label="[Unreleased]" href="md_CHANGELOG.html#autotoc_md1"/>
@@ -124,6 +125,7 @@
           <topic label="boolean" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e"/>
           <topic label="XType" href="xchange_8h.html#a1c7e02eda23566a7891310fd09307a70"/>
           <topic label="xAlloc" href="xchange_8h.html#a3525be19588c2b740fc0dbd54a936dcb"/>
+          <topic label="xAllocLookup" href="xchange_8h.html#a01a94b3210aed984dbee956fbb26fcfd"/>
           <topic label="xClearStruct" href="xchange_8h.html#ae45c0a047c30a17aba84d2fc8c08a2dc"/>
           <topic label="xCopyIDToken" href="xchange_8h.html#ab20a0213369a947a7e48ff45aabee3c0"/>
           <topic label="xCopyOfField" href="xchange_8h.html#afdb31906269568772fdf63adb6685fbc"/>
@@ -155,7 +157,12 @@
           <topic label="xIsFieldValid" href="xchange_8h.html#aec6e78e07733ca246ca485b0fcf02d21"/>
           <topic label="xIsVerbose" href="xchange_8h.html#a46a6c2d802ebadd46ffcfdde7fb438b8"/>
           <topic label="xLastSeparator" href="xchange_8h.html#ab9a9fbc1235164bfeed5fbba1f7d8692"/>
+          <topic label="xLookupCount" href="xchange_8h.html#a13e81b8f1bf3e1c3572ca74edb2836fe"/>
           <topic label="xLookupField" href="xchange_8h.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9"/>
+          <topic label="xLookupPut" href="xchange_8h.html#a3b423bf135d2ed42319abff99fda78e4"/>
+          <topic label="xLookupPutAll" href="xchange_8h.html#a91a19055586ae79dee6d43c5de0cb32b"/>
+          <topic label="xLookupRemove" href="xchange_8h.html#a85f2c5443ebef48499398453a39710da"/>
+          <topic label="xLookupRemoveAll" href="xchange_8h.html#add4a6ffa5866d770bd21636d00b9d3d7"/>
           <topic label="xMatchNextID" href="xchange_8h.html#a90aae0dafd1d461877eef63c9c730592"/>
           <topic label="xNextIDToken" href="xchange_8h.html#af436eb535b32fa88ab4e600c0a37c19d"/>
           <topic label="xParseBoolean" href="xchange_8h.html#a994ae91adbbffc3b55b47b0219338282"/>
@@ -167,9 +174,12 @@
           <topic label="xReduceAllDims" href="xchange_8h.html#acc31fe75f06a6e0e469fba3a57c4fb25"/>
           <topic label="xReduceDims" href="xchange_8h.html#a36fb99b219c5a61db1d1c3d630277987"/>
           <topic label="xRemoveField" href="xchange_8h.html#aec9f913cdb79d8653668a5d9bdda6ab1"/>
+          <topic label="xReverseFieldOrder" href="xchange_8h.html#ad32d8a3f211a3b101142879ae31146ec"/>
           <topic label="xSetField" href="xchange_8h.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4"/>
           <topic label="xSetSubstruct" href="xchange_8h.html#ad84cbb4639f2fbfb604b698a86caf944"/>
           <topic label="xSetVerbose" href="xchange_8h.html#afbe85067ddbc92577cd00ac8f6e3026f"/>
+          <topic label="xSortFields" href="xchange_8h.html#aa1d006a2788adeb0fc9b4799297a69ff"/>
+          <topic label="xSortFieldsByName" href="xchange_8h.html#a74d1f6b9b92ebe82353e75a3d7e9daae"/>
           <topic label="xSplitID" href="xchange_8h.html#acd6af91336f4b5501d0a0e3d5cf88ad3"/>
           <topic label="xStringCopyOf" href="xchange_8h.html#a01d730a1a98963816de2dd73e72957a5"/>
           <topic label="xStringElementSizeOf" href="xchange_8h.html#a8816199a4473325a942e14057dcd9ab8"/>
@@ -230,9 +240,15 @@
           <topic label="xjsonUnescapeString" href="xjson_8c.html#ae11aed18561818c2e39a5709a8e3374d"/>
         </topic>
         <topic label="xlookup.c" href="xlookup_8c.html">
+          <topic label="xAllocLookup" href="xlookup_8c.html#a01a94b3210aed984dbee956fbb26fcfd"/>
           <topic label="xCreateLookup" href="xlookup_8c.html#af8bee9eeac947d7e36ea436252e8dc2d"/>
           <topic label="xDestroyLookup" href="xlookup_8c.html#a02ea2d67e4c540ad706edcc1b3a0431e"/>
+          <topic label="xLookupCount" href="xlookup_8c.html#a13e81b8f1bf3e1c3572ca74edb2836fe"/>
           <topic label="xLookupField" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9"/>
+          <topic label="xLookupPut" href="xlookup_8c.html#a3b423bf135d2ed42319abff99fda78e4"/>
+          <topic label="xLookupPutAll" href="xlookup_8c.html#a91a19055586ae79dee6d43c5de0cb32b"/>
+          <topic label="xLookupRemove" href="xlookup_8c.html#a85f2c5443ebef48499398453a39710da"/>
+          <topic label="xLookupRemoveAll" href="xlookup_8c.html#add4a6ffa5866d770bd21636d00b9d3d7"/>
         </topic>
         <topic label="xstruct.c" href="xstruct_8c.html">
           <topic label="xClearStruct" href="xstruct_8c.html#ae45c0a047c30a17aba84d2fc8c08a2dc"/>
@@ -256,6 +272,7 @@
           <topic label="xGetField" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d"/>
           <topic label="xGetFieldCount" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688"/>
           <topic label="xGetSubstruct" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9"/>
+          <topic label="xInsertField" href="xstruct_8c.html#ad6249db6da0a1294d5621cd9fd829f7a"/>
           <topic label="xIsFieldValid" href="xstruct_8c.html#aec6e78e07733ca246ca485b0fcf02d21"/>
           <topic label="xLastSeparator" href="xstruct_8c.html#ab9a9fbc1235164bfeed5fbba1f7d8692"/>
           <topic label="xMatchNextID" href="xstruct_8c.html#a90aae0dafd1d461877eef63c9c730592"/>
@@ -263,14 +280,27 @@
           <topic label="xReduceAllDims" href="xstruct_8c.html#acc31fe75f06a6e0e469fba3a57c4fb25"/>
           <topic label="xReduceDims" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987"/>
           <topic label="xRemoveField" href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1"/>
+          <topic label="xReverseFieldOrder" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec"/>
           <topic label="xSetField" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4"/>
           <topic label="xSetSubstruct" href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944"/>
+          <topic label="xSortFields" href="xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff"/>
+          <topic label="xSortFieldsByName" href="xstruct_8c.html#a74d1f6b9b92ebe82353e75a3d7e9daae"/>
           <topic label="xSplitID" href="xstruct_8c.html#acd6af91336f4b5501d0a0e3d5cf88ad3"/>
         </topic>
       </topic>
     </topic>
     <topic label="Globals" href="globals.html">
-      <topic label="All" href="globals.html"/>
+      <topic label="All" href="globals.html">
+        <topic label="_" href="globals.html"/>
+        <topic label="b" href="globals_b.html"/>
+        <topic label="e" href="globals_e.html"/>
+        <topic label="f" href="globals_f.html"/>
+        <topic label="m" href="globals_m.html"/>
+        <topic label="n" href="globals_n.html"/>
+        <topic label="s" href="globals_s.html"/>
+        <topic label="t" href="globals_t.html"/>
+        <topic label="x" href="globals_x.html"/>
+      </topic>
       <topic label="Functions" href="globals_func.html"/>
       <topic label="Variables" href="globals_vars.html"/>
       <topic label="Typedefs" href="globals_type.html"/>

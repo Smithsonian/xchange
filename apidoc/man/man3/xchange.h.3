@@ -266,6 +266,9 @@ include/xchange.h
 .RI "void * \fBxAlloc\fP (\fBXType\fP type, int count)"
 .br
 .ti -1c
+.RI "\fBXLookupTable\fP * \fBxAllocLookup\fP (unsigned int size)"
+.br
+.ti -1c
 .RI "void \fBxClearStruct\fP (\fBXStructure\fP *s)"
 .br
 .ti -1c
@@ -359,7 +362,22 @@ include/xchange.h
 .RI "char * \fBxLastSeparator\fP (const char *id)"
 .br
 .ti -1c
+.RI "long \fBxLookupCount\fP (const \fBXLookupTable\fP *tab)"
+.br
+.ti -1c
 .RI "\fBXField\fP * \fBxLookupField\fP (const \fBXLookupTable\fP *tab, const char *id)"
+.br
+.ti -1c
+.RI "int \fBxLookupPut\fP (\fBXLookupTable\fP *tab, const char *prefix, const \fBXField\fP *field, \fBXField\fP **oldValue)"
+.br
+.ti -1c
+.RI "int \fBxLookupPutAll\fP (\fBXLookupTable\fP *tab, const char *prefix, const \fBXStructure\fP *s, \fBboolean\fP recursive)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxLookupRemove\fP (\fBXLookupTable\fP *tab, const char *id)"
+.br
+.ti -1c
+.RI "int \fBxLookupRemoveAll\fP (\fBXLookupTable\fP *tab, const char *prefix, const \fBXStructure\fP *s, \fBboolean\fP recursive)"
 .br
 .ti -1c
 .RI "int \fBxMatchNextID\fP (const char *token, const char *id)"
@@ -395,6 +413,9 @@ include/xchange.h
 .RI "\fBXField\fP * \fBxRemoveField\fP (\fBXStructure\fP *s, const char *name)"
 .br
 .ti -1c
+.RI "int \fBxReverseFieldOrder\fP (\fBXStructure\fP *s, \fBboolean\fP recursive)"
+.br
+.ti -1c
 .RI "\fBXField\fP * \fBxSetField\fP (\fBXStructure\fP *s, \fBXField\fP *f)"
 .br
 .ti -1c
@@ -402,6 +423,12 @@ include/xchange.h
 .br
 .ti -1c
 .RI "void \fBxSetVerbose\fP (\fBboolean\fP value)"
+.br
+.ti -1c
+.RI "int \fBxSortFields\fP (\fBXStructure\fP *s, int(*cmp)(const \fBXField\fP **f1, const \fBXField\fP **f2), \fBboolean\fP recursive)"
+.br
+.ti -1c
+.RI "int \fBxSortFieldsByName\fP (\fBXStructure\fP *s, \fBboolean\fP recursive)"
 .br
 .ti -1c
 .RI "int \fBxSplitID\fP (char *id, char **pKey)"
@@ -488,6 +515,29 @@ Pointer to the initialized buffer or NULL if there was an error (errno will be s
 
 .PP
 References \fBxElementSizeOf()\fP\&.
+.SS "\fBXLookupTable\fP * xAllocLookup (unsigned int size)"
+Allocates a new lookup with the specified hash size\&. The hash size should correspond to the number of elements stored in the lookup\&. If it's larger or roughtly equal to the number of elements to be stored, then the lookup time will stay approximately constant with the number of elements\&. If the size is much smaller than the number of elements \fIN\fP stored, then the lookup time will scale as \fIO(N/size)\fP typically\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIsize\fP The number of hash bins to allocate 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The new lookup table, or else NULL if there was an error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCreateLookup()\fP 
+.PP
+xDEstroyLookup() 
+.RE
+.PP
+
+.PP
+References \fBFALSE\fP, and \fBXLookupTable::priv\fP\&.
 .SS "void xClearStruct (\fBXStructure\fP * s)"
 Destroys the contents of an X structure, leaving the structure empty\&.
 .PP
@@ -739,7 +789,7 @@ The lookup table, or NULL if there was an error (errno will inform about the typ
 .PP
 
 .PP
-References \fBxCountFields()\fP, and \fBxDeepCountFields()\fP\&.
+References \fBxAllocLookup()\fP, \fBxCountFields()\fP, and \fBxDeepCountFields()\fP\&.
 .SS "\fBXField\fP * xCreateScalarField (const char * name, \fBXType\fP type, const void * value)"
 Creates a generic scalar field of a given name and native value\&. The structure will hold a copy of the value that is pointed at\&.
 .PP
@@ -1072,8 +1122,26 @@ Pointer to the beginning of the last separator in the ID, or NULL if the ID does
 
 .PP
 References \fBX_SEP\fP, and \fBX_SEP_LENGTH\fP\&.
+.SS "long xLookupCount (const \fBXLookupTable\fP * tab)"
+Returns the number of fields in the lookup table\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to the lookup table 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+the number of fields stored\&. 
+.RE
+.PP
+
+.PP
+References \fBXLookupTable::priv\fP\&.
 .SS "\fBXField\fP * xLookupField (const \fBXLookupTable\fP * tab, const char * id)"
-Returns a named field from a lookup table\&.
+Returns a named field from a lookup table\&. When retriving a large number (hundreds or more) fields by name from very large structures, this methods of locating the relevant data can be significantly faster than the \fBxGetField()\fP / \fBxGetSubstruct()\fP approach\&.
+.PP
+Note however, that preparing the lookup table has significant \fIO(N)\fP computational cost also, whereas retrieving \fIM\fP fields with \fBxGetField()\fP / \fBxGetSubstruct()\fP have costs that scale \fIO(NM)\fP\&. Therefore, a lookup table is practical only if you are going to use it repeatedly, many times over\&. As a rule of thumb, lookups may have the advantage if accessing fields in a structure by name hundreds of times, or more\&.
 .PP
 \fBParameters\fP
 .RS 4
@@ -1095,6 +1163,116 @@ The corresponding field or NULL if no such field exists or tab was NULL\&.
 .RE
 .PP
 
+.PP
+References \fBXLookupTable::priv\fP\&.
+.SS "int xLookupPut (\fBXLookupTable\fP * tab, const char * prefix, const \fBXField\fP * field, \fBXField\fP ** oldValue)"
+Puts a field into the lookup table with the specified aggregate ID prefix\&. For example, if the prefix is 'system:subsystem', and the field's name is 'property', then the field will be available as 'system:subsystem:property' in the lookup\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to a lookup table 
+.br
+\fIprefix\fP The aggregate ID prefix before the field's name, not including a separator 
+.br
+\fIfield\fP The field 
+.br
+\fIoldValue\fP (optional) pointer to a buffer in which to return the old field value (if any) stored under the same name\&. It may be NULL if not needed\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 if successfully added a new field, 1 if updated an existing fields, or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxLookupPutAll()\fP 
+.PP
+\fBxLookupRemove()\fP 
+.RE
+.PP
+
+.PP
+References \fBXLookupTable::priv\fP, \fBX_FAILURE\fP, \fBX_NULL\fP, and \fBxError()\fP\&.
+.SS "int xLookupPutAll (\fBXLookupTable\fP * tab, const char * prefix, const \fBXStructure\fP * s, \fBboolean\fP recursive)"
+Puts all fields from a structure into the lookup table with the specified aggregate ID prefix, with or without including embedded substructures\&. For example, if the prefix is 'system:subsystem', and a field's name is 'property', then that field will be available as 'system:subsystem:property' in the lookup\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to a lookup table 
+.br
+\fIprefix\fP The aggregate ID prefix before the field's name, not including a separator 
+.br
+\fIs\fP The structure 
+.br
+\fIrecursive\fP Whether to include fields in all substructures recursively also\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+the number of fields added (<=0), or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxLookupRemoveAll()\fP 
+.RE
+.PP
+
+.PP
+References \fBXLookupTable::priv\fP, \fBX_NULL\fP, and \fBxError()\fP\&.
+.SS "\fBXField\fP * xLookupRemove (\fBXLookupTable\fP * tab, const char * id)"
+Removes a field from a lookup table\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to the lookup table 
+.br
+\fIid\fP The aggregate ID of the field as stored in the lookup 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The field that was removed, or else NULL if not found\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxLookupRemoveAll()\fP 
+.PP
+\fBxLookupPut()\fP 
+.RE
+.PP
+
+.PP
+References \fBXLookupTable::priv\fP, \fBX_NULL\fP, and \fBxError()\fP\&.
+.SS "int xLookupRemoveAll (\fBXLookupTable\fP * tab, const char * prefix, const \fBXStructure\fP * s, \fBboolean\fP recursive)"
+Removes all fields of a structure from the lookup table with the specified aggregate ID prefix, with or without including embedded substructures\&. For example, if the prefix is 'system:subsystem', and a field's name is 'property', then the field referred to as 'system:subsystem:property' in the lookup is affected\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to a lookup table 
+.br
+\fIprefix\fP The aggregate ID prefix before the field's name, not including a separator 
+.br
+\fIs\fP The structure 
+.br
+\fIrecursive\fP Whether to include fields in all substructures recursively also\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+the number of fields removed (<=0), or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxLookupRemoveAll()\fP 
+.RE
+.PP
+
+.PP
+References \fBXLookupTable::priv\fP, \fBX_NULL\fP, \fBX_STRUCT_INVALID\fP, and \fBxError()\fP\&.
 .SS "int xMatchNextID (const char * token, const char * id)"
 Checks if the next component in a compound id matches a given token\&.
 .PP
@@ -1255,7 +1433,7 @@ X_SUCCESS (0) if successful or else X_STRUCT_INVALID if the argument is NULL (er
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::ndim\fP, \fBXField::next\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxGetFieldCount()\fP, \fBxReduceAllDims()\fP, and \fBxReduceDims()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::ndim\fP, \fBXField::next\fP, \fBXStructure::parent\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxGetFieldCount()\fP, \fBxReduceAllDims()\fP, and \fBxReduceDims()\fP\&.
 .SS "int xReduceDims (int * ndim, int * sizes)"
 Reduces the dimensions by eliminating axes that contain a singular elements\&. Thus a size of {1, 3, 1, 5} will reduce to {3, 5} containing the same number of elements, in fewer dimensions\&. If any of the dimensions are zero then it reduces to { 0 }\&.
 .PP
@@ -1296,7 +1474,34 @@ Pointer to the removed field or else NULL if the was an error or if no matching 
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_NAME_INVALID\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxError()\fP, and \fBxGetFieldCount()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXStructure::parent\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_NAME_INVALID\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxError()\fP, and \fBxGetFieldCount()\fP\&.
+.SS "int xReverseFieldOrder (\fBXStructure\fP * s, \fBboolean\fP recursive)"
+Reverse the order of fields in a structure\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP The structure, whose field order to reverse\&. 
+.br
+\fIrecursive\fP Whether to apply the reversal to all ebmbedded substructures also 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+X_SUCCESS (0) if successful, or else X_NULL if the structure is NULL\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxSortFields()\fP 
+.PP
+\fBxSortFieldsByName()\fP 
+.PP
+\fBxInsertField()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBTRUE\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxError()\fP, \fBxGetFieldCount()\fP, and \fBxReverseFieldOrder()\fP\&.
 .SS "\fBXField\fP * xSetField (\fBXStructure\fP * s, \fBXField\fP * f)"
 Adds or replaces a field in the structure with the specified field value, returning the previous value for the same field\&. It is up to the caller whether or not the old value should be destoyed or kept\&. Note though that you should check first to see if the replaced field is the same as the new one before attempting to destroy\&.\&.\&.
 .PP
@@ -1318,6 +1523,8 @@ Previous field by the same name, or NULL if the field is new or if there was an 
 .PP
 \fBSee also\fP
 .RS 4
+\fBxInsertField()\fP 
+.PP
 \fBxSetSubstruct()\fP 
 .PP
 \fBxGetSubstruct()\fP 
@@ -1325,7 +1532,7 @@ Previous field by the same name, or NULL if the field is new or if there was an 
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_STRUCT_INVALID\fP, \fBxError()\fP, and \fBxLastSeparator()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_STRUCT_INVALID\fP, and \fBxError()\fP\&.
 .SS "\fBXField\fP * xSetSubstruct (\fBXStructure\fP * s, const char * name, \fBXStructure\fP * substruct)"
 Inserts a structure within a parent structure, returning the old field that may have existed under the requested name before\&.
 .PP
@@ -1366,6 +1573,56 @@ Sets verbose output for the xchange library\&.
 
 .PP
 References \fBFALSE\fP, \fBTRUE\fP, and \fBxVerbose\fP\&.
+.SS "int xSortFields (\fBXStructure\fP * s, int(*)(const \fBXField\fP **f1, const \fBXField\fP **f2) cmp, \fBboolean\fP recursive)"
+Sort the fields in a structure using a specific comparator function\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP The structure, whose fields to sort 
+.br
+\fIcmp\fP The comparator function\&. It takes two pointers to \fBXField\fP locations as arguments\&. 
+.br
+\fIrecursive\fP Whether to apply the sorting to all ebmbedded substructures also 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+X_SUCCESS (0) if successful, or else X_NULL if the structure or the comparator function is NULL\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxSortFieldsByName()\fP 
+.PP
+\fBxReverseFieldOrder()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBTRUE\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxError()\fP, \fBxGetFieldCount()\fP, and \fBxSortFields()\fP\&.
+.SS "int xSortFieldsByName (\fBXStructure\fP * s, \fBboolean\fP recursive)"
+Sorts the fields of a structure by field name, in ascending alphabetical order\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP The structure, whose fields to sort 
+.br
+\fIrecursive\fP Whether to apply the sorting to all ebmbedded substructures also 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+X_SUCCESS (0) if successful, or else X_NULL if the structure is NULL\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxReverseFieldOrder()\fP 
+.RE
+.PP
+
+.PP
+References \fBxSortFields()\fP\&.
 .SS "int xSplitID (char * id, char ** pKey)"
 Splits the id into two strings (sharing the same input buffer): (1) the id of the embedding structure, and (2) the embedded field name\&. The original input id is string terminated after the table name\&. And the pointer to the key part that follows after the last separator is returned in the second (optional argument)\&.
 .PP

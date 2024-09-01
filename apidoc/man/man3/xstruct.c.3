@@ -74,6 +74,9 @@ src/xstruct.c \- A collection of commonly used functions for generic structured 
 .RI "\fBXStructure\fP * \fBxGetSubstruct\fP (const \fBXStructure\fP *s, const char *id)"
 .br
 .ti -1c
+.RI "int \fBxInsertField\fP (\fBXStructure\fP *s, \fBXField\fP *f)"
+.br
+.ti -1c
 .RI "\fBboolean\fP \fBxIsFieldValid\fP (const \fBXField\fP *f)"
 .br
 .ti -1c
@@ -95,10 +98,19 @@ src/xstruct.c \- A collection of commonly used functions for generic structured 
 .RI "\fBXField\fP * \fBxRemoveField\fP (\fBXStructure\fP *s, const char *name)"
 .br
 .ti -1c
+.RI "int \fBxReverseFieldOrder\fP (\fBXStructure\fP *s, \fBboolean\fP recursive)"
+.br
+.ti -1c
 .RI "\fBXField\fP * \fBxSetField\fP (\fBXStructure\fP *s, \fBXField\fP *f)"
 .br
 .ti -1c
 .RI "\fBXField\fP * \fBxSetSubstruct\fP (\fBXStructure\fP *s, const char *name, \fBXStructure\fP *substruct)"
+.br
+.ti -1c
+.RI "int \fBxSortFields\fP (\fBXStructure\fP *s, int(*cmp)(const \fBXField\fP **f1, const \fBXField\fP **f2), \fBboolean\fP recursive)"
+.br
+.ti -1c
+.RI "int \fBxSortFieldsByName\fP (\fBXStructure\fP *s, \fBboolean\fP recursive)"
 .br
 .ti -1c
 .RI "int \fBxSplitID\fP (char *id, char **pKey)"
@@ -527,6 +539,28 @@ Matching sub-structure from the structure or NULL if there is no match or one of
 
 .PP
 References \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, and \fBxGetField()\fP\&.
+.SS "int xInsertField (\fBXStructure\fP * s, \fBXField\fP * f)"
+(\fIexpert\fP) Inserts a field into the structure at its head position\&. That is, the specified field will become the first field in the structure\&. And, unlike \fBxSetField()\fP, this function does not check for (nor remove) previously present fields by the same name\&. Thus, it is left up to the caller to ensure that there are no duplicate field names added to the structure\&.
+.PP
+A note of caution: There is no safeguard against adding the same field to more than one structure, which will result in a corruption of the affected structures, since both structures would link to the field, but the field links to only one specific successive element\&. Therefore, the user is responsible to ensure that fields are assigned to structures uniquely, and if necessary remove the field from one structure before assigning it to another\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Structure to which to add the field 
+.br
+\fIf\fP Field to be added\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxSetField()\fP 
+.PP
+\fBxReverseFieldOrder()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_STRUCT_INVALID\fP, \fBX_SUCCESS\fP, \fBxError()\fP, and \fBxLastSeparator()\fP\&.
 .SS "\fBboolean\fP xIsFieldValid (const \fBXField\fP * f)"
 Checks if a given field has valid data\&.
 .PP
@@ -618,7 +652,7 @@ X_SUCCESS (0) if successful or else X_STRUCT_INVALID if the argument is NULL (er
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::ndim\fP, \fBXField::next\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxGetFieldCount()\fP, \fBxReduceAllDims()\fP, and \fBxReduceDims()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::ndim\fP, \fBXField::next\fP, \fBXStructure::parent\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxGetFieldCount()\fP, \fBxReduceAllDims()\fP, and \fBxReduceDims()\fP\&.
 .SS "int xReduceDims (int * ndim, int * sizes)"
 Reduces the dimensions by eliminating axes that contain a singular elements\&. Thus a size of {1, 3, 1, 5} will reduce to {3, 5} containing the same number of elements, in fewer dimensions\&. If any of the dimensions are zero then it reduces to { 0 }\&.
 .PP
@@ -659,7 +693,34 @@ Pointer to the removed field or else NULL if the was an error or if no matching 
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_NAME_INVALID\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxError()\fP, and \fBxGetFieldCount()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXStructure::parent\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_NAME_INVALID\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxError()\fP, and \fBxGetFieldCount()\fP\&.
+.SS "int xReverseFieldOrder (\fBXStructure\fP * s, \fBboolean\fP recursive)"
+Reverse the order of fields in a structure\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP The structure, whose field order to reverse\&. 
+.br
+\fIrecursive\fP Whether to apply the reversal to all ebmbedded substructures also 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+X_SUCCESS (0) if successful, or else X_NULL if the structure is NULL\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxSortFields()\fP 
+.PP
+\fBxSortFieldsByName()\fP 
+.PP
+\fBxInsertField()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBTRUE\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxError()\fP, \fBxGetFieldCount()\fP, and \fBxReverseFieldOrder()\fP\&.
 .SS "\fBXField\fP * xSetField (\fBXStructure\fP * s, \fBXField\fP * f)"
 Adds or replaces a field in the structure with the specified field value, returning the previous value for the same field\&. It is up to the caller whether or not the old value should be destoyed or kept\&. Note though that you should check first to see if the replaced field is the same as the new one before attempting to destroy\&.\&.\&.
 .PP
@@ -681,6 +742,8 @@ Previous field by the same name, or NULL if the field is new or if there was an 
 .PP
 \fBSee also\fP
 .RS 4
+\fBxInsertField()\fP 
+.PP
 \fBxSetSubstruct()\fP 
 .PP
 \fBxGetSubstruct()\fP 
@@ -688,7 +751,7 @@ Previous field by the same name, or NULL if the field is new or if there was an 
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_STRUCT_INVALID\fP, \fBxError()\fP, and \fBxLastSeparator()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_STRUCT_INVALID\fP, and \fBxError()\fP\&.
 .SS "\fBXField\fP * xSetSubstruct (\fBXStructure\fP * s, const char * name, \fBXStructure\fP * substruct)"
 Inserts a structure within a parent structure, returning the old field that may have existed under the requested name before\&.
 .PP
@@ -713,6 +776,56 @@ return The prior field stored under the same name or NULL\&. If there is an erro
 
 .PP
 References \fBXStructure::parent\fP, \fBX_INCOMPLETE\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxCreateScalarField()\fP, \fBxError()\fP, and \fBxSetField()\fP\&.
+.SS "int xSortFields (\fBXStructure\fP * s, int(*)(const \fBXField\fP **f1, const \fBXField\fP **f2) cmp, \fBboolean\fP recursive)"
+Sort the fields in a structure using a specific comparator function\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP The structure, whose fields to sort 
+.br
+\fIcmp\fP The comparator function\&. It takes two pointers to \fBXField\fP locations as arguments\&. 
+.br
+\fIrecursive\fP Whether to apply the sorting to all ebmbedded substructures also 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+X_SUCCESS (0) if successful, or else X_NULL if the structure or the comparator function is NULL\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxSortFieldsByName()\fP 
+.PP
+\fBxReverseFieldOrder()\fP 
+.RE
+.PP
+
+.PP
+References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBTRUE\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxError()\fP, \fBxGetFieldCount()\fP, and \fBxSortFields()\fP\&.
+.SS "int xSortFieldsByName (\fBXStructure\fP * s, \fBboolean\fP recursive)"
+Sorts the fields of a structure by field name, in ascending alphabetical order\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP The structure, whose fields to sort 
+.br
+\fIrecursive\fP Whether to apply the sorting to all ebmbedded substructures also 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+X_SUCCESS (0) if successful, or else X_NULL if the structure is NULL\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxReverseFieldOrder()\fP 
+.RE
+.PP
+
+.PP
+References \fBxSortFields()\fP\&.
 .SS "int xSplitID (char * id, char ** pKey)"
 Splits the id into two strings (sharing the same input buffer): (1) the id of the embedding structure, and (2) the embedded field name\&. The original input id is string terminated after the table name\&. And the pointer to the key part that follows after the last separator is returned in the second (optional argument)\&.
 .PP

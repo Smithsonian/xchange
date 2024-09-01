@@ -421,6 +421,13 @@
       <arglist>(XType type, int count)</arglist>
     </member>
     <member kind="function">
+      <type>XLookupTable *</type>
+      <name>xAllocLookup</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a01a94b3210aed984dbee956fbb26fcfd</anchor>
+      <arglist>(unsigned int size)</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>xClearStruct</name>
       <anchorfile>xchange_8h.html</anchorfile>
@@ -638,11 +645,46 @@
       <arglist>(const char *id)</arglist>
     </member>
     <member kind="function">
+      <type>long</type>
+      <name>xLookupCount</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a13e81b8f1bf3e1c3572ca74edb2836fe</anchor>
+      <arglist>(const XLookupTable *tab)</arglist>
+    </member>
+    <member kind="function">
       <type>XField *</type>
       <name>xLookupField</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>a5e3a316b7d0c5c40ed079f3df2d9fcc9</anchor>
       <arglist>(const XLookupTable *tab, const char *id)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xLookupPut</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a3b423bf135d2ed42319abff99fda78e4</anchor>
+      <arglist>(XLookupTable *tab, const char *prefix, const XField *field, XField **oldValue)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xLookupPutAll</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a91a19055586ae79dee6d43c5de0cb32b</anchor>
+      <arglist>(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive)</arglist>
+    </member>
+    <member kind="function">
+      <type>XField *</type>
+      <name>xLookupRemove</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a85f2c5443ebef48499398453a39710da</anchor>
+      <arglist>(XLookupTable *tab, const char *id)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xLookupRemoveAll</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>add4a6ffa5866d770bd21636d00b9d3d7</anchor>
+      <arglist>(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -722,6 +764,13 @@
       <arglist>(XStructure *s, const char *name)</arglist>
     </member>
     <member kind="function">
+      <type>int</type>
+      <name>xReverseFieldOrder</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>ad32d8a3f211a3b101142879ae31146ec</anchor>
+      <arglist>(XStructure *s, boolean recursive)</arglist>
+    </member>
+    <member kind="function">
       <type>XField *</type>
       <name>xSetField</name>
       <anchorfile>xchange_8h.html</anchorfile>
@@ -741,6 +790,20 @@
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>afbe85067ddbc92577cd00ac8f6e3026f</anchor>
       <arglist>(boolean value)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xSortFields</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>aa1d006a2788adeb0fc9b4799297a69ff</anchor>
+      <arglist>(XStructure *s, int(*cmp)(const XField **f1, const XField **f2), boolean recursive)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xSortFieldsByName</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a74d1f6b9b92ebe82353e75a3d7e9daae</anchor>
+      <arglist>(XStructure *s, boolean recursive)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -1118,6 +1181,13 @@
     <includes id="xchange_8h" name="xchange.h" local="yes" import="no" module="no" objc="no">xchange.h</includes>
     <member kind="function">
       <type>XLookupTable *</type>
+      <name>xAllocLookup</name>
+      <anchorfile>xlookup_8c.html</anchorfile>
+      <anchor>a01a94b3210aed984dbee956fbb26fcfd</anchor>
+      <arglist>(unsigned int size)</arglist>
+    </member>
+    <member kind="function">
+      <type>XLookupTable *</type>
       <name>xCreateLookup</name>
       <anchorfile>xlookup_8c.html</anchorfile>
       <anchor>af8bee9eeac947d7e36ea436252e8dc2d</anchor>
@@ -1131,11 +1201,46 @@
       <arglist>(XLookupTable *tab)</arglist>
     </member>
     <member kind="function">
+      <type>long</type>
+      <name>xLookupCount</name>
+      <anchorfile>xlookup_8c.html</anchorfile>
+      <anchor>a13e81b8f1bf3e1c3572ca74edb2836fe</anchor>
+      <arglist>(const XLookupTable *tab)</arglist>
+    </member>
+    <member kind="function">
       <type>XField *</type>
       <name>xLookupField</name>
       <anchorfile>xlookup_8c.html</anchorfile>
       <anchor>a5e3a316b7d0c5c40ed079f3df2d9fcc9</anchor>
       <arglist>(const XLookupTable *tab, const char *id)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xLookupPut</name>
+      <anchorfile>xlookup_8c.html</anchorfile>
+      <anchor>a3b423bf135d2ed42319abff99fda78e4</anchor>
+      <arglist>(XLookupTable *tab, const char *prefix, const XField *field, XField **oldValue)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xLookupPutAll</name>
+      <anchorfile>xlookup_8c.html</anchorfile>
+      <anchor>a91a19055586ae79dee6d43c5de0cb32b</anchor>
+      <arglist>(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive)</arglist>
+    </member>
+    <member kind="function">
+      <type>XField *</type>
+      <name>xLookupRemove</name>
+      <anchorfile>xlookup_8c.html</anchorfile>
+      <anchor>a85f2c5443ebef48499398453a39710da</anchor>
+      <arglist>(XLookupTable *tab, const char *id)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xLookupRemoveAll</name>
+      <anchorfile>xlookup_8c.html</anchorfile>
+      <anchor>add4a6ffa5866d770bd21636d00b9d3d7</anchor>
+      <arglist>(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -1291,6 +1396,13 @@
       <arglist>(const XStructure *s, const char *id)</arglist>
     </member>
     <member kind="function">
+      <type>int</type>
+      <name>xInsertField</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>ad6249db6da0a1294d5621cd9fd829f7a</anchor>
+      <arglist>(XStructure *s, XField *f)</arglist>
+    </member>
+    <member kind="function">
       <type>boolean</type>
       <name>xIsFieldValid</name>
       <anchorfile>xstruct_8c.html</anchorfile>
@@ -1340,6 +1452,13 @@
       <arglist>(XStructure *s, const char *name)</arglist>
     </member>
     <member kind="function">
+      <type>int</type>
+      <name>xReverseFieldOrder</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>ad32d8a3f211a3b101142879ae31146ec</anchor>
+      <arglist>(XStructure *s, boolean recursive)</arglist>
+    </member>
+    <member kind="function">
       <type>XField *</type>
       <name>xSetField</name>
       <anchorfile>xstruct_8c.html</anchorfile>
@@ -1352,6 +1471,20 @@
       <anchorfile>xstruct_8c.html</anchorfile>
       <anchor>ad84cbb4639f2fbfb604b698a86caf944</anchor>
       <arglist>(XStructure *s, const char *name, XStructure *substruct)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xSortFields</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>aa1d006a2788adeb0fc9b4799297a69ff</anchor>
+      <arglist>(XStructure *s, int(*cmp)(const XField **f1, const XField **f2), boolean recursive)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xSortFieldsByName</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>a74d1f6b9b92ebe82353e75a3d7e9daae</anchor>
+      <arglist>(XStructure *s, boolean recursive)</arglist>
     </member>
     <member kind="function">
       <type>int</type>

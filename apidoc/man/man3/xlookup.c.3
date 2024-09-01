@@ -10,13 +10,31 @@ src/xlookup.c
 
 .in +1c
 .ti -1c
+.RI "\fBXLookupTable\fP * \fBxAllocLookup\fP (unsigned int size)"
+.br
+.ti -1c
 .RI "\fBXLookupTable\fP * \fBxCreateLookup\fP (const \fBXStructure\fP *s, \fBboolean\fP recursive)"
 .br
 .ti -1c
 .RI "void \fBxDestroyLookup\fP (\fBXLookupTable\fP *tab)"
 .br
 .ti -1c
+.RI "long \fBxLookupCount\fP (const \fBXLookupTable\fP *tab)"
+.br
+.ti -1c
 .RI "\fBXField\fP * \fBxLookupField\fP (const \fBXLookupTable\fP *tab, const char *id)"
+.br
+.ti -1c
+.RI "int \fBxLookupPut\fP (\fBXLookupTable\fP *tab, const char *prefix, const \fBXField\fP *field, \fBXField\fP **oldValue)"
+.br
+.ti -1c
+.RI "int \fBxLookupPutAll\fP (\fBXLookupTable\fP *tab, const char *prefix, const \fBXStructure\fP *s, \fBboolean\fP recursive)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxLookupRemove\fP (\fBXLookupTable\fP *tab, const char *id)"
+.br
+.ti -1c
+.RI "int \fBxLookupRemoveAll\fP (\fBXLookupTable\fP *tab, const char *prefix, const \fBXStructure\fP *s, \fBboolean\fP recursive)"
 .br
 .in -1c
 .SH "Detailed Description"
@@ -36,6 +54,29 @@ Attila Kovacs
 Lookup table for faster field access in large fixed-layout structures\&. 
 .SH "Function Documentation"
 .PP 
+.SS "\fBXLookupTable\fP * xAllocLookup (unsigned int size)"
+Allocates a new lookup with the specified hash size\&. The hash size should correspond to the number of elements stored in the lookup\&. If it's larger or roughtly equal to the number of elements to be stored, then the lookup time will stay approximately constant with the number of elements\&. If the size is much smaller than the number of elements \fIN\fP stored, then the lookup time will scale as \fIO(N/size)\fP typically\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIsize\fP The number of hash bins to allocate 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The new lookup table, or else NULL if there was an error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCreateLookup()\fP 
+.PP
+xDEstroyLookup() 
+.RE
+.PP
+
+.PP
+References \fBFALSE\fP, and \fBXLookupTable::priv\fP\&.
 .SS "\fBXLookupTable\fP * xCreateLookup (const \fBXStructure\fP * s, \fBboolean\fP recursive)"
 Creates a fast name lookup table for the fields of structure, with or without including fields of embedded substructures also\&. For structures with a large number of fields, such a lookup can significantly improve access times for retrieving specific fields from a structure\&. However, the lookup will not track fields added or removed after its creation, and so it is suited for accessing structures with a fixed layout only\&.
 .PP
@@ -64,7 +105,7 @@ The lookup table, or NULL if there was an error (errno will inform about the typ
 .PP
 
 .PP
-References \fBxCountFields()\fP, and \fBxDeepCountFields()\fP\&.
+References \fBxAllocLookup()\fP, \fBxCountFields()\fP, and \fBxDeepCountFields()\fP\&.
 .SS "void xDestroyLookup (\fBXLookupTable\fP * tab)"
 Destroys a lookup table, freeing up it's in-memory resources\&.
 .PP
@@ -81,8 +122,26 @@ Destroys a lookup table, freeing up it's in-memory resources\&.
 
 .PP
 References \fBXLookupTable::priv\fP\&.
+.SS "long xLookupCount (const \fBXLookupTable\fP * tab)"
+Returns the number of fields in the lookup table\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to the lookup table 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+the number of fields stored\&. 
+.RE
+.PP
+
+.PP
+References \fBXLookupTable::priv\fP\&.
 .SS "\fBXField\fP * xLookupField (const \fBXLookupTable\fP * tab, const char * id)"
-Returns a named field from a lookup table\&.
+Returns a named field from a lookup table\&. When retriving a large number (hundreds or more) fields by name from very large structures, this methods of locating the relevant data can be significantly faster than the \fBxGetField()\fP / \fBxGetSubstruct()\fP approach\&.
+.PP
+Note however, that preparing the lookup table has significant \fIO(N)\fP computational cost also, whereas retrieving \fIM\fP fields with \fBxGetField()\fP / \fBxGetSubstruct()\fP have costs that scale \fIO(NM)\fP\&. Therefore, a lookup table is practical only if you are going to use it repeatedly, many times over\&. As a rule of thumb, lookups may have the advantage if accessing fields in a structure by name hundreds of times, or more\&.
 .PP
 \fBParameters\fP
 .RS 4
@@ -104,6 +163,116 @@ The corresponding field or NULL if no such field exists or tab was NULL\&.
 .RE
 .PP
 
+.PP
+References \fBXLookupTable::priv\fP\&.
+.SS "int xLookupPut (\fBXLookupTable\fP * tab, const char * prefix, const \fBXField\fP * field, \fBXField\fP ** oldValue)"
+Puts a field into the lookup table with the specified aggregate ID prefix\&. For example, if the prefix is 'system:subsystem', and the field's name is 'property', then the field will be available as 'system:subsystem:property' in the lookup\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to a lookup table 
+.br
+\fIprefix\fP The aggregate ID prefix before the field's name, not including a separator 
+.br
+\fIfield\fP The field 
+.br
+\fIoldValue\fP (optional) pointer to a buffer in which to return the old field value (if any) stored under the same name\&. It may be NULL if not needed\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 if successfully added a new field, 1 if updated an existing fields, or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxLookupPutAll()\fP 
+.PP
+\fBxLookupRemove()\fP 
+.RE
+.PP
+
+.PP
+References \fBXLookupTable::priv\fP, \fBX_FAILURE\fP, \fBX_NULL\fP, and \fBxError()\fP\&.
+.SS "int xLookupPutAll (\fBXLookupTable\fP * tab, const char * prefix, const \fBXStructure\fP * s, \fBboolean\fP recursive)"
+Puts all fields from a structure into the lookup table with the specified aggregate ID prefix, with or without including embedded substructures\&. For example, if the prefix is 'system:subsystem', and a field's name is 'property', then that field will be available as 'system:subsystem:property' in the lookup\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to a lookup table 
+.br
+\fIprefix\fP The aggregate ID prefix before the field's name, not including a separator 
+.br
+\fIs\fP The structure 
+.br
+\fIrecursive\fP Whether to include fields in all substructures recursively also\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+the number of fields added (<=0), or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxLookupRemoveAll()\fP 
+.RE
+.PP
+
+.PP
+References \fBXLookupTable::priv\fP, \fBX_NULL\fP, and \fBxError()\fP\&.
+.SS "\fBXField\fP * xLookupRemove (\fBXLookupTable\fP * tab, const char * id)"
+Removes a field from a lookup table\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to the lookup table 
+.br
+\fIid\fP The aggregate ID of the field as stored in the lookup 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The field that was removed, or else NULL if not found\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxLookupRemoveAll()\fP 
+.PP
+\fBxLookupPut()\fP 
+.RE
+.PP
+
+.PP
+References \fBXLookupTable::priv\fP, \fBX_NULL\fP, and \fBxError()\fP\&.
+.SS "int xLookupRemoveAll (\fBXLookupTable\fP * tab, const char * prefix, const \fBXStructure\fP * s, \fBboolean\fP recursive)"
+Removes all fields of a structure from the lookup table with the specified aggregate ID prefix, with or without including embedded substructures\&. For example, if the prefix is 'system:subsystem', and a field's name is 'property', then the field referred to as 'system:subsystem:property' in the lookup is affected\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP Pointer to a lookup table 
+.br
+\fIprefix\fP The aggregate ID prefix before the field's name, not including a separator 
+.br
+\fIs\fP The structure 
+.br
+\fIrecursive\fP Whether to include fields in all substructures recursively also\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+the number of fields removed (<=0), or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxLookupRemoveAll()\fP 
+.RE
+.PP
+
+.PP
+References \fBXLookupTable::priv\fP, \fBX_NULL\fP, \fBX_STRUCT_INVALID\fP, and \fBxError()\fP\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for xchange from the source code\&.

@@ -370,6 +370,8 @@ typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>XType</b></td>
 Functions</h2></td></tr>
 <tr class="memitem:a3525be19588c2b740fc0dbd54a936dcb" id="r_a3525be19588c2b740fc0dbd54a936dcb"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a3525be19588c2b740fc0dbd54a936dcb">xAlloc</a> (<a class="el" href="xchange_8h.html#a1c7e02eda23566a7891310fd09307a70">XType</a> type, int count)</td></tr>
 <tr class="separator:a3525be19588c2b740fc0dbd54a936dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01a94b3210aed984dbee956fbb26fcfd" id="r_a01a94b3210aed984dbee956fbb26fcfd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXLookupTable.html">XLookupTable</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a01a94b3210aed984dbee956fbb26fcfd">xAllocLookup</a> (unsigned int size)</td></tr>
+<tr class="separator:a01a94b3210aed984dbee956fbb26fcfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae45c0a047c30a17aba84d2fc8c08a2dc" id="r_ae45c0a047c30a17aba84d2fc8c08a2dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#ae45c0a047c30a17aba84d2fc8c08a2dc">xClearStruct</a> (<a class="el" href="structXStructure.html">XStructure</a> *s)</td></tr>
 <tr class="separator:ae45c0a047c30a17aba84d2fc8c08a2dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab20a0213369a947a7e48ff45aabee3c0" id="r_ab20a0213369a947a7e48ff45aabee3c0"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#ab20a0213369a947a7e48ff45aabee3c0">xCopyIDToken</a> (const char *id)</td></tr>
@@ -432,8 +434,18 @@ Functions</h2></td></tr>
 <tr class="separator:a46a6c2d802ebadd46ffcfdde7fb438b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9a9fbc1235164bfeed5fbba1f7d8692" id="r_ab9a9fbc1235164bfeed5fbba1f7d8692"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#ab9a9fbc1235164bfeed5fbba1f7d8692">xLastSeparator</a> (const char *id)</td></tr>
 <tr class="separator:ab9a9fbc1235164bfeed5fbba1f7d8692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13e81b8f1bf3e1c3572ca74edb2836fe" id="r_a13e81b8f1bf3e1c3572ca74edb2836fe"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a13e81b8f1bf3e1c3572ca74edb2836fe">xLookupCount</a> (const <a class="el" href="structXLookupTable.html">XLookupTable</a> *tab)</td></tr>
+<tr class="separator:a13e81b8f1bf3e1c3572ca74edb2836fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e3a316b7d0c5c40ed079f3df2d9fcc9" id="r_a5e3a316b7d0c5c40ed079f3df2d9fcc9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField</a> (const <a class="el" href="structXLookupTable.html">XLookupTable</a> *tab, const char *id)</td></tr>
 <tr class="separator:a5e3a316b7d0c5c40ed079f3df2d9fcc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b423bf135d2ed42319abff99fda78e4" id="r_a3b423bf135d2ed42319abff99fda78e4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a3b423bf135d2ed42319abff99fda78e4">xLookupPut</a> (<a class="el" href="structXLookupTable.html">XLookupTable</a> *tab, const char *prefix, const <a class="el" href="structXField.html">XField</a> *field, <a class="el" href="structXField.html">XField</a> **oldValue)</td></tr>
+<tr class="separator:a3b423bf135d2ed42319abff99fda78e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91a19055586ae79dee6d43c5de0cb32b" id="r_a91a19055586ae79dee6d43c5de0cb32b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a91a19055586ae79dee6d43c5de0cb32b">xLookupPutAll</a> (<a class="el" href="structXLookupTable.html">XLookupTable</a> *tab, const char *prefix, const <a class="el" href="structXStructure.html">XStructure</a> *s, <a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a> recursive)</td></tr>
+<tr class="separator:a91a19055586ae79dee6d43c5de0cb32b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85f2c5443ebef48499398453a39710da" id="r_a85f2c5443ebef48499398453a39710da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a85f2c5443ebef48499398453a39710da">xLookupRemove</a> (<a class="el" href="structXLookupTable.html">XLookupTable</a> *tab, const char *id)</td></tr>
+<tr class="separator:a85f2c5443ebef48499398453a39710da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add4a6ffa5866d770bd21636d00b9d3d7" id="r_add4a6ffa5866d770bd21636d00b9d3d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#add4a6ffa5866d770bd21636d00b9d3d7">xLookupRemoveAll</a> (<a class="el" href="structXLookupTable.html">XLookupTable</a> *tab, const char *prefix, const <a class="el" href="structXStructure.html">XStructure</a> *s, <a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a> recursive)</td></tr>
+<tr class="separator:add4a6ffa5866d770bd21636d00b9d3d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90aae0dafd1d461877eef63c9c730592" id="r_a90aae0dafd1d461877eef63c9c730592"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a90aae0dafd1d461877eef63c9c730592">xMatchNextID</a> (const char *token, const char *id)</td></tr>
 <tr class="separator:a90aae0dafd1d461877eef63c9c730592"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af436eb535b32fa88ab4e600c0a37c19d" id="r_af436eb535b32fa88ab4e600c0a37c19d"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#af436eb535b32fa88ab4e600c0a37c19d">xNextIDToken</a> (const char *id)</td></tr>
@@ -456,12 +468,18 @@ Functions</h2></td></tr>
 <tr class="separator:a36fb99b219c5a61db1d1c3d630277987"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec9f913cdb79d8653668a5d9bdda6ab1" id="r_aec9f913cdb79d8653668a5d9bdda6ab1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a> (<a class="el" href="structXStructure.html">XStructure</a> *s, const char *name)</td></tr>
 <tr class="separator:aec9f913cdb79d8653668a5d9bdda6ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad32d8a3f211a3b101142879ae31146ec" id="r_ad32d8a3f211a3b101142879ae31146ec"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a> (<a class="el" href="structXStructure.html">XStructure</a> *s, <a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a> recursive)</td></tr>
+<tr class="separator:ad32d8a3f211a3b101142879ae31146ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1cb91bd6aa14c0dae9d24bfbe7b76f4" id="r_ab1cb91bd6aa14c0dae9d24bfbe7b76f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField</a> (<a class="el" href="structXStructure.html">XStructure</a> *s, <a class="el" href="structXField.html">XField</a> *f)</td></tr>
 <tr class="separator:ab1cb91bd6aa14c0dae9d24bfbe7b76f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad84cbb4639f2fbfb604b698a86caf944" id="r_ad84cbb4639f2fbfb604b698a86caf944"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct</a> (<a class="el" href="structXStructure.html">XStructure</a> *s, const char *name, <a class="el" href="structXStructure.html">XStructure</a> *substruct)</td></tr>
 <tr class="separator:ad84cbb4639f2fbfb604b698a86caf944"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbe85067ddbc92577cd00ac8f6e3026f" id="r_afbe85067ddbc92577cd00ac8f6e3026f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#afbe85067ddbc92577cd00ac8f6e3026f">xSetVerbose</a> (<a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a> value)</td></tr>
 <tr class="separator:afbe85067ddbc92577cd00ac8f6e3026f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1d006a2788adeb0fc9b4799297a69ff" id="r_aa1d006a2788adeb0fc9b4799297a69ff"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#aa1d006a2788adeb0fc9b4799297a69ff">xSortFields</a> (<a class="el" href="structXStructure.html">XStructure</a> *s, int(*cmp)(const <a class="el" href="structXField.html">XField</a> **f1, const <a class="el" href="structXField.html">XField</a> **f2), <a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a> recursive)</td></tr>
+<tr class="separator:aa1d006a2788adeb0fc9b4799297a69ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74d1f6b9b92ebe82353e75a3d7e9daae" id="r_a74d1f6b9b92ebe82353e75a3d7e9daae"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a74d1f6b9b92ebe82353e75a3d7e9daae">xSortFieldsByName</a> (<a class="el" href="structXStructure.html">XStructure</a> *s, <a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a> recursive)</td></tr>
+<tr class="separator:a74d1f6b9b92ebe82353e75a3d7e9daae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd6af91336f4b5501d0a0e3d5cf88ad3" id="r_acd6af91336f4b5501d0a0e3d5cf88ad3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#acd6af91336f4b5501d0a0e3d5cf88ad3">xSplitID</a> (char *id, char **pKey)</td></tr>
 <tr class="separator:acd6af91336f4b5501d0a0e3d5cf88ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01d730a1a98963816de2dd73e72957a5" id="r_a01d730a1a98963816de2dd73e72957a5"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a01d730a1a98963816de2dd73e72957a5">xStringCopyOf</a> (const char *str)</td></tr>
@@ -580,6 +598,37 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the initialized buffer or NULL if there was an error (errno will be set accordingly). </dd></dl>
 
 <p class="reference">References <a class="el" href="xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e">xElementSizeOf()</a>.</p>
+
+</div>
+</div>
+<a id="a01a94b3210aed984dbee956fbb26fcfd" name="a01a94b3210aed984dbee956fbb26fcfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01a94b3210aed984dbee956fbb26fcfd">&#9670;&#160;</a></span>xAllocLookup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structXLookupTable.html">XLookupTable</a> * xAllocLookup </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Allocates a new lookup with the specified hash size. The hash size should correspond to the number of elements stored in the lookup. If it's larger or roughtly equal to the number of elements to be stored, then the lookup time will stay approximately constant with the number of elements. If the size is much smaller than the number of elements <em>N</em> stored, then the lookup time will scale as <em>O(N/size)</em> typically.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>The number of hash bins to allocate </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The new lookup table, or else NULL if there was an error.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#af8bee9eeac947d7e36ea436252e8dc2d">xCreateLookup()</a> </dd>
+<dd>
+xDEstroyLookup() </dd></dl>
+
+<p class="reference">References <a class="el" href="xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>, and <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>.</p>
 
 </div>
 </div>
@@ -1037,7 +1086,7 @@ Variables</h2></td></tr>
 <dd>
 <a class="el" href="xlookup_8c.html#a02ea2d67e4c540ad706edcc1b3a0431e">xDestroyLookup()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="xstruct_8c.html#af7447cdd983402a27a25a70cc7187275">xCountFields()</a>, and <a class="el" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff">xDeepCountFields()</a>.</p>
+<p class="reference">References <a class="el" href="xlookup_8c.html#a01a94b3210aed984dbee956fbb26fcfd">xAllocLookup()</a>, <a class="el" href="xstruct_8c.html#af7447cdd983402a27a25a70cc7187275">xCountFields()</a>, and <a class="el" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff">xDeepCountFields()</a>.</p>
 
 </div>
 </div>
@@ -1649,6 +1698,34 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a13e81b8f1bf3e1c3572ca74edb2836fe" name="a13e81b8f1bf3e1c3572ca74edb2836fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13e81b8f1bf3e1c3572ca74edb2836fe">&#9670;&#160;</a></span>xLookupCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long xLookupCount </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structXLookupTable.html">XLookupTable</a> *&#160;</td>
+          <td class="paramname"><em>tab</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the number of fields in the lookup table.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tab</td><td>Pointer to the lookup table </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of fields stored. </dd></dl>
+
+<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>.</p>
+
+</div>
+</div>
 <a id="a5e3a316b7d0c5c40ed079f3df2d9fcc9" name="a5e3a316b7d0c5c40ed079f3df2d9fcc9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5e3a316b7d0c5c40ed079f3df2d9fcc9">&#9670;&#160;</a></span>xLookupField()</h2>
 
@@ -1674,7 +1751,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Returns a named field from a lookup table.</p>
+<p>Returns a named field from a lookup table. When retriving a large number (hundreds or more) fields by name from very large structures, this methods of locating the relevant data can be significantly faster than the <a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a> / <a class="el" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct()</a> approach.</p>
+<p>Note however, that preparing the lookup table has significant <em>O(N)</em> computational cost also, whereas retrieving <em>M</em> fields with <a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a> / <a class="el" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct()</a> have costs that scale <em>O(N&times;M)</em>. Therefore, a lookup table is practical only if you are going to use it repeatedly, many times over. As a rule of thumb, lookups may have the advantage if accessing fields in a structure by name hundreds of times, or more.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tab</td><td>Pointer to the lookup table </td></tr>
@@ -1686,6 +1764,214 @@ Variables</h2></td></tr>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#af8bee9eeac947d7e36ea436252e8dc2d">xCreateLookup()</a> </dd>
 <dd>
 <a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>.</p>
+
+</div>
+</div>
+<a id="a3b423bf135d2ed42319abff99fda78e4" name="a3b423bf135d2ed42319abff99fda78e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b423bf135d2ed42319abff99fda78e4">&#9670;&#160;</a></span>xLookupPut()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int xLookupPut </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXLookupTable.html">XLookupTable</a> *&#160;</td>
+          <td class="paramname"><em>tab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>prefix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structXField.html">XField</a> *&#160;</td>
+          <td class="paramname"><em>field</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structXField.html">XField</a> **&#160;</td>
+          <td class="paramname"><em>oldValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Puts a field into the lookup table with the specified aggregate ID prefix. For example, if the prefix is "system:subsystem", and the field's name is "property", then the field will be available as "system:subsystem:property" in the lookup.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tab</td><td>Pointer to a lookup table </td></tr>
+    <tr><td class="paramname">prefix</td><td>The aggregate ID prefix before the field's name, not including a separator </td></tr>
+    <tr><td class="paramname">field</td><td>The field </td></tr>
+    <tr><td class="paramname">oldValue</td><td>(optional) pointer to a buffer in which to return the old field value (if any) stored under the same name. It may be NULL if not needed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if successfully added a new field, 1 if updated an existing fields, or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#a91a19055586ae79dee6d43c5de0cb32b">xLookupPutAll()</a> </dd>
+<dd>
+<a class="el" href="xlookup_8c.html#a85f2c5443ebef48499398453a39710da">xLookupRemove()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, <a class="el" href="xchange_8h.html#a1d4a0c99f979fd0ecf0e9dcb7191a8d7">X_FAILURE</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, and <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>.</p>
+
+</div>
+</div>
+<a id="a91a19055586ae79dee6d43c5de0cb32b" name="a91a19055586ae79dee6d43c5de0cb32b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91a19055586ae79dee6d43c5de0cb32b">&#9670;&#160;</a></span>xLookupPutAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int xLookupPutAll </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXLookupTable.html">XLookupTable</a> *&#160;</td>
+          <td class="paramname"><em>tab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>prefix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a>&#160;</td>
+          <td class="paramname"><em>recursive</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Puts all fields from a structure into the lookup table with the specified aggregate ID prefix, with or without including embedded substructures. For example, if the prefix is "system:subsystem", and a field's name is "property", then that field will be available as "system:subsystem:property" in the lookup.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tab</td><td>Pointer to a lookup table </td></tr>
+    <tr><td class="paramname">prefix</td><td>The aggregate ID prefix before the field's name, not including a separator </td></tr>
+    <tr><td class="paramname">s</td><td>The structure </td></tr>
+    <tr><td class="paramname">recursive</td><td>Whether to include fields in all substructures recursively also. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of fields added (&lt;=0), or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#add4a6ffa5866d770bd21636d00b9d3d7">xLookupRemoveAll()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, and <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>.</p>
+
+</div>
+</div>
+<a id="a85f2c5443ebef48499398453a39710da" name="a85f2c5443ebef48499398453a39710da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85f2c5443ebef48499398453a39710da">&#9670;&#160;</a></span>xLookupRemove()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structXField.html">XField</a> * xLookupRemove </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXLookupTable.html">XLookupTable</a> *&#160;</td>
+          <td class="paramname"><em>tab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Removes a field from a lookup table.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tab</td><td>Pointer to the lookup table </td></tr>
+    <tr><td class="paramname">id</td><td>The aggregate ID of the field as stored in the lookup </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The field that was removed, or else NULL if not found.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#add4a6ffa5866d770bd21636d00b9d3d7">xLookupRemoveAll()</a> </dd>
+<dd>
+<a class="el" href="xlookup_8c.html#a3b423bf135d2ed42319abff99fda78e4">xLookupPut()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, and <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>.</p>
+
+</div>
+</div>
+<a id="add4a6ffa5866d770bd21636d00b9d3d7" name="add4a6ffa5866d770bd21636d00b9d3d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add4a6ffa5866d770bd21636d00b9d3d7">&#9670;&#160;</a></span>xLookupRemoveAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int xLookupRemoveAll </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXLookupTable.html">XLookupTable</a> *&#160;</td>
+          <td class="paramname"><em>tab</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>prefix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a>&#160;</td>
+          <td class="paramname"><em>recursive</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Removes all fields of a structure from the lookup table with the specified aggregate ID prefix, with or without including embedded substructures. For example, if the prefix is "system:subsystem", and a field's name is "property", then the field referred to as "system:subsystem:property" in the lookup is affected.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tab</td><td>Pointer to a lookup table </td></tr>
+    <tr><td class="paramname">prefix</td><td>The aggregate ID prefix before the field's name, not including a separator </td></tr>
+    <tr><td class="paramname">s</td><td>The structure </td></tr>
+    <tr><td class="paramname">recursive</td><td>Whether to include fields in all substructures recursively also. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of fields removed (&lt;=0), or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#add4a6ffa5866d770bd21636d00b9d3d7">xLookupRemoveAll()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, <a class="el" href="xchange_8h.html#af4b6e6d9baf3e6767041faa3e356af7a">X_STRUCT_INVALID</a>, and <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>.</p>
 
 </div>
 </div>
@@ -2018,7 +2304,7 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>X_SUCCESS (0) if successful or else X_STRUCT_INVALID if the argument is NULL (errno is also set to EINVAL)</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987">xReduceDims()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1">XField::ndim</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d">XField::sizes</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8h.html#af4b6e6d9baf3e6767041faa3e356af7a">X_STRUCT_INVALID</a>, <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>, <a class="el" href="xstruct_8c.html#acc31fe75f06a6e0e469fba3a57c4fb25">xReduceAllDims()</a>, and <a class="el" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987">xReduceDims()</a>.</p>
+<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1">XField::ndim</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="structXStructure.html#a82ba053944ce97d83d41c05f68ec4f3d">XStructure::parent</a>, <a class="el" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d">XField::sizes</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8h.html#af4b6e6d9baf3e6767041faa3e356af7a">X_STRUCT_INVALID</a>, <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>, <a class="el" href="xstruct_8c.html#acc31fe75f06a6e0e469fba3a57c4fb25">xReduceAllDims()</a>, and <a class="el" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987">xReduceDims()</a>.</p>
 
 </div>
 </div>
@@ -2097,7 +2383,51 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the removed field or else NULL if the was an error or if no matching field existed in the structure. </dd></dl>
 
-<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#a5426366367d169401f779c4764ba7736">X_NAME_INVALID</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8h.html#af4b6e6d9baf3e6767041faa3e356af7a">X_STRUCT_INVALID</a>, <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>, and <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>.</p>
+<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="structXStructure.html#a82ba053944ce97d83d41c05f68ec4f3d">XStructure::parent</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#a5426366367d169401f779c4764ba7736">X_NAME_INVALID</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8h.html#af4b6e6d9baf3e6767041faa3e356af7a">X_STRUCT_INVALID</a>, <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>, and <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>.</p>
+
+</div>
+</div>
+<a id="ad32d8a3f211a3b101142879ae31146ec" name="ad32d8a3f211a3b101142879ae31146ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad32d8a3f211a3b101142879ae31146ec">&#9670;&#160;</a></span>xReverseFieldOrder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int xReverseFieldOrder </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a>&#160;</td>
+          <td class="paramname"><em>recursive</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reverse the order of fields in a structure.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>The structure, whose field order to reverse. </td></tr>
+    <tr><td class="paramname">recursive</td><td>Whether to apply the reversal to all ebmbedded substructures also </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>X_SUCCESS (0) if successful, or else X_NULL if the structure is NULL.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff">xSortFields()</a> </dd>
+<dd>
+<a class="el" href="xstruct_8c.html#a74d1f6b9b92ebe82353e75a3d7e9daae">xSortFieldsByName()</a> </dd>
+<dd>
+<a class="el" href="xstruct_8c.html#ad6249db6da0a1294d5621cd9fd829f7a">xInsertField()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8h.html#a7b2679c964ea5f2160380ed55654b873">X_SUCCESS</a>, <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>, <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>, and <a class="el" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder()</a>.</p>
 
 </div>
 </div>
@@ -2137,11 +2467,13 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Previous field by the same name, or NULL if the field is new or if there was an error (errno will be set to EINVAL)</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct()</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#ad6249db6da0a1294d5621cd9fd829f7a">xInsertField()</a> </dd>
+<dd>
+<a class="el" href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct()</a> </dd>
 <dd>
 <a class="el" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="xchange_8h.html#a5426366367d169401f779c4764ba7736">X_NAME_INVALID</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, <a class="el" href="xchange_8h.html#af4b6e6d9baf3e6767041faa3e356af7a">X_STRUCT_INVALID</a>, <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>, and <a class="el" href="xstruct_8c.html#ab9a9fbc1235164bfeed5fbba1f7d8692">xLastSeparator()</a>.</p>
+<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="xchange_8h.html#a5426366367d169401f779c4764ba7736">X_NAME_INVALID</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, <a class="el" href="xchange_8h.html#af4b6e6d9baf3e6767041faa3e356af7a">X_STRUCT_INVALID</a>, and <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>.</p>
 
 </div>
 </div>
@@ -2218,6 +2550,95 @@ Variables</h2></td></tr>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xchange_8c.html#a46a6c2d802ebadd46ffcfdde7fb438b8">xIsVerbose()</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>, <a class="el" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>, and <a class="el" href="xchange_8c.html#a363b67b316973290c30c11bea7931c64">xVerbose</a>.</p>
+
+</div>
+</div>
+<a id="aa1d006a2788adeb0fc9b4799297a69ff" name="aa1d006a2788adeb0fc9b4799297a69ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1d006a2788adeb0fc9b4799297a69ff">&#9670;&#160;</a></span>xSortFields()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int xSortFields </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int(*)(const <a class="el" href="structXField.html">XField</a> **f1, const <a class="el" href="structXField.html">XField</a> **f2)&#160;</td>
+          <td class="paramname"><em>cmp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a>&#160;</td>
+          <td class="paramname"><em>recursive</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sort the fields in a structure using a specific comparator function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>The structure, whose fields to sort </td></tr>
+    <tr><td class="paramname">cmp</td><td>The comparator function. It takes two pointers to <a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a> locations as arguments. </td></tr>
+    <tr><td class="paramname">recursive</td><td>Whether to apply the sorting to all ebmbedded substructures also </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>X_SUCCESS (0) if successful, or else X_NULL if the structure or the comparator function is NULL.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a74d1f6b9b92ebe82353e75a3d7e9daae">xSortFieldsByName()</a> </dd>
+<dd>
+<a class="el" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8h.html#a7b2679c964ea5f2160380ed55654b873">X_SUCCESS</a>, <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>, <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>, and <a class="el" href="xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff">xSortFields()</a>.</p>
+
+</div>
+</div>
+<a id="a74d1f6b9b92ebe82353e75a3d7e9daae" name="a74d1f6b9b92ebe82353e75a3d7e9daae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74d1f6b9b92ebe82353e75a3d7e9daae">&#9670;&#160;</a></span>xSortFieldsByName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int xSortFieldsByName </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a>&#160;</td>
+          <td class="paramname"><em>recursive</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sorts the fields of a structure by field name, in ascending alphabetical order.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>The structure, whose fields to sort </td></tr>
+    <tr><td class="paramname">recursive</td><td>Whether to apply the sorting to all ebmbedded substructures also </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>X_SUCCESS (0) if successful, or else X_NULL if the structure is NULL.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff">xSortFields()</a>.</p>
 
 </div>
 </div>

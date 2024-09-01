@@ -38,12 +38,13 @@ var NAVTREE =
         [ "Aggregate IDs", "index.html#autotoc_md12", null ],
         [ "Accessing substructures and elements", "index.html#autotoc_md13", [
           [ "Large structures", "index.html#autotoc_md14", null ],
-          [ "Iterating over elements", "index.html#autotoc_md15", null ]
+          [ "Iterating over elements", "index.html#autotoc_md15", null ],
+          [ "Sorting fields", "index.html#autotoc_md16", null ]
         ] ]
       ] ],
-      [ "JSON parser and emitter", "index.html#autotoc_md17", null ],
-      [ "Error handling", "index.html#autotoc_md19", null ],
-      [ "Debugging support", "index.html#autotoc_md21", null ],
+      [ "JSON parser and emitter", "index.html#autotoc_md18", null ],
+      [ "Error handling", "index.html#autotoc_md20", null ],
+      [ "Debugging support", "index.html#autotoc_md22", null ],
       [ "[Unreleased]", "md_CHANGELOG.html#autotoc_md1", null ]
     ] ],
     [ "Data Structures", "annotated.html", [
@@ -57,7 +58,7 @@ var NAVTREE =
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "Globals", "globals.html", [
-        [ "All", "globals.html", null ],
+        [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
@@ -69,7 +70,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+"annotated.html",
+"xstruct_8c.html#ab20a0213369a947a7e48ff45aabee3c0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

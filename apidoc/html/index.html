@@ -253,13 +253,13 @@ Creating structure</h3>
 <div class="line"><span class="comment">// Set the &quot;property&quot; field in &quot;subsystem&quot;.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField</a>(sub, <span class="stringliteral">&quot;property&quot;</span>, <a class="code hl_function" href="xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6">xCreateStringField</a>(<span class="stringliteral">&quot;some value here&quot;</span>));</div>
 <div class="ttc" id="astructXStructure_html"><div class="ttname"><a href="structXStructure.html">XStructure</a></div><div class="ttdoc">SMA-X structure object, containing a linked-list of XField elements.</div><div class="ttdef"><b>Definition</b> xchange.h:155</div></div>
-<div class="ttc" id="axstruct_8c_html_ab1cb91bd6aa14c0dae9d24bfbe7b76f4"><div class="ttname"><a href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField</a></div><div class="ttdeci">XField * xSetField(XStructure *s, XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:542</div></div>
+<div class="ttc" id="axstruct_8c_html_ab1cb91bd6aa14c0dae9d24bfbe7b76f4"><div class="ttname"><a href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField</a></div><div class="ttdeci">XField * xSetField(XStructure *s, XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:579</div></div>
 <div class="ttc" id="axstruct_8c_html_ab551d2db420303b4408064a66bbe3f1c"><div class="ttname"><a href="xstruct_8c.html#ab551d2db420303b4408064a66bbe3f1c">xCreateStruct</a></div><div class="ttdeci">__inline__ XStructure * xCreateStruct()</div><div class="ttdef"><b>Definition</b> xstruct.c:27</div></div>
 <div class="ttc" id="axstruct_8c_html_ad84cbb4639f2fbfb604b698a86caf944"><div class="ttname"><a href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct</a></div><div class="ttdeci">XField * xSetSubstruct(XStructure *s, const char *name, XStructure *substruct)</div><div class="ttdef"><b>Definition</b> xstruct.c:435</div></div>
 </div><!-- fragment --><p>and then eventually destroyed after use as:</p>
 <div class="fragment"><div class="line"><span class="comment">// Free up all resources used by the structure &#39;s&#39;</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#a2e12d0147219f85a6ec012d7f475fe21">xDestroyStruct</a>(s);</div>
-<div class="ttc" id="axstruct_8c_html_a2e12d0147219f85a6ec012d7f475fe21"><div class="ttname"><a href="xstruct_8c.html#a2e12d0147219f85a6ec012d7f475fe21">xDestroyStruct</a></div><div class="ttdeci">__inline__ void xDestroyStruct(XStructure *s)</div><div class="ttdef"><b>Definition</b> xstruct.c:621</div></div>
+<div class="ttc" id="axstruct_8c_html_a2e12d0147219f85a6ec012d7f475fe21"><div class="ttname"><a href="xstruct_8c.html#a2e12d0147219f85a6ec012d7f475fe21">xDestroyStruct</a></div><div class="ttdeci">__inline__ void xDestroyStruct(XStructure *s)</div><div class="ttdef"><b>Definition</b> xstruct.c:651</div></div>
 </div><!-- fragment --><p><a class="anchor" id="aggregate-ids"></a> </p>
 <h3><a class="anchor" id="autotoc_md12"></a>
 Aggregate IDs</h3>
@@ -296,26 +296,30 @@ Accessing substructures and elements</h3>
 <div class="fragment"><div class="line"><span class="comment">// Destroy the replaced fields if they are no longer needed.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(oldfield);</div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(oldsub);</div>
-<div class="ttc" id="axstruct_8c_html_ae0ce99c867b11bd14971031eec8ba4ad"><div class="ttname"><a href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a></div><div class="ttdeci">void xDestroyField(XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:633</div></div>
+<div class="ttc" id="axstruct_8c_html_ae0ce99c867b11bd14971031eec8ba4ad"><div class="ttname"><a href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a></div><div class="ttdeci">void xDestroyField(XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:663</div></div>
 </div><!-- fragment --><p>You can also remove existing fields from structures using <code><a class="el" href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField()</a></code>, e.g.</p>
-<div class="fragment"><div class="line"><span class="comment">// Remove and then destroy the fiueld named &quot;blah&quot; in structure &#39;s&#39;.</span></div>
+<div class="fragment"><div class="line"><span class="comment">// Remove and then destroy the field named &quot;blah&quot; in structure &#39;s&#39;.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(<a class="code hl_function" href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a>(s, <span class="stringliteral">&quot;blah&quot;</span>));</div>
 <div class="ttc" id="axstruct_8c_html_aec9f913cdb79d8653668a5d9bdda6ab1"><div class="ttname"><a href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a></div><div class="ttdeci">XField * xRemoveField(XStructure *s, const char *name)</div><div class="ttdef"><b>Definition</b> xstruct.c:482</div></div>
 </div><!-- fragment --><h4><a class="anchor" id="autotoc_md14"></a>
 Large structures</h4>
-<p>The normal <code><a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a></code> and <code><a class="el" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct()</a></code> functions have computational costs that scale linearly with the number of direct fields in the structure. It is not much of an issue for structures that contain dozens of fields (per layer). For much larger structures, which have a fixed layout, there is an option for significantly faster hash-based lookup also. E.g. instead of <code><a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a></code> you may use <code><a class="el" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField()</a></code>:</p>
+<p>The normal <code><a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a></code> and <code><a class="el" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct()</a></code> functions have computational costs that scale linearly with the number of direct fields in the structure. It is not much of an issue for structures that contain dozens, or even hundreds, of fields (per layer). For much larger structures, which have a fixed layout, there is an option for a potentially much faster hash-based lookup also. E.g. instead of <code><a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a></code> you may use <code><a class="el" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField()</a></code>:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s = ...</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Let&#39;s create a lookup table for all fields of &#39;s&#39; and all its substructures.</span></div>
+<div class="line"><span class="comment">// Create a lookup table for all fields of &#39;s&#39; and all its substructures.</span></div>
 <div class="line">XLookupTable *l = xCreateLookupTable(s, <a class="code hl_define" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>);</div>
 <div class="line"> </div>
+<div class="line"><span class="comment">// Now use a hash-based lookup to locate the field by name</span></div>
 <div class="line"><a class="code hl_struct" href="structXField.html">XField</a> *f = <a class="code hl_function" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField</a>(l, <span class="stringliteral">&quot;subsystem:property&quot;</span>);</div>
+<div class="line"> </div>
 <div class="line">...</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Once done with the lookup, destroy it.</span></div>
 <div class="line">xDestroyLookup(l);</div>
-<div class="ttc" id="axlookup_8c_html_a5e3a316b7d0c5c40ed079f3df2d9fcc9"><div class="ttname"><a href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField</a></div><div class="ttdeci">XField * xLookupField(const XLookupTable *tab, const char *id)</div><div class="ttdef"><b>Definition</b> xlookup.c:176</div></div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md15"></a>
+<div class="ttc" id="axlookup_8c_html_a5e3a316b7d0c5c40ed079f3df2d9fcc9"><div class="ttname"><a href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField</a></div><div class="ttdeci">XField * xLookupField(const XLookupTable *tab, const char *id)</div><div class="ttdef"><b>Definition</b> xlookup.c:388</div></div>
+</div><!-- fragment --><p>Note however, that preparing the lookup table has significant <em>O(N)</em> computational cost also. Therefore, a lookup table is practical only if you are going to use it repeatedly, many times over. As a rule of thumb, lookups may have the advantage if accessing fields in a structure by name hundreds of times, or more.</p>
+<p>The same performance limitation also applies to building large structures, since the <code><a class="el" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField()</a></code> and <code><a class="el" href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct()</a></code> functions iterate over the existing fields to check if a prior field by the same name was already present, and which should be removed before the new field is set (hence the time to build up a structure with <em>N</em> fields will scale as _O(N<sup>2</sup>)_ in general). The user may consider using <code><a class="el" href="xstruct_8c.html#ad6249db6da0a1294d5621cd9fd829f7a">xInsertField()</a></code> instead, which is much more scalable for building large structures, since it does not check for duplicates (hence scales as <em>O(N)</em> overall). However, <code><a class="el" href="xstruct_8c.html#ad6249db6da0a1294d5621cd9fd829f7a">xInsertField()</a></code> also makes the ordering of fields less intuitive, and it is left up to the caller to ensure that field names added this way are never duplicated.</p>
+<h4><a class="anchor" id="autotoc_md15"></a>
 Iterating over elements</h4>
 <p>You can easily iterate over the elements also. This is one application where you may want to know the internal layout of <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code>, namely that it contains a simple linked-list of <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> fields. One way to iterate over a strucures elements is with a <code>for</code> loop, e.g.:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s = ...</div>
@@ -327,9 +331,20 @@ Iterating over elements</h4>
 <div class="line">}</div>
 <div class="ttc" id="astructXField_html_ae1ebaf87eb62e6266b14908eee28e565"><div class="ttname"><a href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a></div><div class="ttdeci">struct XField * next</div><div class="ttdoc">Pointer to the next linked element (if inside an XStructure).</div><div class="ttdef"><b>Definition</b> xchange.h:140</div></div>
 <div class="ttc" id="astructXStructure_html_a501ae8af2201d9cfaa60e3af21ff58fc"><div class="ttname"><a href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a></div><div class="ttdeci">XField * firstField</div><div class="ttdoc">Pointer to the first field in this structure or NULL if the structure is empty.</div><div class="ttdef"><b>Definition</b> xchange.h:156</div></div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md16"></a>
+Sorting fields</h4>
+<p>You can easily sort fields by name using <code><a class="el" href="xstruct_8c.html#a74d1f6b9b92ebe82353e75a3d7e9daae">xSortFieldsByName()</a></code>, or with using a custom comparator function with <code><a class="el" href="xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff">xSortFields()</a></code>. You can also reverse the order with <code><a class="el" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder()</a></code>. For example to sort fields in a structure (and its substructures) in decending alphabetical order:</p>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s = ...</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Sort in by names in ascending order, recursively</span></div>
+<div class="line">xSortFieldsByName(s, <a class="code hl_define" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Reverse the order, recursively</span></div>
+<div class="line"><a class="code hl_function" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a>(s, <a class="code hl_define" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>);</div>
+<div class="ttc" id="axstruct_8c_html_ad32d8a3f211a3b101142879ae31146ec"><div class="ttname"><a href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a></div><div class="ttdeci">int xReverseFieldOrder(XStructure *s, boolean recursive)</div><div class="ttdef"><b>Definition</b> xstruct.c:1055</div></div>
 </div><!-- fragment --><hr  />
 <p><a class="anchor" id="json-interchange"></a> </p>
-<h2><a class="anchor" id="autotoc_md17"></a>
+<h2><a class="anchor" id="autotoc_md18"></a>
 JSON parser and emitter</h2>
 <p>Once you have an <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> data object, you can easily convert it to a JSON string representation, as:</p>
 <div class="fragment"><div class="line"><span class="comment">// Obtain a JSON string representation of the structure &#39;s&#39;.</span></div>
@@ -350,7 +365,7 @@ JSON parser and emitter</h2>
 <div class="ttc" id="axjson_8c_html_afff9ee9473a0c939d18dba977cfac075"><div class="ttname"><a href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075">xjsonParseFilename</a></div><div class="ttdeci">XStructure * xjsonParseFilename(const char *fileName, int *lineNumber)</div><div class="ttdef"><b>Definition</b> xjson.c:203</div></div>
 </div><!-- fragment --><hr  />
 <p><a class="anchor" id="error-handling"></a> </p>
-<h2><a class="anchor" id="autotoc_md19"></a>
+<h2><a class="anchor" id="autotoc_md20"></a>
 Error handling</h2>
 <p>The functions that can encounter an error will return either one of the error codes defined in <code><a class="el" href="xchange_8h.html">xchange.h</a></code>, or <code>NULL</code> pointers. String descriptions for the error codes can be produced by <code><a class="el" href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription(int)</a></code>. For example,</p>
 <div class="fragment"><div class="line"><span class="keywordtype">char</span> *text = ...</div>
@@ -366,7 +381,7 @@ Error handling</h2>
 </div><!-- fragment --><p>The JSON parser emitter can also sink its error messages to a designated file or stream, which can be set by <code><a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream(FILE *)</a></code>.</p>
 <hr  />
 <p><a class="anchor" id="debugging-support"></a> </p>
-<h2><a class="anchor" id="autotoc_md21"></a>
+<h2><a class="anchor" id="autotoc_md22"></a>
 Debugging support</h2>
 <p>The <b>xchange</b> library provides two macros: <code><a class="el" href="xchange_8h.html#a1f038bf7ddb58819805cfc44162cb403" title="Use for generating verbose output.">xvprintf()</a></code> and <code><a class="el" href="xchange_8h.html#a2b0edfea798e9e08122f09dba5f189f8" title="Use for generating debug output.">xdprintf()</a></code>, for printing verbose and debug messages to <code>stderr</code>. Both work just like <code>printf()</code>, but they are conditional on verbosity being enabled via <code><a class="el" href="xchange_8c.html#afbe85067ddbc92577cd00ac8f6e3026f">xSetVerbose(boolean)</a></code> and the global variable <code>xDebug</code> being <code>TRUE</code> (non-zero), respectively. Applications using <b>xchange</b> may use these macros to produce their own verbose and/or debugging outputs conditional on the same global settings.</p>
 <p>You can also turn debug messages by defining the <code>DEBUG</code> constant for the compiler, e.g. by adding <code>-DDEBUG</code> to <code>CFLAGS</code> prior to calling <code>make</code>. </p>
