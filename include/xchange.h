@@ -208,9 +208,20 @@ XField *xSetSubstruct(XStructure *s, const char *name, XStructure *substruct);
 int xReduceDims(int *ndim, int *sizes);
 int xReduceAllDims(XStructure *s);
 
-// Fast field lookup
+// Sorting, ordering
+int xSortFields(XStructure *s, int (*cmp)(const XField **f1, const XField **f2), boolean recursive);
+int xSortFieldsByName(XStructure *s, boolean recursive);
+int xReverseFieldOrder(XStructure *s, boolean recursive);
+
+// Field lookup
+XLookupTable *xAllocLookup(unsigned int size);
 XLookupTable *xCreateLookup(const XStructure *s, boolean recursive);
 XField *xLookupField(const XLookupTable *tab, const char *id);
+int xLookupPut(XLookupTable *tab, const char *prefix, const XField *field, XField **oldValue);
+XField *xLookupRemove(XLookupTable *tab, const char *id);
+int xLookupPutAll(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive);
+int xLookupRemoveAll(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive);
+long xLookupCount(const XLookupTable *tab);
 void xDestroyLookup(XLookupTable *tab);
 
 // Convenience field creator methods

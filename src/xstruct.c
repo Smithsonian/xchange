@@ -9,11 +9,11 @@
  *
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <search.h>
 
 #include "xchange.h"
 
@@ -227,7 +227,7 @@ XStructure *xGetSubstruct(const XStructure *s, const char *id) {
  * \return          A newly created field with the copy of the supplied data, or NULL if there was an error.
  */
 XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, const void *value) {
-  const char *funcName = "xCreateField()";
+  static const char *funcName = "xCreateField()";
   XField *f;
   int n;
 
@@ -433,7 +433,7 @@ int xGetFieldCount(const XField *f) {
  * \sa xGetSubstruct()
  */
 XField *xSetSubstruct(XStructure *s, const char *name, XStructure *substruct) {
-  const char *funcName = "smaxSetSubstruct()";
+  static const char *funcName = "xSetSubstruct()";
   XField *f;
 
   if(!s) {
@@ -480,7 +480,7 @@ XField *xSetSubstruct(XStructure *s, const char *name, XStructure *substruct) {
  *
  */
 XField *xRemoveField(XStructure *s, const char *name) {
-  const char *funcName = "smaxSetField()";
+  static const char *funcName = "xRemoveField()";
 
   XField *e, *last = NULL;
 
@@ -505,9 +505,9 @@ XField *xRemoveField(XStructure *s, const char *name) {
       else s->firstField = e->next;
       e->next = NULL;
       if(e->type == X_STRUCT) if(e->value) {
-        XStructure *sf = (XStructure *) e->value;
-        int k;
-        for(k = xGetFieldCount(e); --k >= 0; ) sf[k].parent = NULL;
+        XStructure *sub = (XStructure *) e->value;
+        int k = xGetFieldCount(e);
+        while(--k >= 0) sub[k].parent = NULL;
       }
       return e;
     }
@@ -515,6 +515,42 @@ XField *xRemoveField(XStructure *s, const char *name) {
   }
 
   return NULL;
+}
+
+/**
+ * (<i>expert</i>) Inserts a field into the structure at its head position. That is, the specified field will become
+ * the first field in the structure. And, unlike xSetField(), this function does not check for (nor remove) previously
+ * present fields by the same name. Thus, it is left up to the caller to ensure that there are no duplicate field
+ * names added to the structure.
+ *
+ * A note of caution: There is no safeguard against adding the same field to more than one structure, which will
+ * result in a corruption of the affected structures, since both structures would link to the field, but the field
+ * links to only one specific successive element. Therefore, the user is responsible to ensure that fields are
+ * assigned to structures uniquely, and if necessary remove the field from one structure before assigning it to
+ * another.
+ *
+ * \param s     Structure to which to add the field
+ * \param f     Field to be added.
+ *
+ *
+ * \sa xSetField()
+ * \sa xReverseFieldOrder()
+ */
+int xInsertField(XStructure *s, XField *f) {
+  static const char *funcName = "xInsertField()";
+
+  if(!s) return xError(funcName, X_STRUCT_INVALID);
+  if(!f) return xError(funcName, X_NULL);
+  if(!f->name) return xError(funcName, X_NAME_INVALID);
+
+  // The field name contains a separator?
+  if(xLastSeparator(f->name)) return xError(funcName, X_NAME_INVALID);
+
+  // Add the new field at the head of the list...
+  f->next = s->firstField;
+  s->firstField = f;
+
+  return X_SUCCESS;
 }
 
 /**
@@ -536,11 +572,12 @@ XField *xRemoveField(XStructure *s, const char *name) {
  * \return      Previous field by the same name, or NULL if the field is new or if there was an error
  *              (errno will be set to EINVAL)
  *
+ * \sa xInsertField()
  * \sa xSetSubstruct()
  * \sa xGetSubstruct()
  */
 XField *xSetField(XStructure *s, XField *f) {
-  const char *funcName = "smaxSetField()";
+  static const char *funcName = "xSetField()";
 
   XField *e, *last = NULL;
 
@@ -557,13 +594,6 @@ XField *xSetField(XStructure *s, XField *f) {
   }
 
   if(!f->name) {
-    xError(funcName, X_NAME_INVALID);
-    errno = EINVAL;
-    return NULL;
-  }
-
-  if(xLastSeparator(f->name)) {
-    // The field name contains a separator
     xError(funcName, X_NAME_INVALID);
     errno = EINVAL;
     return NULL;
@@ -635,9 +665,9 @@ void xDestroyField(XField *f) {
 
   if(f->value) {
     if(f->type == X_STRUCT) {
-      XStructure *s = (XStructure *) f->value;
-      int i;
-      for(i=xGetFieldCount(f); --i >= 0; ) xClearStruct(&s[i]);
+      XStructure *sub = (XStructure *) f->value;
+      int i = xGetFieldCount(f);
+      while(--i >= 0) xClearStruct(&sub[i]);
     }
     else if(!f->isSerialized && (f->type == X_STRING || f->type == X_RAW)) {
       char **str = (char **) f->value;
@@ -742,9 +772,9 @@ int xReduceAllDims(XStructure *s) {
 
     s->firstField = sub->firstField;
     for(sf = s->firstField; sf; sf = sf->next) if(sf->type == X_STRUCT) {
-      XStructure *ss = (XStructure *) f;
-      int i;
-      for(i = xGetFieldCount(f); --i >= 0; ) ss[i].parent = s;
+      XStructure *sub = (XStructure *) f;
+      int i = xGetFieldCount(f);
+      while(--i >= 0) sub[i].parent = s;
     }
 
     free(f);
@@ -755,9 +785,9 @@ int xReduceAllDims(XStructure *s) {
     xReduceDims(&f->ndim, f->sizes);
 
     if(f->type == X_STRUCT) {
-      XStructure *ss = (XStructure *) f;
-      int i;
-      for(i = xGetFieldCount(f); --i >= 0; ) xReduceAllDims(&ss[i]);
+      XStructure *sub = (XStructure *) f;
+      int i = xGetFieldCount(f);
+      while(--i >= 0) xReduceAllDims(&sub[i]);
     }
   }
 
@@ -925,7 +955,6 @@ int xSplitID(char *id, char **pKey) {
  * @return            The total number of fields present in the structure and all its sub-structures.
  *
  * @sa xCountFields()
- *
  */
 long xDeepCountFields(const XStructure *s) {
   XField *f;
@@ -938,9 +967,9 @@ long xDeepCountFields(const XStructure *s) {
 
     if(f->type == X_STRUCT) {
       XStructure *sub = (XStructure *) f->value;
-      int count = xGetFieldCount(f);
-      while(--count >= 0) {
-        long m = xDeepCountFields(&sub[count]);
+      int i = xGetFieldCount(f);
+      while(--i >= 0) {
+        long m = xDeepCountFields(&sub[i]);
         if(m < 0) return -1;
         n += m;
       }
@@ -950,5 +979,101 @@ long xDeepCountFields(const XStructure *s) {
   return n;
 }
 
+/**
+ * Sort the fields in a structure using a specific comparator function.
+ *
+ * @param s           The structure, whose fields to sort
+ * @param cmp         The comparator function. It takes two pointers to XField locations as arguments.
+ * @param recursive   Whether to apply the sorting to all ebmbedded substructures also
+ * @return            X_SUCCESS (0) if successful, or else X_NULL if the structure or the comparator
+ *                    function is NULL.
+ *
+ * @sa xSortFieldsByName()
+ * @sa xReverseFieldOrder()
+ */
+int xSortFields(XStructure *s, int (*cmp)(const XField **f1, const XField **f2), boolean recursive) {
+  XField **array, *f;
+  int i, n;
+
+  if(s == NULL || cmp == NULL) return xError("xSortFields()", X_NULL);
+
+  for(n = 0, f = s->firstField; f != NULL; f = f->next, n++)
+    if(f->type == X_STRUCT && recursive) {
+      XStructure *sub = (XStructure *) f->value;
+      int i = xGetFieldCount(f);
+      while (--i >= 0) xSortFields(&sub[i], cmp, TRUE);
+    }
+
+  if(n < 2) return n;
+
+  array = (XField **) malloc(n * sizeof(XField *));
+  for(n = 0, f = s->firstField; f != NULL;) {
+    XField *next = f->next;
+    f->next = NULL;
+    array[n++] = f;
+    f = next;
+  }
+  s->firstField = NULL;
+
+  qsort(array, n, sizeof(XField *), (int (*)(const void *, const void *)) cmp);
+
+  s->firstField = array[0];
+  for(i = 1, f = s->firstField; i < n; i++, f = f->next) f->next = array[i];
+
+  return X_SUCCESS;
+}
 
 
+static int XFieldNameCmp(const XField **f1, const XField **f2) {
+  return strcmp((*f1)->name, (*f2)->name);
+}
+
+/**
+ * Sorts the fields of a structure by field name, in ascending alphabetical order.
+ *
+ * @param s           The structure, whose fields to sort
+ * @param recursive   Whether to apply the sorting to all ebmbedded substructures also
+ * @return            X_SUCCESS (0) if successful, or else X_NULL if the structure is NULL.
+ *
+ * @sa xReverseFieldOrder()
+ */
+int xSortFieldsByName(XStructure *s, boolean recursive) {
+  return xSortFields(s, XFieldNameCmp, recursive);
+}
+
+/**
+ * Reverse the order of fields in a structure.
+ *
+ * @param s           The structure, whose field order to reverse.
+ * @param recursive   Whether to apply the reversal to all ebmbedded substructures also
+ * @return            X_SUCCESS (0) if successful, or else X_NULL if the structure is NULL.
+ *
+ * @sa xSortFields()
+ * @sa xSortFieldsByName()
+ * @sa xInsertField()
+ */
+int xReverseFieldOrder(XStructure *s, boolean recursive) {
+  XField *f, *rev = NULL;
+
+  if(s == NULL) return xError("xReverseFieldOrder()", X_NULL);
+
+  f = s->firstField;
+  s->firstField = NULL;
+
+  while(f != NULL) {
+    XField *next = f->next;
+    f->next = rev;
+    rev = f;
+
+    if(f->type == X_STRUCT && recursive) {
+      XStructure *sub = (XStructure *) f->value;
+      int i = xGetFieldCount(f);
+      while(--i >= 0) xReverseFieldOrder(&sub[i], TRUE);
+    }
+
+    f = next;
+  }
+
+  s->firstField = rev;
+  return X_SUCCESS;
+}

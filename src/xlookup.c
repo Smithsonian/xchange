@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <semaphore.h>
 
 #include "xchange.h"
 
@@ -19,7 +20,7 @@
 typedef struct LookupEntry {
   long hash;
   char *key;                ///< dynamically allocated.
-  XField *value;
+  XField *field;
   struct LookupEntry *next;
 } XLookupEntry;
 
@@ -27,6 +28,7 @@ typedef struct {
   XLookupEntry **table;
   int nBins;
   int nEntries;
+  sem_t sem;
 } XLookupPrivate;
 
 /// \endcond
@@ -39,8 +41,7 @@ static long xGetHash(const char *str) {
   return hash;
 }
 
-
-static XLookupEntry *xGetLookupEntry(const XLookupTable *tab, const char *key, long hash) {
+static XLookupEntry *xGetLookupEntryAsync(const XLookupTable *tab, const char *key, long hash) {
   const XLookupPrivate *p;
   XLookupEntry *e;
 
@@ -51,23 +52,23 @@ static XLookupEntry *xGetLookupEntry(const XLookupTable *tab, const char *key, l
   return NULL;
 }
 
-static int xLookupAddAsync(XLookupTable *tab, const char *prefix, const XField *field, void **oldValue) {
+static int xLookupPutAsync(XLookupTable *tab, const char *prefix, const XField *field, XField **oldValue) {
   XLookupPrivate *p = (XLookupPrivate *) tab->priv;
   const char *id = prefix ? xGetAggregateID(prefix, field->name) : strdup(field->name);
   long hash = xGetHash(id);
-  XLookupEntry *e = xGetLookupEntry(tab, id, hash);
+  XLookupEntry *e = xGetLookupEntryAsync(tab, id, hash);
   int idx;
 
   if(e) {
-    if(oldValue) *oldValue = e->value;
-    e->value = (XField *) field;
+    if(oldValue) *oldValue = e->field;
+    e->field = (XField *) field;
     return 1;
   }
 
   e = (XLookupEntry *) calloc(1, sizeof(XLookupEntry));
   e->hash = hash;
   e->key = (char *) id;
-  e->value = (XField *) field;
+  e->field = (XField *) field;
 
   idx = hash % p->nBins;
 
@@ -78,12 +79,106 @@ static int xLookupAddAsync(XLookupTable *tab, const char *prefix, const XField *
   return 0;
 }
 
-static void xLookupAddAllAsync(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive) {
+static XField *xLookupRemoveAsync(XLookupTable *tab, const char *id) {
+  XLookupPrivate *p = (XLookupPrivate *) tab->priv;
+  XLookupEntry *e, *last = NULL;
+  long hash = xGetHash(id);
+  int idx = (int) (hash % p->nBins);
+
+  for(e = p->table[idx]; e != NULL; e=e->next) {
+    if(strcmp(e->key, id) == 0) {
+      p->nEntries--;
+      if(last) last->next = e->next;
+      else p->table[idx] = e->next;
+      return e->field;
+    }
+    last = e;
+  }
+
+  return NULL;
+}
+
+/**
+ * Returns the number of fields in the lookup table.
+ *
+ * @param tab   Pointer to the lookup table
+ * @return      the number of fields stored.
+ */
+long xLookupCount(const XLookupTable *tab) {
+  const XLookupPrivate *p = (XLookupPrivate *) tab->priv;
+  return p->nEntries;
+}
+
+/**
+ * Puts a field into the lookup table with the specified aggregate ID prefix. For example, if the prefix
+ * is "system:subsystem", and the field's name is "property", then the field will be available as
+ * "system:subsystem:property" in the lookup.
+ *
+ * @param tab         Pointer to a lookup table
+ * @param prefix      The aggregate ID prefix before the field's name, not including a separator
+ * @param field       The field
+ * @param oldValue    (optional) pointer to a buffer in which to return the old field value (if any) stored
+ *                    under the same name. It may be NULL if not needed.
+ * @return            0 if successfully added a new field, 1 if updated an existing fields, or else
+ *                    X_NULL if either of the arguments were NULL, or X_FAILURE if some other error.
+ *
+ * @sa xLookupPutAll()
+ * @sa xLookupRemove()
+ */
+int xLookupPut(XLookupTable *tab, const char *prefix, const XField *field, XField **oldValue) {
+  XLookupPrivate *p;
+  int res;
+
+  if(!tab || !field) return xError("xLookupPutField()", X_NULL);
+
+  p = (XLookupPrivate *) tab->priv;
+  if(sem_wait(&p->sem) != 0) return X_FAILURE;
+
+  res = xLookupPutAsync(tab, prefix, field, oldValue);
+  sem_post(&p->sem);
+
+  return res;
+}
+
+/**
+ * Removes a field from a lookup table.
+ *
+ * @param tab   Pointer to the lookup table
+ * @param id    The aggregate ID of the field as stored in the lookup
+ * @return      The field that was removed, or else NULL if not found.
+ *
+ * @sa xLookupRemoveAll()
+ * @sa xLookupPut()
+ */
+XField *xLookupRemove(XLookupTable *tab, const char *id) {
+  XLookupPrivate *p;
+  XField *f;
+
+  if(!tab || !id) {
+    xError("xLookupRemoveField()", X_NULL);
+    errno = EINVAL;
+    return NULL;
+  }
+
+  p = (XLookupPrivate *) tab->priv;
+  if(sem_wait(&p->sem) != 0) return NULL;
+
+  f = xLookupRemoveAsync(tab, id);
+  sem_post(&p->sem);
+
+  return f;
+}
+
+
+
+static int xLookupPullAllAsync(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive) {
   XField *f;
   int lp = prefix ? strlen(prefix) : 0;
+  int N = 0;
 
   for(f = s->firstField; f != NULL; f = f->next) {
-    xLookupAddAsync(tab, prefix, f, NULL);
+    xLookupPutAsync(tab, prefix, f, NULL);
+    N++;
 
     if(f->type == X_STRUCT && recursive) {
       XStructure *sub = (XStructure *) f->value;
@@ -97,13 +192,123 @@ static void xLookupAddAllAsync(XLookupTable *tab, const char *prefix, const XStr
         if(f->ndim == 0) sprintf(&p1[n], "%s", f->name);
         else sprintf(&p1[n], "%s" X_SEP "%d", f->name, (count + 1));
 
-        xLookupAddAllAsync(tab, p1, &sub[count], TRUE);
+        N += xLookupPullAllAsync(tab, p1, &sub[count], TRUE);
       }
     }
   }
+
+  return N;
 }
 
-static XLookupTable *xAllocLookup(int size) {
+static int xLookupRemoveAllAsync(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive) {
+  XField *f;
+  int lp = prefix ? strlen(prefix) : 0;
+  int N = 0;
+
+  for(f = s->firstField; f != NULL; f = f->next) {
+    char *id = xGetAggregateID(prefix, f->name);
+    xLookupRemoveAsync(tab, id);
+    free(id);
+    N++;
+
+    if(f->type == X_STRUCT && recursive) {
+      XStructure *sub = (XStructure *) f->value;
+      char *p1 = (char *) malloc(lp + strlen(f->value) + 2 * sizeof(X_SEP) + 12);
+
+      int count = xGetFieldCount(f);
+      while(--count >= 0) {
+        int n = 0;
+        if(prefix) n = sprintf(p1, "%s" X_SEP, prefix);
+
+        if(f->ndim == 0) sprintf(&p1[n], "%s", f->name);
+        else sprintf(&p1[n], "%s" X_SEP "%d", f->name, (count + 1));
+
+        N += xLookupRemoveAllAsync(tab, p1, &sub[count], TRUE);
+      }
+    }
+  }
+
+  return N;
+}
+
+
+/**
+ * Puts all fields from a structure into the lookup table with the specified aggregate ID prefix, with or without
+ * including embedded substructures. For example,  if the prefix is "system:subsystem", and a field's name is
+ * "property", then that field will be available as "system:subsystem:property" in the lookup.
+ *
+ * @param tab         Pointer to a lookup table
+ * @param prefix      The aggregate ID prefix before the field's name, not including a separator
+ * @param s           The structure
+ * @param recursive   Whether to include fields in all substructures recursively also.
+ * @return            the number of fields added (&lt;=0), or else X_NULL if either of the arguments were NULL,
+ *                    or X_FAILURE if some other error.
+ *
+ * @sa xLookupRemoveAll()
+ */
+int xLookupPutAll(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive) {
+  static const char *fn = "xLookupPutAll()";
+
+  XLookupPrivate *p;
+  int n;
+
+  if(!tab) return xError(fn, X_NULL);
+  if(!s) return xError(fn, X_NULL);
+
+  p = (XLookupPrivate *) tab->priv;
+  if(sem_wait(&p->sem) != 0) return -1;
+
+  n = xLookupPullAllAsync(tab, prefix, s, recursive);
+  sem_post(&p->sem);
+
+  return n;
+}
+
+/**
+ * Removes all fields of a structure from the lookup table with the specified aggregate ID prefix, with or without
+ * including embedded substructures. For example, if the prefix is "system:subsystem", and a field's name is
+ * "property", then the field referred to as "system:subsystem:property" in the lookup is affected.
+ *
+ * @param tab         Pointer to a lookup table
+ * @param prefix      The aggregate ID prefix before the field's name, not including a separator
+ * @param s           The structure
+ * @param recursive   Whether to include fields in all substructures recursively also.
+ * @return            the number of fields removed (&lt;=0), or else X_NULL if either of the arguments were NULL,
+ *                    or X_FAILURE if some other error.
+ *
+ * @sa xLookupRemoveAll()
+ */
+int xLookupRemoveAll(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive) {
+  static const char *fn = "xLookupRemoveAll()";
+
+  XLookupPrivate *p;
+  int n;
+
+  if(!tab) return xError(fn, X_NULL);
+  if(!s) return xError(fn, X_STRUCT_INVALID);
+
+  p = (XLookupPrivate *) tab->priv;
+  if(sem_wait(&p->sem) != 0) return -1;
+
+  n = xLookupRemoveAllAsync(tab, prefix, s, recursive);
+  sem_post(&p->sem);
+
+  return n;
+}
+
+/**
+ * Allocates a new lookup with the specified hash size. The hash size should correspond to the number of elements
+ * stored in the lookup. If it's larger or roughtly equal to the number of elements to be stored, then the lookup
+ * time will stay approximately constant with the number of elements. If the size is much smaller than the number
+ * of elements _N_ stored, then the lookup time will scale as _O(N/size)_ typically.
+ *
+ * @param size    The number of hash bins to allocate
+ * @return        The new lookup table, or else NULL if there was an error.
+ *
+ * @sa xCreateLookup()
+ * @sa xDEstroyLookup()
+ */
+XLookupTable *xAllocLookup(unsigned int size) {
   XLookupTable *tab;
   XLookupPrivate *p;
 
@@ -119,10 +324,10 @@ static XLookupTable *xAllocLookup(int size) {
   }
 
   p->nBins = n;
+  sem_init(&p->sem, FALSE, 1);
 
   tab = (XLookupTable *) calloc(1, sizeof(XLookupTable));
   tab->priv = p;
-
 
   return tab;
 }
@@ -158,13 +363,20 @@ XLookupTable *xCreateLookup(const XStructure *s, boolean recursive) {
   l = xAllocLookup(recursive ? xDeepCountFields(s) : xCountFields(s));
   if(!l) return NULL;
 
-  xLookupAddAllAsync(l, NULL, s, recursive);
+  xLookupPullAllAsync(l, NULL, s, recursive);
 
   return l;
 }
 
 /**
- * Returns a named field from a lookup table.
+ * Returns a named field from a lookup table. When retriving a large number (hundreds or more) fields by name
+ * from very large structures, this methods of locating the relevant data can be significantly faster than the
+ * xGetField() / xGetSubstruct() approach.
+ *
+ * Note however, that preparing the lookup table has significant _O(N)_ computational cost also, whereas
+ * retrieving _M_ fields with xGetField() / xGetSubstruct() have costs that scale _O(N&times;M)_. Therefore, a
+ * lookup table is practical only if you are going to use it repeatedly, many times over. As a rule of thumb,
+ * lookups may have the advantage if accessing fields in a structure by name hundreds of times, or more.
  *
  * @param tab       Pointer to the lookup table
  * @param id        The aggregate ID of the field to find.
@@ -175,15 +387,22 @@ XLookupTable *xCreateLookup(const XStructure *s, boolean recursive) {
  */
 XField *xLookupField(const XLookupTable *tab, const char *id) {
   XLookupEntry *e;
+  XLookupPrivate *p;
 
   if(!tab || !id) {
     errno = EINVAL;
     return NULL;
   }
 
-  e = xGetLookupEntry(tab, id, xGetHash(id));
-  return e ? e->value : NULL;
+  p = (XLookupPrivate *) tab->priv;
+  if(sem_wait(&p->sem) != 0) return NULL;
+
+  e = xGetLookupEntryAsync(tab, id, xGetHash(id));
+  sem_post(&p->sem);
+
+  return e ? e->field : NULL;
 }
+
 
 /**
  * Destroys a lookup table, freeing up it's in-memory resources.
@@ -215,6 +434,7 @@ void xDestroyLookup(XLookupTable *tab) {
     }
 
     free(p->table);
+    sem_destroy(&p->sem);
   }
 
   free(tab);

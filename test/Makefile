@@ -8,12 +8,12 @@ include ../config.mk
 CFLAGS += -g
 export CFLAGS
 
-all: $(BIN)/test-json $(BIN)/test-lookup
+all: $(BIN)/test-struct $(BIN)/test-lookup $(BIN)/test-json
 
 $(BIN)/test-%: $(OBJ)/test-%.o $(LIB)/libxchange.a | $(BIN)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-$(LIB)/libxchange.a:
+$(LIB)/libxchange.a: ../src ../include ../Makefile
 	make -C .. static
 	
 $(BIN):
