@@ -33,7 +33,7 @@ __Documentation__
  - [User's guide](doc/README.md) (`README.md`)
  - [API Documentation](apidoc/html/files.html)
  - [History of changes](doc/CHANGELOG.md) (`CHANGELOG.md`)
- - [Issues](https://github.com/Smithsonian/xchange/issues) affecting SuperNOVAS releases (past and/or present)
+ - [Issues](https://github.com/Smithsonian/xchange/issues) affecting __xchange__ releases (past and/or present)
  - [Community Forum](https://github.com/Smithsonian/xchange/discussions) &ndash; ask a question, provide feedback, or 
    check announcements.
 
