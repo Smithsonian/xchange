@@ -45,6 +45,7 @@ var NAVTREE =
       [ "JSON parser and emitter", "index.html#autotoc_md18", null ],
       [ "Error handling", "index.html#autotoc_md20", null ],
       [ "Debugging support", "index.html#autotoc_md22", null ],
+      [ "Future plans", "index.html#autotoc_md23", null ],
       [ "[Unreleased]", "md_CHANGELOG.html#autotoc_md1", null ]
     ] ],
     [ "Data Structures", "annotated.html", [
@@ -71,7 +72,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"xstruct_8c.html#ab20a0213369a947a7e48ff45aabee3c0"
+"xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

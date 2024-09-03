@@ -33,13 +33,14 @@ var NAVTREEINDEX0 =
 "index.html#autotoc_md2":[0],
 "index.html#autotoc_md20":[4],
 "index.html#autotoc_md22":[5],
+"index.html#autotoc_md23":[6],
 "index.html#autotoc_md4":[1],
 "index.html#autotoc_md6":[2],
 "index.html#autotoc_md7":[2,0],
 "index.html#autotoc_md8":[2,0,0],
 "index.html#autotoc_md9":[2,1],
 "md_CHANGELOG.html":[0],
-"md_CHANGELOG.html#autotoc_md1":[0,6],
+"md_CHANGELOG.html#autotoc_md1":[0,7],
 "pages.html":[],
 "structXField.html":[1,0,0],
 "structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1":[1,0,0,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "xstruct_8c.html#a9897f06ef8a22d5ddb8538d5fe223ae2":[2,0,1,3,5],
 "xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6":[2,0,1,3,12],
 "xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff":[2,0,1,3,32],
-"xstruct_8c.html#aa4405d56659397e044b6d4fdda394dfa":[2,0,1,3,9],
-"xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4":[2,0,1,3,30]
+"xstruct_8c.html#aa4405d56659397e044b6d4fdda394dfa":[2,0,1,3,9]
 };
