@@ -1,9 +1,9 @@
-![Build Status](https://github.com/Smithsonian/SuperNOVAS/actions/workflows/build.yml/badge.svg)
-![Static Analysis](https://github.com/Smithsonian/SuperNOVAS/actions/workflows/check.yml/badge.svg)
-<a href="https://smithsonian.github.io/SuperNOVAS/apidoc/html/files.html">
- ![API documentation](https://github.com/Smithsonian/SuperNOVAS/actions/workflows/dox.yml/badge.svg)
+![Build Status](https://github.com/Smithsonian/xchange/actions/workflows/build.yml/badge.svg)
+![Static Analysis](https://github.com/Smithsonian/xchange/actions/workflows/check.yml/badge.svg)
+<a href="https://smithsonian.github.io/xchange/apidoc/html/files.html">
+ ![API documentation](https://github.com/Smithsonian/xchange/actions/workflows/dox.yml/badge.svg)
 </a>
-<a href="https://smithsonian.github.io/SuperNOVAS/index.html">
+<a href="https://smithsonian.github.io/xchange/index.html">
  ![Project page](https://github.com/Smithsonian/xchange/actions/workflows/pages/pages-build-deployment/badge.svg)
 </a>
 
@@ -400,7 +400,7 @@ example,
   }
 ```
 
-The JSON parser emitter can also sink its error messages to a designated file or stream, which can be set by 
+The JSON parser &amp; emitter can also sink its error messages to a designated file or stream, which can be set by 
 `xjsonSetErrorStream(FILE *)`.
  
  -----------------------------------------------------------------------------

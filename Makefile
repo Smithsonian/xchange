@@ -14,9 +14,6 @@ include config.mk
 # The version of the shared .so libraries
 SO_VERSION := 1
 
-# Link against math libs (for e.g. isnan())
-LDFLAGS += -lm
-
 # Check if there is a doxygen we can run
 ifndef DOXYGEN
   DOXYGEN := $(shell which doxygen)
