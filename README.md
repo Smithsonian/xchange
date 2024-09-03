@@ -26,6 +26,7 @@ Platform-agnostic data exchange framework for C/C++ with built-in JSON parser/em
  - [JSON parser and emitter](#json-interchange)
  - [Error handling](#error-handling)
  - [Debugging support](#debugging-support)
+ - [Future plans](#future-plans) 
 
 
 -----------------------------------------------------------------------------
@@ -418,6 +419,22 @@ You can also turn debug messages by defining the `DEBUG` constant for the compil
 `CFLAGS` prior to calling `make`. 
 
 
+<a name="future-plans"></a>
+## Future plans
 
+There are a number of ways this little library can evolve and grow in the not too distant future. Some of the obvious
+paths forward are:
+
+ - Add regression testing and code coverage tracking (high priority)
+ - Add support for [BSON](https://bsonspec.org/spec.html) -- MongoDB's binary exchange format. (It may require 
+   expanding the `XType` struct for binary subtype.)
+ - Add support for complex-valued data types (`X_COMPLEX`).
+ - Add support for 128-bit floating point types (`X_FLOAT128`).
+ - Improved debug support, e.g. with built-in error tracing.
+ - Improved error handling, e.g. by consistently setting `errno` beyond just the __xchange__ error status.
+ 
+If you have an idea for a must have feature, please let me (Attila) know. Pull requests, for new features or fixes to
+existing ones are especially welcome! 
+ 
 
 
