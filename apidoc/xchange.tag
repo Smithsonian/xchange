@@ -1582,6 +1582,11 @@
     <filename>md_CHANGELOG.html</filename>
   </compound>
   <compound kind="page">
+    <name>md_CONTRIBUTING</name>
+    <title>Contributing to the xchange library</title>
+    <filename>md_CONTRIBUTING.html</filename>
+  </compound>
+  <compound kind="page">
     <name>index</name>
     <title>xchange</title>
     <filename>index.html</filename>

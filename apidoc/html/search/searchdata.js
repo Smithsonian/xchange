@@ -7,7 +7,7 @@ var indexSectionsWithContent =
   4: "finpstvx",
   5: "bx",
   6: "_efmnstx",
-  7: "cx"
+  7: "cltx"
 };
 
 var indexSectionNames =
