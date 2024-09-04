@@ -257,7 +257,7 @@ void *xAlloc(XType type, int count) {
  * \param count     number of elements.
  */
 void xZero(void *buf, XType type, int count) {
-  int eSize = xElementSizeOf(type);
+  size_t eSize = xElementSizeOf(type);
   if(!buf) return;
   if(eSize < 1) return;
   if(count < 1) return;
