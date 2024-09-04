@@ -17,9 +17,9 @@ which is named either after the issue number, e.g. `issue-192`, or some other de
 `bson-support`.
 
 3. __Develop__. Experiment on your fork/branch freely. If you run into a dead-end, you can always abandon it (which is 
-why branches are great) and start anew. You can run run `make all` to ensure that all components of the package 
-and its API documentation are also in order. Remember to synchronize your `main` branch by fetching changes from 
-upstream every once in a while, and merging them into your development branch. Don't forget to:
+why branches are great) and start anew. You can run run `make all` to ensure that all components of the package and 
+its API documentation are also in order. Remember to synchronize your `main` branch by fetching changes from upstream 
+every once in a while, and merging them into your development branch. Don't forget to:
 
    - Add __doxygen__ markup your new code. You can keep it sweet and simple, but make sure it properly explains your 
    globally exposed functions, their arguments and return values. You should also cross-reference other functions / 
@@ -31,9 +31,9 @@ of what you added or changed. Your pull request will be reviewed. You may get so
 there will be discussions about possible improvements or regressions etc. It's a good thing too, and your changes will 
 likely end up with added polish as a result. You can be all the more proud of it in the end!
 
-5. If all goes well, your pull-request will get merged, and will be included in the upcoming release of 
-_xchange_. Congratulations for your excellent work, and many thanks for dedicating some of your time for making 
-this library a little bit better. There will be many who will appreciate it. :-)
+5. If all goes well, your pull-request will get merged, and will be included in the upcoming release of _xchange_. 
+Congratulations for your excellent work, and many thanks for dedicating some of your time for making this library a 
+little bit better. There will be many who will appreciate it. :-)
 
 
 If at any point you have questions, or need feedback, don't be afraid to ask. You can put your questions into the 
