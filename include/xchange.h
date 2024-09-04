@@ -81,7 +81,7 @@
 
 typedef int XType;          ///< SMA-X data type.
 
-#define X_CHARS(length)      (-(length))    ///< \hideinitializer A fixed-size character sequence of 'length' bytes.
+#define X_CHARS(length)      (-(length))    ///< \hideinitializer A fixed-size sequence of 'length' bytes.
 #define X_UNKNOWN           0       ///< Unknown XType (default)
 #define X_BOOLEAN           '?'     ///< \hideinitializer boolean XType
 #define X_BYTE              'B'     ///< \hideinitializer single byte XType
@@ -136,6 +136,7 @@ typedef struct XField {
   XType type;               ///< The underlyng data type
   int ndim;                 ///< The dimensionality of the data
   int sizes[X_MAX_DIMS];    ///< The sizes along each dimension
+  int flags;                ///< (optional) flags that specific data exchange mechanism may use, e.g. for BSON subtype.
   boolean isSerialized;     ///< Whether the fields is stored in serialized (string) format.
   struct XField *next;      ///< Pointer to the next linked element (if inside an XStructure).
 } XField;

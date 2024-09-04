@@ -63,7 +63,7 @@ void xSetVerbose(boolean value) {
 }
 
 /**
- * Checks if the type represents a (fixed size) character sequence.
+ * Checks if the type represents a fixed-size character / binary sequence.
  *
  * \param type      X-Change type to check.
  *
@@ -166,13 +166,13 @@ int xGetElementCount(int ndim, const int *sizes) {
 }
 
 /**
- * Serializes the dimensions to a string.
+ * Serializes the dimensions to a string as a space-separated list of integers.
  *
  * \param[out]  dst       Pointer to a string buffer with at least X_MAX_STRING_DIMS bytes size.
  * \param[in]   ndim      Number of dimensions
  * \param[in]   sizes     Sizes along each dimension.
  *
- * \return          Number of characters written into the destonation buffer, not counting the string
+ * \return          Number of characters written into the destination buffer, not counting the string
  *                  termination.
  *
  */
@@ -196,7 +196,7 @@ int xPrintDims(char *dst, int ndim, const int *sizes) {
 
 
 /**
- * Deserializes the sizes from a multi-dimensional specification. The parsing will terminate at the first non integer
+ * Deserializes the sizes from a space-separated list of dimensions. The parsing will terminate at the first non integer
  * value or the end of string, whichever comes first. Integer values <= 0 are ignored.
  *
  * \param src       Pointer to a string buffer that contains the serialized dimensions, as a list of space separated integers.

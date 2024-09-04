@@ -13,10 +13,10 @@
 #include <stdio.h>
 #include "xchange.h"
 
-#define XJSON_INDENT         "  "                        ///< Indentation for nested elements.
+#define XJSON_INDENT         "  "       ///< Indentation for nested elements.
 
 #ifndef NULLDEV
-#  define NULLDEV "/dev/null"                             ///< null device on system
+#  define NULLDEV "/dev/null"           ///< null device on system
 #endif
 
 void xjsonSetIndent(int nchars);
