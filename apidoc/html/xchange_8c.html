@@ -387,7 +387,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Checks if the type represents a (fixed size) character sequence.</p>
+<p>Checks if the type represents a fixed-size character / binary sequence.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">type</td><td>X-Change type to check.</td></tr>
@@ -484,7 +484,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Deserializes the sizes from a multi-dimensional specification. The parsing will terminate at the first non integer value or the end of string, whichever comes first. Integer values &lt;= 0 are ignored.</p>
+<p>Deserializes the sizes from a space-separated list of dimensions. The parsing will terminate at the first non integer value or the end of string, whichever comes first. Integer values &lt;= 0 are ignored.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">src</td><td>Pointer to a string buffer that contains the serialized dimensions, as a list of space separated integers. </td></tr>
@@ -568,7 +568,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Serializes the dimensions to a string.</p>
+<p>Serializes the dimensions to a string as a space-separated list of integers.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>Pointer to a string buffer with at least X_MAX_STRING_DIMS bytes size. </td></tr>
@@ -577,7 +577,7 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Number of characters written into the destonation buffer, not counting the string termination. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of characters written into the destination buffer, not counting the string termination. </dd></dl>
 
 <p class="reference">References <a class="el" href="xchange_8h.html#a910ee1c8cd983bf127f7ca2c705d7894">X_MAX_DIMS</a>.</p>
 

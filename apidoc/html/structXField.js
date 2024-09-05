@@ -1,5 +1,6 @@
 var structXField =
 [
+    [ "flags", "structXField.html#ac8bf36fe0577cba66bccda3a6f7e80a4", null ],
     [ "isSerialized", "structXField.html#aaa68a7e140a5370ed0eb52710744c341", null ],
     [ "name", "structXField.html#a5ac083a645d964373f022d03df4849c8", null ],
     [ "ndim", "structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1", null ],

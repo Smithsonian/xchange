@@ -1498,6 +1498,13 @@
     <name>XField</name>
     <filename>structXField.html</filename>
     <member kind="variable">
+      <type>int</type>
+      <name>flags</name>
+      <anchorfile>structXField.html</anchorfile>
+      <anchor>ac8bf36fe0577cba66bccda3a6f7e80a4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
       <type>boolean</type>
       <name>isSerialized</name>
       <anchorfile>structXField.html</anchorfile>

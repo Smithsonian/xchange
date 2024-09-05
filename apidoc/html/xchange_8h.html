@@ -181,7 +181,7 @@ Macros</h2></td></tr>
 <tr class="separator:acbf44ad33891c1171b17aa6ab0616e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76d723969626d4e25235eb24533e3e3a" id="r_a76d723969626d4e25235eb24533e3e3a"><td class="memItemLeft" align="right" valign="top"><a id="a76d723969626d4e25235eb24533e3e3a" name="a76d723969626d4e25235eb24533e3e3a"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>X_CHARS</b>(length)</td></tr>
-<tr class="memdesc:a76d723969626d4e25235eb24533e3e3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fixed-size character sequence of 'length' bytes. <br /></td></tr>
+<tr class="memdesc:a76d723969626d4e25235eb24533e3e3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fixed-size sequence of 'length' bytes. <br /></td></tr>
 <tr class="separator:a76d723969626d4e25235eb24533e3e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a849c7ccb02f63d8554323a889a3d8b4d" id="r_a849c7ccb02f63d8554323a889a3d8b4d"><td class="memItemLeft" align="right" valign="top"><a id="a849c7ccb02f63d8554323a889a3d8b4d" name="a849c7ccb02f63d8554323a889a3d8b4d"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>X_DOUBLE</b></td></tr>
@@ -1608,7 +1608,7 @@ xDEstroyLookup() </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Checks if the type represents a (fixed size) character sequence.</p>
+<p>Checks if the type represents a fixed-size character / binary sequence.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">type</td><td>X-Change type to check.</td></tr>
@@ -2106,7 +2106,7 @@ xDEstroyLookup() </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Deserializes the sizes from a multi-dimensional specification. The parsing will terminate at the first non integer value or the end of string, whichever comes first. Integer values &lt;= 0 are ignored.</p>
+<p>Deserializes the sizes from a space-separated list of dimensions. The parsing will terminate at the first non integer value or the end of string, whichever comes first. Integer values &lt;= 0 are ignored.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">src</td><td>Pointer to a string buffer that contains the serialized dimensions, as a list of space separated integers. </td></tr>
@@ -2190,7 +2190,7 @@ xDEstroyLookup() </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Serializes the dimensions to a string.</p>
+<p>Serializes the dimensions to a string as a space-separated list of integers.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>Pointer to a string buffer with at least X_MAX_STRING_DIMS bytes size. </td></tr>
@@ -2199,7 +2199,7 @@ xDEstroyLookup() </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Number of characters written into the destonation buffer, not counting the string termination. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of characters written into the destination buffer, not counting the string termination. </dd></dl>
 
 <p class="reference">References <a class="el" href="xchange_8h.html#a910ee1c8cd983bf127f7ca2c705d7894">X_MAX_DIMS</a>.</p>
 

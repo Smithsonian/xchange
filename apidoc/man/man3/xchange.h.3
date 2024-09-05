@@ -71,7 +71,7 @@ include/xchange.h
 .ti -1c
 .RI "#define \fBX_CHARS\fP(length)"
 .br
-.RI "A fixed-size character sequence of 'length' bytes\&. "
+.RI "A fixed-size sequence of 'length' bytes\&. "
 .ti -1c
 .RI "#define \fBX_DOUBLE\fP"
 .br
@@ -1056,7 +1056,7 @@ Matching sub-structure from the structure or NULL if there is no match or one of
 .PP
 References \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, and \fBxGetField()\fP\&.
 .SS "\fBboolean\fP xIsCharSequence (\fBXType\fP type)"
-Checks if the type represents a (fixed size) character sequence\&.
+Checks if the type represents a fixed-size character / binary sequence\&.
 .PP
 \fBParameters\fP
 .RS 4
@@ -1326,7 +1326,7 @@ TRUE (1) or FALSE (0)\&.
 .PP
 References \fBFALSE\fP, and \fBTRUE\fP\&.
 .SS "int xParseDims (const char * src, int * sizes)"
-Deserializes the sizes from a multi-dimensional specification\&. The parsing will terminate at the first non integer value or the end of string, whichever comes first\&. Integer values <= 0 are ignored\&.
+Deserializes the sizes from a space-separated list of dimensions\&. The parsing will terminate at the first non integer value or the end of string, whichever comes first\&. Integer values <= 0 are ignored\&.
 .PP
 \fBParameters\fP
 .RS 4
@@ -1362,7 +1362,7 @@ the floating-point value at the head of the string\&.
 .PP
 References \fBNAN\fP\&.
 .SS "int xPrintDims (char * dst, int ndim, const int * sizes)"
-Serializes the dimensions to a string\&.
+Serializes the dimensions to a string as a space-separated list of integers\&.
 .PP
 \fBParameters\fP
 .RS 4
@@ -1375,7 +1375,7 @@ Serializes the dimensions to a string\&.
 .PP
 \fBReturns\fP
 .RS 4
-Number of characters written into the destonation buffer, not counting the string termination\&. 
+Number of characters written into the destination buffer, not counting the string termination\&. 
 .RE
 .PP
 

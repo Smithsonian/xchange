@@ -189,7 +189,7 @@ Basic data types</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>X_STRING</code>   </td><td class="markdownTableBodyNone"><code>char *</code>   </td><td class="markdownTableBodyNone"><code>Hello world!</code>, <code>line1\nline2\n</code> (0-terminated)    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code><a class="el" href="xchange_8h.html#a76d723969626d4e25235eb24533e3e3a" title="A fixed-size character sequence of &#39;length&#39; bytes.">X_CHARS(n)</a></code>   </td><td class="markdownTableBodyNone"><code>char[n]</code>   </td><td class="markdownTableBodyNone">Fixed-length character arrays (also w/o termination)    </td></tr>
+<td class="markdownTableBodyNone"><code><a class="el" href="xchange_8h.html#a76d723969626d4e25235eb24533e3e3a" title="A fixed-size sequence of &#39;length&#39; bytes.">X_CHARS(n)</a></code>   </td><td class="markdownTableBodyNone"><code>char[n]</code>   </td><td class="markdownTableBodyNone">Fixed-length character arrays (also w/o termination)    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>X_STRUCT</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code>   </td><td class="markdownTableBodyNone">substructure   </td></tr>
 </table>
@@ -254,7 +254,7 @@ Creating structure</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Set the &quot;property&quot; field in &quot;subsystem&quot;.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField</a>(sub, <span class="stringliteral">&quot;property&quot;</span>, <a class="code hl_function" href="xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6">xCreateStringField</a>(<span class="stringliteral">&quot;some value here&quot;</span>));</div>
-<div class="ttc" id="astructXStructure_html"><div class="ttname"><a href="structXStructure.html">XStructure</a></div><div class="ttdoc">SMA-X structure object, containing a linked-list of XField elements.</div><div class="ttdef"><b>Definition</b> xchange.h:155</div></div>
+<div class="ttc" id="astructXStructure_html"><div class="ttname"><a href="structXStructure.html">XStructure</a></div><div class="ttdoc">SMA-X structure object, containing a linked-list of XField elements.</div><div class="ttdef"><b>Definition</b> xchange.h:156</div></div>
 <div class="ttc" id="axstruct_8c_html_ab1cb91bd6aa14c0dae9d24bfbe7b76f4"><div class="ttname"><a href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField</a></div><div class="ttdeci">XField * xSetField(XStructure *s, XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:579</div></div>
 <div class="ttc" id="axstruct_8c_html_ab551d2db420303b4408064a66bbe3f1c"><div class="ttname"><a href="xstruct_8c.html#ab551d2db420303b4408064a66bbe3f1c">xCreateStruct</a></div><div class="ttdeci">__inline__ XStructure * xCreateStruct()</div><div class="ttdef"><b>Definition</b> xstruct.c:27</div></div>
 <div class="ttc" id="axstruct_8c_html_ad84cbb4639f2fbfb604b698a86caf944"><div class="ttname"><a href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct</a></div><div class="ttdeci">XField * xSetSubstruct(XStructure *s, const char *name, XStructure *substruct)</div><div class="ttdef"><b>Definition</b> xstruct.c:435</div></div>
@@ -331,8 +331,8 @@ Iterating over elements</h4>
 <div class="line">  <span class="comment">// Process each field &#39;f&#39; here...</span></div>
 <div class="line">  ...</div>
 <div class="line">}</div>
-<div class="ttc" id="astructXField_html_ae1ebaf87eb62e6266b14908eee28e565"><div class="ttname"><a href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a></div><div class="ttdeci">struct XField * next</div><div class="ttdoc">Pointer to the next linked element (if inside an XStructure).</div><div class="ttdef"><b>Definition</b> xchange.h:140</div></div>
-<div class="ttc" id="astructXStructure_html_a501ae8af2201d9cfaa60e3af21ff58fc"><div class="ttname"><a href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a></div><div class="ttdeci">XField * firstField</div><div class="ttdoc">Pointer to the first field in this structure or NULL if the structure is empty.</div><div class="ttdef"><b>Definition</b> xchange.h:156</div></div>
+<div class="ttc" id="astructXField_html_ae1ebaf87eb62e6266b14908eee28e565"><div class="ttname"><a href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a></div><div class="ttdeci">struct XField * next</div><div class="ttdoc">Pointer to the next linked element (if inside an XStructure).</div><div class="ttdef"><b>Definition</b> xchange.h:141</div></div>
+<div class="ttc" id="astructXStructure_html_a501ae8af2201d9cfaa60e3af21ff58fc"><div class="ttname"><a href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a></div><div class="ttdeci">XField * firstField</div><div class="ttdoc">Pointer to the first field in this structure or NULL if the structure is empty.</div><div class="ttdef"><b>Definition</b> xchange.h:157</div></div>
 </div><!-- fragment --><p><a class="anchor" id="sorting-fields"></a> </p>
 <h3><a class="anchor" id="autotoc_md17"></a>
 Sorting fields</h3>
@@ -400,7 +400,9 @@ Future plans</h2>
 <li>Improved debug support, e.g. with built-in error tracing.</li>
 <li>Improved error handling, e.g. by consistently setting <code>errno</code> beyond just the <b>xchange</b> error status.</li>
 </ul>
-<p>If you have an idea for a must have feature, please let me (Attila) know. Pull requests, for new features or fixes to existing ones are especially welcome! </p>
+<p>If you have an idea for a must have feature, please let me (Attila) know. Pull requests, for new features or fixes to existing ones are especially welcome!</p>
+<hr  />
+<p> Copyright (C) 2024 Attila Kovács </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
