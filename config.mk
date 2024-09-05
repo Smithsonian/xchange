@@ -26,6 +26,9 @@ CFLAGS += -I$(INC)
 # Extra warnings (not supported on all compilers)
 #CFLAGS += -Wextra
 
+# Link against math libs (for e.g. isnan())
+LDFLAGS ?= -lm
+
 # cppcheck options for 'check' target
 CHECKOPTS ?= --enable=performance,warning,portability,style --language=c \
             --error-exitcode=1 $(CHECKEXTRA)
@@ -44,7 +47,7 @@ CHECKOPTS ?= --enable=performance,warning,portability,style --language=c \
 
 # Compiler and linker options etc.
 ifeq ($(BUILD_MODE),debug)
-	CFLAGS += -g
+	CFLAGS += -g -DDEBUG
 endif
 
 # Search for files in the designated locations
