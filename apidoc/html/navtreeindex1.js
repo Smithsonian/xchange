@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6":[3,0,1,3,12],
 "xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff":[3,0,1,3,32],
 "xstruct_8c.html#aa4405d56659397e044b6d4fdda394dfa":[3,0,1,3,9],
 "xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4":[3,0,1,3,30],

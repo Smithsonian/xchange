@@ -28,24 +28,25 @@ var NAVTREE =
     [ "Changelog", "md_CHANGELOG.html", [
       [ "Table of Contents", "index.html#autotoc_md3", null ],
       [ "Introduction", "index.html#autotoc_md5", null ],
-      [ "Structured data", "index.html#autotoc_md7", [
-        [ "Basic data types", "index.html#autotoc_md8", [
-          [ "Strings", "index.html#autotoc_md9", null ]
+      [ "Building", "index.html#autotoc_md7", null ],
+      [ "Structured data", "index.html#autotoc_md9", [
+        [ "Basic data types", "index.html#autotoc_md10", [
+          [ "Strings", "index.html#autotoc_md11", null ]
         ] ],
-        [ "Scalar values", "index.html#autotoc_md10", null ],
-        [ "Arrays", "index.html#autotoc_md11", null ],
-        [ "Creating structure", "index.html#autotoc_md12", null ],
-        [ "Aggregate IDs", "index.html#autotoc_md13", null ],
-        [ "Accessing substructures and elements", "index.html#autotoc_md14", [
-          [ "Large structures", "index.html#autotoc_md15", null ],
-          [ "Iterating over elements", "index.html#autotoc_md16", null ]
+        [ "Scalar values", "index.html#autotoc_md12", null ],
+        [ "Arrays", "index.html#autotoc_md13", null ],
+        [ "Creating structure", "index.html#autotoc_md14", null ],
+        [ "Aggregate IDs", "index.html#autotoc_md15", null ],
+        [ "Accessing substructures and elements", "index.html#autotoc_md16", [
+          [ "Large structures", "index.html#autotoc_md17", null ],
+          [ "Iterating over elements", "index.html#autotoc_md18", null ]
         ] ],
-        [ "Sorting fields", "index.html#autotoc_md17", null ]
+        [ "Sorting fields", "index.html#autotoc_md19", null ]
       ] ],
-      [ "JSON parser and emitter", "index.html#autotoc_md19", null ],
-      [ "Error handling", "index.html#autotoc_md21", null ],
-      [ "Debugging support", "index.html#autotoc_md23", null ],
-      [ "Future plans", "index.html#autotoc_md24", null ],
+      [ "JSON parser and emitter", "index.html#autotoc_md21", null ],
+      [ "Error handling", "index.html#autotoc_md23", null ],
+      [ "Debugging support", "index.html#autotoc_md25", null ],
+      [ "Future plans", "index.html#autotoc_md26", null ],
       [ "[Unreleased]", "md_CHANGELOG.html#autotoc_md1", null ]
     ] ],
     [ "Contributing to the xchange library", "md_CONTRIBUTING.html", null ],
@@ -73,7 +74,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff"
+"xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

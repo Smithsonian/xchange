@@ -5,6 +5,7 @@ Platform-agnostic data exchange framework for C/C++ with built-in JSON parser/em
 ## Table of Contents
 
  - [Introduction](#introduction)
+ - [Building](#building)
  - [Structured data](#structured-data)
  - [JSON parser and emitter](#json-interchange)
  - [Error handling](#error-handling)
@@ -38,6 +39,38 @@ Some related links:
 
  - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html)
  - [Project page](https://smithsonian.github.io/xchange) on github.io
+
+
+-----------------------------------------------------------------------------
+
+<a name="building"></a>
+## Building
+
+The __xchange__ library can be built either as a shared (`libxchange.so[.1]`) and as a static (`libxchange.a`) library, 
+depending on what suits your needs best.
+
+You can configure the build, either by editing `config.mk` or else by defining the relevant environment variables 
+prior to invoking `make`. The following build variables can be configured:
+
+ - `CC`: The C compiler to use (default: `gcc`).
+
+ - `CPPFLAGS`: C pre-processor flags, such as externally defined compiler constants.
+ 
+ - `CFLAGS`: Flags to pass onto the C compiler (default: `-Os -Wall`). Note, `-Iinclude` will be added automatically.
+   
+ - `LDFLAGS`: Linker flags (default is `-lm`).
+
+ - `BUILD_MODE`: You can set it to `debug` to enable debugging features: it will initialize the global `xDebug` 
+   variable to `TRUE`) and add `-g` to `CFLAGS`.
+
+ - `CHECKEXTRA`: Extra options to pass to `cppcheck` for the `make check` target
+
+ 
+After configuring, you can simply run `make`, which will build the `shared` (`lib/libxchange.so[.1]`) and `static` 
+(`lib/libxchange.a`) libraries, local HTML documentation (provided `doxygen` is available), and performs static
+analysis via the `check` target. Or, you may build just the components you are interested in, by specifying the
+desired `make` target(s). (You can use `make help` to get a summary of the available `make` targets). 
+
 
 -----------------------------------------------------------------------------
 
