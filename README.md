@@ -171,7 +171,7 @@ create a field for 2&times;3&times;4 array of `double`s, you may have something 
 Note, that there is no requirement that the native array has the same dimensionality as it's nominal format in the
 field. We could have declared `data` as a 1D array `double data[2 * 3 * 4] = ...`, or really any array (pointer)
 containing doubles with storage for at least 24 elements. It is the `sizes` array, along with the dimensionality,
-which together define the shape of the field for __xchange__.
+which together define the number of elements used from it, and the shape of the array for __xchange__.
 
 
 
@@ -213,9 +213,9 @@ and then eventually destroyed after use as:
 <a name="aggregate-ids"></a>
 ### Aggregate IDs
 
-Since the `XStructure` data type can represent hierarchies of arbitrary depth, with names defined at every level,
-we can uniquely identify any particular field, at any level, with an aggregate ID, which concatenates the field
-names eatch every level, top-down, with a separator. The convention of __xchange__ is to use colon (':') as the
+Since the `XStructure` data type can represent hierarchies of arbitrary depth, and named at every level of the 
+hieratchy, we can uniquely identify any particular field, at any level, with an aggregate ID, which concatenates the 
+field names eatch every level, top-down, with a separator. The convention of __xchange__ is to use colon (':') as the
 separator. Consider an example structure (in JSON notation):
 
 ```
@@ -284,9 +284,9 @@ You can also remove existing fields from structures using `xRemoveField()`, e.g.
 #### Large structures
 
 The normal `xGetField()` and `xGetSubstruct()` functions have computational costs that scale linearly with the number 
-of direct fields in the structure. It is not much of an issue for structures that contain dozens, or even hundreds, of 
-fields (per layer). For much larger structures, which have a fixed layout, there is an option for a potentially much 
-faster hash-based lookup also. E.g. instead of `xGetField()` you may use `xLookupField()`:
+of direct fields in the structure. It is not much of an issue for structures that contain dozens of, or even a couple 
+hundred, fields (per layer). For much larger structures, which have a fixed layout, there is an option for a 
+potentially much more efficient hash-based lookup also. E.g. instead of `xGetField()` you may use `xLookupField()`:
 
 ```c
   XStructure *s = ...
@@ -313,7 +313,8 @@ present, and which should be removed before the new field is set (hence the time
 fields will scale as _O(N<sup>2</sup>)_ in general). The user may consider using `xInsertField()` instead, which is 
 much more scalable for building large structures, since it does not check for duplicates (hence scales as _O(N)_ 
 overall). However, `xInsertField()` also makes the ordering of fields less intuitive, and it is left up to the caller 
-to ensure that field names added this way are never duplicated.
+to ensure that field names added this way are never duplicated. (Tip: if you used `InsertField()` consistently, you 
+may call `xReverseFieldOrder()` at the end, so the fields will appear in the same order in which they were inserted.)
 
 
 #### Iterating over elements
@@ -337,7 +338,7 @@ elements is with a `for` loop, e.g.:
 
 You can easily sort fields by name using `xSortFieldsByName()`, or with using a custom comparator function with 
 `xSortFields()`. You can also reverse the order with `xReverseFieldOrder()`. For example to sort fields in a 
-structure (and its substructures) in decending alphabetical order:
+structure (and its substructures) in descending alphabetical order:
 
 ```c
   XStructure *s = ...
@@ -372,10 +373,10 @@ Or, you can do the reverse and create an `XStructure` from its JSON representati
   }
 ```
 
-or from a file, e.g. specified by the file name/path that contains a JSON definition of the structured data.
+or parse it from a file, which contains a JSON definition of the structured data:
 
 ```c
-  XStructure *s1 = xjsonParseFilename("myStructure.json", &lineNumber);
+  XStructure *s1 = xjsonParseFilename("my-data.json", &lineNumber);
   if (s1 == NULL) {
      // Oops, there was some problem...
   }
