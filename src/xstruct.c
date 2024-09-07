@@ -15,6 +15,7 @@
 #include <errno.h>
 #include <search.h>
 
+#define __XCHANGE_INTERNAL_API__      ///< Use internal definitions
 #include "xchange.h"
 
 
@@ -24,8 +25,10 @@
  * \sa smaxDestroyStruct()
  *
  */
-__inline__ XStructure *xCreateStruct() {
-  return (XStructure *) calloc(1, sizeof(XStructure));
+XStructure *xCreateStruct() {
+  XStructure *s = (XStructure *) calloc(1, sizeof(XStructure));
+  if(!s) x_error(0, errno, "xCreateStruct", "calloc() error");
+  return s;
 }
 
 /**
@@ -39,19 +42,26 @@ __inline__ XStructure *xCreateStruct() {
  * @sa xCopyOfField()
  */
 XStructure *xCopyOfStruct(const XStructure *s) {
+  static const char *fn = "xCopyOfStruct";
+
   XStructure *copy;
   XField *f, *last = NULL;
 
-  if(!s) return NULL;
-
-  copy = xCreateStruct();
-  if(!copy) {
-    fprintf(stderr, "xCopyOfStruct(): %s\n", strerror(errno));
+  if(!s) {
+    x_error(0, EINVAL, fn, "input structure is NULL");
     return NULL;
   }
 
-  for(f=s->firstField; f != NULL; f=f->next) {
+  copy = xCreateStruct();
+  if(!copy)
+    return x_trace_null(fn, NULL);
+
+  for(f = s->firstField; f != NULL; f = f->next) {
     XField *cf = xCopyOfField(f);
+    if(!cf) {
+      xDestroyStruct(copy);
+      return x_trace_null(fn, NULL);
+    }
 
     if(f->type == X_STRUCT) if(f->value) {
       // Set the copy as the parent structure for any copied substructures.
@@ -82,14 +92,19 @@ XStructure *xCopyOfStruct(const XStructure *s) {
  * @sa xCopyOfStruct()
  */
 XField *xCopyOfField(const XField *f) {
+  static const char *fn = "xCopyOfField";
+
   XField *copy;
   int k, n, eCount;
 
-  if(!f) return NULL;
+  if(!f) {
+    x_error(0, EINVAL, fn, "input field is NULL");
+    return NULL;
+  }
 
   copy = (XField *) malloc(sizeof(XField));
   if(!copy) {
-    perror("xCopyOfField(): malloc(XField)");
+    x_error(0, errno, fn, "malloc() error");
     return NULL;
   }
 
@@ -101,9 +116,8 @@ XField *xCopyOfField(const XField *f) {
 
   if(f->name) copy->name = xStringCopyOf(f->name);
   if(!f->name) {
-    perror("xCopyOfField(): xStringCopyOf(f->name)");
     free(copy);
-    return NULL;
+    return x_trace_null(fn, f->name);
   }
 
   if(!f->value) return copy;
@@ -113,15 +127,23 @@ XField *xCopyOfField(const XField *f) {
   // -----------------------------------------------------------------------------------
 
   if(f->type == X_STRUCT) {
-    XStructure *s;
+    XStructure *s = (XStructure *) f->value, *c;
     eCount = xGetFieldCount(f);
 
-    s = calloc(eCount, sizeof(XStructure));
-    copy->value = (char *) s;
+    c = calloc(eCount, sizeof(XStructure));
+    if(!c) {
+      x_error(0, errno, fn, "calloc() error (eCount=%d)", eCount);
+      xDestroyField(copy);
+      return NULL;
+    }
+    copy->value = (char *) c;
 
     for(k = 0; k < eCount; k++) {
-      XStructure *e = xCopyOfStruct((XStructure *) f->value);
-      if(!e) continue;
+      XStructure *e = xCopyOfStruct(&s[k]);
+      if(!e) {
+        xDestroyField(copy);
+        return x_trace_null(fn, f->name);
+      }
       s[k].firstField = e->firstField;
       free(e);
     }
@@ -147,8 +169,8 @@ XField *xCopyOfField(const XField *f) {
   // Allocate the copy value storage.
   copy->value = malloc(n);
   if(!copy->value) {
-    fprintf(stderr, "xCopyOfField(%c[%d]): %s\n", xTypeChar(f->type), eCount, strerror(errno));
-    return copy;
+    x_error(0, errno, fn, "field %s value alloc: n=%d", f->name, n);
+    return NULL;
   }
 
   if(f->type == X_STRING || f->type == X_RAW) {
@@ -176,10 +198,18 @@ XField *xCopyOfField(const XField *f) {
  * \sa xGetSubstruct()
  */
 XField *xGetField(const XStructure *s, const char *id) {
+  static const char *fn = "xGetField";
+
   XField *e;
 
-  if(s == NULL) return NULL;
-  if(id == NULL) return NULL;
+  if(s == NULL) {
+    x_error(0, EINVAL, fn, "input structure is NULL");
+    return NULL;
+  }
+  if(id == NULL) {
+    x_error(0, EINVAL, fn, "input id is NULL");
+    return NULL;
+  }
 
   for(e = s->firstField; e != NULL; e = e->next) if(e->name) if(xMatchNextID(e->name, id) == X_SUCCESS) {
     const char *next = xNextIDToken(id);
@@ -209,7 +239,6 @@ XStructure *xGetSubstruct(const XStructure *s, const char *id) {
   if(f && f->type == X_STRUCT)
     return (XStructure *) f->value;
 
-  errno = ENOENT;
   return NULL;
 }
 
@@ -227,28 +256,38 @@ XStructure *xGetSubstruct(const XStructure *s, const char *id) {
  * \return          A newly created field with the copy of the supplied data, or NULL if there was an error.
  */
 XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, const void *value) {
-  static const char *funcName = "xCreateField()";
+  static const char *fn = "xCreateField";
   XField *f;
   int n;
 
   if(!name) {
-    xError(funcName, X_NAME_INVALID);
+    x_error(0, EINVAL, fn, "name is NULL");
     return NULL;
   }
 
   if(xLastSeparator(name)) {
-    // name contains a separator
-    xError(funcName, X_NAME_INVALID);
+    x_error(0, EINVAL, fn, "name contains separator: %s", name);
     return NULL;
   }
 
   if(ndim > X_MAX_DIMS) {
-    xError(funcName, X_SIZE_INVALID);
+    x_error(0, EINVAL, fn, "too many dimensions: %d", ndim);
     return NULL;
   }
 
   f = calloc(1, sizeof(XField));
+  if(!f) {
+    x_error(0, errno, fn, "calloc error");
+    return NULL;
+  }
+
   f->name = xStringCopyOf(name);
+  if(!f->name) {
+    free(f);
+    x_error(0, errno, fn, "copy of name");
+    return NULL;
+  }
+
   f->type = type;
 
   if(ndim < 1) {
@@ -267,7 +306,10 @@ XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, c
 
   n = xGetElementCount(ndim, sizes) * xElementSizeOf(type);
 
-  if(type == X_STRUCT) {
+  if(n <= 0) {
+    x_trace(fn, "count", n);
+  }
+  else if(type == X_STRUCT) {
     f->value = (char *) value;
   }
   else {
@@ -275,7 +317,7 @@ XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, c
 
     if(!f->value) {
       xDestroyField(f);
-      xError(funcName, X_NULL);
+      x_error(0, errno, fn, "field %s value alloc: count=%d", f->name, n);
       return NULL;
     }
 
@@ -297,7 +339,9 @@ XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, c
  * \return          A newly created field with the supplied data, or NULL if there was an error.
  */
 XField *xCreateScalarField(const char *name, XType type, const void *value) {
-  return xCreateField(name, type, 0, NULL, value);
+  XField *f = xCreateField(name, type, 0, NULL, value);
+  if(!f) return x_trace_null("xCreateScalarField", NULL);
+  return f;
 }
 
 /**
@@ -313,7 +357,9 @@ XField *xCreateScalarField(const char *name, XType type, const void *value) {
  */
 XField *xCreate1DField(const char *name, XType type, int count, const void *values) {
   const int sizes[] = { count };
-  return xCreateField(name, type, 1, sizes, values);
+  XField *f = xCreateField(name, type, 1, sizes, values);
+  if(!f) return x_trace_null("xCreate1DField", NULL);
+  return f;
 }
 
 /**
@@ -326,7 +372,9 @@ XField *xCreate1DField(const char *name, XType type, int count, const void *valu
  *
  */
 XField *xCreateDoubleField(const char *name, double value) {
-  return xCreateScalarField(name, X_DOUBLE, &value);
+  XField *f = xCreateScalarField(name, X_DOUBLE, &value);
+  if(!f) return x_trace_null("xCreateDoubleField", NULL);
+  return f;
 }
 
 /**
@@ -340,7 +388,9 @@ XField *xCreateDoubleField(const char *name, double value) {
  * @sa xCreateLongField()
  */
 XField *xCreateIntField(const char *name, int value) {
-  return xCreateScalarField(name, X_INT, &value);
+  XField *f = xCreateScalarField(name, X_INT, &value);
+  if(!f) return x_trace_null("xCreateIntField", NULL);
+  return f;
 }
 
 /**
@@ -354,7 +404,9 @@ XField *xCreateIntField(const char *name, int value) {
  * @sa xCreateIntField()
  */
 XField *xCreateLongField(const char *name, long long value) {
-  return xCreateScalarField(name, X_LONG, &value);
+  XField *f = xCreateScalarField(name, X_LONG, &value);
+  if(!f) return x_trace_null("xCreateLongField", NULL);
+  return f;
 }
 
 
@@ -367,7 +419,9 @@ XField *xCreateLongField(const char *name, long long value) {
  * \return          A newly created field with the supplied data, or NULL if there was an error.
  */
 XField *xCreateBooleanField(const char *name, boolean value) {
-  return xCreateScalarField(name, X_BOOLEAN, &value);
+  XField *f = xCreateScalarField(name, X_BOOLEAN, &value);
+  if(!f) return x_trace_null("xCreateBooleanField", NULL);
+    return f;
 }
 
 
@@ -381,7 +435,9 @@ XField *xCreateBooleanField(const char *name, boolean value) {
  */
 XField *xCreateStringField(const char *name, const char *value) {
   const char *empty = "";
-  return xCreateScalarField(name, X_STRING, value ? &value : &empty);
+  XField *f = xCreateScalarField(name, X_STRING, value ? &value : &empty);
+  if(!f) return x_trace_null("xCreateStringField", NULL);
+  return f;
 }
 
 
@@ -433,36 +489,36 @@ int xGetFieldCount(const XField *f) {
  * \sa xGetSubstruct()
  */
 XField *xSetSubstruct(XStructure *s, const char *name, XStructure *substruct) {
-  static const char *funcName = "xSetSubstruct()";
+  static const char *fn = "xSetSubstruct";
   XField *f;
 
   if(!s) {
-    xError(funcName, X_STRUCT_INVALID);
+    x_error(0, EINVAL, fn, "input structure is NULL");
     return NULL;
   }
 
   if(!name) {
-    xError(funcName, X_NAME_INVALID);
+    x_error(0, EINVAL, fn, "input name is NULL");
     return NULL;
   }
 
   if(!name[0]) {
-    xError(funcName, X_NAME_INVALID);
+    x_error(0, EINVAL, fn, "input name is empty");
     return NULL;
   }
 
   if(!substruct) {
-    xError(funcName, X_NULL);
+    x_error(0, EINVAL, fn, "input sub-structure is NULL");
     return NULL;
   }
 
   if(substruct->parent) {
-    xError(funcName, X_INCOMPLETE);
+    x_error(0, EALREADY, fn, "input substructure is already assigned");
     return NULL;
   }
 
   f = xCreateScalarField(name, X_STRUCT, substruct);
-  if(!f) return NULL;
+  if(!f) return x_trace_null(fn, name);
 
   substruct->parent = s;
 
@@ -480,22 +536,22 @@ XField *xSetSubstruct(XStructure *s, const char *name, XStructure *substruct) {
  *
  */
 XField *xRemoveField(XStructure *s, const char *name) {
-  static const char *funcName = "xRemoveField()";
+  static const char *fn = "xRemoveField";
 
   XField *e, *last = NULL;
 
   if(!s) {
-    xError(funcName, X_STRUCT_INVALID);
+    x_error(0, EINVAL, fn, "input structure is NULL");
     return NULL;
   }
 
   if(!name) {
-    xError(funcName, X_NAME_INVALID);
+    x_error(0, EINVAL, fn, "input name is NULL");
     return NULL;
   }
 
   if(!name[0]) {
-    xError(funcName, X_NAME_INVALID);
+    x_error(0, EINVAL, fn, "input name is empty");
     return NULL;
   }
 
@@ -537,14 +593,15 @@ XField *xRemoveField(XStructure *s, const char *name) {
  * \sa xReverseFieldOrder()
  */
 int xInsertField(XStructure *s, XField *f) {
-  static const char *funcName = "xInsertField()";
+  static const char *fn = "xInsertField";
 
-  if(!s) return xError(funcName, X_STRUCT_INVALID);
-  if(!f) return xError(funcName, X_NULL);
-  if(!f->name) return xError(funcName, X_NAME_INVALID);
+  if(!s) return x_error(X_STRUCT_INVALID, EINVAL, fn, "input structure is NULL");
+  if(!f) return x_error(X_NULL, EINVAL, fn, "input field is NULL");
+  if(!f->name) return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is NULL");
+  if(!f->name[0]) return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is empty");
 
   // The field name contains a separator?
-  if(xLastSeparator(f->name)) return xError(funcName, X_NAME_INVALID);
+  if(xLastSeparator(f->name)) return x_error(X_NAME_INVALID, EINVAL, fn, "field->name contains separator");
 
   // Add the new field at the head of the list...
   f->next = s->firstField;
@@ -577,25 +634,27 @@ int xInsertField(XStructure *s, XField *f) {
  * \sa xGetSubstruct()
  */
 XField *xSetField(XStructure *s, XField *f) {
-  static const char *funcName = "xSetField()";
+  static const char *fn = "xSetField";
 
   XField *e, *last = NULL;
 
   if(!s) {
-    xError(funcName, X_STRUCT_INVALID);
-    errno = EINVAL;
+    x_error(0, EINVAL, fn, "input structure is NULL");
     return NULL;
   }
 
   if(!f) {
-    xError(funcName, X_NULL);
-    errno = EINVAL;
+    x_error(0, EINVAL, fn, "input field is NULL");
     return NULL;
   }
 
   if(!f->name) {
-    xError(funcName, X_NAME_INVALID);
-    errno = EINVAL;
+    x_error(0, EINVAL, fn, "input field->name is NULL");
+    return NULL;
+  }
+
+  if(!f->name[0]) {
+    x_error(0, EINVAL, fn, "input field->name is empty");
     return NULL;
   }
 
@@ -635,7 +694,10 @@ int xCountFields(const XStructure *s) {
   XField *f;
   int n = 0;
 
-  if(!s) return 0;
+  if(!s) {
+    x_warn("xCountFields", "input structure is NULL");
+    return 0;
+  }
 
   for(f = s->firstField; f != NULL; f = f->next) n++;
 
@@ -693,7 +755,10 @@ void xDestroyField(XField *f) {
 void xClearStruct(XStructure *s) {
   XField *f;
 
-  if(s == NULL) return;
+  if(s == NULL) {
+    x_warn("xClearStruct", "input structure is NULL");
+    return;
+  }
 
   for(f = s->firstField; f != NULL; ) {
     XField *next = f->next;
@@ -718,19 +783,15 @@ void xClearStruct(XStructure *s) {
  * @see xReduceAllDims()
  */
 int xReduceDims(int *ndim, int *sizes) {
+  static const char *fn = "xReduceDims";
+
   int i;
 
-  if(!ndim) {
-    errno = EINVAL;
-    return X_SIZE_INVALID;
-  }
+  if(!ndim) return x_error(X_SIZE_INVALID, EINVAL, fn, "ndim pointer is NULL");
 
   if(*ndim <= 0) return X_SUCCESS;
 
-  if(sizes == NULL) {
-    errno = EINVAL;
-    return -1;
-  }
+  if(sizes == NULL) return x_error(X_SIZE_INVALID, EINVAL, fn, "sizes is NULL (ndim = %d)", ndim);
 
   for(i = *ndim; --i >= 0; ) if (sizes[i] == 0) {
     *ndim = 1;
@@ -758,17 +819,17 @@ int xReduceDims(int *ndim, int *sizes) {
  * @see xReduceDims()
  */
 int xReduceAllDims(XStructure *s) {
+  static const char *fn;
+
   XField *f;
 
-  if(!s) {
-    errno = EINVAL;
-    return X_STRUCT_INVALID;
-  }
+  if(!s) return x_error(X_STRUCT_INVALID, EINVAL, fn, "input structure is NULL");
 
   f = s->firstField;
   if(f->next == NULL && f->type == X_STRUCT) {
     XStructure *sub = (XStructure *) f;
     XField *sf;
+    int status;
 
     s->firstField = sub->firstField;
     for(sf = s->firstField; sf; sf = sf->next) if(sf->type == X_STRUCT) {
@@ -777,8 +838,11 @@ int xReduceAllDims(XStructure *s) {
       while(--i >= 0) ss[i].parent = s;
     }
 
+    status = xReduceAllDims(s);
+    if(status < 0) x_trace(fn, f->name, status);
+
     free(f);
-    return xReduceAllDims(s);
+    return status;
   }
 
   for(f = s->firstField; f; f = f->next) {
@@ -787,7 +851,15 @@ int xReduceAllDims(XStructure *s) {
     if(f->type == X_STRUCT) {
       XStructure *sub = (XStructure *) f;
       int i = xGetFieldCount(f);
-      while(--i >= 0) xReduceAllDims(&sub[i]);
+      while(--i >= 0) {
+        int status = xReduceAllDims(&sub[i]);
+        if(status < 0) {
+          char *id = malloc(strlen(f->name + 20));
+          sprintf(id, "%s[%d]", f->name, i);
+          x_trace(fn, id, status);
+          free(id);
+        }
+      }
     }
   }
 
@@ -805,7 +877,10 @@ int xReduceAllDims(XStructure *s) {
 char *xNextIDToken(const char *id) {
   char *next;
 
-  if(!id) return NULL;
+  if(!id) {
+    x_warn("xNextIDToken", "input is NULL");
+    return NULL;
+  }
 
   // Ignore leading separator.
   if(!strncmp(id, X_SEP, X_SEP_LENGTH)) id += X_SEP_LENGTH;
@@ -821,11 +896,16 @@ char *xNextIDToken(const char *id) {
  * @return      Pointer to the start of the next compound ID token, or NULL if there is no more components in the ID.
  */
 char *xCopyIDToken(const char *id) {
+  static const char *fn = "xCopyIDToken";
+
   const char *next;
   char *token;
   int l;
 
-  if(!id) return NULL;
+  if(!id) {
+    x_warn(fn, "input is NULL");
+    return NULL;
+  }
 
   // Ignore leading separator.
   if(!strncmp(id, X_SEP, X_SEP_LENGTH)) id += X_SEP_LENGTH;
@@ -835,7 +915,10 @@ char *xCopyIDToken(const char *id) {
   else l = strlen(id);
 
   token = malloc(l+1);
-  if(!token) return NULL;
+  if(!token) {
+    x_error(0, errno, fn, "malloc error");
+    return NULL;
+  }
 
   memcpy(token, id, l);
   token[l] = '\0';
@@ -852,16 +935,17 @@ char *xCopyIDToken(const char *id) {
  *                  arguments are invalid.
  */
 int xMatchNextID(const char *token, const char *id) {
+  static const char *fn = "xMatchNextID";
+
   int L;
 
-  if(!token) return X_NULL;
-  if(!id) return X_NULL;
-  if(*token == '\0') return X_NAME_INVALID;
-  if(*id == '\0') return X_GROUP_INVALID;
-
+  if(!token) return x_error(X_NULL, EINVAL, fn, "input token is NULL");
+  if(!id) return x_error(X_NULL, EINVAL, fn, "input id is NULL");
+  if(*token == '\0') return x_error(X_NAME_INVALID, EINVAL, fn, "input token is empty");
+  if(*id == '\0') return x_error(X_GROUP_INVALID, EINVAL, fn, "input id is empty");
 
   L = strlen(token);
-  if(strncmp(id, token, L)) return X_FAILURE;
+  if(strncmp(id, token, L) != 0) return X_FAILURE;
 
   if(id[L] == '\0') return X_SUCCESS;
 
@@ -884,15 +968,23 @@ int xMatchNextID(const char *token, const char *id) {
  * \sa xSplitID()
  */
 char *xGetAggregateID(const char *table, const char *key) {
+  static const char *fn = "xGetAggregateID";
+
   char *id;
 
-  if(table == NULL && key == NULL) return NULL;
+  if(table == NULL && key == NULL) {
+    x_error(0, EINVAL, fn, "both inputs are NULL");
+    return NULL;
+  }
 
   if(table == NULL) return xStringCopyOf(key);
   if(key == NULL) return xStringCopyOf(table);
 
   id = (char *) malloc(strlen(table) + strlen(key) + X_SEP_LENGTH + 1); // <group>:<key>
-  if(!id) return NULL;
+  if(!id) {
+    x_error(0, errno, fn, "malloc error");
+    return NULL;
+  }
   sprintf(id, "%s" X_SEP "%s", table, key);
 
   return id;
@@ -907,7 +999,14 @@ char *xGetAggregateID(const char *table, const char *key) {
  * @sa xSplitID()
  */
 char *xLastSeparator(const char *id) {
-  int l = strlen(id);
+  int l;
+
+  if(!id) {
+    x_error(0, EINVAL, "xLastSeparator", "input id is NULL");
+    return NULL;
+  }
+
+  l = strlen(id);
 
   while(--l >= 0) if(id[l] == X_SEP[0]) if(!strncmp(&id[l], X_SEP, X_SEP_LENGTH)) return (char *) &id[l];
   return NULL;
@@ -933,7 +1032,7 @@ char *xLastSeparator(const char *id) {
  * \sa xLastSeparator()
  */
 int xSplitID(char *id, char **pKey) {
-  if(id == NULL) return X_NULL;
+  if(id == NULL) return x_error(X_NULL, EINVAL, "xSplitID", "input id is NULL");
 
   // Default NULL return for the second component.
   if(pKey) *pKey = NULL;
@@ -957,10 +1056,12 @@ int xSplitID(char *id, char **pKey) {
  * @sa xCountFields()
  */
 long xDeepCountFields(const XStructure *s) {
+  static const char *fn = "xDeepCountFields";
+
   XField *f;
   long n = 0;
 
-  if(!s) return 0;
+  if(!s) return x_error(0, EINVAL, fn, "input structure is NULL");
 
   for(f = s->firstField; f != NULL; f = f->next) {
     n++;
@@ -970,7 +1071,10 @@ long xDeepCountFields(const XStructure *s) {
       int i = xGetFieldCount(f);
       while(--i >= 0) {
         long m = xDeepCountFields(&sub[i]);
-        if(m < 0) return -1;
+        if(m < 0) {
+          x_trace(fn, f->name, m);
+          return -1;
+        }
         n += m;
       }
     }
@@ -995,10 +1099,10 @@ int xSortFields(XStructure *s, int (*cmp)(const XField **f1, const XField **f2),
   XField **array, *f;
   int i, n;
 
-  if(s == NULL || cmp == NULL) return xError("xSortFields()", X_NULL);
+  if(s == NULL || cmp == NULL) return x_error(X_NULL, EINVAL, "xSortFields", "NULL argument: s=%p, cmp=%p", s, cmp);
 
   for(n = 0, f = s->firstField; f != NULL; f = f->next, n++)
-    if(f->type == X_STRUCT && recursive) {
+    if(f->type == X_STRUCT && recursive && f->value) {
       XStructure *sub = (XStructure *) f->value;
       int k = xGetFieldCount(f);
       while (--k >= 0) xSortFields(&sub[k], cmp, TRUE);
@@ -1038,7 +1142,8 @@ static int XFieldNameCmp(const XField **f1, const XField **f2) {
  * @sa xReverseFieldOrder()
  */
 int xSortFieldsByName(XStructure *s, boolean recursive) {
-  return xSortFields(s, XFieldNameCmp, recursive);
+ prop_error("xSortFieldsByName", xSortFields(s, XFieldNameCmp, recursive));
+ return X_SUCCESS;
 }
 
 /**
@@ -1055,7 +1160,7 @@ int xSortFieldsByName(XStructure *s, boolean recursive) {
 int xReverseFieldOrder(XStructure *s, boolean recursive) {
   XField *f, *rev = NULL;
 
-  if(s == NULL) return xError("xReverseFieldOrder()", X_NULL);
+  if(s == NULL) return x_error(X_NULL, EINVAL, "xReverseFieldOrder", "input structure is NULL");
 
   f = s->firstField;
   s->firstField = NULL;
@@ -1065,7 +1170,7 @@ int xReverseFieldOrder(XStructure *s, boolean recursive) {
     f->next = rev;
     rev = f;
 
-    if(f->type == X_STRUCT && recursive) {
+    if(f->type == X_STRUCT && recursive && f->value) {
       XStructure *sub = (XStructure *) f->value;
       int i = xGetFieldCount(f);
       while(--i >= 0) xReverseFieldOrder(&sub[i], TRUE);

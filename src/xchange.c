@@ -16,10 +16,12 @@
 #include <ctype.h>      // isspace()
 #include <unistd.h>     // sleep()
 #include <pthread.h>
+#include <stdarg.h>
 #include <float.h>
 #include <math.h>
 #include <errno.h>
 
+#define __XCHANGE_INTERNAL_API__      ///< Use internal definitions
 #include "xchange.h"
 
 #ifndef INFINITY
@@ -41,11 +43,123 @@ boolean xDebug = FALSE;
 #endif
 
 /**
+ * (<i>for internal use</i>) Propagates an error (if any). If the error is
+ * non-zero, it returns with the offset error value. Otherwise it keeps going as if it weren't
+ * even there...
+ *
+ * @param loc     Function [:location] where error was produced.
+ * @param op      (optional) further info or NULL.
+ * @param n       error code that was received.
+ *
+ * @return        n
+ */
+int x_trace(const char *loc, const char *op, int n) {
+  if(n != 0 && xDebug) {
+    fprintf(stderr, "       @ %s", loc);
+    if(op) fprintf(stderr, " [%s]", op);
+    fprintf(stderr, " [=> %d]\n", n);
+  }
+  return n;
+}
+
+/**
+ * (<i>for internal use</i>) Traces an error before returning NULL.
+ *
+ * @param loc     Function [:location] where error was produced.
+ * @param op      (optional) further info or NULL.
+ * @return        NULL
+ */
+void *x_trace_null(const char *loc, const char *op) {
+  if(xDebug) {
+    fprintf(stderr, "       @ %s", loc);
+    if(op) fprintf(stderr, " [%s]", op);
+    fprintf(stderr, " [=> NULL]\n");
+  }
+  return NULL;
+}
+
+/**
+ * (<i>for internal use</i>) Sets an errno and report errors to the standard error, depending
+ * on the current debug mode.
+ *
+ * @param en    {int} UNIX error number (see errno.h)
+ * @param from  {string} Function (:location) where error originated
+ * @param desc  {string} Description of error, with information to convey to user.
+ *
+ * @sa x_error()
+ * @sa x_debug()
+ */
+void x_set_errno(int en, const char *from, const char *desc, ...) {
+  va_list varg;
+
+  va_start(varg, desc);
+  if(xDebug) {
+    fprintf(stderr, "\n  ERROR! %s: ", from);
+    vfprintf(stderr, desc, varg);
+    fprintf(stderr, "\n");
+  }
+  va_end(varg);
+
+  errno = en;
+}
+
+/**
+ * (<i>for internal use</i>) Sets errno and reports errors to the standard error, depending
+ * on the current debug mode, before returning the supplied return code.
+ *
+ * @param ret   return value
+ * @param en    UNIX error code (see errno.h)
+ * @param from  function (:location) where error originated
+ * @param desc  description of error, with information to convey to user.
+ *
+ * @sa x_set_errno()
+ * @sa x_trace()
+ */
+int x_error(int ret, int en, const char *from, const char *desc, ...) {
+  va_list varg;
+
+  va_start(varg, desc);
+  if(xDebug) {
+    fprintf(stderr, "\n  ERROR! %s: ", from);
+    vfprintf(stderr, desc, varg);
+    if(ret) fprintf(stderr, " [=> %d]\n", ret);
+  }
+  va_end(varg);
+
+  errno = en;
+  return ret;
+}
+
+/**
+ * (<i>for internal use</i>) Prints a warning message.
+ *
+ * @param from  function (:location) where error originated
+ * @param desc  description of error, with information to convey to user.
+ *
+ * @sa x_set_errno()
+ * @sa x_trace()
+ */
+int x_warn(const char *from, const char *desc, ...) {
+  va_list varg;
+
+  va_start(varg, desc);
+  if(xDebug) {
+    fprintf(stderr, "\n  WARNING! %s: ", from);
+    vfprintf(stderr, desc, varg);
+  }
+  va_end(varg);
+
+  return 0;
+}
+
+
+/**
  * Checks if verbosity is enabled for the xchange library.
  *
  * @return    TRUE (1) if verbosity is enabled, or else FALSE (0).
  *
- * @sa setVerbose()
+ * @sa xSetVerbose()
+ * @sa xSetDebug()
  */
 boolean xIsVerbose() {
   return xVerbose;
@@ -60,6 +174,17 @@ boolean xIsVerbose() {
  */
 void xSetVerbose(boolean value) {
   xVerbose = value ? TRUE : FALSE;
+}
+
+/**
+ * Enables or disables debugging output.
+ *
+ * @param value   TRUE (non-zero) to enable verbose output, or else FALSE (0).
+ *
+ * @sa xSetVerbose()
+ */
+void xSetDebug(boolean value) {
+  xDebug = value ? TRUE : FALSE;
 }
 
 /**
@@ -99,7 +224,7 @@ int xStringElementSizeOf(XType type) {
     case X_LONG_HEX : l = 18; break;
     case X_FLOAT : l = 16; break;     // 1 leading + 8 significant figs + 2 signs + 1 dot + 1 E + 3 exponent
     case X_DOUBLE : l = 25; break;    // 1 leading + 16 significant figs + (4) + 4 exponent
-    default : return -1;
+    default : return x_error(-1, EINVAL, "xStringElementSizeOf", "invalid type: %d", type);
   }
   return (l+1); // with terminating '\0'
 }
@@ -131,7 +256,7 @@ int xElementSizeOf(XType type) {
     case X_STRUCT: return sizeof(XStructure);
     case X_STRING: return sizeof(char *);
   }
-  return 0;
+  return x_warn("xElementSizeOf", "invalid type: %d", type);
 }
 
 /**
@@ -144,8 +269,10 @@ int xElementSizeOf(XType type) {
  */
 char xTypeChar(XType type) {
   if(type < 0) return 'C';
-  if(type < 0x20) return '?';
-  if(type > 0x7E) return '?';
+  if(type < 0x20 || type > 0x7E) {
+    x_warn("xTypeChar", "invaid type: %d", type);
+    return '?';
+  }
   return (char) (type & 0xff);
 }
 
@@ -160,6 +287,10 @@ char xTypeChar(XType type) {
  */
 int xGetElementCount(int ndim, const int *sizes) {
   int i, N = 1;
+
+  if(ndim > 0 && !sizes)
+    x_warn("xGetElementCount", "input 'sizes' is NULL (ndim = %d)", ndim);
+
   if(ndim > X_MAX_DIMS) ndim = X_MAX_DIMS;
   for(i = 0; i < ndim; i++) N *= sizes[i];
   return N;
@@ -173,12 +304,20 @@ int xGetElementCount(int ndim, const int *sizes) {
  * \param[in]   sizes     Sizes along each dimension.
  *
  * \return          Number of characters written into the destination buffer, not counting the string
- *                  termination.
+ *                  termination, or -1 if an the essential pointer arguments is NULL.
  *
  */
 int xPrintDims(char *dst, int ndim, const int *sizes) {
+  static const char *fn = "xPrintDims";
+
   int i, N=0;
   char *next = dst;
+
+  if(!dst)
+    return x_error(-1, EINVAL, fn, "'dst' is NULL");
+
+  if(ndim > 0 && !sizes)
+    return x_error(-1, EINVAL, fn, "input 'sizes' is NULL (ndim = %d)", ndim);
 
   if(ndim <= 0) return sprintf(dst, "1");           // default, will be overwritten with actual sizes, if any.
   else if(ndim > X_MAX_DIMS) ndim = X_MAX_DIMS;
@@ -208,7 +347,7 @@ int xParseDims(const char *src, int *sizes) {
   int ndim, N = 1;
   char *next = (char *) src;
 
-  if(!src) return 0;
+  if(!src) return x_error(0, EINVAL, "xParseDims", "'src' is NULL");
   if(!sizes) return 0;
 
   for(ndim = 0; ndim <= X_MAX_DIMS; ) {
@@ -241,12 +380,23 @@ int xParseDims(const char *src, int *sizes) {
  *              be set accordingly).
  */
 void *xAlloc(XType type, int count) {
-  int eSize = xElementSizeOf(type);
-  if(eSize < 1 || count < 1) {
-    errno = EINVAL;
+  static const char *fn = "xAlloc";
+  int eSize;
+  void *ptr;
+
+  if(count < 1) {
+    x_error(0, EINVAL, fn, "invalid count=%d", count);
     return NULL;
   }
-  return calloc(eSize, count);
+
+  eSize = xElementSizeOf(type);
+  if(eSize < 1)
+    return x_trace_null(fn, NULL);
+
+  ptr = calloc(eSize, count);
+  if(!ptr) x_error(0, errno, fn, "calloc() error");
+
+  return ptr;
 }
 
 /**
@@ -298,6 +448,8 @@ static int TokenMatch(char *a, char *b) {
  * @return      TRUE (1) or FALSE (0).
  */
 boolean xParseBoolean(char *str, char **end) {
+  static const char *fn = "xParseBoolean";
+
   static char *true[] = { "true", "t", "on", "yes", "y", "enabled", "active", NULL };
   static char *false[] = { "false", "f", "off", "no", "n", "disabled", "invactive", NULL };
 
@@ -305,8 +457,8 @@ boolean xParseBoolean(char *str, char **end) {
   long l;
 
   if(!str) {
-    *end = NULL;
-    return FALSE;
+    if(end) *end = NULL;
+    return x_error(FALSE, EINVAL, fn, "input string is NULL");
   }
 
   while(isspace(*str)) str++;
@@ -328,7 +480,7 @@ boolean xParseBoolean(char *str, char **end) {
 
   if(errno != ERANGE) return (l != 0);
 
-  return FALSE;
+  return x_error(FALSE, errno, fn, "invalid argument: %s", str);
 }
 
 
@@ -361,29 +513,36 @@ static int CompareToken(const char *a, const char *b) {
  * @param str       String to parse floating-point value from
  * @param tail      (optional) reference to pointed in which to return the parse position after successfully
  *                  parsing a floating-point value.
- * @return          the floating-point value at the head of the string.
+ * @return          the floating-point value at the head of the string, or NAN if the input string is NULL.
  */
 double xParseDouble(const char *str, char **tail) {
+  if(!str) {
+    x_error(0, EINVAL, "xParseDouble", "input string is NULL");
+    return NAN;
+  }
+
 #if EXPLCIT_PARSE_SPECIAL_DOUBLES
-  char *next = (char *) str;
+  {
+    char *next = (char *) str;
 
-  while(isspace(*next)) next++;
+    while(isspace(*next)) next++;
 
-  if(*next == '+' || *next == '-') next++;          // Skip sign (if any)
+    if(*next == '+' || *next == '-') next++;          // Skip sign (if any)
 
-  // If leading character is not a number or a decimal point, then check for special values.
-  if(*next) if((*next < '0' || *next > '9') && *next != '.') {
-    if(!CompareToken("nan", next)) {
-      if(tail) *tail = next + sizeof("nan") - 1;
-      return NAN;
-    }
-    if(!CompareToken("inf", next)) {
-      if(tail) *tail = next + sizeof("inf") - 1;
-      return NAN;
-    }
-    if(!CompareToken("infinity", next)) {
-      if(tail) *tail = next + sizeof("infinity") - 1;
-      return NAN;
+    // If leading character is not a number or a decimal point, then check for special values.
+    if(*next) if((*next < '0' || *next > '9') && *next != '.') {
+      if(!CompareToken("nan", next)) {
+        if(tail) *tail = next + sizeof("nan") - 1;
+        return NAN;
+      }
+      if(!CompareToken("inf", next)) {
+        if(tail) *tail = next + sizeof("inf") - 1;
+        return NAN;
+      }
+      if(!CompareToken("infinity", next)) {
+        if(tail) *tail = next + sizeof("infinity") - 1;
+        return NAN;
+      }
     }
   }
 #endif
@@ -399,9 +558,12 @@ double xParseDouble(const char *str, char **tail) {
  *
  * @param str       Pointer to buffer for printed value.
  * @param value     Value to print.
- * @return          Number of characters printed into the buffer.
+ * @return          Number of characters printed into the buffer, or -1 if there was an error.
  */
 int xPrintDouble(char *str, double value) {
+  if(!str)
+    return x_error(-1, EINVAL, "xPrintDouble", "input string is NULL");
+
   // For double-precision restrict range to IEEE range
   if(value > DBL_MAX) return sprintf(str, "nan");
   else if(value < -DBL_MAX) return sprintf(str, "nan");
@@ -422,6 +584,9 @@ int xPrintDouble(char *str, double value) {
  * @return          Number of characters printed into the buffer.
  */
 int xPrintFloat(char *str, float value) {
+  if(!str)
+    return x_error(-1, EINVAL, "xPrintFloat", "input string is NULL");
+
   // For single-precision restrict range to IEEE range
   if(value > FLT_MAX) return sprintf(str, "nan");
   else if(value < -FLT_MAX) return sprintf(str, "nan");
@@ -434,14 +599,32 @@ int xPrintFloat(char *str, float value) {
 /**
  * Prints a descriptive error message to stderr, and returns the error code.
  *
- * \param func      String that describes the function or location where the error occurred.
- * \param errorCode Error code that describes the failure.
+ * \param code    The xchange error code that describes the failure (see xchange.h).
+ * \param fn      String that describes the function or location where the error occurred.
  *
  * \return          Same error code as specified on input.
  */
-int xError(const char *func, int errorCode) {
-  if(xDebug) fprintf(stderr, "DEBUG-X> %4d (%s) in %s.\n", errorCode, xErrorDescription(errorCode), func);
-  return errorCode;
+int xError(int code, const char *fn) {
+  switch(code) {
+    case X_SUCCESS: return 0;
+    case X_FAILURE: return x_error(code, ECANCELED, fn, "internal failure");
+    case X_ALREADY_OPEN: return x_error(code, EISCONN, fn, "already opened");
+    case X_NO_INIT: return x_error(code, ENXIO, fn, "not initialized");
+    case X_NO_SERVICE: return x_error(code, EIO, fn, "connection lost?");
+    case X_NO_BLOCKED_READ: return x_error(code, 0, fn, "no blocked calls");
+    case X_NO_PIPELINE: return x_error(code, EPIPE, fn, "pipeline mode disabled");
+    case X_TIMEDOUT: return x_error(code, ETIMEDOUT, fn, "timed out while waiting to complete");
+    case X_INTERRUPTED: return x_error(code, EINTR, fn, "wait released without read");
+    case X_INCOMPLETE: return x_error(code, EAGAIN, fn, "incomplete data transfer");
+    case X_NULL: return x_error(code, EFAULT, fn, "null value");
+    case X_PARSE_ERROR: return x_error(code, ECANCELED, fn, "parse error");
+    case X_NOT_ENOUGH_TOKENS: return x_error(code, EINVAL, fn, "not enough tokens");
+    case X_GROUP_INVALID: return x_error(code, EINVAL, fn, "invalid group");
+    case X_NAME_INVALID: return x_error(code, EINVAL, fn, "invalid variable name");
+    case X_TYPE_INVALID: return x_error(code, EINVAL, fn, "invalid variable type");
+    case X_SIZE_INVALID: return x_error(code, EDOM, fn, "invalid variable dimensions");
+  }
+  return x_error(code, errno, fn, "unknown error");
 }
 
 /**
@@ -458,23 +641,23 @@ int xError(const char *func, int errorCode) {
  */
 const char *xErrorDescription(int code) {
   switch(code) {
-  case X_FAILURE: errno = ECANCELED; return "internal failure";
-  case X_SUCCESS: errno = 0; return "success!";
-  case X_ALREADY_OPEN: errno = EISCONN; return "already opened";
-  case X_NO_INIT: errno = ENXIO; return "not initialized";
-  case X_NO_SERVICE: errno = EIO; return "connection lost?";
-  case X_NO_BLOCKED_READ: errno = 0; return "no blocked calls";
-  case X_NO_PIPELINE: errno = EPIPE; return "pipeline mode disabled";
-  case X_TIMEDOUT: errno = ETIMEDOUT; return "timed out while waiting to complete";
-  case X_INTERRUPTED: errno = EINTR; return "wait released without read";
-  case X_INCOMPLETE: errno = EAGAIN; return "incomplete data transfer";
-  case X_NULL: errno = EFAULT; return "null value";
-  case X_PARSE_ERROR: errno = EINVAL; return "parse error";
-  case X_NOT_ENOUGH_TOKENS: errno = EINVAL; return "not enough tokens";
-  case X_GROUP_INVALID: errno = EINVAL; return "invalid group";
-  case X_NAME_INVALID: errno = EINVAL; return "invalid variable name";
-  case X_TYPE_INVALID: errno = EINVAL; return "invalid variable type";
-  case X_SIZE_INVALID: errno = EDOM; return "invalid variable dimensions";
+    case X_FAILURE: return "internal failure";
+    case X_SUCCESS: return "success!";
+    case X_ALREADY_OPEN: return "already opened";
+    case X_NO_INIT: return "not initialized";
+    case X_NO_SERVICE: return "connection lost?";
+    case X_NO_BLOCKED_READ: return "no blocked calls";
+    case X_NO_PIPELINE: return "pipeline mode disabled";
+    case X_TIMEDOUT: return "timed out while waiting to complete";
+    case X_INTERRUPTED: return "wait released without read";
+    case X_INCOMPLETE: return "incomplete data transfer";
+    case X_NULL: return "null value";
+    case X_PARSE_ERROR: return "parse error";
+    case X_NOT_ENOUGH_TOKENS: return "not enough tokens";
+    case X_GROUP_INVALID: return "invalid group";
+    case X_NAME_INVALID: return "invalid variable name";
+    case X_TYPE_INVALID: return "invalid variable type";
+    case X_SIZE_INVALID: return "invalid variable dimensions";
   }
   return "unknown error";
 }

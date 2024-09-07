@@ -13,6 +13,7 @@
 #include <errno.h>
 #include <semaphore.h>
 
+#define __XCHANGE_INTERNAL_API__      ///< Use internal definitions
 #include "xchange.h"
 
 /// \cond PRIVATE
@@ -105,6 +106,7 @@ static XField *xLookupRemoveAsync(XLookupTable *tab, const char *id) {
  * @return      the number of fields stored.
  */
 long xLookupCount(const XLookupTable *tab) {
+  if(!tab) return 0;
   const XLookupPrivate *p = (XLookupPrivate *) tab->priv;
   return p->nEntries;
 }
@@ -126,13 +128,16 @@ long xLookupCount(const XLookupTable *tab) {
  * @sa xLookupRemove()
  */
 int xLookupPut(XLookupTable *tab, const char *prefix, const XField *field, XField **oldValue) {
+  static const char *fn = "xLookupPutField()";
+
   XLookupPrivate *p;
   int res;
 
-  if(!tab || !field) return xError("xLookupPutField()", X_NULL);
+  if(!tab) return x_error(X_NULL, EINVAL, fn, "input table is NULL");
+  if(!field) return x_error(X_NULL, EINVAL, fn, "input field is NULL");
 
   p = (XLookupPrivate *) tab->priv;
-  if(sem_wait(&p->sem) != 0) return X_FAILURE;
+  if(sem_wait(&p->sem) != 0) return x_error(X_FAILURE, errno, fn, "sem_wait() error");
 
   res = xLookupPutAsync(tab, prefix, field, oldValue);
   sem_post(&p->sem);
@@ -151,17 +156,21 @@ int xLookupPut(XLookupTable *tab, const char *prefix, const XField *field, XFiel
  * @sa xLookupPut()
  */
 XField *xLookupRemove(XLookupTable *tab, const char *id) {
+  static const char *fn = "xLookupRemoveField()";
+
   XLookupPrivate *p;
   XField *f;
 
   if(!tab || !id) {
-    xError("xLookupRemoveField()", X_NULL);
-    errno = EINVAL;
+    x_error(X_NULL, EINVAL, fn, "NULL input: tab = %p, id = %p", tab, id);
     return NULL;
   }
 
   p = (XLookupPrivate *) tab->priv;
-  if(sem_wait(&p->sem) != 0) return NULL;
+  if(sem_wait(&p->sem) != 0) {
+    x_error(0, errno, fn, "sem_wait() error");
+    return NULL;
+  }
 
   f = xLookupRemoveAsync(tab, id);
   sem_post(&p->sem);
@@ -171,7 +180,7 @@ XField *xLookupRemove(XLookupTable *tab, const char *id) {
 
 
 
-static int xLookupPullAllAsync(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive) {
+static int xLookupPutAllAsync(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive) {
   XField *f;
   int lp = prefix ? strlen(prefix) : 0;
   int N = 0;
@@ -192,7 +201,7 @@ static int xLookupPullAllAsync(XLookupTable *tab, const char *prefix, const XStr
         if(f->ndim == 0) sprintf(&p1[n], "%s", f->name);
         else sprintf(&p1[n], "%s" X_SEP "%d", f->name, (count + 1));
 
-        N += xLookupPullAllAsync(tab, p1, &sub[count], TRUE);
+        N += xLookupPutAllAsync(tab, p1, &sub[count], TRUE);
       }
     }
   }
@@ -252,13 +261,13 @@ int xLookupPutAll(XLookupTable *tab, const char *prefix, const XStructure *s, bo
   XLookupPrivate *p;
   int n;
 
-  if(!tab) return xError(fn, X_NULL);
-  if(!s) return xError(fn, X_NULL);
+  if(!tab) return x_error(X_NULL, EINVAL, fn, "input table is NULL");
+  if(!s) return x_error(X_NULL, EINVAL, fn, "input structure is NULL");
 
   p = (XLookupPrivate *) tab->priv;
-  if(sem_wait(&p->sem) != 0) return -1;
+  if(sem_wait(&p->sem) != 0) return x_error(X_FAILURE, errno, fn, "sem_wait() error");
 
-  n = xLookupPullAllAsync(tab, prefix, s, recursive);
+  n = xLookupPutAllAsync(tab, prefix, s, recursive);
   sem_post(&p->sem);
 
   return n;
@@ -284,11 +293,11 @@ int xLookupRemoveAll(XLookupTable *tab, const char *prefix, const XStructure *s,
   XLookupPrivate *p;
   int n;
 
-  if(!tab) return xError(fn, X_NULL);
-  if(!s) return xError(fn, X_STRUCT_INVALID);
+  if(!tab) return x_error(X_NULL, EINVAL, fn, "input table is NULL");
+  if(!s) return x_error(X_NULL, EINVAL, fn, "input structure is NULL");
 
   p = (XLookupPrivate *) tab->priv;
-  if(sem_wait(&p->sem) != 0) return -1;
+  if(sem_wait(&p->sem) != 0) return x_error(X_FAILURE, errno, fn, "sem_wait() error");
 
   n = xLookupRemoveAllAsync(tab, prefix, s, recursive);
   sem_post(&p->sem);
@@ -306,19 +315,32 @@ int xLookupRemoveAll(XLookupTable *tab, const char *prefix, const XStructure *s,
  * @return        The new lookup table, or else NULL if there was an error.
  *
  * @sa xCreateLookup()
- * @sa xDEstroyLookup()
+ * @sa xDestroyLookup()
  */
 XLookupTable *xAllocLookup(unsigned int size) {
+  static const char *fn = "xAllocLookup";
+
   XLookupTable *tab;
   XLookupPrivate *p;
 
-  unsigned int n = 1;
+  unsigned int n = 2;
+
+  if(size < 1) {
+    x_error(0, errno, fn, "invalid size: %d", size);
+    return NULL;
+  }
+
   while(n < size) n <<= 1;
 
   p = (XLookupPrivate *) calloc(1, sizeof(XLookupPrivate));
+  if(!p) {
+    x_error(0, errno, fn, "calloc() error");
+    return NULL;
+  }
+
   p->table = (XLookupEntry **) calloc(n, sizeof(XLookupEntry *));
   if(!p->table) {
-    perror("ERROR! xAllocLookup");
+    x_error(0, errno, fn, "calloc() error (n = %d)", n);
     free(p);
     return NULL;
   }
@@ -327,6 +349,11 @@ XLookupTable *xAllocLookup(unsigned int size) {
   sem_init(&p->sem, FALSE, 1);
 
   tab = (XLookupTable *) calloc(1, sizeof(XLookupTable));
+  if(!tab) {
+    x_error(0, errno, fn, "calloc() error");
+    return NULL;
+  }
+
   tab->priv = p;
 
   return tab;
@@ -361,9 +388,9 @@ XLookupTable *xCreateLookup(const XStructure *s, boolean recursive) {
   }
 
   l = xAllocLookup(recursive ? xDeepCountFields(s) : xCountFields(s));
-  if(!l) return NULL;
+  if(!l) return x_trace_null("xCreateLookup", NULL);
 
-  xLookupPullAllAsync(l, NULL, s, recursive);
+  xLookupPutAllAsync(l, NULL, s, recursive);
 
   return l;
 }
@@ -386,16 +413,21 @@ XLookupTable *xCreateLookup(const XStructure *s, boolean recursive) {
  * @sa xGetField()
  */
 XField *xLookupField(const XLookupTable *tab, const char *id) {
+  static const char *fn = "xLookupField";
+
   XLookupEntry *e;
   XLookupPrivate *p;
 
   if(!tab || !id) {
-    errno = EINVAL;
+    x_error(0, EINVAL, fn, "null parameter: tab=%p, id=%p", tab, id);
     return NULL;
   }
 
   p = (XLookupPrivate *) tab->priv;
-  if(sem_wait(&p->sem) != 0) return NULL;
+  if(sem_wait(&p->sem) != 0) {
+    x_error(0, errno, fn, "sem_wait() error");
+    return NULL;
+  }
 
   e = xGetLookupEntryAsync(tab, id, xGetHash(id));
   sem_post(&p->sem);

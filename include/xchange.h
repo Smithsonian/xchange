@@ -185,7 +185,8 @@ extern boolean xDebug;          ///< Switch to enable debugging (very verbose) o
 // In xutil.c ------------------------------------------------>
 boolean xIsVerbose();
 void xSetVerbose(boolean value);
-int xError(const char *func, int errorCode);    // TODO...
+void xSetDebug(boolean value);
+int xError(int code, const char *fn);
 const char *xErrorDescription(int code);
 
 // Structure access methods ----------------------------------->
@@ -257,5 +258,52 @@ void *xAlloc(XType type, int count);
 void xZero(void *buf, XType type, int count);
 char *xStringCopyOf(const char *str);
 
+
+// <================= xchange internals ======================>
+
+/// \cond PRIVATE
+#ifdef __XCHANGE_INTERNAL_API__
+
+#  include <stdio.h>
+#  include <math.h>
+
+// On some older platform NAN may not be defined, so define it here if need be
+#ifndef NAN
+#  define NAN               (0.0/0.0)
+#endif
+
+#  ifndef THREAD_LOCAL
+#    if __STDC_VERSION__ >= 201112L
+#      define THREAD_LOCAL _Thread_local          ///< C11 standard for thread-local variables
+#    elif __GNUC__ >= 3 && __GNUC_MINOR__ >= 3
+#      define THREAD_LOCAL __thread               ///< pre C11 gcc >= 3.3 standard for thread-local variables
+#    else
+#      define THREAD_LOCAL                        ///< no thread-local variables
+#    endif
+#  endif
+
+
+int x_trace(const char *loc, const char *op, int n);
+void *x_trace_null(const char *loc, const char *op);
+void x_set_errno(int en, const char *from, const char *desc, ...);
+int x_error(int ret, int en, const char *from, const char *desc, ...);
+int x_warn(const char *from, const char *desc, ...);
+
+/**
+ * Propagates an error (if any) with an offset. If the error is non-zero, it returns with the offset
+ * error value. Otherwise it keeps going as if it weren't even there...
+ *
+ * @param n     {int} error code or the call that produces the error code
+ *
+ * @sa error_return
+ */
+#  define prop_error(loc, n) { \
+  int __ret = x_trace(loc, NULL, n); \
+  if (__ret != 0) \
+    return __ret; \
+}
+
+#endif /* __XCHANGE_INTERNAL_API__ */
+/// \endcond
 
 #endif /* XCHANGE_H_ */

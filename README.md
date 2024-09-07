@@ -78,7 +78,7 @@ prior to invoking `make`. The following build variables can be configured:
  - `LDFLAGS`: Linker flags (default is `-lm`).
 
  - `BUILD_MODE`: You can set it to `debug` to enable debugging features: it will initialize the global `xDebug` 
-   variable to `TRUE`) and add `-g` to `CFLAGS`.
+   variable to `TRUE` and add `-g` to `CFLAGS`.
 
  - `CHECKEXTRA`: Extra options to pass to `cppcheck` for the `make check` target
 
