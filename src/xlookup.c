@@ -128,7 +128,7 @@ long xLookupCount(const XLookupTable *tab) {
  * @sa xLookupRemove()
  */
 int xLookupPut(XLookupTable *tab, const char *prefix, const XField *field, XField **oldValue) {
-  static const char *fn = "xLookupPutField()";
+  static const char *fn = "xLookupPutField";
 
   XLookupPrivate *p;
   int res;
@@ -156,7 +156,7 @@ int xLookupPut(XLookupTable *tab, const char *prefix, const XField *field, XFiel
  * @sa xLookupPut()
  */
 XField *xLookupRemove(XLookupTable *tab, const char *id) {
-  static const char *fn = "xLookupRemoveField()";
+  static const char *fn = "xLookupRemoveField";
 
   XLookupPrivate *p;
   XField *f;
@@ -256,7 +256,7 @@ static int xLookupRemoveAllAsync(XLookupTable *tab, const char *prefix, const XS
  * @sa xLookupRemoveAll()
  */
 int xLookupPutAll(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive) {
-  static const char *fn = "xLookupPutAll()";
+  static const char *fn = "xLookupPutAll";
 
   XLookupPrivate *p;
   int n;
@@ -288,7 +288,7 @@ int xLookupPutAll(XLookupTable *tab, const char *prefix, const XStructure *s, bo
  * @sa xLookupRemoveAll()
  */
 int xLookupRemoveAll(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive) {
-  static const char *fn = "xLookupRemoveAll()";
+  static const char *fn = "xLookupRemoveAll";
 
   XLookupPrivate *p;
   int n;

@@ -299,7 +299,7 @@ int x_warn(const char *from, const char *desc, ...);
  */
 #  define prop_error(loc, n) { \
   int __ret = x_trace(loc, NULL, n); \
-  if (__ret != 0) \
+  if (__ret < 0) \
     return __ret; \
 }
 

@@ -170,6 +170,7 @@ XField *xCopyOfField(const XField *f) {
   copy->value = malloc(n);
   if(!copy->value) {
     x_error(0, errno, fn, "field %s value alloc: n=%d", f->name, n);
+    free(copy);
     return NULL;
   }
 
