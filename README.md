@@ -116,8 +116,6 @@ associated data type, a dimensionality, a shape (for multidimensional arrays).
 <a name="data-types"></a>
 ### Basic data types
 
- - [Strings](#strings)
-
 The __xchange__ library supports most basic (primitive) data types used across programming languages. The table below 
 shows the (`XType`) types recognised by the library and their C equivalents etc.:
 
@@ -159,7 +157,7 @@ Fixed-length strings of up to _n_ characters are represented internally as the `
 Alternatively, the `X_STRING` type represents ASCII strings of arbitrary length, up to the 0-termination character.
 
 <a name="scalars"></a>
-### Scalar values
+### Scalars
 
 You can create scalar fields easily, e.g.:
 
@@ -181,7 +179,7 @@ Under the hood, scalar values are a special case of arrays containing a single e
 i.e., a shape defined by an empty integer array, e.g. `int shape[0]` in a corresponding `XField` element. 
 
 In this way scalars are distinsguished from true arrays containing just a single elements, which have dimensionality 
-&lt;=1 and shapes e.g., `int shape[1] = {1}` or `shape[2] = {1, 1}`. The difference, while subtle, becomes more 
+&lt;=1 and shapes e.g., `int shape[1] = {1}` or `int shape[2] = {1, 1}`. The difference, while subtle, becomes more 
 obvious when serializing the array, e.g. to JSON. A scalar floating point value of 1.04, for example, will appear as 
 `1.04` in JSON, whereas the 1D and 2D single-element arrays will be serialized as `{ 1.04 }` or `{{ 1.04 }}`, 
 respectively.
