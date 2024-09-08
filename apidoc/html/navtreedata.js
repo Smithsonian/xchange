@@ -33,7 +33,7 @@ var NAVTREE =
         [ "Basic data types", "index.html#autotoc_md10", [
           [ "Strings", "index.html#autotoc_md11", null ]
         ] ],
-        [ "Scalar values", "index.html#autotoc_md12", null ],
+        [ "Scalars", "index.html#autotoc_md12", null ],
         [ "Arrays", "index.html#autotoc_md13", null ],
         [ "Creating structure", "index.html#autotoc_md14", null ],
         [ "Aggregate IDs", "index.html#autotoc_md15", null ],
@@ -74,7 +74,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6"
+"xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

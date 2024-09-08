@@ -1,5 +1,6 @@
 var xstruct_8c =
 [
+    [ "__XCHANGE_INTERNAL_API__", "xstruct_8c.html#ac36bd75f87a1614fb477a0fbcd5df1f3", null ],
     [ "xClearStruct", "xstruct_8c.html#ae45c0a047c30a17aba84d2fc8c08a2dc", null ],
     [ "xCopyIDToken", "xstruct_8c.html#ab20a0213369a947a7e48ff45aabee3c0", null ],
     [ "xCopyOfField", "xstruct_8c.html#afdb31906269568772fdf63adb6685fbc", null ],
@@ -13,7 +14,7 @@ var xstruct_8c =
     [ "xCreateLongField", "xstruct_8c.html#a4587dcd0157acce30373288e19f1237d", null ],
     [ "xCreateScalarField", "xstruct_8c.html#a965f7e58fd1c10570c6f6a472599b08f", null ],
     [ "xCreateStringField", "xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6", null ],
-    [ "xCreateStruct", "xstruct_8c.html#ab551d2db420303b4408064a66bbe3f1c", null ],
+    [ "xCreateStruct", "xstruct_8c.html#a12112584a34e07f9ef7b08f6ef1bc865", null ],
     [ "xDeepCountFields", "xstruct_8c.html#a789489313df89d33aa50de911e1e42ff", null ],
     [ "xDestroyField", "xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad", null ],
     [ "xDestroyStruct", "xstruct_8c.html#a2e12d0147219f85a6ec012d7f475fe21", null ],

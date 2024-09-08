@@ -329,7 +329,7 @@ include/xchange.h
 .RI "int \fBxElementSizeOf\fP (\fBXType\fP type)"
 .br
 .ti -1c
-.RI "int \fBxError\fP (const char *func, int errorCode)"
+.RI "int \fBxError\fP (int code, const char *fn)"
 .br
 .ti -1c
 .RI "const char * \fBxErrorDescription\fP (int code)"
@@ -414,6 +414,9 @@ include/xchange.h
 .br
 .ti -1c
 .RI "int \fBxReverseFieldOrder\fP (\fBXStructure\fP *s, \fBboolean\fP recursive)"
+.br
+.ti -1c
+.RI "void \fBxSetDebug\fP (\fBboolean\fP value)"
 .br
 .ti -1c
 .RI "\fBXField\fP * \fBxSetField\fP (\fBXStructure\fP *s, \fBXField\fP *f)"
@@ -514,7 +517,7 @@ Pointer to the initialized buffer or NULL if there was an error (errno will be s
 .PP
 
 .PP
-References \fBxElementSizeOf()\fP\&.
+References \fBx_error()\fP, \fBx_trace_null()\fP, and \fBxElementSizeOf()\fP\&.
 .SS "\fBXLookupTable\fP * xAllocLookup (unsigned int size)"
 Allocates a new lookup with the specified hash size\&. The hash size should correspond to the number of elements stored in the lookup\&. If it's larger or roughtly equal to the number of elements to be stored, then the lookup time will stay approximately constant with the number of elements\&. If the size is much smaller than the number of elements \fIN\fP stored, then the lookup time will scale as \fIO(N/size)\fP typically\&.
 .PP
@@ -532,12 +535,12 @@ The new lookup table, or else NULL if there was an error\&.
 .RS 4
 \fBxCreateLookup()\fP 
 .PP
-xDEstroyLookup() 
+\fBxDestroyLookup()\fP 
 .RE
 .PP
 
 .PP
-References \fBFALSE\fP, and \fBXLookupTable::priv\fP\&.
+References \fBFALSE\fP, \fBXLookupTable::priv\fP, and \fBx_error()\fP\&.
 .SS "void xClearStruct (\fBXStructure\fP * s)"
 Destroys the contents of an X structure, leaving the structure empty\&.
 .PP
@@ -553,7 +556,7 @@ smaDestroyStruct()
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::next\fP, and \fBxDestroyField()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBx_warn()\fP, and \fBxDestroyField()\fP\&.
 .SS "char * xCopyIDToken (const char * id)"
 Returns a copy of the next next component in a compound ID\&. Leading ID separators are ignored\&.
 .PP
@@ -569,7 +572,7 @@ Pointer to the start of the next compound ID token, or NULL if there is no more 
 .PP
 
 .PP
-References \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBxNextIDToken()\fP\&.
+References \fBx_error()\fP, \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, \fBx_warn()\fP, and \fBxNextIDToken()\fP\&.
 .SS "\fBXField\fP * xCopyOfField (const \fBXField\fP * f)"
 Returns a deep copy of the supplied field\&. The returned copy is a standalone field, unlinked to another to avoid corrupting any structure in which the original field may reside in\&. Note, that this only works with vanilla xchange structures with native storage fields\&. For example, SMA-X structures store data in serialized forms, and therefore it needs its own implementation for making deep copies of fields!
 .PP
@@ -590,7 +593,7 @@ A fully independent (deep) copy of the argument or NULL if the input field is NU
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::isSerialized\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, \fBxCopyOfStruct()\fP, \fBxElementSizeOf()\fP, \fBxGetFieldCount()\fP, \fBxStringCopyOf()\fP, and \fBxTypeChar()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::isSerialized\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, \fBx_trace_null()\fP, \fBxCopyOfStruct()\fP, \fBxDestroyField()\fP, \fBxElementSizeOf()\fP, \fBxGetFieldCount()\fP, and \fBxStringCopyOf()\fP\&.
 .SS "\fBXStructure\fP * xCopyOfStruct (const \fBXStructure\fP * s)"
 Returns a deep copy of the supplied structure\&. Note that this only works with vanilla xchange structures with native storage fields\&. For example, SMA-X structures store data in serialized forms, and therefore it needs its own implementation for making deep copies of structs!
 .PP
@@ -611,7 +614,7 @@ A fully independent (deep) copy of the argument or NULL if the input structure i
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, \fBxCopyOfField()\fP, \fBxCreateStruct()\fP, and \fBxGetFieldCount()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBx_trace_null()\fP, \fBxCopyOfField()\fP, \fBxCreateStruct()\fP, \fBxDestroyStruct()\fP, and \fBxGetFieldCount()\fP\&.
 .SS "int xCountFields (const \fBXStructure\fP * s)"
 Returns the number of fields contained inside the structure\&. It is not recursive\&.
 .PP
@@ -632,7 +635,7 @@ the number of fields cotnained in the structure (but not counting fields in sub-
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, and \fBXField::next\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::next\fP, and \fBx_warn()\fP\&.
 .SS "\fBXField\fP * xCreate1DField (const char * name, \fBXType\fP type, int count, const void * values)"
 Creates a generic field for a 1D array of a given name and native data\&. The structure will hold a copy of the value that is pointed at\&.
 .PP
@@ -654,7 +657,7 @@ A newly created field with the supplied data, or NULL if there was an error\&.
 .PP
 
 .PP
-References \fBxCreateField()\fP\&.
+References \fBx_trace_null()\fP, and \fBxCreateField()\fP\&.
 .SS "\fBXField\fP * xCreateBooleanField (const char * name, \fBboolean\fP value)"
 Creates a field holding a single boolean value value\&.
 .PP
@@ -672,7 +675,7 @@ A newly created field with the supplied data, or NULL if there was an error\&.
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, and \fBxCreateScalarField()\fP\&.
+References \fBX_BOOLEAN\fP, \fBx_trace_null()\fP, and \fBxCreateScalarField()\fP\&.
 .SS "\fBXField\fP * xCreateDoubleField (const char * name, double value)"
 Creates a field holding a single double-precision value value\&.
 .PP
@@ -690,7 +693,7 @@ A newly created field with the supplied data, or NULL if there was an error\&.
 .PP
 
 .PP
-References \fBX_DOUBLE\fP, and \fBxCreateScalarField()\fP\&.
+References \fBX_DOUBLE\fP, \fBx_trace_null()\fP, and \fBxCreateScalarField()\fP\&.
 .SS "\fBXField\fP * xCreateField (const char * name, \fBXType\fP type, int ndim, const int * sizes, const void * value)"
 Creates a generic field of a given name and type and dimensions using a copy of the specified native array, unless type is X_STRUCT in which case the value is referenced directly inside the field\&. For X_STRING and X_RAW only the array references to the underlying string/byte buffers are copied into the field\&.
 .PP
@@ -714,7 +717,7 @@ A newly created field with the copy of the supplied data, or NULL if there was a
 .PP
 
 .PP
-References \fBXField::name\fP, \fBXField::ndim\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_MAX_DIMS\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_SIZE_INVALID\fP, \fBX_STRUCT\fP, \fBxDestroyField()\fP, \fBxElementSizeOf()\fP, \fBxError()\fP, \fBxGetElementCount()\fP, \fBxLastSeparator()\fP, and \fBxStringCopyOf()\fP\&.
+References \fBXField::name\fP, \fBXField::ndim\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_MAX_DIMS\fP, \fBX_STRUCT\fP, \fBx_trace()\fP, \fBxDestroyField()\fP, \fBxElementSizeOf()\fP, \fBxGetElementCount()\fP, \fBxLastSeparator()\fP, and \fBxStringCopyOf()\fP\&.
 .SS "\fBXField\fP * xCreateIntField (const char * name, int value)"
 Creates a field holding a single ineger value value\&.
 .PP
@@ -737,7 +740,7 @@ A newly created field with the supplied data, or NULL if there was an error\&.
 .PP
 
 .PP
-References \fBX_INT\fP, and \fBxCreateScalarField()\fP\&.
+References \fBX_INT\fP, \fBx_trace_null()\fP, and \fBxCreateScalarField()\fP\&.
 .SS "\fBXField\fP * xCreateLongField (const char * name, long long value)"
 Creates a field holding a single ineger value value\&.
 .PP
@@ -760,7 +763,7 @@ A newly created field with the supplied data, or NULL if there was an error\&.
 .PP
 
 .PP
-References \fBX_LONG\fP, and \fBxCreateScalarField()\fP\&.
+References \fBX_LONG\fP, \fBx_trace_null()\fP, and \fBxCreateScalarField()\fP\&.
 .SS "\fBXLookupTable\fP * xCreateLookup (const \fBXStructure\fP * s, \fBboolean\fP recursive)"
 Creates a fast name lookup table for the fields of structure, with or without including fields of embedded substructures also\&. For structures with a large number of fields, such a lookup can significantly improve access times for retrieving specific fields from a structure\&. However, the lookup will not track fields added or removed after its creation, and so it is suited for accessing structures with a fixed layout only\&.
 .PP
@@ -789,7 +792,7 @@ The lookup table, or NULL if there was an error (errno will inform about the typ
 .PP
 
 .PP
-References \fBxAllocLookup()\fP, \fBxCountFields()\fP, and \fBxDeepCountFields()\fP\&.
+References \fBx_trace_null()\fP, \fBxAllocLookup()\fP, \fBxCountFields()\fP, and \fBxDeepCountFields()\fP\&.
 .SS "\fBXField\fP * xCreateScalarField (const char * name, \fBXType\fP type, const void * value)"
 Creates a generic scalar field of a given name and native value\&. The structure will hold a copy of the value that is pointed at\&.
 .PP
@@ -809,7 +812,7 @@ A newly created field with the supplied data, or NULL if there was an error\&.
 .PP
 
 .PP
-References \fBxCreateField()\fP\&.
+References \fBx_trace_null()\fP, and \fBxCreateField()\fP\&.
 .SS "\fBXField\fP * xCreateStringField (const char * name, const char * value)"
 Creates a field holding a single string value\&.
 .PP
@@ -827,7 +830,7 @@ A newly created field referencing the supplied string, or NULL if there was an e
 .PP
 
 .PP
-References \fBX_STRING\fP, and \fBxCreateScalarField()\fP\&.
+References \fBX_STRING\fP, \fBx_trace_null()\fP, and \fBxCreateScalarField()\fP\&.
 .SS "\fBXStructure\fP * xCreateStruct ()"
 Creates a new empty \fBXStructure\fP\&.
 .PP
@@ -857,7 +860,7 @@ The total number of fields present in the structure and all its sub-structures\&
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, \fBxDeepCountFields()\fP, and \fBxGetFieldCount()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBx_trace()\fP, \fBxDeepCountFields()\fP, and \fBxGetFieldCount()\fP\&.
 .SS "void xDestroyField (\fBXField\fP * f)"
 Destroys an X structure field, freeing up resources used\&.
 .PP
@@ -911,15 +914,15 @@ Returns the storage byte size of a single element of a given type\&.
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_SHORT_HEX\fP, \fBX_STRING\fP, and \fBX_STRUCT\fP\&.
-.SS "int xError (const char * func, int errorCode)"
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_SHORT_HEX\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, and \fBx_warn()\fP\&.
+.SS "int xError (int code, const char * fn)"
 Prints a descriptive error message to stderr, and returns the error code\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIfunc\fP String that describes the function or location where the error occurred\&. 
+\fIcode\fP The xchange error code that describes the failure (see \fBxchange\&.h\fP)\&. 
 .br
-\fIerrorCode\fP Error code that describes the failure\&.
+\fIfn\fP String that describes the function or location where the error occurred\&.
 .RE
 .PP
 \fBReturns\fP
@@ -929,7 +932,7 @@ Same error code as specified on input\&.
 .PP
 
 .PP
-References \fBxDebug\fP, and \fBxErrorDescription()\fP\&.
+References \fBX_ALREADY_OPEN\fP, \fBx_error()\fP, \fBX_FAILURE\fP, \fBX_GROUP_INVALID\fP, \fBX_INCOMPLETE\fP, \fBX_INTERRUPTED\fP, \fBX_NAME_INVALID\fP, \fBX_NO_BLOCKED_READ\fP, \fBX_NO_INIT\fP, \fBX_NO_PIPELINE\fP, \fBX_NO_SERVICE\fP, \fBX_NOT_ENOUGH_TOKENS\fP, \fBX_NULL\fP, \fBX_PARSE_ERROR\fP, \fBX_SIZE_INVALID\fP, \fBX_SUCCESS\fP, \fBX_TIMEDOUT\fP, and \fBX_TYPE_INVALID\fP\&.
 .SS "const char * xErrorDescription (int code)"
 Returns a string description for one of the standard X-change error codes, and sets errno as appropriate also\&. (The mapping to error codes is not one-to-one\&. The same errno may be used to describe different X-change errors\&. Nevertheless, it is a guide that can be used when the X-change error is not directtly available, e\&.g\&. because it is not returned by a given function\&.)
 .PP
@@ -968,7 +971,7 @@ The aggregated ID, or NULL if both arguments were NULL themselves\&.
 .PP
 
 .PP
-References \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBxStringCopyOf()\fP\&.
+References \fBx_error()\fP, \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBxStringCopyOf()\fP\&.
 .SS "int xGetElementCount (int ndim, const int * sizes)"
 Returns the total element count specified by along a number of dimensions\&. It ignores dimensions that have size components <= 0;
 .PP
@@ -986,7 +989,7 @@ Total element count specified by the dimensions\&. Defaults to 1\&.
 .PP
 
 .PP
-References \fBX_MAX_DIMS\fP\&.
+References \fBX_MAX_DIMS\fP, and \fBx_warn()\fP\&.
 .SS "\fBXField\fP * xGetField (const \fBXStructure\fP * s, const char * id)"
 Return the field by the specified name, or NULL if no such field exists\&.
 .PP
@@ -1013,7 +1016,7 @@ Matching field from the structure or NULL if there is no match or one of the arg
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxGetField()\fP, \fBxMatchNextID()\fP, and \fBxNextIDToken()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxGetField()\fP, \fBxMatchNextID()\fP, and \fBxNextIDToken()\fP\&.
 .SS "int xGetFieldCount (const \fBXField\fP * f)"
 Returns the total number of primitive elements in a field\&.
 .PP
@@ -1095,7 +1098,9 @@ TRUE (1) if verbosity is enabled, or else FALSE (0)\&.
 .PP
 \fBSee also\fP
 .RS 4
-setVerbose() 
+\fBxSetVerbose()\fP 
+.PP
+\fBxSetDebug()\fP 
 .RE
 .PP
 
@@ -1121,7 +1126,7 @@ Pointer to the beginning of the last separator in the ID, or NULL if the ID does
 .PP
 
 .PP
-References \fBX_SEP\fP, and \fBX_SEP_LENGTH\fP\&.
+References \fBx_error()\fP, \fBX_SEP\fP, and \fBX_SEP_LENGTH\fP\&.
 .SS "long xLookupCount (const \fBXLookupTable\fP * tab)"
 Returns the number of fields in the lookup table\&.
 .PP
@@ -1164,7 +1169,7 @@ The corresponding field or NULL if no such field exists or tab was NULL\&.
 .PP
 
 .PP
-References \fBXLookupTable::priv\fP\&.
+References \fBXLookupTable::priv\fP, and \fBx_error()\fP\&.
 .SS "int xLookupPut (\fBXLookupTable\fP * tab, const char * prefix, const \fBXField\fP * field, \fBXField\fP ** oldValue)"
 Puts a field into the lookup table with the specified aggregate ID prefix\&. For example, if the prefix is 'system:subsystem', and the field's name is 'property', then the field will be available as 'system:subsystem:property' in the lookup\&.
 .PP
@@ -1193,7 +1198,7 @@ Puts a field into the lookup table with the specified aggregate ID prefix\&. For
 .PP
 
 .PP
-References \fBXLookupTable::priv\fP, \fBX_FAILURE\fP, \fBX_NULL\fP, and \fBxError()\fP\&.
+References \fBXLookupTable::priv\fP, \fBx_error()\fP, \fBX_FAILURE\fP, and \fBX_NULL\fP\&.
 .SS "int xLookupPutAll (\fBXLookupTable\fP * tab, const char * prefix, const \fBXStructure\fP * s, \fBboolean\fP recursive)"
 Puts all fields from a structure into the lookup table with the specified aggregate ID prefix, with or without including embedded substructures\&. For example, if the prefix is 'system:subsystem', and a field's name is 'property', then that field will be available as 'system:subsystem:property' in the lookup\&.
 .PP
@@ -1220,7 +1225,7 @@ the number of fields added (<=0), or else X_NULL if either of the arguments were
 .PP
 
 .PP
-References \fBXLookupTable::priv\fP, \fBX_NULL\fP, and \fBxError()\fP\&.
+References \fBXLookupTable::priv\fP, \fBx_error()\fP, \fBX_FAILURE\fP, and \fBX_NULL\fP\&.
 .SS "\fBXField\fP * xLookupRemove (\fBXLookupTable\fP * tab, const char * id)"
 Removes a field from a lookup table\&.
 .PP
@@ -1245,7 +1250,7 @@ The field that was removed, or else NULL if not found\&.
 .PP
 
 .PP
-References \fBXLookupTable::priv\fP, \fBX_NULL\fP, and \fBxError()\fP\&.
+References \fBXLookupTable::priv\fP, \fBx_error()\fP, and \fBX_NULL\fP\&.
 .SS "int xLookupRemoveAll (\fBXLookupTable\fP * tab, const char * prefix, const \fBXStructure\fP * s, \fBboolean\fP recursive)"
 Removes all fields of a structure from the lookup table with the specified aggregate ID prefix, with or without including embedded substructures\&. For example, if the prefix is 'system:subsystem', and a field's name is 'property', then the field referred to as 'system:subsystem:property' in the lookup is affected\&.
 .PP
@@ -1272,7 +1277,7 @@ the number of fields removed (<=0), or else X_NULL if either of the arguments we
 .PP
 
 .PP
-References \fBXLookupTable::priv\fP, \fBX_NULL\fP, \fBX_STRUCT_INVALID\fP, and \fBxError()\fP\&.
+References \fBXLookupTable::priv\fP, \fBx_error()\fP, \fBX_FAILURE\fP, and \fBX_NULL\fP\&.
 .SS "int xMatchNextID (const char * token, const char * id)"
 Checks if the next component in a compound id matches a given token\&.
 .PP
@@ -1290,7 +1295,7 @@ X_SUCCESS if it's a match\&. Otherwise X_FAILURE or another X error if the argum
 .PP
 
 .PP
-References \fBX_FAILURE\fP, \fBX_GROUP_INVALID\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBX_SUCCESS\fP\&.
+References \fBx_error()\fP, \fBX_FAILURE\fP, \fBX_GROUP_INVALID\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBX_SUCCESS\fP\&.
 .SS "char * xNextIDToken (const char * id)"
 Returns a pointer to the beginning of the next component in a compound ID\&. Leading ID separators are ignored\&.
 .PP
@@ -1306,7 +1311,7 @@ Pointer to the start of the next compound ID token, or NULL if there is no more 
 .PP
 
 .PP
-References \fBX_SEP\fP, and \fBX_SEP_LENGTH\fP\&.
+References \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBx_warn()\fP\&.
 .SS "\fBboolean\fP xParseBoolean (char * str, char ** end)"
 Parses a boolean value, either as a zero/non-zero number or as a case-insensitive match to the next token to one of the recognized boolean terms, such as 'true'/'false', 'on'/'off', 'yes'/'no', 't'/'f', 'y'/'n', 'enabled'/'disabled' or 'active'/'inactive'\&. If a boolean value cannot be matched, FALSE is returned, and errno is set to ERANGE\&.
 .PP
@@ -1324,7 +1329,7 @@ TRUE (1) or FALSE (0)\&.
 .PP
 
 .PP
-References \fBFALSE\fP, and \fBTRUE\fP\&.
+References \fBFALSE\fP, \fBTRUE\fP, and \fBx_error()\fP\&.
 .SS "int xParseDims (const char * src, int * sizes)"
 Deserializes the sizes from a space-separated list of dimensions\&. The parsing will terminate at the first non integer value or the end of string, whichever comes first\&. Integer values <= 0 are ignored\&.
 .PP
@@ -1342,7 +1347,7 @@ Number of valid (i\&.e\&. positive) dimensions parsed\&.
 .PP
 
 .PP
-References \fBX_MAX_DIMS\fP\&.
+References \fBx_error()\fP, and \fBX_MAX_DIMS\fP\&.
 .SS "double xParseDouble (const char * str, char ** tail)"
 Same as strtod() on C99, but with explicit parsing of NaN and Infinity values on older platforms also\&.
 .PP
@@ -1355,12 +1360,12 @@ Same as strtod() on C99, but with explicit parsing of NaN and Infinity values on
 .PP
 \fBReturns\fP
 .RS 4
-the floating-point value at the head of the string\&. 
+the floating-point value at the head of the string, or NAN if the input string is NULL\&. 
 .RE
 .PP
 
 .PP
-References \fBNAN\fP\&.
+References \fBNAN\fP, and \fBx_error()\fP\&.
 .SS "int xPrintDims (char * dst, int ndim, const int * sizes)"
 Serializes the dimensions to a string as a space-separated list of integers\&.
 .PP
@@ -1375,12 +1380,12 @@ Serializes the dimensions to a string as a space-separated list of integers\&.
 .PP
 \fBReturns\fP
 .RS 4
-Number of characters written into the destination buffer, not counting the string termination\&. 
+Number of characters written into the destination buffer, not counting the string termination, or -1 if an the essential pointer arguments is NULL\&. 
 .RE
 .PP
 
 .PP
-References \fBX_MAX_DIMS\fP\&.
+References \fBx_error()\fP, and \fBX_MAX_DIMS\fP\&.
 .SS "int xPrintDouble (char * str, double value)"
 Prints a double precision number, restricted to IEEE double-precision range\&. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead\&. For values that exceed the IEEE double precision range, 'nan' will be printed\&.
 .PP
@@ -1393,10 +1398,12 @@ Prints a double precision number, restricted to IEEE double-precision range\&. I
 .PP
 \fBReturns\fP
 .RS 4
-Number of characters printed into the buffer\&. 
+Number of characters printed into the buffer, or -1 if there was an error\&. 
 .RE
 .PP
 
+.PP
+References \fBx_error()\fP\&.
 .SS "int xPrintFloat (char * str, float value)"
 Prints a single-precision number, restricted to IEEE single-precision range\&. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead\&. For values that exceed the IEEE double precision range, 'nan' will be printed\&.
 .PP
@@ -1413,6 +1420,8 @@ Number of characters printed into the buffer\&.
 .RE
 .PP
 
+.PP
+References \fBx_error()\fP\&.
 .SS "int xReduceAllDims (\fBXStructure\fP * s)"
 Recursively eliminates unneccessary embedding of singular structures inside a structure as well as reduces the dimension of all array fields with \fBxReduceDims()\fP\&.
 .PP
@@ -1433,7 +1442,7 @@ X_SUCCESS (0) if successful or else X_STRUCT_INVALID if the argument is NULL (er
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::ndim\fP, \fBXField::next\fP, \fBXStructure::parent\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxGetFieldCount()\fP, \fBxReduceAllDims()\fP, and \fBxReduceDims()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::ndim\fP, \fBXField::next\fP, \fBXStructure::parent\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBx_trace()\fP, \fBxGetFieldCount()\fP, \fBxReduceAllDims()\fP, and \fBxReduceDims()\fP\&.
 .SS "int xReduceDims (int * ndim, int * sizes)"
 Reduces the dimensions by eliminating axes that contain a singular elements\&. Thus a size of {1, 3, 1, 5} will reduce to {3, 5} containing the same number of elements, in fewer dimensions\&. If any of the dimensions are zero then it reduces to { 0 }\&.
 .PP
@@ -1456,7 +1465,7 @@ X_SUCCESS (0) if successful or else X_SIZE_INVALID if the ndim argument is NULL,
 .PP
 
 .PP
-References \fBX_SIZE_INVALID\fP, and \fBX_SUCCESS\fP\&.
+References \fBx_error()\fP, \fBX_SIZE_INVALID\fP, and \fBX_SUCCESS\fP\&.
 .SS "\fBXField\fP * xRemoveField (\fBXStructure\fP * s, const char * name)"
 Removes as field from the structure, returning it if found\&.
 .PP
@@ -1474,7 +1483,7 @@ Pointer to the removed field or else NULL if the was an error or if no matching 
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXStructure::parent\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_NAME_INVALID\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxError()\fP, and \fBxGetFieldCount()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXStructure::parent\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_STRUCT\fP, and \fBxGetFieldCount()\fP\&.
 .SS "int xReverseFieldOrder (\fBXStructure\fP * s, \fBboolean\fP recursive)"
 Reverse the order of fields in a structure\&.
 .PP
@@ -1501,7 +1510,23 @@ X_SUCCESS (0) if successful, or else X_NULL if the structure is NULL\&.
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBTRUE\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxError()\fP, \fBxGetFieldCount()\fP, and \fBxReverseFieldOrder()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBTRUE\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxGetFieldCount()\fP, and \fBxReverseFieldOrder()\fP\&.
+.SS "void xSetDebug (\fBboolean\fP value)"
+Enables or disables debugging output\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP TRUE (non-zero) to enable verbose output, or else FALSE (0)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxSetVerbose()\fP 
+.RE
+.PP
+
+.PP
+References \fBFALSE\fP, \fBTRUE\fP, and \fBxDebug\fP\&.
 .SS "\fBXField\fP * xSetField (\fBXStructure\fP * s, \fBXField\fP * f)"
 Adds or replaces a field in the structure with the specified field value, returning the previous value for the same field\&. It is up to the caller whether or not the old value should be destoyed or kept\&. Note though that you should check first to see if the replaced field is the same as the new one before attempting to destroy\&.\&.\&.
 .PP
@@ -1532,7 +1557,7 @@ Previous field by the same name, or NULL if the field is new or if there was an 
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_STRUCT_INVALID\fP, and \fBxError()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, and \fBx_error()\fP\&.
 .SS "\fBXField\fP * xSetSubstruct (\fBXStructure\fP * s, const char * name, \fBXStructure\fP * substruct)"
 Inserts a structure within a parent structure, returning the old field that may have existed under the requested name before\&.
 .PP
@@ -1556,7 +1581,7 @@ return The prior field stored under the same name or NULL\&. If there is an erro
 .PP
 
 .PP
-References \fBXStructure::parent\fP, \fBX_INCOMPLETE\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_STRUCT_INVALID\fP, \fBxCreateScalarField()\fP, \fBxError()\fP, and \fBxSetField()\fP\&.
+References \fBXStructure::parent\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBx_trace_null()\fP, \fBxCreateScalarField()\fP, and \fBxSetField()\fP\&.
 .SS "void xSetVerbose (\fBboolean\fP value)"
 Sets verbose output for the xchange library\&.
 .PP
@@ -1599,7 +1624,7 @@ X_SUCCESS (0) if successful, or else X_NULL if the structure or the comparator f
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBTRUE\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxError()\fP, \fBxGetFieldCount()\fP, and \fBxSortFields()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBTRUE\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxGetFieldCount()\fP, and \fBxSortFields()\fP\&.
 .SS "int xSortFieldsByName (\fBXStructure\fP * s, \fBboolean\fP recursive)"
 Sorts the fields of a structure by field name, in ascending alphabetical order\&.
 .PP
@@ -1622,7 +1647,7 @@ X_SUCCESS (0) if successful, or else X_NULL if the structure is NULL\&.
 .PP
 
 .PP
-References \fBxSortFields()\fP\&.
+References \fBX_SUCCESS\fP, and \fBxSortFields()\fP\&.
 .SS "int xSplitID (char * id, char ** pKey)"
 Splits the id into two strings (sharing the same input buffer): (1) the id of the embedding structure, and (2) the embedded field name\&. The original input id is string terminated after the table name\&. And the pointer to the key part that follows after the last separator is returned in the second (optional argument)\&.
 .PP
@@ -1647,7 +1672,7 @@ X_SUCCESS (0) if the ID was successfully split into two components\&. X_NULL if 
 .PP
 
 .PP
-References \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_SEP_LENGTH\fP, \fBX_SUCCESS\fP, and \fBxLastSeparator()\fP\&.
+References \fBx_error()\fP, \fBX_NAME_INVALID\fP, \fBX_NULL\fP, \fBX_SEP_LENGTH\fP, \fBX_SUCCESS\fP, and \fBxLastSeparator()\fP\&.
 .SS "char * xStringCopyOf (const char * str)"
 Returns a freshly allocated string with the same content as the argument\&.
 .PP
@@ -1677,7 +1702,7 @@ Number of characters (including termination) required for the string representat
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_SHORT\fP, and \fBX_SHORT_HEX\fP\&.
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_SHORT\fP, and \fBX_SHORT_HEX\fP\&.
 .SS "char xTypeChar (\fBXType\fP type)"
 Returns the character of the field type\&. For X_CHAR types it returns 'C' (without the length specification), and for all other types it returns the constant XType value itself\&.
 .PP
@@ -1692,6 +1717,8 @@ A character that represented the type\&.
 .RE
 .PP
 
+.PP
+References \fBx_warn()\fP\&.
 .SS "void xZero (void * buf, \fBXType\fP type, int count)"
 Zeroes out the contents of an SMA-X buffer\&.
 .PP

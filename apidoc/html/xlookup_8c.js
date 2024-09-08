@@ -1,5 +1,6 @@
 var xlookup_8c =
 [
+    [ "__XCHANGE_INTERNAL_API__", "xlookup_8c.html#ac36bd75f87a1614fb477a0fbcd5df1f3", null ],
     [ "xAllocLookup", "xlookup_8c.html#a01a94b3210aed984dbee956fbb26fcfd", null ],
     [ "xCreateLookup", "xlookup_8c.html#af8bee9eeac947d7e36ea436252e8dc2d", null ],
     [ "xDestroyLookup", "xlookup_8c.html#a02ea2d67e4c540ad706edcc1b3a0431e", null ],

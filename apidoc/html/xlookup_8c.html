@@ -113,11 +113,19 @@ $(document).ready(function(){initNavTree('xlookup_8c.html',''); initResizable();
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">xlookup.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ac36bd75f87a1614fb477a0fbcd5df1f3" id="r_ac36bd75f87a1614fb477a0fbcd5df1f3"><td class="memItemLeft" align="right" valign="top"><a id="ac36bd75f87a1614fb477a0fbcd5df1f3" name="ac36bd75f87a1614fb477a0fbcd5df1f3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>__XCHANGE_INTERNAL_API__</b></td></tr>
+<tr class="memdesc:ac36bd75f87a1614fb477a0fbcd5df1f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use internal definitions. <br /></td></tr>
+<tr class="separator:ac36bd75f87a1614fb477a0fbcd5df1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a01a94b3210aed984dbee956fbb26fcfd" id="r_a01a94b3210aed984dbee956fbb26fcfd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXLookupTable.html">XLookupTable</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xlookup_8c.html#a01a94b3210aed984dbee956fbb26fcfd">xAllocLookup</a> (unsigned int size)</td></tr>
@@ -169,9 +177,9 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The new lookup table, or else NULL if there was an error.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#af8bee9eeac947d7e36ea436252e8dc2d">xCreateLookup()</a> </dd>
 <dd>
-xDEstroyLookup() </dd></dl>
+<a class="el" href="xlookup_8c.html#a02ea2d67e4c540ad706edcc1b3a0431e">xDestroyLookup()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>, and <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>.</p>
+<p class="reference">References <a class="el" href="xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>, <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, and <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>.</p>
 
 </div>
 </div>
@@ -215,7 +223,7 @@ xDEstroyLookup() </dd></dl>
 <dd>
 <a class="el" href="xlookup_8c.html#a02ea2d67e4c540ad706edcc1b3a0431e">xDestroyLookup()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="xlookup_8c.html#a01a94b3210aed984dbee956fbb26fcfd">xAllocLookup()</a>, <a class="el" href="xstruct_8c.html#af7447cdd983402a27a25a70cc7187275">xCountFields()</a>, and <a class="el" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff">xDeepCountFields()</a>.</p>
+<p class="reference">References <a class="el" href="xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31">x_trace_null()</a>, <a class="el" href="xlookup_8c.html#a01a94b3210aed984dbee956fbb26fcfd">xAllocLookup()</a>, <a class="el" href="xstruct_8c.html#af7447cdd983402a27a25a70cc7187275">xCountFields()</a>, and <a class="el" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff">xDeepCountFields()</a>.</p>
 
 </div>
 </div>
@@ -314,7 +322,7 @@ xDEstroyLookup() </dd></dl>
 <dd>
 <a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>.</p>
+<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, and <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>.</p>
 
 </div>
 </div>
@@ -370,7 +378,7 @@ xDEstroyLookup() </dd></dl>
 <dd>
 <a class="el" href="xlookup_8c.html#a85f2c5443ebef48499398453a39710da">xLookupRemove()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, <a class="el" href="xchange_8h.html#a1d4a0c99f979fd0ecf0e9dcb7191a8d7">X_FAILURE</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, and <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>.</p>
+<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a1d4a0c99f979fd0ecf0e9dcb7191a8d7">X_FAILURE</a>, and <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>.</p>
 
 </div>
 </div>
@@ -424,7 +432,7 @@ xDEstroyLookup() </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of fields added (&lt;=0), or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#add4a6ffa5866d770bd21636d00b9d3d7">xLookupRemoveAll()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, and <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>.</p>
+<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a1d4a0c99f979fd0ecf0e9dcb7191a8d7">X_FAILURE</a>, and <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>.</p>
 
 </div>
 </div>
@@ -466,7 +474,7 @@ xDEstroyLookup() </dd></dl>
 <dd>
 <a class="el" href="xlookup_8c.html#a3b423bf135d2ed42319abff99fda78e4">xLookupPut()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, and <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>.</p>
+<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, and <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>.</p>
 
 </div>
 </div>
@@ -520,7 +528,7 @@ xDEstroyLookup() </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of fields removed (&lt;=0), or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#add4a6ffa5866d770bd21636d00b9d3d7">xLookupRemoveAll()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, <a class="el" href="xchange_8h.html#af4b6e6d9baf3e6767041faa3e356af7a">X_STRUCT_INVALID</a>, and <a class="el" href="xchange_8c.html#a3fe612344032025068b6d32b16863d68">xError()</a>.</p>
+<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a1d4a0c99f979fd0ecf0e9dcb7191a8d7">X_FAILURE</a>, and <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>.</p>
 
 </div>
 </div>

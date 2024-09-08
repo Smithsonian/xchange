@@ -11,6 +11,10 @@ src/xchange.c \- A collection of commonly used functions for standard data excha
 
 .in +1c
 .ti -1c
+.RI "#define \fB__XCHANGE_INTERNAL_API__\fP"
+.br
+.RI "Use internal definitions\&. "
+.ti -1c
 .RI "#define \fBEIXPLICIT_PARSE_SPECIAL_DOUBLES\fP   \fBTRUE\fP"
 .br
 .in -1c
@@ -18,13 +22,28 @@ src/xchange.c \- A collection of commonly used functions for standard data excha
 
 .in +1c
 .ti -1c
+.RI "int \fBx_error\fP (int ret, int en, const char *from, const char *desc,\&.\&.\&.)"
+.br
+.ti -1c
+.RI "void \fBx_set_errno\fP (int en, const char *from, const char *desc,\&.\&.\&.)"
+.br
+.ti -1c
+.RI "int \fBx_trace\fP (const char *loc, const char *op, int n)"
+.br
+.ti -1c
+.RI "void * \fBx_trace_null\fP (const char *loc, const char *op)"
+.br
+.ti -1c
+.RI "int \fBx_warn\fP (const char *from, const char *desc,\&.\&.\&.)"
+.br
+.ti -1c
 .RI "void * \fBxAlloc\fP (\fBXType\fP type, int count)"
 .br
 .ti -1c
 .RI "int \fBxElementSizeOf\fP (\fBXType\fP type)"
 .br
 .ti -1c
-.RI "int \fBxError\fP (const char *func, int errorCode)"
+.RI "int \fBxError\fP (int code, const char *fn)"
 .br
 .ti -1c
 .RI "const char * \fBxErrorDescription\fP (int code)"
@@ -55,6 +74,9 @@ src/xchange.c \- A collection of commonly used functions for standard data excha
 .br
 .ti -1c
 .RI "int \fBxPrintFloat\fP (char *str, float value)"
+.br
+.ti -1c
+.RI "void \fBxSetDebug\fP (\fBboolean\fP value)"
 .br
 .ti -1c
 .RI "void \fBxSetVerbose\fP (\fBboolean\fP value)"
@@ -107,6 +129,110 @@ Attila Kovacs
 Check if we need to parse special floating point values, such as 'nan', 'infinity' or 'inf'\&.\&.\&. These were added in the C99 standard, at the same time as the constant INFINITY was added\&. 
 .SH "Function Documentation"
 .PP 
+.SS "int x_error (int ret, int en, const char * from, const char * desc,  \&.\&.\&.)"
+(\fIfor internal use\fP) Sets errno and reports errors to the standard error, depending on the current debug mode, before returning the supplied return code\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIret\fP return value 
+.br
+\fIen\fP UNIX error code (see errno\&.h) 
+.br
+\fIfrom\fP function (:location) where error originated 
+.br
+\fIdesc\fP description of error, with information to convey to user\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBx_set_errno()\fP 
+.PP
+\fBx_trace()\fP 
+.RE
+.PP
+
+.PP
+References \fBxDebug\fP\&.
+.SS "void x_set_errno (int en, const char * from, const char * desc,  \&.\&.\&.)"
+(\fIfor internal use\fP) Sets an errno and report errors to the standard error, depending on the current debug mode\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIen\fP {int} UNIX error number (see errno\&.h) 
+.br
+\fIfrom\fP {string} Function (:location) where error originated 
+.br
+\fIdesc\fP {string} Description of error, with information to convey to user\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBx_error()\fP 
+.PP
+x_debug() 
+.RE
+.PP
+
+.PP
+References \fBxDebug\fP\&.
+.SS "int x_trace (const char * loc, const char * op, int n)"
+(\fIfor internal use\fP) Propagates an error (if any)\&. If the error is non-zero, it returns with the offset error value\&. Otherwise it keeps going as if it weren't even there\&.\&.\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIloc\fP Function [:location] where error was produced\&. 
+.br
+\fIop\fP (optional) further info or NULL\&. 
+.br
+\fIn\fP error code that was received\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+n 
+.RE
+.PP
+
+.PP
+References \fBxDebug\fP\&.
+.SS "void * x_trace_null (const char * loc, const char * op)"
+(\fIfor internal use\fP) Traces an error before returning NULL\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIloc\fP Function [:location] where error was produced\&. 
+.br
+\fIop\fP (optional) further info or NULL\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+NULL 
+.RE
+.PP
+
+.PP
+References \fBxDebug\fP\&.
+.SS "int x_warn (const char * from, const char * desc,  \&.\&.\&.)"
+(\fIfor internal use\fP) Prints a warning message\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIfrom\fP function (:location) where error originated 
+.br
+\fIdesc\fP description of error, with information to convey to user\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBx_set_errno()\fP 
+.PP
+\fBx_trace()\fP 
+.RE
+.PP
+
+.PP
+References \fBxDebug\fP\&.
 .SS "void * xAlloc (\fBXType\fP type, int count)"
 Allocates a buffer for a given SMA-X type and element count\&. The buffer is initialized with zeroes\&.
 .PP
@@ -124,7 +250,7 @@ Pointer to the initialized buffer or NULL if there was an error (errno will be s
 .PP
 
 .PP
-References \fBxElementSizeOf()\fP\&.
+References \fBx_error()\fP, \fBx_trace_null()\fP, and \fBxElementSizeOf()\fP\&.
 .SS "int xElementSizeOf (\fBXType\fP type)"
 Returns the storage byte size of a single element of a given type\&.
 .PP
@@ -140,15 +266,15 @@ Returns the storage byte size of a single element of a given type\&.
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_SHORT_HEX\fP, \fBX_STRING\fP, and \fBX_STRUCT\fP\&.
-.SS "int xError (const char * func, int errorCode)"
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_SHORT_HEX\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, and \fBx_warn()\fP\&.
+.SS "int xError (int code, const char * fn)"
 Prints a descriptive error message to stderr, and returns the error code\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIfunc\fP String that describes the function or location where the error occurred\&. 
+\fIcode\fP The xchange error code that describes the failure (see \fBxchange\&.h\fP)\&. 
 .br
-\fIerrorCode\fP Error code that describes the failure\&.
+\fIfn\fP String that describes the function or location where the error occurred\&.
 .RE
 .PP
 \fBReturns\fP
@@ -158,7 +284,7 @@ Same error code as specified on input\&.
 .PP
 
 .PP
-References \fBxDebug\fP, and \fBxErrorDescription()\fP\&.
+References \fBX_ALREADY_OPEN\fP, \fBx_error()\fP, \fBX_FAILURE\fP, \fBX_GROUP_INVALID\fP, \fBX_INCOMPLETE\fP, \fBX_INTERRUPTED\fP, \fBX_NAME_INVALID\fP, \fBX_NO_BLOCKED_READ\fP, \fBX_NO_INIT\fP, \fBX_NO_PIPELINE\fP, \fBX_NO_SERVICE\fP, \fBX_NOT_ENOUGH_TOKENS\fP, \fBX_NULL\fP, \fBX_PARSE_ERROR\fP, \fBX_SIZE_INVALID\fP, \fBX_SUCCESS\fP, \fBX_TIMEDOUT\fP, and \fBX_TYPE_INVALID\fP\&.
 .SS "const char * xErrorDescription (int code)"
 Returns a string description for one of the standard X-change error codes, and sets errno as appropriate also\&. (The mapping to error codes is not one-to-one\&. The same errno may be used to describe different X-change errors\&. Nevertheless, it is a guide that can be used when the X-change error is not directtly available, e\&.g\&. because it is not returned by a given function\&.)
 .PP
@@ -192,7 +318,7 @@ Total element count specified by the dimensions\&. Defaults to 1\&.
 .PP
 
 .PP
-References \fBX_MAX_DIMS\fP\&.
+References \fBX_MAX_DIMS\fP, and \fBx_warn()\fP\&.
 .SS "\fBboolean\fP xIsCharSequence (\fBXType\fP type)"
 Checks if the type represents a fixed-size character / binary sequence\&.
 .PP
@@ -217,7 +343,9 @@ TRUE (1) if verbosity is enabled, or else FALSE (0)\&.
 .PP
 \fBSee also\fP
 .RS 4
-setVerbose() 
+\fBxSetVerbose()\fP 
+.PP
+\fBxSetDebug()\fP 
 .RE
 .PP
 
@@ -240,7 +368,7 @@ TRUE (1) or FALSE (0)\&.
 .PP
 
 .PP
-References \fBFALSE\fP, and \fBTRUE\fP\&.
+References \fBFALSE\fP, \fBTRUE\fP, and \fBx_error()\fP\&.
 .SS "int xParseDims (const char * src, int * sizes)"
 Deserializes the sizes from a space-separated list of dimensions\&. The parsing will terminate at the first non integer value or the end of string, whichever comes first\&. Integer values <= 0 are ignored\&.
 .PP
@@ -258,7 +386,7 @@ Number of valid (i\&.e\&. positive) dimensions parsed\&.
 .PP
 
 .PP
-References \fBX_MAX_DIMS\fP\&.
+References \fBx_error()\fP, and \fBX_MAX_DIMS\fP\&.
 .SS "double xParseDouble (const char * str, char ** tail)"
 Same as strtod() on C99, but with explicit parsing of NaN and Infinity values on older platforms also\&.
 .PP
@@ -271,12 +399,12 @@ Same as strtod() on C99, but with explicit parsing of NaN and Infinity values on
 .PP
 \fBReturns\fP
 .RS 4
-the floating-point value at the head of the string\&. 
+the floating-point value at the head of the string, or NAN if the input string is NULL\&. 
 .RE
 .PP
 
 .PP
-References \fBNAN\fP\&.
+References \fBNAN\fP, and \fBx_error()\fP\&.
 .SS "int xPrintDims (char * dst, int ndim, const int * sizes)"
 Serializes the dimensions to a string as a space-separated list of integers\&.
 .PP
@@ -291,12 +419,12 @@ Serializes the dimensions to a string as a space-separated list of integers\&.
 .PP
 \fBReturns\fP
 .RS 4
-Number of characters written into the destination buffer, not counting the string termination\&. 
+Number of characters written into the destination buffer, not counting the string termination, or -1 if an the essential pointer arguments is NULL\&. 
 .RE
 .PP
 
 .PP
-References \fBX_MAX_DIMS\fP\&.
+References \fBx_error()\fP, and \fBX_MAX_DIMS\fP\&.
 .SS "int xPrintDouble (char * str, double value)"
 Prints a double precision number, restricted to IEEE double-precision range\&. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead\&. For values that exceed the IEEE double precision range, 'nan' will be printed\&.
 .PP
@@ -309,10 +437,12 @@ Prints a double precision number, restricted to IEEE double-precision range\&. I
 .PP
 \fBReturns\fP
 .RS 4
-Number of characters printed into the buffer\&. 
+Number of characters printed into the buffer, or -1 if there was an error\&. 
 .RE
 .PP
 
+.PP
+References \fBx_error()\fP\&.
 .SS "int xPrintFloat (char * str, float value)"
 Prints a single-precision number, restricted to IEEE single-precision range\&. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead\&. For values that exceed the IEEE double precision range, 'nan' will be printed\&.
 .PP
@@ -329,6 +459,24 @@ Number of characters printed into the buffer\&.
 .RE
 .PP
 
+.PP
+References \fBx_error()\fP\&.
+.SS "void xSetDebug (\fBboolean\fP value)"
+Enables or disables debugging output\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP TRUE (non-zero) to enable verbose output, or else FALSE (0)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxSetVerbose()\fP 
+.RE
+.PP
+
+.PP
+References \fBFALSE\fP, \fBTRUE\fP, and \fBxDebug\fP\&.
 .SS "void xSetVerbose (\fBboolean\fP value)"
 Sets verbose output for the xchange library\&.
 .PP
@@ -374,7 +522,7 @@ Number of characters (including termination) required for the string representat
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_SHORT\fP, and \fBX_SHORT_HEX\fP\&.
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_SHORT\fP, and \fBX_SHORT_HEX\fP\&.
 .SS "char xTypeChar (\fBXType\fP type)"
 Returns the character of the field type\&. For X_CHAR types it returns 'C' (without the length specification), and for all other types it returns the constant XType value itself\&.
 .PP
@@ -389,6 +537,8 @@ A character that represented the type\&.
 .RE
 .PP
 
+.PP
+References \fBx_warn()\fP\&.
 .SS "void xZero (void * buf, \fBXType\fP type, int count)"
 Zeroes out the contents of an SMA-X buffer\&.
 .PP

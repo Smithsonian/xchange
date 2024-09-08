@@ -6,6 +6,14 @@ src/xlookup.c
 .SH SYNOPSIS
 .br
 .PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB__XCHANGE_INTERNAL_API__\fP"
+.br
+.RI "Use internal definitions\&. "
+.in -1c
 .SS "Functions"
 
 .in +1c
@@ -71,12 +79,12 @@ The new lookup table, or else NULL if there was an error\&.
 .RS 4
 \fBxCreateLookup()\fP 
 .PP
-xDEstroyLookup() 
+\fBxDestroyLookup()\fP 
 .RE
 .PP
 
 .PP
-References \fBFALSE\fP, and \fBXLookupTable::priv\fP\&.
+References \fBFALSE\fP, \fBXLookupTable::priv\fP, and \fBx_error()\fP\&.
 .SS "\fBXLookupTable\fP * xCreateLookup (const \fBXStructure\fP * s, \fBboolean\fP recursive)"
 Creates a fast name lookup table for the fields of structure, with or without including fields of embedded substructures also\&. For structures with a large number of fields, such a lookup can significantly improve access times for retrieving specific fields from a structure\&. However, the lookup will not track fields added or removed after its creation, and so it is suited for accessing structures with a fixed layout only\&.
 .PP
@@ -105,7 +113,7 @@ The lookup table, or NULL if there was an error (errno will inform about the typ
 .PP
 
 .PP
-References \fBxAllocLookup()\fP, \fBxCountFields()\fP, and \fBxDeepCountFields()\fP\&.
+References \fBx_trace_null()\fP, \fBxAllocLookup()\fP, \fBxCountFields()\fP, and \fBxDeepCountFields()\fP\&.
 .SS "void xDestroyLookup (\fBXLookupTable\fP * tab)"
 Destroys a lookup table, freeing up it's in-memory resources\&.
 .PP
@@ -164,7 +172,7 @@ The corresponding field or NULL if no such field exists or tab was NULL\&.
 .PP
 
 .PP
-References \fBXLookupTable::priv\fP\&.
+References \fBXLookupTable::priv\fP, and \fBx_error()\fP\&.
 .SS "int xLookupPut (\fBXLookupTable\fP * tab, const char * prefix, const \fBXField\fP * field, \fBXField\fP ** oldValue)"
 Puts a field into the lookup table with the specified aggregate ID prefix\&. For example, if the prefix is 'system:subsystem', and the field's name is 'property', then the field will be available as 'system:subsystem:property' in the lookup\&.
 .PP
@@ -193,7 +201,7 @@ Puts a field into the lookup table with the specified aggregate ID prefix\&. For
 .PP
 
 .PP
-References \fBXLookupTable::priv\fP, \fBX_FAILURE\fP, \fBX_NULL\fP, and \fBxError()\fP\&.
+References \fBXLookupTable::priv\fP, \fBx_error()\fP, \fBX_FAILURE\fP, and \fBX_NULL\fP\&.
 .SS "int xLookupPutAll (\fBXLookupTable\fP * tab, const char * prefix, const \fBXStructure\fP * s, \fBboolean\fP recursive)"
 Puts all fields from a structure into the lookup table with the specified aggregate ID prefix, with or without including embedded substructures\&. For example, if the prefix is 'system:subsystem', and a field's name is 'property', then that field will be available as 'system:subsystem:property' in the lookup\&.
 .PP
@@ -220,7 +228,7 @@ the number of fields added (<=0), or else X_NULL if either of the arguments were
 .PP
 
 .PP
-References \fBXLookupTable::priv\fP, \fBX_NULL\fP, and \fBxError()\fP\&.
+References \fBXLookupTable::priv\fP, \fBx_error()\fP, \fBX_FAILURE\fP, and \fBX_NULL\fP\&.
 .SS "\fBXField\fP * xLookupRemove (\fBXLookupTable\fP * tab, const char * id)"
 Removes a field from a lookup table\&.
 .PP
@@ -245,7 +253,7 @@ The field that was removed, or else NULL if not found\&.
 .PP
 
 .PP
-References \fBXLookupTable::priv\fP, \fBX_NULL\fP, and \fBxError()\fP\&.
+References \fBXLookupTable::priv\fP, \fBx_error()\fP, and \fBX_NULL\fP\&.
 .SS "int xLookupRemoveAll (\fBXLookupTable\fP * tab, const char * prefix, const \fBXStructure\fP * s, \fBboolean\fP recursive)"
 Removes all fields of a structure from the lookup table with the specified aggregate ID prefix, with or without including embedded substructures\&. For example, if the prefix is 'system:subsystem', and a field's name is 'property', then the field referred to as 'system:subsystem:property' in the lookup is affected\&.
 .PP
@@ -272,7 +280,7 @@ the number of fields removed (<=0), or else X_NULL if either of the arguments we
 .PP
 
 .PP
-References \fBXLookupTable::priv\fP, \fBX_NULL\fP, \fBX_STRUCT_INVALID\fP, and \fBxError()\fP\&.
+References \fBXLookupTable::priv\fP, \fBx_error()\fP, \fBX_FAILURE\fP, and \fBX_NULL\fP\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for xchange from the source code\&.

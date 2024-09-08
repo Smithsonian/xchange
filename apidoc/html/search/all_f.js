@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['scalar_20values_0',['Scalar values',['../index.html#autotoc_md12',1,'']]],
+  ['scalars_0',['Scalars',['../index.html#autotoc_md12',1,'']]],
   ['sizes_1',['sizes',['../structXField.html#af743830ee6c7d5e81a0206b07238ca5d',1,'XField']]],
   ['sorting_20fields_2',['Sorting fields',['../index.html#autotoc_md19',1,'']]],
   ['str_5f1_3',['str_1',['../xchange_8h.html#a1f298f5039a547cea57a36c2ef616522',1,'xchange.h']]],
