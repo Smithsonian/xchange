@@ -27,7 +27,10 @@
  */
 XStructure *xCreateStruct() {
   XStructure *s = (XStructure *) calloc(1, sizeof(XStructure));
-  if(!s) x_error(0, errno, "xCreateStruct", "calloc() error");
+  if(!s) {
+    perror("ERROR! alloc error");
+    exit(errno);
+  }
   return s;
 }
 
@@ -104,8 +107,8 @@ XField *xCopyOfField(const XField *f) {
 
   copy = (XField *) malloc(sizeof(XField));
   if(!copy) {
-    x_error(0, errno, fn, "malloc() error");
-    return NULL;
+    perror("ERROR! alloc error");
+    exit(errno);
   }
 
   // Start with a clone...
@@ -132,7 +135,7 @@ XField *xCopyOfField(const XField *f) {
 
     c = calloc(eCount, sizeof(XStructure));
     if(!c) {
-      x_error(0, errno, fn, "calloc() error (eCount=%d)", eCount);
+      x_error(0, errno, fn, "calloc() error (%d XStructure)", eCount);
       xDestroyField(copy);
       return NULL;
     }
@@ -788,11 +791,11 @@ int xReduceDims(int *ndim, int *sizes) {
 
   int i;
 
-  if(!ndim) return x_error(X_SIZE_INVALID, EINVAL, fn, "ndim pointer is NULL");
+  if(ndim == NULL) return x_error(X_SIZE_INVALID, EINVAL, fn, "ndim pointer is NULL");
 
   if(*ndim <= 0) return X_SUCCESS;
 
-  if(sizes == NULL) return x_error(X_SIZE_INVALID, EINVAL, fn, "sizes is NULL (ndim = %d)", ndim);
+  if(sizes == NULL) return x_error(X_SIZE_INVALID, EINVAL, fn, "sizes is NULL (ndim = %d)", *ndim);
 
   for(i = *ndim; --i >= 0; ) if (sizes[i] == 0) {
     *ndim = 1;
@@ -855,7 +858,7 @@ int xReduceAllDims(XStructure *s) {
       while(--i >= 0) {
         int status = xReduceAllDims(&sub[i]);
         if(status < 0) {
-          char *id = malloc(strlen(f->name + 20));
+          char *id = malloc(strlen(f->name) + 20);
           sprintf(id, "%s[%d]", f->name, i);
           x_trace(fn, id, status);
           free(id);

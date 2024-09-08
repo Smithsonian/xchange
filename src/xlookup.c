@@ -334,8 +334,8 @@ XLookupTable *xAllocLookup(unsigned int size) {
 
   p = (XLookupPrivate *) calloc(1, sizeof(XLookupPrivate));
   if(!p) {
-    x_error(0, errno, fn, "calloc() error");
-    return NULL;
+    perror("ERROR! alloc error");
+    exit(errno);
   }
 
   p->table = (XLookupEntry **) calloc(n, sizeof(XLookupEntry *));
@@ -350,8 +350,8 @@ XLookupTable *xAllocLookup(unsigned int size) {
 
   tab = (XLookupTable *) calloc(1, sizeof(XLookupTable));
   if(!tab) {
-    x_error(0, errno, fn, "calloc() error");
-    return NULL;
+    perror("ERROR! alloc error");
+    exit(errno);
   }
 
   tab->priv = p;
