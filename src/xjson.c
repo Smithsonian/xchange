@@ -16,6 +16,7 @@
 #include <limits.h>
 #include <sys/stat.h>
 
+#define __XCHANGE_INTERNAL_API__        ///< Use internal definitions
 #include "xjson.h"
 
 #ifndef TRUE
@@ -116,7 +117,7 @@ char *xjsonToString(const XStructure *s) {
   int n;
 
   if(!s) {
-    errno = EINVAL;
+    x_error(0, X_NULL, "xjsonToString", "input structure is NULL");
     return NULL;
   }
 
@@ -171,7 +172,7 @@ XStructure *xjsonParseAt(char **pos, int *lineNumber) {
   int n;
 
   if(!pos) {
-    errno = EINVAL;
+    x_error(0, EINVAL, "xjsonParseAt", "'pos' parameter is NULL");
     return NULL;
   }
 
@@ -206,7 +207,7 @@ XStructure *xjsonParseFilename(const char *fileName, int *lineNumber) {
   XStructure *s;
 
   if(!fileName) {
-    errno = EINVAL;
+    x_error(0, EINVAL, "xjsonParseFilename", "fileName is NULL");
     return NULL;
   }
 
@@ -249,19 +250,32 @@ XStructure *xjsonParseFilename(const char *fileName, int *lineNumber) {
  * @sa xjsonToString()
  */
 XStructure *xjsonParseFile(FILE *fp, size_t length, int *lineNumber) {
+  static const char *fn = "xjsonParseFile";
+
   XStructure *s;
   int n;
   long L;
   char *str;
   volatile char *pos;
 
+  if(fp == NULL) {
+    x_error(0, EINVAL, fn, "file is NULL");
+    return NULL;
+  }
+
   if(!xerr) xerr = stderr;
 
   if(length == 0) {
     long p = ftell(fp);
-    if(fseek(fp, 0, SEEK_END) != 0) return NULL;
+    if(fseek(fp, 0, SEEK_END) != 0) {
+      x_error(0, errno, fn, "fseek() error");
+      return NULL;
+    }
     length = ftell(fp) - p;
-    if(fseek(fp, p, SEEK_SET) != 0) return NULL;
+    if(fseek(fp, p, SEEK_SET) != 0) {
+      x_error(0, errno, fn, "ftell() error");
+      return NULL;
+    }
   }
 
   if(!lineNumber) lineNumber = &n;
@@ -1145,7 +1159,7 @@ char *xjsonEscapeString(const char *src, int maxLength) {
   char *json;
 
   if(!src) {
-    errno = EINVAL;
+    x_error(0, EINVAL, "xjsonEscapeString", "input string is NULL");
     return NULL;
   }
 
@@ -1172,5 +1186,11 @@ char *xjsonEscapeString(const char *src, int maxLength) {
  */
 char *xjsonUnescapeString(const char *str) {
   int lineNumber = 0;
+
+  if(!str) {
+    x_error(0, EINVAL, "xjsonUnescapeString", "input string is NULL");
+    return NULL;
+  }
+
   return ParseString((char **) &str, &lineNumber);
 }
