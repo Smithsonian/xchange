@@ -186,7 +186,7 @@ extern boolean xDebug;          ///< Switch to enable debugging (very verbose) o
 boolean xIsVerbose();
 void xSetVerbose(boolean value);
 void xSetDebug(boolean value);
-int xError(int code, const char *fn);
+int xError(const char *fn, int code);
 const char *xErrorDescription(int code);
 
 // Structure access methods ----------------------------------->

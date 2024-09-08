@@ -599,12 +599,12 @@ int xPrintFloat(char *str, float value) {
 /**
  * Prints a descriptive error message to stderr, and returns the error code.
  *
- * \param code    The xchange error code that describes the failure (see xchange.h).
  * \param fn      String that describes the function or location where the error occurred.
+ * \param code    The xchange error code that describes the failure (see xchange.h).
  *
  * \return          Same error code as specified on input.
  */
-int xError(int code, const char *fn) {
+int xError(const char *fn, int code) {
   switch(code) {
     case X_SUCCESS: return 0;
     case X_FAILURE: return x_error(code, ECANCELED, fn, "internal failure");
