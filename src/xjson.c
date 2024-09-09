@@ -82,6 +82,8 @@ void xjsonSetIndent(int nchars) {
   if(nchars < 0) nchars = 0;
 
   indent = (char *) malloc(nchars + 1);
+  x_check_alloc(indent);
+
   memset(indent, ' ', nchars);
   indent[nchars] = '\0';
 
@@ -404,10 +406,7 @@ static XStructure *ParseObject(char **pos, int *lineNumber) {
   next++; // Opening {
 
   s = (XStructure *) calloc(1, sizeof(XStructure));
-  if(!s) {
-    Error("[L.%d] Out of memory (XStructure).\n", *lineNumber);
-    return NULL;
-  }
+  x_check_alloc(s);
 
   while(*next) {
     int l;
@@ -420,11 +419,7 @@ static XStructure *ParseObject(char **pos, int *lineNumber) {
     }
 
     f = calloc(1, sizeof(XField));
-    if(!f) {
-      Error("[L.%d] Out of memory (XField).\n", *lineNumber);
-      xDestroyStruct(s);
-      return NULL;
-    }
+    x_check_alloc(f);
 
     for(l=0; next[l]; l++) if(isspace(next[l])) break;
 
@@ -460,11 +455,8 @@ static XStructure *ParseObject(char **pos, int *lineNumber) {
         break;
       case '"': {
         char **str = malloc(sizeof(char *));
-        if(!str) {
-          Error("[L.%d] Out of memory (string pointer).\n", *lineNumber);
-          xDestroyStruct(s);
-          return NULL;
-        }
+        x_check_alloc(str);
+
         *str = ParseString(&next, lineNumber);
         f->type = X_STRING;
         f->value = (char *) str;
@@ -584,24 +576,26 @@ static void *ParsePrimitive(char **pos, XType *type, int *lineNumber) {
   // Check if boolean
   if(l == JSON_TRUE_LEN) if(!strncmp(next, JSON_TRUE, JSON_TRUE_LEN)) {
     boolean *value = malloc(sizeof(boolean));
-    if(value) *value = TRUE;
+    x_check_alloc(value);
+    *value = TRUE;
     *type = X_BOOLEAN;
     return value;
   }
 
   if(l == JSON_FALSE_LEN) if(!strncmp(next, JSON_FALSE, JSON_FALSE_LEN)) {
     boolean *value = malloc(sizeof(boolean));
-    if(value) *value = FALSE;
+    x_check_alloc(value);
+    *value = FALSE;
     *type = X_BOOLEAN;
     return value;
   }
-
 
   // Try parse as int / long
   ll = strtoll(next, &end, 0);
   if(end == *pos) if(errno != ERANGE) {
     long long *value = (long long *) malloc(sizeof(long));
-    if(value) *value = ll;
+    x_check_alloc(value);
+    *value = ll;
     *type = (ll == (int) ll) ? X_INT : X_LONG;
     return value;
   }
@@ -610,7 +604,8 @@ static void *ParsePrimitive(char **pos, XType *type, int *lineNumber) {
   d = strtod(next, &end);
   if(end == *pos) {
     double *value = (double *) malloc(sizeof(double));
-    if(value) *value = d;
+    x_check_alloc(value);
+    *value = d;
     *type = X_DOUBLE;
     return value;
   }
@@ -693,6 +688,8 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
     boolean isValid;
 
     e = (XField *) calloc(1, sizeof(XField));
+    x_check_alloc(e);
+
     e->value = ParseValue(&next, &e->type, &e->ndim, e->sizes, lineNumber);
     isValid = (e->value || errno != EINVAL);
 

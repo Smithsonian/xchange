@@ -443,9 +443,8 @@ The JSON parser &amp; emitter can also sink its error messages to a designated f
 
 The __xchange__ library provides two macros: `xvprintf()` and `xdprintf()`, for printing verbose and debug messages
 to `stderr`. Both work just like `printf()`, but they are conditional on verbosity being enabled via 
-`xSetVerbose(boolean)` and the global variable `xDebug` being `TRUE` (non-zero), respectively. Applications using 
-__xchange__ may use these macros to produce their own verbose and/or debugging outputs conditional on the same global 
-settings. 
+`xSetVerbose(boolean)` and `setSetDebug(boolean)`, respectively. Applications using __xchange__ may use these macros 
+to produce their own verbose and/or debugging outputs conditional on the same global settings. 
 
 You can also turn debug messages by defining the `DEBUG` constant for the compiler, e.g. by adding `-DDEBUG` to 
 `CFLAGS` prior to calling `make`. 
@@ -462,8 +461,6 @@ paths forward are:
    expanding the `XType` struct for binary subtype.)
  - Add support for complex-valued data types (`X_COMPLEX`).
  - Add support for 128-bit floating point types (`X_FLOAT128`).
- - Improved debug support, e.g. with built-in error tracing.
- - Improved error handling, e.g. by consistently setting `errno` beyond just the __xchange__ error status.
  
 If you have an idea for a must have feature, please let me (Attila) know. Pull requests, for new features or fixes to
 existing ones are especially welcome! 

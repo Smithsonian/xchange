@@ -227,6 +227,94 @@ XField *xGetField(const XStructure *s, const char *id) {
 }
 
 /**
+ * Returns the first value in a structure's field as an integer, or the specified default
+ * value if there is no such fiield in the structure, or the content cannot be parse into an integer.
+ *
+ * @param s                 Pointer to the XStructure.
+ * @param name              Field name
+ * @param defaultValue      Value to return if no corresponding integer field value.
+ * @return                  The (first) field value as a long long, or the default value if there is no such field.
+ *
+ * @sa xGetField()
+ */
+boolean xGetBooleanField(const XStructure *s, const char *name, boolean defaultValue) {
+  boolean b;
+  const XField *f = xGetField(s, name);
+
+  if(!f) return defaultValue;
+
+  b = xParseBoolean(f->value, NULL);
+  if(b < 0) return defaultValue;
+  return b;
+}
+
+/**
+ * Returns the first value in a structure's field as an integer, or the specified default
+ * value if there is no such fiield in the structure, or the content cannot be parse into an integer.
+ *
+ * @param s                 Pointer to the XStructure.
+ * @param name              Field name
+ * @param defaultValue      Value to return if no corresponding integer field value.
+ * @return                  The (first) field value as a long long, or the default value if there is no such field.
+ *
+ * @sa xGetField()
+ */
+long long xGetLongField(const XStructure *s, const char *name, long long defaultValue) {
+  int i;
+  char *end;
+  const XField *f = xGetField(s, name);
+
+  if(!f) return defaultValue;
+
+  i = strtol(f->value, &end, 0);
+  if(end == f->value) return defaultValue;
+  if(errno == ERANGE) return defaultValue;
+  return i;
+}
+
+
+/**
+ * Returns the first value in a structure's field as a double precision float, or the specified
+ * default value if there is no such fiield in the structure, or the content cannot be parse into an double.
+ *
+ * @param s                 Pointer to the XStructure.
+ * @param name              Field name
+ * @param defaultValue      Value to return if no corresponding integer field value.
+ * @return                  The (first) field value as a double, or the specified default if there is no such field.
+ *
+ * @sa xGetField()
+ */
+double xGetDoubleField(const XStructure *s, const char *name, double defaultValue) {
+  double d;
+  char *end;
+  const XField *f = xGetField(s, name);
+
+  if(!f) return defaultValue;
+
+  d = strtod(f->value, &end);
+  if(end == f->value) return defaultValue;
+  if(errno == ERANGE) return defaultValue;
+  return d;
+}
+
+/**
+ * Returns the string value in a structure's field, or the specified default value if there is no
+ * such fiield in the structure.
+ *
+ * @param s                 Pointer to the XStructure.
+ * @param name              Field name
+ * @param defaultValue      Value to return if no corresponding integer field value.
+ * @return                  The field's string (raw) value, or the specified default if there is no such field.
+ *
+ * @sa xGetField()
+ */
+char *xGetRawField(const XStructure *s, const char *name, char *defaultValue) {
+  const XField *f = xGetField(s, name);
+  if(!f) return defaultValue;
+  return f->value;
+}
+
+/**
  * Returns a substructure by the specified name, or NULL if no such sub-structure exists.
  *
  * \param s   Structure from which to retrieve a given sub-structure.
@@ -247,9 +335,8 @@ XStructure *xGetSubstruct(const XStructure *s, const char *id) {
 }
 
 /**
- * Creates a generic field of a given name and type and dimensions using a copy of the specified native array,
- * unless type is X_STRUCT in which case the value is referenced directly inside the field. For X_STRING
- * and X_RAW only the array references to the underlying string/byte buffers are copied into the field.
+ * Creates a generic field of a given name and type and dimensions using a copy of the specified native data,
+ * unless type is X_STRUCT in which case the value is referenced directly inside the field.
  *
  * \param name      Field name (it may not contain a separator X_SEP)
  * \param type      Storage type, e.g. X_INT.
@@ -262,7 +349,7 @@ XStructure *xGetSubstruct(const XStructure *s, const char *id) {
 XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, const void *value) {
   static const char *fn = "xCreateField";
   XField *f;
-  int n;
+  int count, n;
 
   if(!name) {
     x_error(0, EINVAL, fn, "name is NULL");
@@ -276,6 +363,14 @@ XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, c
 
   if(ndim > X_MAX_DIMS) {
     x_error(0, EINVAL, fn, "too many dimensions: %d", ndim);
+    return NULL;
+  }
+
+  count = xGetElementCount(ndim, sizes);
+  n = count * xElementSizeOf(type);
+
+  if(n < 0) {
+    x_error(0, ERANGE, fn, "invalid size: count=%d, eSize=%d", xGetElementCount(ndim, sizes), xElementSizeOf(type));
     return NULL;
   }
 
@@ -308,25 +403,26 @@ XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, c
     return f;
   }
 
-  n = xGetElementCount(ndim, sizes) * xElementSizeOf(type);
-
-  if(n <= 0) {
-    x_trace(fn, "count", n);
-  }
-  else if(type == X_STRUCT) {
+  if(type == X_STRUCT) {
     f->value = (char *) value;
+    return f;
   }
-  else {
-    f->value = malloc(n);
 
-    if(!f->value) {
-      xDestroyField(f);
-      x_error(0, errno, fn, "field %s value alloc: count=%d", f->name, n);
-      return NULL;
-    }
+  f->value = malloc(n);
 
-    memcpy(f->value, value, n);
+  if(!f->value) {
+    xDestroyField(f);
+    x_error(0, errno, fn, "malloc() error (%d bytes)", n);
+    return NULL;
   }
+
+  if(f->type == X_STRING || f->type == X_RAW) {
+    const char **src = (const char **) value;
+    char **dst = (char **) f->value;
+    int i;
+    for(i = 0; i < count; i++) dst[i] = xStringCopyOf(src[i]);
+  }
+  else memcpy(f->value, value, n);
 
   return f;
 }
@@ -454,13 +550,14 @@ XField *xCreateStringField(const char *name, const char *value) {
  *
  */
 boolean xIsFieldValid(const XField *f) {
+  int i;
   if(f->name == NULL) return FALSE;
   if(xLastSeparator(f->name)) return FALSE;
   if(f->value == NULL) return FALSE;
   if(f->type == X_STRUCT) return TRUE;
   if(xElementSizeOf(f->type) <= 0) return FALSE;
-  if(f->ndim <= 0) return FALSE;
-  if(f->sizes[0] <= 0) return FALSE;
+  if(f->ndim < 0) return FALSE;
+  for(i=0; i <f->ndim; i++) if(f->sizes[0] <= 0) return FALSE;
   return TRUE;
 }
 
@@ -721,7 +818,7 @@ __inline__ void xDestroyStruct(XStructure *s) {
 }
 
 /**
- * Destroys an X structure field, freeing up resources used.
+ * Destroys an X structure field, freeing up resources used. For
  *
  * \param f     Pointer to the field to be destroyed.
  *
@@ -734,11 +831,6 @@ void xDestroyField(XField *f) {
       XStructure *sub = (XStructure *) f->value;
       int i = xGetFieldCount(f);
       while(--i >= 0) xClearStruct(&sub[i]);
-    }
-    else if(!f->isSerialized && (f->type == X_STRING || f->type == X_RAW)) {
-      char **str = (char **) f->value;
-      int i;
-      for(i=xGetFieldCount(f); --i >= 0; ) if(str[i]) free(str[i]);
     }
     free(f->value);
   }

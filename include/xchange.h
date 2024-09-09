@@ -210,6 +210,12 @@ XField *xSetSubstruct(XStructure *s, const char *name, XStructure *substruct);
 int xReduceDims(int *ndim, int *sizes);
 int xReduceAllDims(XStructure *s);
 
+// Convenience method for structure fields --------------->
+boolean xGetBooleanField(const XStructure *s, const char *name, boolean defaultValue);
+long long xGetLongField(const XStructure *s, const char *name, long long defaultValue);
+double xGetDoubleField(const XStructure *s, const char *name, double defaultValue);
+char *xGetRawField(const XStructure *s, const char *name, char *defaultValue);
+
 // Sorting, ordering
 int xSortFields(XStructure *s, int (*cmp)(const XField **f1, const XField **f2), boolean recursive);
 int xSortFieldsByName(XStructure *s, boolean recursive);
@@ -302,6 +308,12 @@ int x_warn(const char *from, const char *desc, ...);
   if (__ret < 0) \
     return __ret; \
 }
+
+#  define x_check_alloc(ptr) \
+  if (!ptr) { \
+    perror("ERROR! alloc error"); \
+    exit(errno); \
+  }
 
 #endif /* __XCHANGE_INTERNAL_API__ */
 /// \endcond
