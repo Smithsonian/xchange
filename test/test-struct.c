@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 
   xDestroyStruct(s);
 
-
+  printf("OK\n");
 
   return 0;
 }

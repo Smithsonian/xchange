@@ -54,7 +54,7 @@ boolean xDebug = FALSE;
  * @return        n
  */
 int x_trace(const char *loc, const char *op, int n) {
-  if(n != 0 && xDebug) {
+  if(n < 0 && xDebug) {
     fprintf(stderr, "       @ %s", loc);
     if(op) fprintf(stderr, " [%s]", op);
     fprintf(stderr, " [=> %d]\n", n);
@@ -76,31 +76,6 @@ void *x_trace_null(const char *loc, const char *op) {
     fprintf(stderr, " [=> NULL]\n");
   }
   return NULL;
-}
-
-/**
- * (<i>for internal use</i>) Sets an errno and report errors to the standard error, depending
- * on the current debug mode.
- *
- * @param en    {int} UNIX error number (see errno.h)
- * @param from  {string} Function (:location) where error originated
- * @param desc  {string} Description of error, with information to convey to user.
- *
- * @sa x_error()
- * @sa x_debug()
- */
-void x_set_errno(int en, const char *from, const char *desc, ...) {
-  va_list varg;
-
-  va_start(varg, desc);
-  if(xDebug) {
-    fprintf(stderr, "\n  ERROR! %s: ", from);
-    vfprintf(stderr, desc, varg);
-    fprintf(stderr, "\n");
-  }
-  va_end(varg);
-
-  errno = en;
 }
 
 /**
@@ -256,7 +231,7 @@ int xElementSizeOf(XType type) {
     case X_STRUCT: return sizeof(XStructure);
     case X_STRING: return sizeof(char *);
   }
-  return x_warn("xElementSizeOf", "invalid type: %d", type);
+  return 0;
 }
 
 /**
@@ -269,10 +244,7 @@ int xElementSizeOf(XType type) {
  */
 char xTypeChar(XType type) {
   if(type < 0) return 'C';
-  if(type < 0x20 || type > 0x7E) {
-    x_warn("xTypeChar", "invaid type: %d", type);
-    return '?';
-  }
+  if(type < 0x20 || type > 0x7E) return (char) x_error('?', EINVAL, "xTypeChar", "invalid type: %d", type);
   return (char) (type & 0xff);
 }
 
@@ -289,7 +261,7 @@ int xGetElementCount(int ndim, const int *sizes) {
   int i, N = 1;
 
   if(ndim > 0 && !sizes)
-    x_warn("xGetElementCount", "input 'sizes' is NULL (ndim = %d)", ndim);
+    return x_error(1, EINVAL, "xGetElementCount", "input 'sizes' is NULL (ndim = %d)", ndim);
 
   if(ndim > X_MAX_DIMS) ndim = X_MAX_DIMS;
   for(i = 0; i < ndim; i++) N *= sizes[i];

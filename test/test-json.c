@@ -45,6 +45,7 @@ int main(int argc, char *argv[]) {
   char *str = xjsonToString(s), *next, *str1;
 
   printf("%s\n\n", str);
+  xSetDebug(TRUE);
 
   next = str;
   s1 = xjsonParseAt(&next, NULL);
@@ -55,6 +56,8 @@ int main(int argc, char *argv[]) {
     printf("%s\n\n", str1);
     return 1;
   }
+
+  printf("OK\n");
 
   return 0;
 }

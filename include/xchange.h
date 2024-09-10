@@ -282,12 +282,11 @@ char *xStringCopyOf(const char *str);
 #    endif
 #  endif
 
-
-int x_trace(const char *loc, const char *op, int n);
-void *x_trace_null(const char *loc, const char *op);
-void x_set_errno(int en, const char *from, const char *desc, ...);
 int x_error(int ret, int en, const char *from, const char *desc, ...);
 int x_warn(const char *from, const char *desc, ...);
+int x_trace(const char *loc, const char *op, int n);
+void *x_trace_null(const char *loc, const char *op);
+
 
 /**
  * Propagates an error (if any) with an offset. If the error is non-zero, it returns with the offset

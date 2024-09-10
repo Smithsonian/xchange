@@ -270,6 +270,7 @@ int xLookupPutAll(XLookupTable *tab, const char *prefix, const XStructure *s, bo
   n = xLookupPutAllAsync(tab, prefix, s, recursive);
   sem_post(&p->sem);
 
+  prop_error(fn, n);
   return n;
 }
 
@@ -302,6 +303,7 @@ int xLookupRemoveAll(XLookupTable *tab, const char *prefix, const XStructure *s,
   n = xLookupRemoveAllAsync(tab, prefix, s, recursive);
   sem_post(&p->sem);
 
+  prop_error(fn, n);
   return n;
 }
 
@@ -318,41 +320,29 @@ int xLookupRemoveAll(XLookupTable *tab, const char *prefix, const XStructure *s,
  * @sa xDestroyLookup()
  */
 XLookupTable *xAllocLookup(unsigned int size) {
-  static const char *fn = "xAllocLookup";
-
   XLookupTable *tab;
   XLookupPrivate *p;
 
   unsigned int n = 2;
 
   if(size < 1) {
-    x_error(0, errno, fn, "invalid size: %d", size);
+    x_error(0, errno, "xAllocLookup", "invalid size: %d", size);
     return NULL;
   }
 
   while(n < size) n <<= 1;
 
   p = (XLookupPrivate *) calloc(1, sizeof(XLookupPrivate));
-  if(!p) {
-    perror("ERROR! alloc error");
-    exit(errno);
-  }
+  x_check_alloc(p)
 
   p->table = (XLookupEntry **) calloc(n, sizeof(XLookupEntry *));
-  if(!p->table) {
-    x_error(0, errno, fn, "calloc() error (n = %d)", n);
-    free(p);
-    return NULL;
-  }
+  x_check_alloc(p->table);
 
   p->nBins = n;
   sem_init(&p->sem, FALSE, 1);
 
   tab = (XLookupTable *) calloc(1, sizeof(XLookupTable));
-  if(!tab) {
-    perror("ERROR! alloc error");
-    exit(errno);
-  }
+  x_check_alloc(tab);
 
   tab->priv = p;
 
@@ -380,15 +370,17 @@ XLookupTable *xAllocLookup(unsigned int size) {
  * @sa xDestroyLookup()
  */
 XLookupTable *xCreateLookup(const XStructure *s, boolean recursive) {
+  static const char *fn = "xCreateLookup";
+
   XLookupTable *l;
 
   if(s == NULL) {
-    errno = EINVAL;
+    x_error(0, EINVAL, fn, "input structure is NULL");
     return NULL;
   }
 
   l = xAllocLookup(recursive ? xDeepCountFields(s) : xCountFields(s));
-  if(!l) return x_trace_null("xCreateLookup", NULL);
+  if(!l) return x_trace_null(fn, NULL);
 
   xLookupPutAllAsync(l, NULL, s, recursive);
 

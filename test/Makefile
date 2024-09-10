@@ -15,7 +15,7 @@ $(BIN)/test-%: $(OBJ)/test-%.o $(LIB)/libxchange.a | $(BIN)
 
 $(LIB)/libxchange.a: ../src ../include ../Makefile
 	make -C .. static
-	
+
 $(BIN):
 	mkdir $(BIN)
 

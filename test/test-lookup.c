@@ -88,5 +88,7 @@ int main(int argc, char *argv[]) {
 
   xDestroyLookup(l);
 
+  printf("OK\n");
+
   return 0;
 }

@@ -707,10 +707,7 @@ int xCountFields(const XStructure *s) {
   XField *f;
   int n = 0;
 
-  if(!s) {
-    x_warn("xCountFields", "input structure is NULL");
-    return 0;
-  }
+  if(!s) return 0;
 
   for(f = s->firstField; f != NULL; f = f->next) n++;
 
@@ -763,10 +760,7 @@ void xDestroyField(XField *f) {
 void xClearStruct(XStructure *s) {
   XField *f;
 
-  if(s == NULL) {
-    x_warn("xClearStruct", "input structure is NULL");
-    return;
-  }
+  if(s == NULL) return;
 
   for(f = s->firstField; f != NULL; ) {
     XField *next = f->next;
@@ -885,10 +879,7 @@ int xReduceAllDims(XStructure *s) {
 char *xNextIDToken(const char *id) {
   char *next;
 
-  if(!id) {
-    x_warn("xNextIDToken", "input is NULL");
-    return NULL;
-  }
+  if(!id) return NULL;
 
   // Ignore leading separator.
   if(!strncmp(id, X_SEP, X_SEP_LENGTH)) id += X_SEP_LENGTH;
@@ -904,16 +895,11 @@ char *xNextIDToken(const char *id) {
  * @return      Pointer to the start of the next compound ID token, or NULL if there is no more components in the ID.
  */
 char *xCopyIDToken(const char *id) {
-  static const char *fn = "xCopyIDToken";
-
   const char *next;
   char *token;
   int l;
 
-  if(!id) {
-    x_warn(fn, "input is NULL");
-    return NULL;
-  }
+  if(!id) return NULL;
 
   // Ignore leading separator.
   if(!strncmp(id, X_SEP, X_SEP_LENGTH)) id += X_SEP_LENGTH;
@@ -924,7 +910,7 @@ char *xCopyIDToken(const char *id) {
 
   token = malloc(l+1);
   if(!token) {
-    x_error(0, errno, fn, "malloc error");
+    x_error(0, errno, "xCopyIDToken", "malloc error");
     return NULL;
   }
 
