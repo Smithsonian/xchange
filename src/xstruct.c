@@ -723,7 +723,7 @@ int xCountFields(const XStructure *s) {
  * \param s     Pointer to the structure to be destroyed.
  *
  */
-__inline__ void xDestroyStruct(XStructure *s) {
+void xDestroyStruct(XStructure *s) {
   if(s == NULL) return;
   xClearStruct(s);
   free(s);
