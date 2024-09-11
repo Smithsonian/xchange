@@ -433,7 +433,7 @@ example,
   }
 ```
 
-The JSON parser &amp; emitter can also sink its error messages to a designated file or stream, which can be set by 
+The JSON parser can also sink its error messages to a designated file or stream, which can be set by 
 `xjsonSetErrorStream(FILE *)`.
  
  -----------------------------------------------------------------------------
@@ -441,13 +441,18 @@ The JSON parser &amp; emitter can also sink its error messages to a designated f
 <a name="debugging-support"></a>
 ## Debugging support
 
-The __xchange__ library provides two macros: `xvprintf()` and `xdprintf()`, for printing verbose and debug messages
-to `stderr`. Both work just like `printf()`, but they are conditional on verbosity being enabled via 
-`xSetVerbose(boolean)` and `setSetDebug(boolean)`, respectively. Applications using __xchange__ may use these macros 
-to produce their own verbose and/or debugging outputs conditional on the same global settings. 
+You can enable verbose output of the __xchange__ library with `xSetVerbose(boolean)`. When enabled, it will produce 
+status messages to `stderr`so you can follow what's going on. In addition (or alternatively), you can enable debug 
+messages with `xSetDebug(boolean)`. When enabled, all errors encountered by the library (such as invalid arguments 
+passed) will be printed to `stderr`, including call traces, so you can walk back to see where the error may have 
+originated from. (You can also enable debug messages by default by defining the `DEBUG` constant for the compiler, 
+e.g. by adding `-DDEBUG` to `CFLAGS` prior to calling `make`). 
 
-You can also turn debug messages by defining the `DEBUG` constant for the compiler, e.g. by adding `-DDEBUG` to 
-`CFLAGS` prior to calling `make`. 
+For helping to debug your application, the __xchange__ library provides two macros: `xvprintf()` and `xdprintf()`, 
+for printing verbose and debug messages to `stderr`. Both work just like `printf()`, but they are conditional on 
+verbosity being enabled via `xSetVerbose(boolean)` and `xSetDebug(boolean)`, respectively. Applications using 
+__xchange__ may use these macros to produce their own verbose and/or debugging outputs conditional on the same global 
+settings. 
 
 
 <a name="future-plans"></a>

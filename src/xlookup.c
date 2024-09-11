@@ -106,8 +106,10 @@ static XField *xLookupRemoveAsync(XLookupTable *tab, const char *id) {
  * @return      the number of fields stored.
  */
 long xLookupCount(const XLookupTable *tab) {
+  const XLookupPrivate *p;
+
   if(!tab) return 0;
-  const XLookupPrivate *p = (XLookupPrivate *) tab->priv;
+  p = (XLookupPrivate *) tab->priv;
   return p->nEntries;
 }
 
