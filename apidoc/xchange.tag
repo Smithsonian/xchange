@@ -571,8 +571,8 @@
       <type>int</type>
       <name>xError</name>
       <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>a9b93f25b8532bf63ce2f050f5f2e7356</anchor>
-      <arglist>(int code, const char *fn)</arglist>
+      <anchor>a606c4844e51124bee155e30bac8ca885</anchor>
+      <arglist>(const char *fn, int code)</arglist>
     </member>
     <member kind="function">
       <type>const char *</type>
@@ -972,13 +972,6 @@
       <arglist>(int ret, int en, const char *from, const char *desc,...)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
-      <name>x_set_errno</name>
-      <anchorfile>xchange_8c.html</anchorfile>
-      <anchor>a5633b3cd408ca05851d31e07d04d3d5d</anchor>
-      <arglist>(int en, const char *from, const char *desc,...)</arglist>
-    </member>
-    <member kind="function">
       <type>int</type>
       <name>x_trace</name>
       <anchorfile>xchange_8c.html</anchorfile>
@@ -1017,8 +1010,8 @@
       <type>int</type>
       <name>xError</name>
       <anchorfile>xchange_8c.html</anchorfile>
-      <anchor>a9b93f25b8532bf63ce2f050f5f2e7356</anchor>
-      <arglist>(int code, const char *fn)</arglist>
+      <anchor>a606c4844e51124bee155e30bac8ca885</anchor>
+      <arglist>(const char *fn, int code)</arglist>
     </member>
     <member kind="function">
       <type>const char *</type>
@@ -1152,6 +1145,13 @@
     <path>src/</path>
     <filename>xjson_8c.html</filename>
     <includes id="xjson_8h" name="xjson.h" local="yes" import="no" module="no" objc="no">xjson.h</includes>
+    <member kind="define">
+      <type>#define</type>
+      <name>__XCHANGE_INTERNAL_API__</name>
+      <anchorfile>xjson_8c.html</anchorfile>
+      <anchor>ac36bd75f87a1614fb477a0fbcd5df1f3</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="define">
       <type>#define</type>
       <name>FALSE</name>
@@ -1431,10 +1431,10 @@
       <arglist>(XField *f)</arglist>
     </member>
     <member kind="function">
-      <type>__inline__ void</type>
+      <type>void</type>
       <name>xDestroyStruct</name>
       <anchorfile>xstruct_8c.html</anchorfile>
-      <anchor>a2e12d0147219f85a6ec012d7f475fe21</anchor>
+      <anchor>afe3fda2f392bae11e136e8c0c90f086d</anchor>
       <arglist>(XStructure *s)</arglist>
     </member>
     <member kind="function">

@@ -67,7 +67,7 @@ src/xstruct.c \- A collection of commonly used functions for generic structured 
 .RI "void \fBxDestroyField\fP (\fBXField\fP *f)"
 .br
 .ti -1c
-.RI "__inline__ void \fBxDestroyStruct\fP (\fBXStructure\fP *s)"
+.RI "void \fBxDestroyStruct\fP (\fBXStructure\fP *s)"
 .br
 .ti -1c
 .RI "char * \fBxGetAggregateID\fP (const char *table, const char *key)"
@@ -158,7 +158,7 @@ smaDestroyStruct()
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::next\fP, \fBx_warn()\fP, and \fBxDestroyField()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::next\fP, and \fBxDestroyField()\fP\&.
 .SS "char * xCopyIDToken (const char * id)"
 Returns a copy of the next next component in a compound ID\&. Leading ID separators are ignored\&.
 .PP
@@ -174,7 +174,7 @@ Pointer to the start of the next compound ID token, or NULL if there is no more 
 .PP
 
 .PP
-References \fBx_error()\fP, \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, \fBx_warn()\fP, and \fBxNextIDToken()\fP\&.
+References \fBx_error()\fP, \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBxNextIDToken()\fP\&.
 .SS "\fBXField\fP * xCopyOfField (const \fBXField\fP * f)"
 Returns a deep copy of the supplied field\&. The returned copy is a standalone field, unlinked to another to avoid corrupting any structure in which the original field may reside in\&. Note, that this only works with vanilla xchange structures with native storage fields\&. For example, SMA-X structures store data in serialized forms, and therefore it needs its own implementation for making deep copies of fields!
 .PP
@@ -237,7 +237,7 @@ the number of fields cotnained in the structure (but not counting fields in sub-
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::next\fP, and \fBx_warn()\fP\&.
+References \fBXStructure::firstField\fP, and \fBXField::next\fP\&.
 .SS "\fBXField\fP * xCreate1DField (const char * name, \fBXType\fP type, int count, const void * values)"
 Creates a generic field for a 1D array of a given name and native data\&. The structure will hold a copy of the value that is pointed at\&.
 .PP
@@ -297,7 +297,7 @@ A newly created field with the supplied data, or NULL if there was an error\&.
 .PP
 References \fBX_DOUBLE\fP, \fBx_trace_null()\fP, and \fBxCreateScalarField()\fP\&.
 .SS "\fBXField\fP * xCreateField (const char * name, \fBXType\fP type, int ndim, const int * sizes, const void * value)"
-Creates a generic field of a given name and type and dimensions using a copy of the specified native array, unless type is X_STRUCT in which case the value is referenced directly inside the field\&. For X_STRING and X_RAW only the array references to the underlying string/byte buffers are copied into the field\&.
+Creates a generic field of a given name and type and dimensions using a copy of the specified native data, unless type is X_STRUCT in which case the value is referenced directly inside the field\&.
 .PP
 \fBParameters\fP
 .RS 4
@@ -319,7 +319,7 @@ A newly created field with the copy of the supplied data, or NULL if there was a
 .PP
 
 .PP
-References \fBXField::name\fP, \fBXField::ndim\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_MAX_DIMS\fP, \fBX_STRUCT\fP, \fBx_trace()\fP, \fBxDestroyField()\fP, \fBxElementSizeOf()\fP, \fBxGetElementCount()\fP, \fBxLastSeparator()\fP, and \fBxStringCopyOf()\fP\&.
+References \fBXField::name\fP, \fBXField::ndim\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_MAX_DIMS\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, \fBxDestroyField()\fP, \fBxElementSizeOf()\fP, \fBxGetElementCount()\fP, \fBxLastSeparator()\fP, and \fBxStringCopyOf()\fP\&.
 .SS "\fBXField\fP * xCreateIntField (const char * name, int value)"
 Creates a field holding a single ineger value value\&.
 .PP
@@ -435,7 +435,7 @@ The total number of fields present in the structure and all its sub-structures\&
 .PP
 References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBx_trace()\fP, \fBxDeepCountFields()\fP, and \fBxGetFieldCount()\fP\&.
 .SS "void xDestroyField (\fBXField\fP * f)"
-Destroys an X structure field, freeing up resources used\&.
+Destroys an X structure field, freeing up resources used\&. For
 .PP
 \fBParameters\fP
 .RS 4
@@ -444,8 +444,8 @@ Destroys an X structure field, freeing up resources used\&.
 .PP
 
 .PP
-References \fBXField::isSerialized\fP, \fBXField::name\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, \fBxClearStruct()\fP, and \fBxGetFieldCount()\fP\&.
-.SS "__inline__ void xDestroyStruct (\fBXStructure\fP * s)"
+References \fBXField::name\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, \fBxClearStruct()\fP, and \fBxGetFieldCount()\fP\&.
+.SS "void xDestroyStruct (\fBXStructure\fP * s)"
 Destroys an X structure, freeing up resources used by name and value\&.
 .PP
 \fBParameters\fP
@@ -639,7 +639,7 @@ Pointer to the start of the next compound ID token, or NULL if there is no more 
 .PP
 
 .PP
-References \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBx_warn()\fP\&.
+References \fBX_SEP\fP, and \fBX_SEP_LENGTH\fP\&.
 .SS "int xReduceAllDims (\fBXStructure\fP * s)"
 Recursively eliminates unneccessary embedding of singular structures inside a structure as well as reduces the dimension of all array fields with \fBxReduceDims()\fP\&.
 .PP

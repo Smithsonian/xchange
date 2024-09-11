@@ -11,6 +11,10 @@ src/xjson.c \- A set of functions for parsing and creating JSON description of d
 
 .in +1c
 .ti -1c
+.RI "#define \fB__XCHANGE_INTERNAL_API__\fP"
+.br
+.RI "Use internal definitions\&. "
+.ti -1c
 .RI "#define \fBFALSE\fP   0"
 .br
 .RI "Boolean 'false' in case it isn't already defined\&. "
@@ -91,7 +95,7 @@ The JSON representation of the original string, in which special characters appe
 .PP
 
 .PP
-References \fBX_SUCCESS\fP\&.
+References \fBx_error()\fP, \fBX_SUCCESS\fP, and \fBx_trace_null()\fP\&.
 .SS "int xjsonGetIndent ()"
 Returns the number of spaces per indentation when emitting JSON formatted output\&.
 .PP
@@ -133,6 +137,8 @@ xjsonParseFileName()
 .RE
 .PP
 
+.PP
+References \fBx_error()\fP\&.
 .SS "\fBXStructure\fP * xjsonParseFile (FILE * fp, size_t length, int * lineNumber)"
 Parses a JSON object from the current position in a file, returning the described structured data\&. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream()\&.
 .PP
@@ -160,6 +166,8 @@ Structured data created from the JSON description, or NULL if there was an error
 .RE
 .PP
 
+.PP
+References \fBx_error()\fP\&.
 .SS "\fBXStructure\fP * xjsonParseFilename (const char * fileName, int * lineNumber)"
 Parses a JSON object from the beginning of a file, returning the described structured data\&. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream()\&.
 .PP
@@ -186,7 +194,7 @@ Structured data created from the JSON description, or NULL if there was an error
 .PP
 
 .PP
-References \fBxIsVerbose()\fP, and \fBxjsonParseFile()\fP\&.
+References \fBx_error()\fP, \fBxIsVerbose()\fP, and \fBxjsonParseFile()\fP\&.
 .SS "void xjsonSetErrorStream (FILE * fp)"
 Change the file to which XJSON reports errors\&. By default it will use stderr\&.
 .PP
@@ -240,7 +248,7 @@ String JSON representation, or NULL if there was an error (errno set to EINVAL)\
 .PP
 
 .PP
-References \fBFALSE\fP, and \fBxErrorDescription()\fP\&.
+References \fBFALSE\fP, \fBx_error()\fP, \fBX_NULL\fP, and \fBxErrorDescription()\fP\&.
 .SS "char * xjsonUnescapeString (const char * str)"
 Converts a an escaped string in JSON representation to a native string
 .PP
@@ -260,6 +268,8 @@ The native string, which may contain special characters\&.
 .RE
 .PP
 
+.PP
+References \fBx_error()\fP\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for xchange from the source code\&.

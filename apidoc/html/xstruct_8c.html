@@ -163,8 +163,8 @@ Functions</h2></td></tr>
 <tr class="separator:a789489313df89d33aa50de911e1e42ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0ce99c867b11bd14971031eec8ba4ad" id="r_ae0ce99c867b11bd14971031eec8ba4ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a> (<a class="el" href="structXField.html">XField</a> *f)</td></tr>
 <tr class="separator:ae0ce99c867b11bd14971031eec8ba4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e12d0147219f85a6ec012d7f475fe21" id="r_a2e12d0147219f85a6ec012d7f475fe21"><td class="memItemLeft" align="right" valign="top">__inline__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a2e12d0147219f85a6ec012d7f475fe21">xDestroyStruct</a> (<a class="el" href="structXStructure.html">XStructure</a> *s)</td></tr>
-<tr class="separator:a2e12d0147219f85a6ec012d7f475fe21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe3fda2f392bae11e136e8c0c90f086d" id="r_afe3fda2f392bae11e136e8c0c90f086d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct</a> (<a class="el" href="structXStructure.html">XStructure</a> *s)</td></tr>
+<tr class="separator:afe3fda2f392bae11e136e8c0c90f086d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cbbd824406d862b2018e28a466ff318" id="r_a2cbbd824406d862b2018e28a466ff318"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a2cbbd824406d862b2018e28a466ff318">xGetAggregateID</a> (const char *table, const char *key)</td></tr>
 <tr class="separator:a2cbbd824406d862b2018e28a466ff318"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a442f155b0c6549549737510ce42bb66d" id="r_a442f155b0c6549549737510ce42bb66d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField</a> (const <a class="el" href="structXStructure.html">XStructure</a> *s, const char *id)</td></tr>
@@ -231,7 +231,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See also</dt><dd>smaDestroyStruct() </dd></dl>
 
-<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="xchange_8c.html#af771fbf7ea96f8051db140b1750d3a20">x_warn()</a>, and <a class="el" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField()</a>.</p>
+<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, and <a class="el" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField()</a>.</p>
 
 </div>
 </div>
@@ -259,7 +259,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the start of the next compound ID token, or NULL if there is no more components in the ID. </dd></dl>
 
-<p class="reference">References <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a923cd66e2074f32817a3468c5617a440">X_SEP</a>, <a class="el" href="xchange_8h.html#a28120364666ec6054159012a58ba27af">X_SEP_LENGTH</a>, <a class="el" href="xchange_8c.html#af771fbf7ea96f8051db140b1750d3a20">x_warn()</a>, and <a class="el" href="xstruct_8c.html#af436eb535b32fa88ab4e600c0a37c19d">xNextIDToken()</a>.</p>
+<p class="reference">References <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a923cd66e2074f32817a3468c5617a440">X_SEP</a>, <a class="el" href="xchange_8h.html#a28120364666ec6054159012a58ba27af">X_SEP_LENGTH</a>, and <a class="el" href="xstruct_8c.html#af436eb535b32fa88ab4e600c0a37c19d">xNextIDToken()</a>.</p>
 
 </div>
 </div>
@@ -317,7 +317,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A fully independent (deep) copy of the argument or NULL if the input structure is NULL.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#afdb31906269568772fdf63adb6685fbc">xCopyOfField()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31">x_trace_null()</a>, <a class="el" href="xstruct_8c.html#afdb31906269568772fdf63adb6685fbc">xCopyOfField()</a>, <a class="el" href="xstruct_8c.html#a12112584a34e07f9ef7b08f6ef1bc865">xCreateStruct()</a>, <a class="el" href="xstruct_8c.html#a2e12d0147219f85a6ec012d7f475fe21">xDestroyStruct()</a>, and <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>.</p>
+<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31">x_trace_null()</a>, <a class="el" href="xstruct_8c.html#afdb31906269568772fdf63adb6685fbc">xCopyOfField()</a>, <a class="el" href="xstruct_8c.html#a12112584a34e07f9ef7b08f6ef1bc865">xCreateStruct()</a>, <a class="el" href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct()</a>, and <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>.</p>
 
 </div>
 </div>
@@ -346,7 +346,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the number of fields cotnained in the structure (but not counting fields in sub-structures).</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff">xDeepCountFields()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, and <a class="el" href="xchange_8c.html#af771fbf7ea96f8051db140b1750d3a20">x_warn()</a>.</p>
+<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, and <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>.</p>
 
 </div>
 </div>
@@ -524,7 +524,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Creates a generic field of a given name and type and dimensions using a copy of the specified native array, unless type is X_STRUCT in which case the value is referenced directly inside the field. For X_STRING and X_RAW only the array references to the underlying string/byte buffers are copied into the field.</p>
+<p>Creates a generic field of a given name and type and dimensions using a copy of the specified native data, unless type is X_STRUCT in which case the value is referenced directly inside the field.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>Field name (it may not contain a separator X_SEP) </td></tr>
@@ -537,7 +537,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A newly created field with the copy of the supplied data, or NULL if there was an error. </dd></dl>
 
-<p class="reference">References <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1">XField::ndim</a>, <a class="el" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d">XField::sizes</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a910ee1c8cd983bf127f7ca2c705d7894">X_MAX_DIMS</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8c.html#a9b61b8b8b3ef0f7cc0b96ab499265c74">x_trace()</a>, <a class="el" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField()</a>, <a class="el" href="xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e">xElementSizeOf()</a>, <a class="el" href="xchange_8c.html#ad35e0d8c0ebbb4948c233f96c54bd8d6">xGetElementCount()</a>, <a class="el" href="xstruct_8c.html#ab9a9fbc1235164bfeed5fbba1f7d8692">xLastSeparator()</a>, and <a class="el" href="xchange_8c.html#a01d730a1a98963816de2dd73e72957a5">xStringCopyOf()</a>.</p>
+<p class="reference">References <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1">XField::ndim</a>, <a class="el" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d">XField::sizes</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a910ee1c8cd983bf127f7ca2c705d7894">X_MAX_DIMS</a>, <a class="el" href="xchange_8h.html#adb72c72467963a6ace1632638a8a6a7b">X_RAW</a>, <a class="el" href="xchange_8h.html#a2443dd783d2728a3559361fba845e533">X_STRING</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField()</a>, <a class="el" href="xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e">xElementSizeOf()</a>, <a class="el" href="xchange_8c.html#ad35e0d8c0ebbb4948c233f96c54bd8d6">xGetElementCount()</a>, <a class="el" href="xstruct_8c.html#ab9a9fbc1235164bfeed5fbba1f7d8692">xLastSeparator()</a>, and <a class="el" href="xchange_8c.html#a01d730a1a98963816de2dd73e72957a5">xStringCopyOf()</a>.</p>
 
 </div>
 </div>
@@ -769,7 +769,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Destroys an X structure field, freeing up resources used.</p>
+<p>Destroys an X structure field, freeing up resources used. For</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">f</td><td>Pointer to the field to be destroyed. </td></tr>
@@ -777,18 +777,18 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="reference">References <a class="el" href="structXField.html#aaa68a7e140a5370ed0eb52710744c341">XField::isSerialized</a>, <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#adb72c72467963a6ace1632638a8a6a7b">X_RAW</a>, <a class="el" href="xchange_8h.html#a2443dd783d2728a3559361fba845e533">X_STRING</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xstruct_8c.html#ae45c0a047c30a17aba84d2fc8c08a2dc">xClearStruct()</a>, and <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>.</p>
+<p class="reference">References <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xstruct_8c.html#ae45c0a047c30a17aba84d2fc8c08a2dc">xClearStruct()</a>, and <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>.</p>
 
 </div>
 </div>
-<a id="a2e12d0147219f85a6ec012d7f475fe21" name="a2e12d0147219f85a6ec012d7f475fe21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e12d0147219f85a6ec012d7f475fe21">&#9670;&#160;</a></span>xDestroyStruct()</h2>
+<a id="afe3fda2f392bae11e136e8c0c90f086d" name="afe3fda2f392bae11e136e8c0c90f086d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe3fda2f392bae11e136e8c0c90f086d">&#9670;&#160;</a></span>xDestroyStruct()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__inline__ void xDestroyStruct </td>
+          <td class="memname">void xDestroyStruct </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
@@ -1124,7 +1124,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the start of the next compound ID token, or NULL if there is no more components in the ID. </dd></dl>
 
-<p class="reference">References <a class="el" href="xchange_8h.html#a923cd66e2074f32817a3468c5617a440">X_SEP</a>, <a class="el" href="xchange_8h.html#a28120364666ec6054159012a58ba27af">X_SEP_LENGTH</a>, and <a class="el" href="xchange_8c.html#af771fbf7ea96f8051db140b1750d3a20">x_warn()</a>.</p>
+<p class="reference">References <a class="el" href="xchange_8h.html#a923cd66e2074f32817a3468c5617a440">X_SEP</a>, and <a class="el" href="xchange_8h.html#a28120364666ec6054159012a58ba27af">X_SEP_LENGTH</a>.</p>
 
 </div>
 </div>

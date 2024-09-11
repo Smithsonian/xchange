@@ -1,5 +1,6 @@
 var xjson_8c =
 [
+    [ "__XCHANGE_INTERNAL_API__", "xjson_8c.html#ac36bd75f87a1614fb477a0fbcd5df1f3", null ],
     [ "FALSE", "xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1", null ],
     [ "TRUE", "xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d", null ],
     [ "xjsonEscapeString", "xjson_8c.html#aad83ebcc397046a875040dfc2297d892", null ],

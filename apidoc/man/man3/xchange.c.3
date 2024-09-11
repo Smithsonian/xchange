@@ -25,9 +25,6 @@ src/xchange.c \- A collection of commonly used functions for standard data excha
 .RI "int \fBx_error\fP (int ret, int en, const char *from, const char *desc,\&.\&.\&.)"
 .br
 .ti -1c
-.RI "void \fBx_set_errno\fP (int en, const char *from, const char *desc,\&.\&.\&.)"
-.br
-.ti -1c
 .RI "int \fBx_trace\fP (const char *loc, const char *op, int n)"
 .br
 .ti -1c
@@ -43,7 +40,7 @@ src/xchange.c \- A collection of commonly used functions for standard data excha
 .RI "int \fBxElementSizeOf\fP (\fBXType\fP type)"
 .br
 .ti -1c
-.RI "int \fBxError\fP (int code, const char *fn)"
+.RI "int \fBxError\fP (const char *fn, int code)"
 .br
 .ti -1c
 .RI "const char * \fBxErrorDescription\fP (int code)"
@@ -145,31 +142,9 @@ Check if we need to parse special floating point values, such as 'nan', 'infinit
 .PP
 \fBSee also\fP
 .RS 4
-\fBx_set_errno()\fP 
+x_set_errno() 
 .PP
 \fBx_trace()\fP 
-.RE
-.PP
-
-.PP
-References \fBxDebug\fP\&.
-.SS "void x_set_errno (int en, const char * from, const char * desc,  \&.\&.\&.)"
-(\fIfor internal use\fP) Sets an errno and report errors to the standard error, depending on the current debug mode\&.
-.PP
-\fBParameters\fP
-.RS 4
-\fIen\fP {int} UNIX error number (see errno\&.h) 
-.br
-\fIfrom\fP {string} Function (:location) where error originated 
-.br
-\fIdesc\fP {string} Description of error, with information to convey to user\&.
-.RE
-.PP
-\fBSee also\fP
-.RS 4
-\fBx_error()\fP 
-.PP
-x_debug() 
 .RE
 .PP
 
@@ -225,7 +200,7 @@ References \fBxDebug\fP\&.
 .PP
 \fBSee also\fP
 .RS 4
-\fBx_set_errno()\fP 
+x_set_errno() 
 .PP
 \fBx_trace()\fP 
 .RE
@@ -266,15 +241,15 @@ Returns the storage byte size of a single element of a given type\&.
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_SHORT_HEX\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, and \fBx_warn()\fP\&.
-.SS "int xError (int code, const char * fn)"
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_SHORT_HEX\fP, \fBX_STRING\fP, and \fBX_STRUCT\fP\&.
+.SS "int xError (const char * fn, int code)"
 Prints a descriptive error message to stderr, and returns the error code\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIcode\fP The xchange error code that describes the failure (see \fBxchange\&.h\fP)\&. 
+\fIfn\fP String that describes the function or location where the error occurred\&. 
 .br
-\fIfn\fP String that describes the function or location where the error occurred\&.
+\fIcode\fP The xchange error code that describes the failure (see \fBxchange\&.h\fP)\&.
 .RE
 .PP
 \fBReturns\fP
@@ -318,7 +293,7 @@ Total element count specified by the dimensions\&. Defaults to 1\&.
 .PP
 
 .PP
-References \fBX_MAX_DIMS\fP, and \fBx_warn()\fP\&.
+References \fBx_error()\fP, and \fBX_MAX_DIMS\fP\&.
 .SS "\fBboolean\fP xIsCharSequence (\fBXType\fP type)"
 Checks if the type represents a fixed-size character / binary sequence\&.
 .PP
@@ -538,7 +513,7 @@ A character that represented the type\&.
 .PP
 
 .PP
-References \fBx_warn()\fP\&.
+References \fBx_error()\fP\&.
 .SS "void xZero (void * buf, \fBXType\fP type, int count)"
 Zeroes out the contents of an SMA-X buffer\&.
 .PP

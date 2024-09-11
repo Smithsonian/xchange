@@ -151,7 +151,7 @@
           <topic label="xDestroyLookup" href="xchange_8h.html#a02ea2d67e4c540ad706edcc1b3a0431e"/>
           <topic label="xDestroyStruct" href="xchange_8h.html#afe3fda2f392bae11e136e8c0c90f086d"/>
           <topic label="xElementSizeOf" href="xchange_8h.html#af5ec26d18b20fc0da9ec9032af73fa9e"/>
-          <topic label="xError" href="xchange_8h.html#a9b93f25b8532bf63ce2f050f5f2e7356"/>
+          <topic label="xError" href="xchange_8h.html#a606c4844e51124bee155e30bac8ca885"/>
           <topic label="xErrorDescription" href="xchange_8h.html#acc701c734a3b95d356660ca5ee16a96a"/>
           <topic label="xGetAggregateID" href="xchange_8h.html#a32e104d7a23090f8ae0e6ea3cc55a84f"/>
           <topic label="xGetElementCount" href="xchange_8h.html#ad35e0d8c0ebbb4948c233f96c54bd8d6"/>
@@ -213,13 +213,12 @@
           <topic label="__XCHANGE_INTERNAL_API__" href="xchange_8c.html#ac36bd75f87a1614fb477a0fbcd5df1f3"/>
           <topic label="EIXPLICIT_PARSE_SPECIAL_DOUBLES" href="xchange_8c.html#acc843123b41c0889b5b328a538b8c6ca"/>
           <topic label="x_error" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7"/>
-          <topic label="x_set_errno" href="xchange_8c.html#a5633b3cd408ca05851d31e07d04d3d5d"/>
           <topic label="x_trace" href="xchange_8c.html#a9b61b8b8b3ef0f7cc0b96ab499265c74"/>
           <topic label="x_trace_null" href="xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31"/>
           <topic label="x_warn" href="xchange_8c.html#af771fbf7ea96f8051db140b1750d3a20"/>
           <topic label="xAlloc" href="xchange_8c.html#a3525be19588c2b740fc0dbd54a936dcb"/>
           <topic label="xElementSizeOf" href="xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e"/>
-          <topic label="xError" href="xchange_8c.html#a9b93f25b8532bf63ce2f050f5f2e7356"/>
+          <topic label="xError" href="xchange_8c.html#a606c4844e51124bee155e30bac8ca885"/>
           <topic label="xErrorDescription" href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a"/>
           <topic label="xGetElementCount" href="xchange_8c.html#ad35e0d8c0ebbb4948c233f96c54bd8d6"/>
           <topic label="xIsCharSequence" href="xchange_8c.html#adcc86baacb3ddebcc529e269223274b8"/>
@@ -240,6 +239,7 @@
           <topic label="xVerbose" href="xchange_8c.html#a363b67b316973290c30c11bea7931c64"/>
         </topic>
         <topic label="xjson.c" href="xjson_8c.html">
+          <topic label="__XCHANGE_INTERNAL_API__" href="xjson_8c.html#ac36bd75f87a1614fb477a0fbcd5df1f3"/>
           <topic label="FALSE" href="xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1"/>
           <topic label="TRUE" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d"/>
           <topic label="xjsonEscapeString" href="xjson_8c.html#aad83ebcc397046a875040dfc2297d892"/>
@@ -282,7 +282,7 @@
           <topic label="xCreateStruct" href="xstruct_8c.html#a12112584a34e07f9ef7b08f6ef1bc865"/>
           <topic label="xDeepCountFields" href="xstruct_8c.html#a789489313df89d33aa50de911e1e42ff"/>
           <topic label="xDestroyField" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad"/>
-          <topic label="xDestroyStruct" href="xstruct_8c.html#a2e12d0147219f85a6ec012d7f475fe21"/>
+          <topic label="xDestroyStruct" href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d"/>
           <topic label="xGetAggregateID" href="xstruct_8c.html#a2cbbd824406d862b2018e28a466ff318"/>
           <topic label="xGetField" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d"/>
           <topic label="xGetFieldCount" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688"/>

@@ -83,7 +83,7 @@ var xchange_8h =
     [ "xDestroyLookup", "xchange_8h.html#a02ea2d67e4c540ad706edcc1b3a0431e", null ],
     [ "xDestroyStruct", "xchange_8h.html#afe3fda2f392bae11e136e8c0c90f086d", null ],
     [ "xElementSizeOf", "xchange_8h.html#af5ec26d18b20fc0da9ec9032af73fa9e", null ],
-    [ "xError", "xchange_8h.html#a9b93f25b8532bf63ce2f050f5f2e7356", null ],
+    [ "xError", "xchange_8h.html#a606c4844e51124bee155e30bac8ca885", null ],
     [ "xErrorDescription", "xchange_8h.html#acc701c734a3b95d356660ca5ee16a96a", null ],
     [ "xGetAggregateID", "xchange_8h.html#a32e104d7a23090f8ae0e6ea3cc55a84f", null ],
     [ "xGetElementCount", "xchange_8h.html#ad35e0d8c0ebbb4948c233f96c54bd8d6", null ],
