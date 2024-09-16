@@ -40,9 +40,9 @@ includes a JSON parser and emitter.
 
 While there are many excellent libraries out there that offer such capabilities for C++ and/or other object-oriented 
 languages, support for structured data exchange is notably rare for standard C. The __xchange__ library aims to fill 
-that niche, by providing a data exchange framework with a C90-compatible API that supports the interchange of 
+that niche, by providing a data exchange framework with a C99-compatible API that supports the interchange of 
 arbitrary structured data between different platforms and different serialization formats with ease. The __xchange__ 
-library also provides support for JSON formatting and parsing using the C90 standard out of the box. All that in a 
+library also provides support for JSON formatting and parsing using the C99 standard out of the box. All that in a 
 light-weight and fast package.
 
 The __xchange__ library was created, and is maintained, by Attila Kovács at the Center for Astrophysics \| Harvard 
