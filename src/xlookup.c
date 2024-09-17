@@ -55,7 +55,7 @@ static XLookupEntry *xGetLookupEntryAsync(const XLookupTable *tab, const char *k
 
 static int xLookupPutAsync(XLookupTable *tab, const char *prefix, const XField *field, XField **oldValue) {
   XLookupPrivate *p = (XLookupPrivate *) tab->priv;
-  const char *id = prefix ? xGetAggregateID(prefix, field->name) : strdup(field->name);
+  const char *id = prefix ? xGetAggregateID(prefix, field->name) : xStringCopyOf(field->name);
   long hash = xGetHash(id);
   XLookupEntry *e = xGetLookupEntryAsync(tab, id, hash);
   int idx;

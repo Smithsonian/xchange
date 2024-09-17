@@ -395,7 +395,17 @@ void xZero(void *buf, XType type, int count) {
  *
  */
 char *xStringCopyOf(const char *str) {
-  return str ? strdup(str) : NULL;
+  char *copy;
+  int n;
+
+  if(str == NULL) return NULL;
+
+  n = strlen(str) + 1;
+  copy = (char *) malloc(n);
+  x_check_alloc(copy);
+
+  memcpy(copy, str, n);
+  return copy;
 }
 
 static int TokenMatch(char *a, char *b) {

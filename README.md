@@ -73,7 +73,8 @@ prior to invoking `make`. The following build variables can be configured:
 
  - `CPPFLAGS`: C pre-processor flags, such as externally defined compiler constants.
  
- - `CFLAGS`: Flags to pass onto the C compiler (default: `-Os -Wall`). Note, `-Iinclude` will be added automatically.
+ - `CFLAGS`: Flags to pass onto the C compiler (default: `-Os -Wall -std=c99`). Note, `-Iinclude` will be added 
+   automatically.
    
  - `LDFLAGS`: Linker flags (default is `-lm`).
 
