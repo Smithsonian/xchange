@@ -291,7 +291,7 @@ XStructure *xjsonParseFile(FILE *fp, size_t length, int *lineNumber) {
     return NULL;
   }
 
-  for(L=0; L < length; L++) {
+  for(L=0; L < (long) length; L++) {
     int m = fread(str, L, 1, fp);
 
     if(m < 0) {
