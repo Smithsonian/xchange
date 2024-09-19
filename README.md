@@ -19,6 +19,13 @@
 
 Platform-agnostic data exchange framework for C/C++ with built-in JSON parser/emitter support.
 
+ - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html)
+ - [Project page](https://smithsonian.github.io/xchange) on github.io
+
+Author: Attila Kovacs
+
+Last Updated: 18 September 2024
+
 ## Table of Contents
 
  - [Introduction](#introduction)
@@ -51,12 +58,6 @@ repository on GitHub.
 
 There are no official releases of __xchange__ yet. An initial 1.0.0 release is expected in late 2024. Before then the 
 API may undergo slight changes and tweaks. Use the repository as is at your own risk for now.
-
-Some related links:
-
- - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html)
- - [Project page](https://smithsonian.github.io/xchange) on github.io
-
 
 -----------------------------------------------------------------------------
 
