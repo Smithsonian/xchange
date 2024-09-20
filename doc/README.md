@@ -2,6 +2,13 @@
 <br clear="all">
 Platform-agnostic data exchange framework for C/C++ with built-in JSON parser/emitter support.
 
+ - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html)
+ - [Project page](https://smithsonian.github.io/xchange) on github.io
+
+Author: Attila Kovacs
+
+Last Updated: 18 September 2024
+
 ## Table of Contents
 
  - [Introduction](#introduction)
@@ -35,12 +42,6 @@ repository on GitHub.
 There are no official releases of __xchange__ yet. An initial 1.0.0 release is expected in late 2024. Before then the 
 API may undergo slight changes and tweaks. Use the repository as is at your own risk for now.
 
-Some related links:
-
- - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html)
- - [Project page](https://smithsonian.github.io/xchange) on github.io
-
-
 -----------------------------------------------------------------------------
 
 <a name="building"></a>
@@ -56,9 +57,10 @@ prior to invoking `make`. The following build variables can be configured:
 
  - `CPPFLAGS`: C pre-processor flags, such as externally defined compiler constants.
  
- - `CFLAGS`: Flags to pass onto the C compiler (default: `-Os -Wall`). Note, `-Iinclude` will be added automatically.
+ - `CFLAGS`: Flags to pass onto the C compiler (default: `-Os -Wall -std=c99`). Note, `-Iinclude` will be added 
+   automatically.
    
- - `LDFLAGS`: Linker flags (default is `-lm`).
+ - `LDFLAGS`: Extra linker flags (default: _not set_). Note, `-lm` will be added automatically.
 
  - `BUILD_MODE`: You can set it to `debug` to enable debugging features: it will initialize the global `xDebug` 
    variable to `TRUE` and add `-g` to `CFLAGS`.

@@ -116,6 +116,12 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README-xchange"></a> Platform-agnostic data exchange framework for C/C++ with built-in JSON parser/emitter support.</p>
+<ul>
+<li><a href="https://smithsonian.github.io/xchange/apidoc/html/files.html">API documentation</a></li>
+<li><a href="https://smithsonian.github.io/xchange">Project page</a> on github.io</li>
+</ul>
+<p>Author: Attila Kovacs</p>
+<p>Last Updated: 18 September 2024</p>
 <h2><a class="anchor" id="autotoc_md3"></a>
 Table of Contents</h2>
 <ul>
@@ -135,11 +141,6 @@ Introduction</h2>
 <p>While there are many excellent libraries out there that offer such capabilities for C++ and/or other object-oriented languages, support for structured data exchange is notably rare for standard C. The <b>xchange</b> library aims to fill that niche, by providing a data exchange framework with a C99-compatible API that supports the interchange of arbitrary structured data between different platforms and different serialization formats with ease. The <b>xchange</b> library also provides support for JSON formatting and parsing using the C99 standard out of the box. All that in a light-weight and fast package.</p>
 <p>The <b>xchange</b> library was created, and is maintained, by Attila Kovács at the Center for Astrophysics | Harvard &amp; Smithsonian, and it is available through the <a href="https://github.com/Smithsonian/xchange">Smithsonian/xchange</a> repository on GitHub.</p>
 <p>There are no official releases of <b>xchange</b> yet. An initial 1.0.0 release is expected in late 2024. Before then the API may undergo slight changes and tweaks. Use the repository as is at your own risk for now.</p>
-<p>Some related links:</p>
-<ul>
-<li><a href="https://smithsonian.github.io/xchange/apidoc/html/files.html">API documentation</a></li>
-<li><a href="https://smithsonian.github.io/xchange">Project page</a> on github.io</li>
-</ul>
 <hr  />
 <p><a class="anchor" id="building"></a> </p>
 <h2><a class="anchor" id="autotoc_md7"></a>
@@ -149,8 +150,8 @@ Building</h2>
 <ul>
 <li><code>CC</code>: The C compiler to use (default: <code>gcc</code>).</li>
 <li><code>CPPFLAGS</code>: C pre-processor flags, such as externally defined compiler constants.</li>
-<li><code>CFLAGS</code>: Flags to pass onto the C compiler (default: <code>-Os -Wall</code>). Note, <code>-Iinclude</code> will be added automatically.</li>
-<li><code>LDFLAGS</code>: Linker flags (default is <code>-lm</code>).</li>
+<li><code>CFLAGS</code>: Flags to pass onto the C compiler (default: <code>-Os -Wall -std=c99</code>). Note, <code>-Iinclude</code> will be added automatically.</li>
+<li><code>LDFLAGS</code>: Extra linker flags (default: <em>not set</em>). Note, <code>-lm</code> will be added automatically.</li>
 <li><code>BUILD_MODE</code>: You can set it to <code>debug</code> to enable debugging features: it will initialize the global <code>xDebug</code> variable to <code>TRUE</code> and add <code>-g</code> to <code>CFLAGS</code>.</li>
 <li><code>CHECKEXTRA</code>: Extra options to pass to <code>cppcheck</code> for the <code>make check</code> target</li>
 </ul>
@@ -391,8 +392,8 @@ Error handling</h2>
 <div class="line">  fprintf(stderr, <span class="stringliteral">&quot;WARNING! %s&quot;</span>, <a class="code hl_function" href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription</a>(status));</div>
 <div class="line">  ...</div>
 <div class="line">}</div>
-<div class="ttc" id="axchange_8c_html_a7e2e177c11fe7f44ca5ce11f316c0ad9"><div class="ttname"><a href="xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9">xParseDouble</a></div><div class="ttdeci">double xParseDouble(const char *str, char **tail)</div><div class="ttdef"><b>Definition</b> xchange.c:490</div></div>
-<div class="ttc" id="axchange_8c_html_acc701c734a3b95d356660ca5ee16a96a"><div class="ttname"><a href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription</a></div><div class="ttdeci">const char * xErrorDescription(int code)</div><div class="ttdef"><b>Definition</b> xchange.c:614</div></div>
+<div class="ttc" id="axchange_8c_html_a7e2e177c11fe7f44ca5ce11f316c0ad9"><div class="ttname"><a href="xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9">xParseDouble</a></div><div class="ttdeci">double xParseDouble(const char *str, char **tail)</div><div class="ttdef"><b>Definition</b> xchange.c:500</div></div>
+<div class="ttc" id="axchange_8c_html_acc701c734a3b95d356660ca5ee16a96a"><div class="ttname"><a href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription</a></div><div class="ttdeci">const char * xErrorDescription(int code)</div><div class="ttdef"><b>Definition</b> xchange.c:624</div></div>
 <div class="ttc" id="axchange_8h_html_a7b2679c964ea5f2160380ed55654b873"><div class="ttname"><a href="xchange_8h.html#a7b2679c964ea5f2160380ed55654b873">X_SUCCESS</a></div><div class="ttdeci">#define X_SUCCESS</div><div class="ttdoc">hooray!</div><div class="ttdef"><b>Definition</b> xchange.h:58</div></div>
 </div><!-- fragment --><p>The JSON parser can also sink its error messages to a designated file or stream, which can be set by <code><a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream(FILE *)</a></code>.</p>
 <hr  />
