@@ -6,6 +6,7 @@ INC = ../include
 include ../config.mk
 
 CFLAGS += -g
+
 export CFLAGS
 
 all: $(BIN)/test-struct $(BIN)/test-lookup $(BIN)/test-json

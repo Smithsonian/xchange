@@ -26,8 +26,8 @@ CFLAGS ?= -Os -Wall -std=c99
 # Extra warnings (not supported on all compilers)
 #CFLAGS += -Wextra
 
-# Link against math libs (for e.g. isnan())
-LDFLAGS ?= -lm
+# Extra linker flags to use
+#LDFLAGS =
 
 # cppcheck options for 'check' target
 CHECKOPTS ?= --enable=performance,warning,portability,style --language=c \
@@ -49,6 +49,9 @@ CHECKOPTS ?= --enable=performance,warning,portability,style --language=c \
 ifeq ($(BUILD_MODE),debug)
 	CFLAGS += -g -DDEBUG
 endif
+
+# Link against math libs (for e.g. isnan())
+LDFLAGS += -lm
 
 # Search for files in the designated locations
 vpath %.h $(INC)
