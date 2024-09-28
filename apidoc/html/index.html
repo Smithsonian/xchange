@@ -149,7 +149,7 @@ Building</h2>
 <p>You can configure the build, either by editing <code>config.mk</code> or else by defining the relevant environment variables prior to invoking <code>make</code>. The following build variables can be configured:</p>
 <ul>
 <li><code>CC</code>: The C compiler to use (default: <code>gcc</code>).</li>
-<li><code>CPPFLAGS</code>: C pre-processor flags, such as externally defined compiler constants.</li>
+<li><code>CPPFLAGS</code>: C preprocessor flags, such as externally defined compiler constants.</li>
 <li><code>CFLAGS</code>: Flags to pass onto the C compiler (default: <code>-Os -Wall -std=c99</code>). Note, <code>-Iinclude</code> will be added automatically.</li>
 <li><code>LDFLAGS</code>: Extra linker flags (default: <em>not set</em>). Note, <code>-lm</code> will be added automatically.</li>
 <li><code>BUILD_MODE</code>: You can set it to <code>debug</code> to enable debugging features: it will initialize the global <code>xDebug</code> variable to <code>TRUE</code> and add <code>-g</code> to <code>CFLAGS</code>.</li>
@@ -174,7 +174,7 @@ Structured data</h2>
 <p><a class="anchor" id="data-types"></a> </p>
 <h3><a class="anchor" id="autotoc_md10"></a>
 Basic data types</h3>
-<p>The <b>xchange</b> library supports most basic (primitive) data types used across programming languages. The table below shows the (<code>XType</code>) types recognised by the library and their C equivalents etc.:</p>
+<p>The <b>xchange</b> library supports most basic (primitive) data types used across programming languages. The table below shows the (<code>XType</code>) types recognized by the library and their C equivalents etc.:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone"><b>xchange</b> type   </th><th class="markdownTableHeadNone">C type   </th><th class="markdownTableHeadNone">Comment / example    </th></tr>
@@ -183,15 +183,15 @@ Basic data types</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>X_BYTE</code>   </td><td class="markdownTableBodyNone"><code>char</code> or <code>int8_t</code>   </td><td class="markdownTableBodyNone">'<code>-128</code>' to '<code>127</code>'    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_BYTE_HEX</code>   </td><td class="markdownTableBodyNone"><code>char</code> or <code>[u]int8_t</code>   </td><td class="markdownTableBodyNone">'<code>0x0</code>' to '<code>0xff</code>' (hexadeximal representation)    </td></tr>
+<td class="markdownTableBodyNone"><code>X_BYTE_HEX</code>   </td><td class="markdownTableBodyNone"><code>char</code> or <code>[u]int8_t</code>   </td><td class="markdownTableBodyNone">'<code>0x0</code>' to '<code>0xff</code>' (hexadecimal representation)    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>X_SHORT</code>   </td><td class="markdownTableBodyNone"><code>short</code> or <code>int16_t</code>   </td><td class="markdownTableBodyNone">'<code>-32768</code>' to '<code>32767</code>'    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_SHORT_HEX</code>   </td><td class="markdownTableBodyNone"><code>short</code> or <code>[u]int16_t</code>   </td><td class="markdownTableBodyNone">'<code>0x0</code>' to '<code>0xffff</code>' (hexadeximal representation)    </td></tr>
+<td class="markdownTableBodyNone"><code>X_SHORT_HEX</code>   </td><td class="markdownTableBodyNone"><code>short</code> or <code>[u]int16_t</code>   </td><td class="markdownTableBodyNone">'<code>0x0</code>' to '<code>0xffff</code>' (hexadecimal representation)    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>X_INT</code>   </td><td class="markdownTableBodyNone"><code>int32_t</code>   </td><td class="markdownTableBodyNone">'<code>-2,147,483,648</code>' to '<code>2,147,483,647</code>'    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_INT_HEX</code>   </td><td class="markdownTableBodyNone"><code>[u]int32_t</code>   </td><td class="markdownTableBodyNone">'<code>0x0</code>' to '<code>0xffffffff</code>' (hexadeximal representation)    </td></tr>
+<td class="markdownTableBodyNone"><code>X_INT_HEX</code>   </td><td class="markdownTableBodyNone"><code>[u]int32_t</code>   </td><td class="markdownTableBodyNone">'<code>0x0</code>' to '<code>0xffffffff</code>' (hexadecimal representation)    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>X_LONG</code>   </td><td class="markdownTableBodyNone"><code>long long</code> or <code>int64_t</code>   </td><td class="markdownTableBodyNone">'<code>-9,223,372,036,854,775,808</code>' to '<code>9,223,372,036,854,775,807</code>'    </td></tr>
 <tr class="markdownTableRowOdd">
@@ -212,7 +212,7 @@ Basic data types</h3>
 <p><a class="anchor" id="strings"></a> </p>
 <h4><a class="anchor" id="autotoc_md11"></a>
 Strings</h4>
-<p>Strings can be either fixed-length or else a 0-terminated sequence of ASCII characters. At its basic level the library does not impose any restriction of what ASCII characters may be used. However, we recommend that users stick to the JSON convention, and represent special characters in escaped form. E.g. carriagle return (<code>0xd</code>) as <code>\</code> followed by <code>n</code>, tabs as <code>\</code> followed by <code>t</code>, etc. As a result a single backslash should also be escaped as two consecutive <code>\</code> characters. You might use <code><a class="el" href="xjson_8c.html#aad83ebcc397046a875040dfc2297d892">xjsonEscapeString()</a></code> or <code><a class="el" href="xjson_8c.html#ae11aed18561818c2e39a5709a8e3374d">xjsonUnescapeString()</a></code> to perform the conversion to/from standard JSON representation.</p>
+<p>Strings can be either fixed-length or else a 0-terminated sequence of ASCII characters. At its basic level the library does not impose any restriction of what ASCII characters may be used. However, we recommend that users stick to the JSON convention, and represent special characters in escaped form. E.g. carriage return (<code>0xd</code>) as <code>\</code> followed by <code>n</code>, tabs as <code>\</code> followed by <code>t</code>, etc. As a result a single backslash should also be escaped as two consecutive <code>\</code> characters. You might use <code><a class="el" href="xjson_8c.html#aad83ebcc397046a875040dfc2297d892">xjsonEscapeString()</a></code> or <code><a class="el" href="xjson_8c.html#ae11aed18561818c2e39a5709a8e3374d">xjsonUnescapeString()</a></code> to perform the conversion to/from standard JSON representation.</p>
 <p>Fixed-length strings of up to <em>n</em> characters are represented internally as the <code>XCHAR(n)</code> type. They may be 0-terminated as appropriate, or else represent exactly <em>n</em> ASCII characters without explicit termination. Alternatively, the <code>X_STRING</code> type represents ASCII strings of arbitrary length, up to the 0-termination character.</p>
 <p><a class="anchor" id="scalars"></a> </p>
 <h3><a class="anchor" id="autotoc_md12"></a>
@@ -236,7 +236,7 @@ Scalars</h3>
 <div class="ttc" id="axstruct_8c_html_ab7ac206d0ec3608a0872f09c7f7bc189"><div class="ttname"><a href="xstruct_8c.html#ab7ac206d0ec3608a0872f09c7f7bc189">xCreateDoubleField</a></div><div class="ttdeci">XField * xCreateDoubleField(const char *name, double value)</div><div class="ttdef"><b>Definition</b> xstruct.c:386</div></div>
 <div class="ttc" id="axstruct_8c_html_ad2fa86a7d296f1efa6b41079bc2a6b65"><div class="ttname"><a href="xstruct_8c.html#ad2fa86a7d296f1efa6b41079bc2a6b65">xCreateBooleanField</a></div><div class="ttdeci">XField * xCreateBooleanField(const char *name, boolean value)</div><div class="ttdef"><b>Definition</b> xstruct.c:433</div></div>
 </div><!-- fragment --><p>Under the hood, scalar values are a special case of arrays containing a single element. Scalars have dimension zero i.e., a shape defined by an empty integer array, e.g. <code>int shape[0]</code> in a corresponding <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> element.</p>
-<p>In this way scalars are distinsguished from true arrays containing just a single elements, which have dimensionality &lt;=1 and shapes e.g., <code>int shape[1] = {1}</code> or <code>int shape[2] = {1, 1}</code>. The difference, while subtle, becomes more obvious when serializing the array, e.g. to JSON. A scalar floating point value of 1.04, for example, will appear as <code>1.04</code> in JSON, whereas the 1D and 2D single-element arrays will be serialized as <code>{ 1.04 }</code> or <code>{{ 1.04 }}</code>, respectively.</p>
+<p>In this way scalars are distinguished from true arrays containing just a single elements, which have dimensionality &lt;=1 and shapes e.g., <code>int shape[1] = {1}</code> or <code>int shape[2] = {1, 1}</code>. The difference, while subtle, becomes more obvious when serializing the array, e.g. to JSON. A scalar floating point value of 1.04, for example, will appear as <code>1.04</code> in JSON, whereas the 1D and 2D single-element arrays will be serialized as <code>{ 1.04 }</code> or <code>{{ 1.04 }}</code>, respectively.</p>
 <p><a class="anchor" id="arrays"></a> </p>
 <h3><a class="anchor" id="autotoc_md13"></a>
 Arrays</h3>
@@ -279,7 +279,7 @@ Creating structure</h3>
 </div><!-- fragment --><p><a class="anchor" id="aggregate-ids"></a> </p>
 <h3><a class="anchor" id="autotoc_md15"></a>
 Aggregate IDs</h3>
-<p>Since the <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> data type can represent hierarchies of arbitrary depth, and named at every level of the hieratchy, we can uniquely identify any particular field, at any level, with an aggregate ID, which concatenates the field names eatch every level, top-down, with a separator. The convention of <b>xchange</b> is to use colon (':') as the separator. Consider an example structure (in JSON notation):</p>
+<p>Since the <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> data type can represent hierarchies of arbitrary depth, and named at every level of the hierarchy, we can uniquely identify any particular field, at any level, with an aggregate ID, which concatenates the field names each every level, top-down, with a separator. The convention of <b>xchange</b> is to use colon (':') as the separator. Consider an example structure (in JSON notation):</p>
 <div class="fragment"><div class="line">{</div>
 <div class="line">  ...</div>
 <div class="line">  system = {</div>
@@ -337,7 +337,7 @@ Large structures</h4>
 <p>The same performance limitation also applies to building large structures, since the <code><a class="el" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField()</a></code> and <code><a class="el" href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct()</a></code> functions iterate over the existing fields to check if a prior field by the same name was already present, and which should be removed before the new field is set (hence the time to build up a structure with <em>N</em> fields will scale as _O(N<sup>2</sup>)_ in general). The user may consider using <code><a class="el" href="xstruct_8c.html#ad6249db6da0a1294d5621cd9fd829f7a">xInsertField()</a></code> instead, which is much more scalable for building large structures, since it does not check for duplicates (hence scales as <em>O(N)</em> overall). However, <code><a class="el" href="xstruct_8c.html#ad6249db6da0a1294d5621cd9fd829f7a">xInsertField()</a></code> also makes the ordering of fields less intuitive, and it is left up to the caller to ensure that field names added this way are never duplicated. (Tip: if you used <code>InsertField()</code> consistently, you may call <code><a class="el" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder()</a></code> at the end, so the fields will appear in the same order in which they were inserted.)</p>
 <h4><a class="anchor" id="autotoc_md18"></a>
 Iterating over elements</h4>
-<p>You can easily iterate over the elements also. This is one application where you may want to know the internal layout of <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code>, namely that it contains a simple linked-list of <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> fields. One way to iterate over a strucures elements is with a <code>for</code> loop, e.g.:</p>
+<p>You can easily iterate over the elements also. This is one application where you may want to know the internal layout of <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code>, namely that it contains a simple linked-list of <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> fields. One way to iterate over a structures elements is with a <code>for</code> loop, e.g.:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s = ...</div>
 <div class="line">XField *f;</div>
 <div class="line"> </div>
