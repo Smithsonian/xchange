@@ -72,7 +72,7 @@ prior to invoking `make`. The following build variables can be configured:
 
  - `CC`: The C compiler to use (default: `gcc`).
 
- - `CPPFLAGS`: C pre-processor flags, such as externally defined compiler constants.
+ - `CPPFLAGS`: C preprocessor flags, such as externally defined compiler constants.
  
  - `CFLAGS`: Flags to pass onto the C compiler (default: `-Os -Wall -std=c99`). Note, `-Iinclude` will be added 
    automatically.
@@ -119,17 +119,17 @@ associated data type, a dimensionality, a shape (for multidimensional arrays).
 ### Basic data types
 
 The __xchange__ library supports most basic (primitive) data types used across programming languages. The table below 
-shows the (`XType`) types recognised by the library and their C equivalents etc.:
+shows the (`XType`) types recognized by the library and their C equivalents etc.:
 
  | __xchange__ type | C type                   | Comment / example                                        |
  |------------------|--------------------------|----------------------------------------------------------|
  | `X_BOOLEAN`      | `boolean`<sup>*</sup>    | '`true`' or '`false`'                                    |
  | `X_BYTE`         | `char` or `int8_t`       | '`-128`' to  '`127`'                                     |
- | `X_BYTE_HEX`     | `char` or `[u]int8_t`    | '`0x0`' to  '`0xff`' (hexadeximal representation)        |
+ | `X_BYTE_HEX`     | `char` or `[u]int8_t`    | '`0x0`' to  '`0xff`' (hexadecimal representation)        |
  | `X_SHORT`        | `short` or `int16_t`     | '`-32768`' to '`32767`'                                  |
- | `X_SHORT_HEX`    | `short` or `[u]int16_t`  | '`0x0`' to  '`0xffff`' (hexadeximal representation)      |
+ | `X_SHORT_HEX`    | `short` or `[u]int16_t`  | '`0x0`' to  '`0xffff`' (hexadecimal representation)      |
  | `X_INT`          | `int32_t`                | '`-2,147,483,648`' to '`2,147,483,647`'                  |
- | `X_INT_HEX`      | `[u]int32_t`             | '`0x0`' to  '`0xffffffff`' (hexadeximal representation)  |
+ | `X_INT_HEX`      | `[u]int32_t`             | '`0x0`' to  '`0xffffffff`' (hexadecimal representation)  |
  | `X_LONG`         | `long long` or `int64_t` | '`-9,223,372,036,854,775,808`' to '`9,223,372,036,854,775,807`' |
  | `X_LONG_HEX`     | `[u]int64_t`             | '`0x0`' to  '`0xffffffffffffffff`' (hex. representation) |
  | `X_FLOAT`        | `float`                  | `1`, `1.0`, `-1.234567e-33`                              |
@@ -149,7 +149,7 @@ value is to be represented in hexadecimal format rather than the default decimal
 
 Strings can be either fixed-length or else a 0-terminated sequence of ASCII characters. At its basic level the library 
 does not impose any restriction of what ASCII characters may be used. However, we recommend that users stick to the 
-JSON convention, and represent special characters in escaped form. E.g. carriagle return (`0xd`) as `\` followed by 
+JSON convention, and represent special characters in escaped form. E.g. carriage return (`0xd`) as `\` followed by 
 `n`, tabs as `\` followed by `t`, etc. As a result a single backslash should also be escaped as two consecutive `\` 
 characters. You might use `xjsonEscapeString()` or `xjsonUnescapeString()` to perform the conversion to/from standard
 JSON representation.
@@ -180,7 +180,7 @@ You can create scalar fields easily, e.g.:
 Under the hood, scalar values are a special case of arrays containing a single element. Scalars have dimension zero 
 i.e., a shape defined by an empty integer array, e.g. `int shape[0]` in a corresponding `XField` element. 
 
-In this way scalars are distinsguished from true arrays containing just a single elements, which have dimensionality 
+In this way scalars are distinguished from true arrays containing just a single elements, which have dimensionality 
 &lt;=1 and shapes e.g., `int shape[1] = {1}` or `int shape[2] = {1, 1}`. The difference, while subtle, becomes more 
 obvious when serializing the array, e.g. to JSON. A scalar floating point value of 1.04, for example, will appear as 
 `1.04` in JSON, whereas the 1D and 2D single-element arrays will be serialized as `{ 1.04 }` or `{{ 1.04 }}`, 
@@ -247,8 +247,8 @@ and then eventually destroyed after use as:
 ### Aggregate IDs
 
 Since the `XStructure` data type can represent hierarchies of arbitrary depth, and named at every level of the 
-hieratchy, we can uniquely identify any particular field, at any level, with an aggregate ID, which concatenates the 
-field names eatch every level, top-down, with a separator. The convention of __xchange__ is to use colon (':') as the
+hierarchy, we can uniquely identify any particular field, at any level, with an aggregate ID, which concatenates the 
+field names each every level, top-down, with a separator. The convention of __xchange__ is to use colon (':') as the
 separator. Consider an example structure (in JSON notation):
 
 ```
@@ -353,7 +353,7 @@ may call `xReverseFieldOrder()` at the end, so the fields will appear in the sam
 #### Iterating over elements
 
 You can easily iterate over the elements also. This is one application where you may want to know the internal layout
-of `XStructure`, namely that it contains a simple linked-list of `XField` fields. One way to iterate over a strucures
+of `XStructure`, namely that it contains a simple linked-list of `XField` fields. One way to iterate over a structures
 elements is with a `for` loop, e.g.:
 
 ```c
