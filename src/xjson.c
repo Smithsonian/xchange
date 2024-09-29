@@ -466,6 +466,9 @@ static XStructure *ParseObject(char **pos, int *lineNumber) {
         f->value = ParsePrimitive(&next, &f->type, lineNumber);
     }
 
+    if(*next == ',')
+      next++;
+
     f = xSetField(s, f);
     if(f) xDestroyField(f); // If duplicate field, destroy the prior one.
   }
@@ -887,7 +890,7 @@ static int GetFieldStringSize(int prefixSize, const XField *f) {
 
   prop_error(fn, m);
 
-  return m + strlen(f->name) + 4;   // name + " = " + value + "\n"
+  return m + strlen(f->name) + 5;   // name + " = " + value + ",\n"
 }
 
 
@@ -908,6 +911,7 @@ static int PrintField(const char *prefix, const XField *f, char *str) {
   prop_error(fn, m);
 
   n += m;
+  if(f->next) n += sprintf(&str[n], ",");
   n += sprintf(&str[n], "\n");
   return n;
 }
