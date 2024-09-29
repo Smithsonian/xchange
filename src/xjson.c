@@ -413,9 +413,16 @@ static XStructure *ParseObject(char **pos, int *lineNumber) {
     XField *f;
 
     next = SkipSpaces(next, lineNumber);
+
     if(*next == '}') {
       next++;
       break;
+    }
+
+    if(*next == ',') {
+      Warning("[L.%d] Empty field.\n", *lineNumber);
+      next++;
+      continue;
     }
 
     f = calloc(1, sizeof(XField));
@@ -466,11 +473,19 @@ static XStructure *ParseObject(char **pos, int *lineNumber) {
         f->value = ParsePrimitive(&next, &f->type, lineNumber);
     }
 
-    if(*next == ',')
-      next++;
-
     f = xSetField(s, f);
     if(f) xDestroyField(f); // If duplicate field, destroy the prior one.
+
+    // Spaces after field...
+    next = SkipSpaces(next, lineNumber);
+
+    // There should be either a comma or a closing bracket after the field...
+    if(*next == ',') next++;
+    else if(*next == '}') {
+      next++;
+      break;
+    }
+    else Warning("[L.%d] Missing comma or closing bracket after field.\n", *lineNumber);
   }
 
   *pos = next;
