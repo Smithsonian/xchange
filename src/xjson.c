@@ -892,7 +892,7 @@ static int GetFieldStringSize(int prefixSize, const XField *f) {
 
   prop_error(fn, m);
 
-  return m + GetJsonStringSize(f->name, -1) + 5;   // name + " = " + value + ",\n"
+  return m + GetJsonStringSize(f->name, TERMINATED_STRING) + 4;   // <"name"> + ': ' + <value> + ',\n'
 }
 
 
@@ -1102,8 +1102,14 @@ static int GetJsonBytes(char c) {
 
 static int GetJsonStringSize(const char *src, int maxLength) {
   int i, n = 2; // ""
-  if(maxLength < 0) maxLength = INT_MAX;
-  for(i = 0; i < maxLength && src[i]; i++) n += GetJsonBytes(src[i]);
+
+  if(maxLength < 0) {
+    for(i = 0; i < src[i]; i++)
+      n += GetJsonBytes(src[i]);
+  }
+  else for(i = 0; i < maxLength && src[i]; i++)
+    n += GetJsonBytes(src[i]);
+
   return n;
 }
 
