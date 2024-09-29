@@ -42,7 +42,7 @@ static: $(LIB)/libxchange.a
 
 # Run regression tests
 .PHONY: test
-test:
+test: $(LIB)/libxchange.a
 	make -C test
 
 # Remove intermediates
@@ -56,7 +56,6 @@ clean:
 distclean: clean
 	rm -f $(LIB)/libxchange.so* $(LIB)/libxchange.a
 	make -C test distclean
-	
 
 # ----------------------------------------------------------------------------
 # The nitty-gritty stuff below
@@ -74,7 +73,7 @@ $(LIB)/libxchange.so: $(LIB)/libxchange.so.$(SO_VERSION)
 $(LIB)/libxchange.so.$(SO_VERSION): $(SOURCES)
 
 # Static library
-$(LIB)/libxchange.a: $(OBJECTS) | $(LIB) Makefile
+$(LIB)/libxchange.a: $(OBJECTS)
 
 README-xchange.md: README.md
 	LINE=`sed -n '/\# /{=;q;}' $<` && tail -n +$$((LINE+2)) $< > $@

@@ -409,7 +409,6 @@ static XStructure *ParseObject(char **pos, int *lineNumber) {
   x_check_alloc(s);
 
   while(*next) {
-    int l;
     XField *f;
 
     next = SkipSpaces(next, lineNumber);
@@ -428,19 +427,7 @@ static XStructure *ParseObject(char **pos, int *lineNumber) {
     f = calloc(1, sizeof(XField));
     x_check_alloc(f);
 
-    for(l=0; next[l]; l++) if(isspace(next[l])) break;
-
-    f->name = malloc(l+1);
-    if(!f->name) {
-      Error("[L.%d] Out of memory (field->name).\n", *lineNumber);
-      xDestroyStruct(s);
-      return NULL;
-    }
-
-    memcpy(f->name, next, l);
-    f->name[l] = '\0';
-
-    next += l;
+    f->name = ParseString(&next, lineNumber);
     next = SkipSpaces(next, lineNumber);
 
     if(*next != ':') {
@@ -905,7 +892,7 @@ static int GetFieldStringSize(int prefixSize, const XField *f) {
 
   prop_error(fn, m);
 
-  return m + strlen(f->name) + 5;   // name + " = " + value + ",\n"
+  return m + GetJsonStringSize(f->name, -1) + 5;   // name + " = " + value + ",\n"
 }
 
 
@@ -920,7 +907,9 @@ static int PrintField(const char *prefix, const XField *f, char *str) {
   if(*f->name == '\0') return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is empty");
   if(f->isSerialized) return x_error(X_PARSE_ERROR, ENOMSG, fn, "field is serialized (unknown format)");        // We don't know what format, so return an error
 
-  n = sprintf(str, "%s%s : ", prefix, f->name);
+  n = sprintf(str, "%s", prefix);
+  n += PrintString(f->name, -1, &str[n]);
+  n += sprintf(&str[n], ": ");
 
   m = PrintArray(prefix, f->value, f->type, f->ndim, f->sizes, &str[n]);
   prop_error(fn, m);
@@ -928,6 +917,7 @@ static int PrintField(const char *prefix, const XField *f, char *str) {
   n += m;
   if(f->next) n += sprintf(&str[n], ",");
   n += sprintf(&str[n], "\n");
+
   return n;
 }
 
@@ -1112,6 +1102,7 @@ static int GetJsonBytes(char c) {
 
 static int GetJsonStringSize(const char *src, int maxLength) {
   int i, n = 2; // ""
+  if(maxLength < 0) maxLength = INT_MAX;
   for(i = 0; i < maxLength && src[i]; i++) n += GetJsonBytes(src[i]);
   return n;
 }

@@ -9,21 +9,22 @@ CFLAGS += -g
 
 export CFLAGS
 
-all: $(BIN)/test-struct $(BIN)/test-lookup $(BIN)/test-json
+all: tests run
 
-$(BIN)/test-%: $(OBJ)/test-%.o $(LIB)/libxchange.a | $(BIN)
+tests: $(BIN)/test-struct $(BIN)/test-lookup $(BIN)/test-json
+
+run: tests
+	$(BIN)/test-struct
+	$(BIN)/test-lookup
+	$(BIN)/test-json
+
+$(BIN)/test-%: $(OBJ)/test-%.o $(LIB)/libxchange.a | $(BIN) Makefile
 	$(CC) -o $@ $^ $(LDFLAGS)
-
-$(LIB)/libxchange.a: ../src ../include ../Makefile
-	make -C .. static
-
-$(BIN):
-	mkdir $(BIN)
 
 .PHONY: clean-test
 clean-test:
 	rm -rf bin
-	
+
 clean: clean-test
 
 # Finally, the standard generic rules and targets...
