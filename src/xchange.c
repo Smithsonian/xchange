@@ -199,6 +199,8 @@ int xStringElementSizeOf(XType type) {
     case X_LONG_HEX : l = 18; break;
     case X_FLOAT : l = 16; break;     // 1 leading + 8 significant figs + 2 signs + 1 dot + 1 E + 3 exponent
     case X_DOUBLE : l = 25; break;    // 1 leading + 16 significant figs + (4) + 4 exponent
+    case X_COMPLEX32 : l = 33; break; // 2 floats + sep.
+    case X_COMPLEX64 : l = 51; break; // 2 doubles + sep.
     default : return x_error(-1, EINVAL, "xStringElementSizeOf", "invalid type: %d", type);
   }
   return (l+1); // with terminating '\0'
@@ -228,6 +230,8 @@ int xElementSizeOf(XType type) {
     case X_LONG_HEX: return sizeof(long long);
     case X_FLOAT: return sizeof(float);
     case X_DOUBLE: return sizeof(double);
+    case X_COMPLEX32: return sizeof(XComplex32);
+    case X_COMPLEX64: return sizeof(XComplex64);
     case X_STRUCT: return sizeof(XStructure);
     case X_STRING: return sizeof(char *);
   }
