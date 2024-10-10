@@ -30,6 +30,7 @@ Last Updated: 18 September 2024
 
  - [Introduction](#introduction)
  - [Building](#building)
+ - [Linking your application against `xchange`](#linking)
  - [Structured data](#structured-data)
  - [JSON parser and emitter](#json-interchange)
  - [Error handling](#error-handling)
@@ -89,6 +90,24 @@ After configuring, you can simply run `make`, which will build the `shared` (`li
 (`lib/libxchange.a`) libraries, local HTML documentation (provided `doxygen` is available), and performs static
 analysis via the `check` target. Or, you may build just the components you are interested in, by specifying the
 desired `make` target(s). (You can use `make help` to get a summary of the available `make` targets). 
+
+
+-----------------------------------------------------------------------------
+
+<a name="linking"></a>
+## Linking your application against `xchange`
+
+Provided you have installed the shared (`libxchange.so`) or static (`libxchange.a`) library in a location that is
+in your `LD_LIBRARY_PATH` (e.g. in `/usr/lib` or `/usr/local/lib`) you can simply link your program using the 
+`-lxchange` flag. Your `Makefile` may look like: 
+
+```make
+myprog: ...
+	cc -o $@ $^ $(LDFLAGS) -lxchange 
+```
+
+(Or, you might simply add `-lxchange` to `LDFLAGS` and use a more standard recipe.) And, in if you installed the 
+__xchange__ library elsewhere, you can simply add the location to `LD_LIBRARY_PATH` prior to linking.
 
 
 -----------------------------------------------------------------------------
