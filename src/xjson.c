@@ -868,6 +868,7 @@ static int PrintObject(const char *prefix, const XStructure *s, char *str, boole
 
 
 static int GetFieldStringSize(int prefixSize, const XField *f) {
+  static const int pair[] = {2};
   static const char *fn = "GetFieldStringSize";
 
   int m;
@@ -881,6 +882,8 @@ static int GetFieldStringSize(int prefixSize, const XField *f) {
   else switch(f->type) {
     case X_STRUCT: m = GetObjectStringSize(prefixSize, (XStructure *) f->value); break;
     case X_STRING:
+    case X_COMPLEX32: m = GetArrayStringSize(0, f->value, X_FLOAT, 1, pair); break;
+    case X_COMPLEX64: m = GetArrayStringSize(0, f->value, X_DOUBLE, 1, pair); break;
     case X_RAW:
       m = GetJsonStringSize((char *) f->value, TERMINATED_STRING);
       break;
@@ -1053,6 +1056,7 @@ static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const
 
 
 static int PrintPrimitive(const void *ptr, XType type, char *str) {
+  static const int pair[] = {2};
   static const char *fn = "PrintPrimitive";
 
   if(!ptr) return sprintf(str, JSON_NULL);
@@ -1074,6 +1078,8 @@ static int PrintPrimitive(const void *ptr, XType type, char *str) {
     case X_LONG_HEX: return sprintf(str, "0x%llx", *(long long *) ptr);
     case X_FLOAT: return sprintf(str, "%.8g , ", *(float *) ptr);
     case X_DOUBLE: return xPrintDouble(str, *(double *) ptr);
+    case X_COMPLEX32: return PrintArray("", (char *) ptr, X_FLOAT, 1, pair, str);
+    case X_COMPLEX64: return PrintArray("", (char *) ptr, X_DOUBLE, 1, pair, str);
     case X_STRING:
     case X_RAW: return PrintString(*(char **) ptr, TERMINATED_STRING, str);
     default: return x_error(X_TYPE_INVALID, EINVAL, fn, "invalid type: %d", type);

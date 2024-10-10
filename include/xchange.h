@@ -90,10 +90,12 @@ typedef int XType;          ///< SMA-X data type.
 #define X_SHORT_HEX         'h'     ///< \hideinitializer native short XType in hexadecimal representation
 #define X_INT               'L'     ///< \hideinitializer native int XType (usually 16-bits)
 #define X_INT_HEX           'H'     ///< \hideinitializer native int XType in hexadecimal representation
-#define X_LONG              'Y'     ///< \hideinitializer 64-bit int XType
-#define X_LONG_HEX          'Z'     ///< \hideinitializer 64-bit int XType in hexadecimal representation
+#define X_LONG              'J'     ///< \hideinitializer 64-bit int XType
+#define X_LONG_HEX          'K'     ///< \hideinitializer 64-bit int XType in hexadecimal representation
 #define X_FLOAT             'F'     ///< \hideinitializer 32-bit floating point XType
-#define X_DOUBLE            'D'     ///< \hideinitializer double-precision (64) bit floating point XType
+#define X_DOUBLE            'D'     ///< \hideinitializer double-precision (64-bit) floating point XType
+#define X_COMPLEX32         'z'     ///< \hideinitializer single-precision (32-bit) complex value XType
+#define X_COMPLEX64         'Z'     ///< \hideinitializer double-precision (64-bit) complex value XType
 #define X_STRING            '$'     ///< \hideinitializer a terminated string XType
 #define X_RAW               'R'     ///< \hideinitializer raw Redis (string) value XType, as stored in database
 #define X_STRUCT            'X'     ///< \hideinitializer An XStructure XType
@@ -119,6 +121,27 @@ typedef int boolean;               ///< boolean TRUE/FALSE data type.
 #    define NAN (0.0/0.0)           ///< Not-a-number in case it's not already defined in math.h
 #  endif
 #endif
+
+/**
+ * Single precision comple value type.
+ *
+ * @sa XComplex64
+ */
+typedef struct {
+  float re;       ///< Real part
+  float im;       ///< imaginary part
+} XComplex32;
+
+
+/**
+ * Single precision comple value type.
+ *
+ * @sa XComplex32
+ */
+typedef struct {
+  double re;       ///< Real part
+  double im;       ///< imaginary part
+} XComplex64;
 
 
 /**
@@ -232,6 +255,8 @@ XField *xCreateIntField(const char *name, int value);
 XField *xCreateLongField(const char *name, long long value);
 XField *xCreateBooleanField(const char *name, boolean value);
 XField *xCreateStringField(const char *name, const char *value);
+XField *xCreateComplex32Field(const char *name, XComplex32 value);
+XField *xCreateComplex64Field(const char *name, XComplex64 value);
 XField *xCreate1DField(const char *name, XType type, int count, const void *values);
 
 // Parsers / formatters

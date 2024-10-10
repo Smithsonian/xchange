@@ -390,6 +390,37 @@ XField *xCreateDoubleField(const char *name, double value) {
 }
 
 /**
+ * Creates a field holding a single double-precision value value.
+ *
+ * \param name      Field name (it may not contain a separator X_SEP)
+ * \param value     Associated value
+ *
+ * \return          A newly created field with the supplied data, or NULL if there was an error.
+ *
+ */
+XField *xCreateComplex32Field(const char *name, XComplex32 value) {
+  XField *f = xCreateScalarField(name, X_COMPLEX32, &value);
+  if(!f) return x_trace_null("xCreateComplex32Field", NULL);
+  return f;
+}
+
+
+/**
+ * Creates a field holding a single double-precision value value.
+ *
+ * \param name      Field name (it may not contain a separator X_SEP)
+ * \param value     Associated value
+ *
+ * \return          A newly created field with the supplied data, or NULL if there was an error.
+ *
+ */
+XField *xCreateComplex64Field(const char *name, XComplex64 value) {
+  XField *f = xCreateScalarField(name, X_COMPLEX64, &value);
+  if(!f) return x_trace_null("xCreateComplex64Field", NULL);
+  return f;
+}
+
+/**
  * Creates a field holding a single ineger value value.
  *
  * \param name      Field name (it may not contain a separator X_SEP)
