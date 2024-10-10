@@ -1670,6 +1670,7 @@
     <docanchor file="index.html">md_README-xchange</docanchor>
     <docanchor file="index.html">introduction</docanchor>
     <docanchor file="index.html">building</docanchor>
+    <docanchor file="index.html">linking</docanchor>
     <docanchor file="index.html">structured-data</docanchor>
     <docanchor file="index.html">data-types</docanchor>
     <docanchor file="index.html">strings</docanchor>

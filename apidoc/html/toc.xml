@@ -2,23 +2,24 @@
     <topic label="Table of Contents" href="index.html#autotoc_md3"/>
     <topic label="Introduction" href="index.html#autotoc_md5"/>
     <topic label="Building" href="index.html#autotoc_md7"/>
-    <topic label="Structured data" href="index.html#autotoc_md9">
-      <topic label="Basic data types" href="index.html#autotoc_md10">
-        <topic label="Strings" href="index.html#autotoc_md11"/>
-      <topic label="Scalars" href="index.html#autotoc_md12"/>
-      <topic label="Arrays" href="index.html#autotoc_md13"/>
-      <topic label="Creating structure" href="index.html#autotoc_md14"/>
-      <topic label="Aggregate IDs" href="index.html#autotoc_md15"/>
-      <topic label="Accessing substructures and elements" href="index.html#autotoc_md16">
-        <topic label="Large structures" href="index.html#autotoc_md17"/>
-        <topic label="Iterating over elements" href="index.html#autotoc_md18"/>
+    <topic label="Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;" href="index.html#autotoc_md9"/>
+    <topic label="Structured data" href="index.html#autotoc_md11">
+      <topic label="Basic data types" href="index.html#autotoc_md12">
+        <topic label="Strings" href="index.html#autotoc_md13"/>
+      <topic label="Scalars" href="index.html#autotoc_md14"/>
+      <topic label="Arrays" href="index.html#autotoc_md15"/>
+      <topic label="Creating structure" href="index.html#autotoc_md16"/>
+      <topic label="Aggregate IDs" href="index.html#autotoc_md17"/>
+      <topic label="Accessing substructures and elements" href="index.html#autotoc_md18">
+        <topic label="Large structures" href="index.html#autotoc_md19"/>
+        <topic label="Iterating over elements" href="index.html#autotoc_md20"/>
       </topic>
-      <topic label="Sorting fields" href="index.html#autotoc_md19"/>
+      <topic label="Sorting fields" href="index.html#autotoc_md21"/>
     </topic>
-    <topic label="JSON parser and emitter" href="index.html#autotoc_md21"/>
-    <topic label="Error handling" href="index.html#autotoc_md23"/>
-    <topic label="Debugging support" href="index.html#autotoc_md25"/>
-    <topic label="Future plans" href="index.html#autotoc_md26"/>
+    <topic label="JSON parser and emitter" href="index.html#autotoc_md23"/>
+    <topic label="Error handling" href="index.html#autotoc_md25"/>
+    <topic label="Debugging support" href="index.html#autotoc_md27"/>
+    <topic label="Future plans" href="index.html#autotoc_md28"/>
   </topic>
   <topic label="Changelog" href="md_CHANGELOG.html">
     <topic label="[Unreleased]" href="md_CHANGELOG.html#autotoc_md1"/>
