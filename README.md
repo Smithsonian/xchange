@@ -270,20 +270,17 @@ hierarchy, we can uniquely identify any particular field, at any level, with an 
 field names each every level, top-down, with a separator. The convention of __xchange__ is to use colon (':') as the
 separator. Consider an example structure (in JSON notation):
 
-```
+```json
   {
-    ...
-    system = {
-      ...
-      subsystem = {
-        ...
-        property = "some value here";
+    "system": {
+      "subsystem": {
+        "property": "some value here"
       }
     }
   }
 ```
 
-Then, the leaf "properly" entry can be 'addressed' with the aggregate ID of `system:subsystem:property` from the top
+Then, the leaf "property" entry can be 'addressed' with the aggregate ID of `system:subsystem:property` from the top
 level. The `xGetAggregateID()` function is provided to construct such aggregate IDs by gluing together a leading and 
 trailing component.
 
@@ -485,7 +482,6 @@ paths forward are:
  - Add regression testing and code coverage tracking (high priority)
  - Add support for [BSON](https://bsonspec.org/spec.html) -- MongoDB's binary exchange format. (It may require 
    expanding the `XType` struct for binary subtype.)
- - Add support for complex-valued data types (`X_COMPLEX`).
  - Add support for 128-bit floating point types (`X_FLOAT128`).
  
 If you have an idea for a must have feature, please let me (Attila) know. Pull requests, for new features or fixes to
