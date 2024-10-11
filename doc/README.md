@@ -255,11 +255,8 @@ separator. Consider an example structure (in JSON notation):
 
 ```json
   {
-    ...
     "system": {
-      ...
       "subsystem": {
-        ...
         "property": "some value here"
       }
     }
