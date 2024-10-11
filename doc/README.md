@@ -253,7 +253,7 @@ hierarchy, we can uniquely identify any particular field, at any level, with an 
 field names each every level, top-down, with a separator. The convention of __xchange__ is to use colon (':') as the
 separator. Consider an example structure (in JSON notation):
 
-```
+```json
   {
     ...
     "system": {
