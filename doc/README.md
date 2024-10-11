@@ -256,11 +256,11 @@ separator. Consider an example structure (in JSON notation):
 ```
   {
     ...
-    system = {
+    "system": {
       ...
-      subsystem = {
+      "subsystem": {
         ...
-        property = "some value here";
+        "property": "some value here"
       }
     }
   }
@@ -468,7 +468,6 @@ paths forward are:
  - Add regression testing and code coverage tracking (high priority)
  - Add support for [BSON](https://bsonspec.org/spec.html) -- MongoDB's binary exchange format. (It may require 
    expanding the `XType` struct for binary subtype.)
- - Add support for complex-valued data types (`X_COMPLEX`).
  - Add support for 128-bit floating point types (`X_FLOAT128`).
  
 If you have an idea for a must have feature, please let me (Attila) know. Pull requests, for new features or fixes to

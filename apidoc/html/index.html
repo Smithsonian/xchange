@@ -291,11 +291,11 @@ Aggregate IDs</h3>
 <p>Since the <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> data type can represent hierarchies of arbitrary depth, and named at every level of the hierarchy, we can uniquely identify any particular field, at any level, with an aggregate ID, which concatenates the field names each every level, top-down, with a separator. The convention of <b>xchange</b> is to use colon (':') as the separator. Consider an example structure (in JSON notation):</p>
 <div class="fragment"><div class="line">{</div>
 <div class="line">  ...</div>
-<div class="line">  system = {</div>
+<div class="line">  &quot;system&quot;: {</div>
 <div class="line">    ...</div>
-<div class="line">    subsystem = {</div>
+<div class="line">    &quot;subsystem&quot;: {</div>
 <div class="line">      ...</div>
-<div class="line">      property = &quot;some value here&quot;;</div>
+<div class="line">      &quot;property&quot;: &quot;some value here&quot;</div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">}</div>
@@ -418,7 +418,6 @@ Future plans</h2>
 <ul>
 <li>Add regression testing and code coverage tracking (high priority)</li>
 <li>Add support for <a href="https://bsonspec.org/spec.html">BSON</a> &ndash; MongoDB's binary exchange format. (It may require expanding the <code>XType</code> struct for binary subtype.)</li>
-<li>Add support for complex-valued data types (<code>X_COMPLEX</code>).</li>
 <li>Add support for 128-bit floating point types (<code>X_FLOAT128</code>).</li>
 </ul>
 <p>If you have an idea for a must have feature, please let me (Attila) know. Pull requests, for new features or fixes to existing ones are especially welcome!</p>
