@@ -263,7 +263,7 @@ separator. Consider an example structure (in JSON notation):
   }
 ```
 
-Then, the leaf "properly" entry can be 'addressed' with the aggregate ID of `system:subsystem:property` from the top
+Then, the leaf "property" entry can be 'addressed' with the aggregate ID of `system:subsystem:property` from the top
 level. The `xGetAggregateID()` function is provided to construct such aggregate IDs by gluing together a leading and 
 trailing component.
 
