@@ -28,9 +28,13 @@ else
   $(info WARNING! Doxygen is not available. Will skip 'dox' target) 
 endif
 
+# Build libraries
+.PHONY: libs
+libs: shared static
+
 # Build everything...
 .PHONY: all
-all: shared static $(DOC_TARGETS) check
+all: libs $(DOC_TARGETS) check
 
 # Shared libraries (versioned and unversioned)
 .PHONY: shared
