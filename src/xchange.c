@@ -316,24 +316,30 @@ int xPrintDims(char *dst, int ndim, const int *sizes) {
  * \return          Number of valid (i.e. positive) dimensions parsed.
  */
 int xParseDims(const char *src, int *sizes) {
+  static const char *fn = "xParseDims";
+
   int ndim, N = 1;
   char *next = (char *) src;
 
-  if(!src) return x_error(0, EINVAL, "xParseDims", "'src' is NULL");
+  if(!src) return x_error(0, EINVAL, fn, "'src' is NULL");
   if(!sizes) return 0;
 
   for(ndim = 0; ndim <= X_MAX_DIMS; ) {
     char *from = next;
 
-    *sizes = strtol(from, &next, 10);
-    if(next == from) break;
-    if(errno == ERANGE) break;
+    errno = 0;
+    *sizes = (int) strtol(from, &next, 10);
+    if(next == from) break;     // Empty string
+    if(errno) {
+      x_error(0, errno, fn, "invalid dimension: %s\n", from);
+      break;
+    }
 
-    if(*sizes <= 0) continue;  // ignore 0 or negative sizes.
+    if(*sizes <= 0) continue;   // ignore 0 or negative sizes.
 
     N *= *sizes;
 
-    sizes++;            // move to the next dimension
+    sizes++;                    // move to the next dimension
     ndim++;
   }
 
@@ -458,11 +464,11 @@ boolean xParseBoolean(char *str, char **end) {
   }
 
   /* Try parse as a number... */
+  errno = 0;
   l = strtol(str, end, 0);
+  if(errno) x_error(FALSE, errno, fn, "invalid argument: %s", str);
 
-  if(errno != ERANGE) return (l != 0);
-
-  return x_error(FALSE, errno, fn, "invalid argument: %s", str);
+  return (l != 0);
 }
 
 
@@ -529,6 +535,7 @@ double xParseDouble(const char *str, char **tail) {
   }
 #endif
 
+  errno = 0;
   return strtod(str, tail);
 }
 

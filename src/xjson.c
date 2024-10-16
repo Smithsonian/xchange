@@ -592,8 +592,9 @@ static void *ParsePrimitive(char **pos, XType *type, int *lineNumber) {
   }
 
   // Try parse as int / long
+  errno = 0;
   ll = strtoll(next, &end, 0);
-  if(end == *pos) if(errno != ERANGE) {
+  if(end == *pos && !errno) {
     long long *value = (long long *) malloc(sizeof(long));
     x_check_alloc(value);
     *value = ll;
@@ -602,8 +603,9 @@ static void *ParsePrimitive(char **pos, XType *type, int *lineNumber) {
   }
 
   // Try parse as double...
+  errno = 0;
   d = strtod(next, &end);
-  if(end == *pos) {
+  if(end == *pos && !errno) {
     double *value = (double *) malloc(sizeof(double));
     x_check_alloc(value);
     *value = d;
