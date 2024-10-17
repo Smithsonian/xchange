@@ -68,8 +68,7 @@ distclean: clean
 SOURCES = $(SRC)/xchange.c $(SRC)/xstruct.c $(SRC)/xlookup.c $(SRC)/xjson.c
 
 # Generate a list of object (obj/*.o) files from the input sources
-OBJECTS := $(subst $(SRC),$(OBJ),$(SOURCES))
-OBJECTS := $(subst .c,.o,$(OBJECTS))
+OBJECTS := $(subst .c,.o,$(subst $(SRC),$(OBJ),$(SOURCES)))
 
 $(LIB)/libxchange.so: $(LIB)/libxchange.so.$(SO_VERSION)
 
