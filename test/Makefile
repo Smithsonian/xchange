@@ -1,24 +1,25 @@
 # Use the parent directories for libraries and headers.
 LIB = ../lib
 INC = ../include
+BUILD_MODE = debug
 
 # Load the common Makefile definitions...
 include ../config.mk
 
-CFLAGS += -g
-
-export CFLAGS
-
+.PHONY: all
 all: tests run
 
+.PHONY: tests
 tests: $(BIN)/test-struct $(BIN)/test-lookup $(BIN)/test-json
 
+.PHONY: run
 run: tests
 	$(BIN)/test-struct
 	$(BIN)/test-lookup
 	$(BIN)/test-json
 
-$(BIN)/test-%: $(OBJ)/test-%.o $(LIB)/libxchange.a | $(BIN) Makefile
+$(BIN)/test-%: $(OBJ)/test-%.o $(LIB)/libxchange.a
+	make $(BIN)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 .PHONY: clean-test
@@ -29,3 +30,4 @@ clean: clean-test
 
 # Finally, the standard generic rules and targets...
 include ../build.mk
+
