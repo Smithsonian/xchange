@@ -11,7 +11,7 @@
 #define XJSON_H_
 
 #include <stdio.h>
-#include "xchange.h"
+#include <xchange.h>
 
 #define XJSON_INDENT         "  "       ///< Indentation for nested elements.
 
