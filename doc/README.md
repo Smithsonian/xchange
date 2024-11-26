@@ -26,8 +26,8 @@ Last Updated: 18 September 2024
 <a name="introduction"></a>
 ## Introduction
 
-The __xchange__ library provides a framework for platform independent data exchange for structured data in C/C++, and
-includes a JSON parser and emitter. 
+The __xchange__ library provides a free framework for platform independent data exchange for structured data in C/C++, 
+and includes a JSON parser and emitter. It is free to use, in any way you like, without licensing restrictions.
 
 While there are many excellent libraries out there that offer such capabilities for C++ and/or other object-oriented 
 languages, support for structured data exchange is notably rare for standard C. The __xchange__ library aims to fill 
@@ -73,6 +73,27 @@ After configuring, you can simply run `make`, which will build the `shared` (`li
 (`lib/libxchange.a`) libraries, local HTML documentation (provided `doxygen` is available), and performs static
 analysis via the `check` target. Or, you may build just the components you are interested in, by specifying the
 desired `make` target(s). (You can use `make help` to get a summary of the available `make` targets). 
+
+After building the library you can install the above components to the desired locations on your system. For a 
+system-wide install you may simply run:
+
+```bash
+  $ sudo make install
+```
+
+Or, to install in some other locations, you may set a prefix and/or `DESTDIR`. For example, to install under `/opt` 
+instead, you can:
+
+```bash
+  $ sudo make prefix="/opt" install
+```
+
+Or, to stage the installation (to `/usr`) under a 'build root':
+
+```bash
+  $ make DESTDIR="/tmp/stage" install
+```
+
 
 
 -----------------------------------------------------------------------------

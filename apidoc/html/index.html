@@ -138,7 +138,7 @@ Table of Contents</h2>
 <p><a class="anchor" id="introduction"></a> </p>
 <h2><a class="anchor" id="autotoc_md5"></a>
 Introduction</h2>
-<p>The <b>xchange</b> library provides a framework for platform independent data exchange for structured data in C/C++, and includes a JSON parser and emitter.</p>
+<p>The <b>xchange</b> library provides a free framework for platform independent data exchange for structured data in C/C++, and includes a JSON parser and emitter. It is free to use, in any way you like, without licensing restrictions.</p>
 <p>While there are many excellent libraries out there that offer such capabilities for C++ and/or other object-oriented languages, support for structured data exchange is notably rare for standard C. The <b>xchange</b> library aims to fill that niche, by providing a data exchange framework with a C99-compatible API that supports the interchange of arbitrary structured data between different platforms and different serialization formats with ease. The <b>xchange</b> library also provides support for JSON formatting and parsing using the C99 standard out of the box. All that in a light-weight and fast package.</p>
 <p>The <b>xchange</b> library was created, and is maintained, by Attila Kovács at the Center for Astrophysics | Harvard &amp; Smithsonian, and it is available through the <a href="https://github.com/Smithsonian/xchange">Smithsonian/xchange</a> repository on GitHub.</p>
 <p>There are no official releases of <b>xchange</b> yet. An initial 1.0.0 release is expected in late 2024. Before then the API may undergo slight changes and tweaks. Use the repository as is at your own risk for now.</p>
@@ -157,7 +157,13 @@ Building</h2>
 <li><code>CHECKEXTRA</code>: Extra options to pass to <code>cppcheck</code> for the <code>make check</code> target</li>
 </ul>
 <p>After configuring, you can simply run <code>make</code>, which will build the <code>shared</code> (<code>lib/libxchange.so[.1]</code>) and <code>static</code> (<code>lib/libxchange.a</code>) libraries, local HTML documentation (provided <code>doxygen</code> is available), and performs static analysis via the <code>check</code> target. Or, you may build just the components you are interested in, by specifying the desired <code>make</code> target(s). (You can use <code>make help</code> to get a summary of the available <code>make</code> targets).</p>
-<hr  />
+<p>After building the library you can install the above components to the desired locations on your system. For a system-wide install you may simply run:</p>
+<div class="fragment"><div class="line">$ sudo make install</div>
+</div><!-- fragment --><p>Or, to install in some other locations, you may set a prefix and/or <code>DESTDIR</code>. For example, to install under <code>/opt</code> instead, you can:</p>
+<div class="fragment"><div class="line">$ sudo make prefix=&quot;/opt&quot; install</div>
+</div><!-- fragment --><p>Or, to stage the installation (to <code>/usr</code>) under a 'build root':</p>
+<div class="fragment"><div class="line">$ make DESTDIR=&quot;/tmp/stage&quot; install</div>
+</div><!-- fragment --><hr  />
 <p><a class="anchor" id="linking"></a> </p>
 <h2><a class="anchor" id="autotoc_md9"></a>
 Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;</h2>
@@ -398,8 +404,8 @@ Error handling</h2>
 <div class="line">  fprintf(stderr, <span class="stringliteral">&quot;WARNING! %s&quot;</span>, <a class="code hl_function" href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription</a>(status));</div>
 <div class="line">  ...</div>
 <div class="line">}</div>
-<div class="ttc" id="axchange_8c_html_a7e2e177c11fe7f44ca5ce11f316c0ad9"><div class="ttname"><a href="xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9">xParseDouble</a></div><div class="ttdeci">double xParseDouble(const char *str, char **tail)</div><div class="ttdef"><b>Definition</b> xchange.c:500</div></div>
-<div class="ttc" id="axchange_8c_html_acc701c734a3b95d356660ca5ee16a96a"><div class="ttname"><a href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription</a></div><div class="ttdeci">const char * xErrorDescription(int code)</div><div class="ttdef"><b>Definition</b> xchange.c:624</div></div>
+<div class="ttc" id="axchange_8c_html_a7e2e177c11fe7f44ca5ce11f316c0ad9"><div class="ttname"><a href="xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9">xParseDouble</a></div><div class="ttdeci">double xParseDouble(const char *str, char **tail)</div><div class="ttdef"><b>Definition</b> xchange.c:506</div></div>
+<div class="ttc" id="axchange_8c_html_acc701c734a3b95d356660ca5ee16a96a"><div class="ttname"><a href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription</a></div><div class="ttdeci">const char * xErrorDescription(int code)</div><div class="ttdef"><b>Definition</b> xchange.c:631</div></div>
 <div class="ttc" id="axchange_8h_html_a7b2679c964ea5f2160380ed55654b873"><div class="ttname"><a href="xchange_8h.html#a7b2679c964ea5f2160380ed55654b873">X_SUCCESS</a></div><div class="ttdeci">#define X_SUCCESS</div><div class="ttdoc">hooray!</div><div class="ttdef"><b>Definition</b> xchange.h:58</div></div>
 </div><!-- fragment --><p>The JSON parser can also sink its error messages to a designated file or stream, which can be set by <code><a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream(FILE *)</a></code>.</p>
 <hr  />

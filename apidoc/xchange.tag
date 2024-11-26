@@ -866,7 +866,7 @@
     <name>xjson.h</name>
     <path>include/</path>
     <filename>xjson_8h.html</filename>
-    <includes id="xchange_8h" name="xchange.h" local="yes" import="no" module="no" objc="no">xchange.h</includes>
+    <includes id="xchange_8h" name="xchange.h" local="no" import="no" module="no" objc="no">xchange.h</includes>
     <member kind="define">
       <type>#define</type>
       <name>NULLDEV</name>
