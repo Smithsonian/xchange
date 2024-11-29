@@ -371,7 +371,7 @@ static char *SkipSpaces(char *str, int *lineNumber) {
 }
 
 static char *GetToken(char *from) {
-  int l;
+  int l = 0;
   char *token;
 
   from = SkipSpaces(from, &l);
@@ -684,7 +684,7 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
     return NULL;
   }
 
-  next = SkipSpaces(++next, lineNumber);
+  next = SkipSpaces(next+1, lineNumber);
 
   for(n = 0; *next && *next != ']';) {
     XField *e;
