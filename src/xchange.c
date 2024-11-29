@@ -318,7 +318,7 @@ int xPrintDims(char *dst, int ndim, const int *sizes) {
 int xParseDims(const char *src, int *sizes) {
   static const char *fn = "xParseDims";
 
-  int ndim, N = 1;
+  int ndim;
   char *next = (char *) src;
 
   if(!src) return x_error(0, EINVAL, fn, "'src' is NULL");
@@ -336,8 +336,6 @@ int xParseDims(const char *src, int *sizes) {
     }
 
     if(*sizes <= 0) continue;   // ignore 0 or negative sizes.
-
-    N *= *sizes;
 
     sizes++;                    // move to the next dimension
     ndim++;
