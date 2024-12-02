@@ -54,11 +54,6 @@ analyze:
 	@echo "   [analyze]"
 	@cppcheck $(CPPFLAGS) $(CHECKOPTS) src
 
-# Static code analysis viacat Facebook's infer
-.PHONY: infer
-infer: CC := infer run -- $(CC)
-infer: distclean shared
-
 # Doxygen documentation (HTML and man pages) under apidocs/
 .PHONY: dox
 dox: README.md Doxyfile apidoc $(SRC) $(INC)

@@ -30,14 +30,6 @@ endif
 
 INSTALL_TARGETS := install-headers
 
-# Build libraries
-.PHONY: libs
-libs: shared static
-
-# Build everything...
-.PHONY: all
-all: libs $(DOC_TARGETS) check
-
 # Build for distribution
 .PHONY: distro
 distro: shared $(DOC_TARGETS)
@@ -50,6 +42,14 @@ shared: $(LIB)/libxchange.so
 .PHONY: static
 static: $(LIB)/libxchange.a
 
+# Build libraries
+.PHONY: libs
+libs: shared static
+
+# Build everything...
+.PHONY: all
+all: libs $(DOC_TARGETS) check
+
 # Run regression tests
 .PHONY: test
 test: $(LIB)/libxchange.a
@@ -58,6 +58,11 @@ test: $(LIB)/libxchange.a
 # 'test" + 'analyze'
 .PHONY: check
 check: test analyze
+
+# Static code analysis via Facebook's infer
+.PHONY: infer
+infer: clean
+	infer run -- make shared
 
 # Remove intermediates
 .PHONY: clean
@@ -178,7 +183,8 @@ help:
 	@echo "  local-dox     Compiles local HTML API documentation using 'doxygen'."
 	@echo "  analyze       Performs static analysis with 'cppcheck'."
 	@echo "  all           All of the above."
-	@echo "  install       Install components (e.g. 'make prefix=<path> install')"
+	@echo "  distro        shared libs and documentation (default target)."
+	@echo "  install       Install components (e.g. 'make prefix=<path> install')."
 	@echo "  clean         Removes intermediate products."
 	@echo "  distclean     Deletes all generated files."
 	@echo
