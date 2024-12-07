@@ -656,10 +656,9 @@ static void *ParseValue(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
 static XType GetCommonType(XType t1, XType t2) {
   if(t1 == X_UNKNOWN) return t2;
   if(t2 == X_UNKNOWN) return t1;
-  if(t1 == X_STRING && t2 == X_STRING) return X_STRING;
   if(t1 == X_FIELD || t2 == X_FIELD) return X_FIELD;
-  if(t1 == X_STRING || t2 == X_STRING) return X_FIELD;
   if(t1 == X_STRUCT || t2 == X_STRUCT) return X_FIELD;
+  if(t1 == X_STRING || t2 == X_STRING) return X_FIELD;
   if(t1 == X_DOUBLE || t2 == X_DOUBLE) return X_DOUBLE;
   if(t1 == X_FLOAT || t2 == X_FLOAT) return X_FLOAT;
   if(t1 == X_LONG || t2 == X_LONG) return X_LONG;
