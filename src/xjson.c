@@ -54,11 +54,11 @@ static char *ParseString(char **pos, int *lineNumber);
 static void *ParsePrimitive(char **pos, XType *type, int *lineNumber);
 
 static int GetObjectStringSize(int prefixSize, const XStructure *s);
-static int GetFieldStringSize(int prefixSize, const XField *f);
+static int GetFieldStringSize(int prefixSize, const XField *f, boolean ignoreName);
 static int GetArrayStringSize(int prefixSize,char *ptr, XType type, int ndim, const int *sizes);
 static int GetJsonStringSize(const char *src, int maxLength);
 
-static int PrintObject(const char *prefix, const XStructure *s, char *str, boolean asArray);
+static int PrintObject(const char *prefix, const XStructure *s, char *str);
 static int PrintField(const char *prefix, const XField *f, char *str);
 static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const int *sizes, char *str);
 static int PrintPrimitive(const void *ptr, XType type, char *str);
@@ -138,7 +138,7 @@ char *xjsonToString(const XStructure *s) {
     return NULL;
   }
 
-  n = PrintObject("", s, str, FALSE);
+  n = PrintObject("", s, str);
   if (n < 0) {
     free(str);
     return NULL;
@@ -641,16 +641,25 @@ static void *ParseValue(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
   if(*next == '[') return ParseArray(pos, type, ndim, sizes, lineNumber);
 
   // Is value a string?
-  if(*next == '"') return ParseString(pos, lineNumber);
+  if(*next == '"') {
+    char **ptr = (char **) calloc(1, sizeof(char *));
+    x_check_alloc(ptr);
+    *ptr = ParseString(pos, lineNumber);
+    *type = X_STRING;
+    return ptr;
+  }
 
   return ParsePrimitive(pos, type, lineNumber);
 }
 
 
 static XType GetCommonType(XType t1, XType t2) {
+  if(t1 == X_UNKNOWN) return t2;
+  if(t2 == X_UNKNOWN) return t1;
   if(t1 == X_STRING && t2 == X_STRING) return X_STRING;
-  if(t1 == X_STRING || t2 == X_STRING) return X_STRUCT;
-  if(t1 == X_STRUCT || t2 == X_STRUCT) return X_STRUCT;
+  if(t1 == X_FIELD || t2 == X_FIELD) return X_FIELD;
+  if(t1 == X_STRING || t2 == X_STRING) return X_FIELD;
+  if(t1 == X_STRUCT || t2 == X_STRUCT) return X_FIELD;
   if(t1 == X_DOUBLE || t2 == X_DOUBLE) return X_DOUBLE;
   if(t1 == X_FLOAT || t2 == X_FLOAT) return X_FLOAT;
   if(t1 == X_LONG || t2 == X_LONG) return X_LONG;
@@ -704,7 +713,7 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
 
     // If types and dimensions all match, then will return an array of that type (e.g. double[], or int[]).
     // Otherwise return an array of the common type...
-    if(*type != X_STRUCT) {
+    if(*type != X_FIELD && *type != X_STRUCT) {
       if(*type == X_UNKNOWN) *type = e->type;
       else if(*type != e->type) *type = GetCommonType(*type, e->type);
 
@@ -713,12 +722,12 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
         memcpy(sizes, e->sizes, e->ndim * sizeof(int));
       }
 
-      // Heterogeneous arrays are treated as array of structures.
+      // Heterogeneous arrays are treated as an array of fields.
       else if(*ndim != e->ndim) {
-        *type = X_STRUCT;
+        *type = X_FIELD;
       }
       else if(memcmp(sizes, e->sizes, e->ndim * sizeof(int))) {
-        *type = X_STRUCT;
+        *type = X_FIELD;
       }
     }
 
@@ -742,28 +751,33 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
 
   *pos = ++next;
 
-  // For heterogeneous arrays, return an array of XStructures...
-  if(*type == X_STRUCT) {
+  // For heterogeneous arrays, return an array of XFields...
+  if(*type == X_FIELD) {
+    XField *array, *e = first;
     int i;
-    XStructure *s;
 
-    s = calloc(n, sizeof(XStructure));
+    array = (XField *) calloc(n, sizeof(XField));
+    x_check_alloc(array);
 
-    *ndim = 1;
     memset(sizes, 0, X_MAX_DIMS * sizeof(int));
+    *ndim = 1;
     sizes[0] = n;
 
-    (*pos)++;
+    for(i = 0; i < n; i++) {
+      char idx[20];
 
-    for(i = 0; i < n; i++) if(first) {
-      s[i].firstField = first;
-      if (first->type == X_STRUCT) ((XStructure *) first)->parent = &s[i];
+      // Name is . + 1-based index, e.g. ".1", ".2"...
+      sprintf(idx, ".%d", (i + 1));
 
-      first = first->next;
-      s[i].firstField->next = NULL;
+      XField *nextField = e->next;
+      array[i] = *e;
+      array[i].name = xStringCopyOf(idx);
+      array[i].next = NULL;
+      free(e);
+      e = nextField;
     }
 
-    return s;
+    return array;
   }
 
   // Otherwise return a primitive array...
@@ -802,9 +816,10 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
 
     for(i = 0; i < n; i++) if(first) {
       XField *e = first;
+      first = e->next;
+
       if(e->value) {
-        memcpy(data + i * rowSize, e->value, rowSize);
-        first = e->next;
+        memcpy(data + i * rowSize, *type == X_FIELD ? (char *) e : e->value, rowSize);
         free(e->value);
       }
       free(e);
@@ -824,7 +839,7 @@ static int GetObjectStringSize(int prefixSize, const XStructure *s) {
   n = prefixSize + 4;       // "{\n" + .... + <prefix> + "}\n";
 
   for(f = s->firstField; f != NULL; f = f->next) {
-    int m = GetFieldStringSize(prefixSize + ilen, f);
+    int m = GetFieldStringSize(prefixSize + ilen, f, f->type == X_FIELD);
     prop_error("GetObjectStringSize", m);
     n += m;
   }
@@ -833,7 +848,7 @@ static int GetObjectStringSize(int prefixSize, const XStructure *s) {
 }
 
 
-static int PrintObject(const char *prefix, const XStructure *s, char *str, boolean asArray) {
+static int PrintObject(const char *prefix, const XStructure *s, char *str) {
   static const char *fn = "PrintObject";
 
   char *fieldPrefix;
@@ -851,7 +866,7 @@ static int PrintObject(const char *prefix, const XStructure *s, char *str, boole
 
   sprintf(fieldPrefix, "%s%s", prefix, indent);
 
-  n += sprintf(str, asArray ? "[\n" : "{\n");
+  n += sprintf(str, "{\n");
 
   for(f = s->firstField; f != NULL; f = f->next) {
     int m = PrintField(fieldPrefix, f, &str[n]);
@@ -863,22 +878,29 @@ static int PrintObject(const char *prefix, const XStructure *s, char *str, boole
   }
 
   free(fieldPrefix);
-  n += sprintf(&str[n], asArray ? "%s]" : "%s}", prefix);
+  n += sprintf(&str[n], "%s}", prefix);
 
   return n;
 }
 
 
-static int GetFieldStringSize(int prefixSize, const XField *f) {
+static int GetFieldStringSize(int prefixSize, const XField *f, boolean ignoreName) {
   static const char *fn = "GetFieldStringSize";
 
   int m;
 
   if(f == NULL) return 0;
-  if(f->name == NULL) return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is NULL");
-  if(*f->name == '\0') return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is empty");
+  if(!ignoreName) {
+    if(f->name == NULL) return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is NULL");
+    if(*f->name == '\0') return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is empty");
+  }
 
   if(!f->value) m = 4; // "null"
+  else if(f->type == X_FIELD) {
+    const XField *e = (XField *) f->value;
+    int i;
+    for(m = 0, i = xGetElementCount(f->ndim, f->sizes); --i >= 0;) m += GetFieldStringSize(prefixSize, e, TRUE);
+  }
   else if(f->ndim > 1) m = GetArrayStringSize(prefixSize, f->value, f->type, f->ndim, f->sizes);
   else switch(f->type) {
     case X_STRUCT: m = GetObjectStringSize(prefixSize, (XStructure *) f->value); break;
@@ -894,7 +916,9 @@ static int GetFieldStringSize(int prefixSize, const XField *f) {
 
   prop_error(fn, m);
 
-  return m + GetJsonStringSize(f->name, TERMINATED_STRING) + 4;   // <"name"> + ': ' + <value> + ',\n'
+  if(!ignoreName) m += GetJsonStringSize(f->name, TERMINATED_STRING) + 4;   // <"name"> + ': ' + <value> + ',\n'
+
+  return m;
 }
 
 
@@ -925,7 +949,7 @@ static int PrintField(const char *prefix, const XField *f, char *str) {
 
 
 static __inline__ int IsNewLine(XType type, int ndim) {
-  return (ndim > 1 || type == X_STRUCT);
+  return (ndim > 1 || type == X_STRUCT || type == X_FIELD);
 }
 
 
@@ -982,7 +1006,21 @@ static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const
   if(ndim < 0) return x_error(X_SIZE_INVALID, ERANGE, fn, "invalid ndim: %d", ndim);
 
   if(ndim == 0) {
-    int n = (type == X_STRUCT) ? PrintObject(prefix, (XStructure *) ptr, str, FALSE) : PrintPrimitive(ptr, type, str);
+    int n;
+
+    switch(type) {
+      case X_STRUCT:
+        n = PrintObject(prefix, (XStructure *) ptr, str);
+        break;
+      case X_FIELD: {
+        XField *f = (XField *) ptr;
+        n = PrintArray(prefix, f->value, f->type, f->ndim, f->sizes, str);
+        break;
+      }
+      default:
+        n = PrintPrimitive(ptr, type, str);
+    }
+
     prop_error(fn, n);
     return n;
   }
@@ -1023,12 +1061,7 @@ static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const
 
       // The next element...
       if (type == X_STRUCT) {
-        XStructure *s = (XStructure *) ptr;
-
-        // Check if we should print the structure element as just an array. It is possible
-        // only if the structure contains a single unnamed field only.
-        boolean asObject = s->firstField && (s->firstField->name || s->firstField->next);
-        m = PrintObject(rowPrefix, (XStructure *) ptr, str, !asObject);
+        m = PrintObject(rowPrefix, (XStructure *) ptr, str);
       }
       else {
         m = PrintArray(rowPrefix, ptr, type, ndim-1, &sizes[1], str);

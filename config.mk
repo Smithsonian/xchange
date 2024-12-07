@@ -31,7 +31,8 @@ CFLAGS ?= -g -Os -Wall -std=c99
 
 # cppcheck options for 'check' target
 CHECKOPTS ?= --enable=performance,warning,portability,style --language=c \
-            --error-exitcode=1 --std=c99 $(CHECKEXTRA)
+            --error-exitcode=1 --inline-suppr --std=c99 $(CHECKEXTRA)
+
 
 # Exhaustive checking for newer cppcheck
 #CHECKOPTS += --check-level=exhaustive

@@ -230,6 +230,7 @@ int xElementSizeOf(XType type) {
     case X_DOUBLE: return sizeof(double);
     case X_STRUCT: return sizeof(XStructure);
     case X_STRING: return sizeof(char *);
+    case X_FIELD: return sizeof(XField);
   }
   return 0;
 }
@@ -510,10 +511,15 @@ double xParseDouble(const char *str, char **tail) {
 #if EXPLCIT_PARSE_SPECIAL_DOUBLES
   {
     char *next = (char *) str;
+    int sign = 1;
 
     while(isspace(*next)) next++;
 
-    if(*next == '+' || *next == '-') next++;          // Skip sign (if any)
+    if(*next == '+') next++;          // Skip sign (if any)
+    else if(*next == '-') {
+      sign = -1;
+      next++;          // Skip sign (if any)
+    }
 
     // If leading character is not a number or a decimal point, then check for special values.
     if(*next) if((*next < '0' || *next > '9') && *next != '.') {
@@ -523,11 +529,13 @@ double xParseDouble(const char *str, char **tail) {
       }
       if(!CompareToken("inf", next)) {
         if(tail) *tail = next + sizeof("inf") - 1;
-        return NAN;
+        // cppcheck-suppress nanInArithmeticExpression
+        return sign > 0 ? INFINITY : -INFINITY;
       }
       if(!CompareToken("infinity", next)) {
         if(tail) *tail = next + sizeof("infinity") - 1;
-        return NAN;
+        // cppcheck-suppress nanInArithmeticExpression
+        return sign > 0 ? INFINITY : -INFINITY;
       }
     }
   }
@@ -552,8 +560,8 @@ int xPrintDouble(char *str, double value) {
     return x_error(-1, EINVAL, "xPrintDouble", "input string is NULL");
 
   // For double-precision restrict range to IEEE range
-  if(value > DBL_MAX) return sprintf(str, "nan");
-  else if(value < -DBL_MAX) return sprintf(str, "nan");
+  if(value > DBL_MAX) return sprintf(str, "inf");
+  else if(value < -DBL_MAX) return sprintf(str, "-inf");
   else if(isnan(value)) return sprintf(str, "nan");
   else if(value < DBL_MIN) if(value > -DBL_MIN) return sprintf(str, "0");
 
@@ -575,8 +583,8 @@ int xPrintFloat(char *str, float value) {
     return x_error(-1, EINVAL, "xPrintFloat", "input string is NULL");
 
   // For single-precision restrict range to IEEE range
-  if(value > FLT_MAX) return sprintf(str, "nan");
-  else if(value < -FLT_MAX) return sprintf(str, "nan");
+  if(value > FLT_MAX) return sprintf(str, "inf");
+  else if(value < -FLT_MAX) return sprintf(str, "-inf");
   else if(isnan(value)) return sprintf(str, "nan");
   else if(value < FLT_MIN) if(value > -FLT_MIN) return sprintf(str, "0");
 

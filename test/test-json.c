@@ -22,6 +22,16 @@ static XStructure *createStruct() {
   int sizes[] = {3, 10};
   int empty[] = {0, 0};
 
+  int i1[] = {1, 2};
+  char *s2[] = {"aa", "bb", "cc"};
+  boolean b3[] = {TRUE};
+
+  // Heterogeneous array...
+  XField *f1 = xCreate1DField(".1", X_INT, 2, i1);
+  XField *f2 = xCreate1DField(".3", X_BOOLEAN, 1, b3);
+  XField *f3 = xCreate1DField(".2", X_STRING, 3, s2);
+  XField fa[] = {*f1, *f2, *f3 };
+
   xSetField(s, xCreateBooleanField("bool", 1));
   xSetField(s, xCreateStringField("string", "Hello world!"));
   xSetField(s, xCreateIntField("int", -10));
@@ -29,6 +39,7 @@ static XStructure *createStruct() {
   xSetField(s, xCreateDoubleField("double", 1.2345e-11));
   xSetField(s, xCreateField("array", X_INT, 2, sizes, array));
   xSetField(s, xCreateField("empty-array", X_INT, 2, empty, array));
+  xSetField(s, xCreate1DField("hetero-array", X_FIELD, 3, fa));
 
   xSetField(sub, xCreateIntField("int", 1154));
   xSetField(sub, xCreateStringField("string", "Here go the \n\t special chars."));
@@ -42,10 +53,12 @@ static XStructure *createStruct() {
 
 int main(int argc, char *argv[]) {
   XStructure *s = createStruct(), *s1;
-  char *str = xjsonToString(s), *next, *str1;
+  char *str, *next, *str1;
 
-  printf("%s\n\n", str);
   xSetDebug(TRUE);
+
+  str = xjsonToString(s),
+  printf("%s\n\n", str);
 
   next = str;
   s1 = xjsonParseAt(&next, NULL);
@@ -53,7 +66,7 @@ int main(int argc, char *argv[]) {
   str1 = xjsonToString(s1);
   if(strcmp(str1, str) != 0) {
     fprintf(stderr, "ERROR! str1 != str:\n\n");
-    printf("%s\n\n", str1);
+    printf(" str1: %s\n\n", str1);
     return 1;
   }
 

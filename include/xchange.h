@@ -96,7 +96,8 @@ typedef int XType;          ///< SMA-X data type.
 #define X_DOUBLE            'D'     ///< \hideinitializer double-precision (64) bit floating point XType
 #define X_STRING            '$'     ///< \hideinitializer a terminated string XType
 #define X_RAW               'R'     ///< \hideinitializer raw Redis (string) value XType, as stored in database
-#define X_STRUCT            'X'     ///< \hideinitializer An XStructure XType
+#define X_STRUCT            'X'     ///< \hideinitializer XType for an XStructure or array thereof
+#define X_FIELD             '-'     ///< \hideinitializer XType for an XField or array thereof
 
 #define X_SEP               ":"             ///< sepatator for patterning of notification channels, e.g. "changed:<table>:<key>"
 #define X_SEP_LENGTH         (sizeof(X_SEP) - 1)    ///< String length of hierarchical separator.
@@ -116,7 +117,15 @@ typedef int boolean;               ///< boolean TRUE/FALSE data type.
 #  ifdef _NAN
 #    define NAN _NAN
 #  else
-#    define NAN (0.0/0.0)           ///< Not-a-number in case it's not already defined in math.h
+#    define NAN (0.0/0.0)          ///< Not-a-number in case it's not already defined in math.h
+#  endif
+#endif
+
+#ifndef INFINITY
+#  ifdef _INFINITY
+#    define INFINITY _INFINITY
+#  else
+#    define INFINITY (1.0/0.0)    ///< Infinity in case it's not already defined in math.h
 #  endif
 #endif
 
