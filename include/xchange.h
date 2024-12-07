@@ -206,6 +206,7 @@ void xClearStruct(XStructure *s);
 XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, const void *value);
 XField *xCreateScalarField(const char *name, XType type, const void *value);
 XField *xCopyOfField(const XField *f);
+void xClearField(XField *f);
 void xDestroyField(XField *f);
 XField *xGetField(const XStructure *s, const char *name);
 XField *xSetField(XStructure *s, XField *f);

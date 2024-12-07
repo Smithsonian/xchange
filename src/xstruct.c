@@ -727,28 +727,51 @@ void xDestroyStruct(XStructure *s) {
 }
 
 /**
- * Destroys an X structure field, freeing up resources used. For
+ * Clears an X structure field, freeing up all referfenced resources. However, the
+ * field itself is kept, but its contents are reset.
  *
- * \param f     Pointer to the field to be destroyed.
+ * \param f     Pointer to the field to be cleared.
  *
+ * \sa xDestroyField()
  */
-void xDestroyField(XField *f) {
+void xClearField(XField *f) {
   if(!f) return;
 
   if(f->value) {
+
     if(f->type == X_STRUCT) {
       XStructure *sub = (XStructure *) f->value;
       int i = xGetFieldCount(f);
       while(--i >= 0) xClearStruct(&sub[i]);
     }
+
+    if(f->type == X_FIELD) {
+      XField *array = (XField *) f->value;
+      int i;
+      for(i = xGetFieldCount(f); --i >=0;) xClearField(&array[i]);
+    }
+
     free(f->value);
   }
 
   if(f->name != NULL) free(f->name);
 
-  free(f);
+  memset(f, 0, sizeof(XField));
 }
 
+/**
+ * Destroys an X structure field, freeing up all referenced resources, and
+ * destroying the field itself.
+ *
+ * \param f     Pointer to the field to be destroyed.
+ *
+ * \sa xClearField()
+ */
+void xDestroyField(XField *f) {
+  if(!f) return;
+  xClearField(f);
+  free(f);
+}
 
 /**
  * Destroys the contents of an X structure, leaving the structure empty.
