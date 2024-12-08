@@ -115,7 +115,7 @@ typedef int boolean;               ///< boolean TRUE/FALSE data type.
 
 #ifndef NAN
 #  ifdef _NAN
-#    define NAN _NAN
+#    define NAN _NAN               ///< Not-a-number in case it's not already defined in math.h
 #  else
 #    define NAN (0.0/0.0)          ///< Not-a-number in case it's not already defined in math.h
 #  endif
@@ -123,9 +123,9 @@ typedef int boolean;               ///< boolean TRUE/FALSE data type.
 
 #ifndef INFINITY
 #  ifdef _INFINITY
-#    define INFINITY _INFINITY
+#    define INFINITY _INFINITY     ///< Infinity in case it's not already defined in math.h
 #  else
-#    define INFINITY (1.0/0.0)    ///< Infinity in case it's not already defined in math.h
+#    define INFINITY (1.0/0.0)     ///< Infinity in case it's not already defined in math.h
 #  endif
 #endif
 
@@ -243,6 +243,8 @@ XField *xCreateLongField(const char *name, long long value);
 XField *xCreateBooleanField(const char *name, boolean value);
 XField *xCreateStringField(const char *name, const char *value);
 XField *xCreate1DField(const char *name, XType type, int count, const void *values);
+XField *xCreateFieldArray(const char *name, int ndim, const int *sizes);
+XField *xCreate1DFieldArray(const char *name, int size);
 
 // Parsers / formatters
 boolean xParseBoolean(char *str, char **end);

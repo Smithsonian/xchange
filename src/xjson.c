@@ -149,7 +149,6 @@ char *xjsonToString(const XStructure *s) {
   return str;
 }
 
-
 /**
  * Parses a JSON object from the given parse position, returning the structured data
  * and updating the parse position. Parse errors are reported to stderr or the alternate

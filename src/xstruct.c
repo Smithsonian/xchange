@@ -35,6 +35,60 @@ XStructure *xCreateStruct() {
 }
 
 /**
+ * Creates a field containing an array of heterogeneous fields. Each element of the
+ * array may have a different type and/or size.
+ *
+ * @param name    The name of the array field
+ * @param ndim    The dimensionality of the heterogeneous components
+ * @param sizes   The individual sizes along each dimension
+ * @return        A field containing a heterogeneous array of entries, or NULL if there
+ *                was an error. The entries are initially empty, except for their names
+ *                bearing '.' followed by the 1-based array index, e.g. '.1', '.2'...
+ */
+XField *xCreateFieldArray(const char *name, int ndim, const int *sizes) {
+  static const char *fn = "xCreateFieldArray";
+
+  int count = xGetElementCount(ndim, sizes);
+  XField *array = NULL, *f;
+
+  if(count < 0) return x_trace_null(fn, NULL);
+
+  if(count) {
+    array = (XField *) calloc(count, sizeof(XField));
+    if(array == NULL) {
+      x_error(0, errno, fn, "alloc error (%d fields)", count);
+      return NULL;
+    }
+  }
+
+  f = xCreateField(name, X_FIELD, ndim, sizes, array);
+  x_check_alloc(f);
+
+  while(--count >= 0) {
+    char idx[20];
+    sprintf(idx, ".%d", (count+1));
+    array[count].name = xStringCopyOf(idx);
+  }
+
+  return f;
+}
+
+/**
+ * Creates a field containing a 1D array of heterogeneous fields. Each element of the
+ * array may have a different type and/or size.
+ *
+ * @param name    The name of the array field
+ * @param size   The number of heterogeneous fields in the array.
+ * @return        A field containing a heterogeneous array of entries, or NULL if there
+ *                was an error. The entries are initially empty, except for their names
+ *                bearing '.' followed by the 1-based array index, e.g. '.1', '.2'...
+ */
+XField *xCreate1DFieldArray(const char *name, int size) {
+  const int sizes[X_MAX_DIMS] = { size };
+  return xCreateFieldArray(name, 1, sizes);
+}
+
+/**
  * Returns a deep copy of the supplied structure. Note that this only works with vanilla xchange structures
  * with native storage fields. For example, SMA-X structures store data in serialized forms, and therefore it
  * needs its own implementation for making deep copies of structs!
