@@ -197,8 +197,6 @@ char *xjsonFieldToString(const XField *f) {
     return NULL;
   }
 
-  sprintf(&str[n], "\n");
-
   return str;
 }
 
