@@ -44,8 +44,10 @@ XStructure *xCreateStruct() {
  * @return        A field containing a heterogeneous array of entries, or NULL if there
  *                was an error. The entries are initially empty, except for their names
  *                bearing '.' followed by the 1-based array index, e.g. '.1', '.2'...
+ *
+ * @sa xCreateHeterogeneous1DField()
  */
-XField *xCreateFieldArray(const char *name, int ndim, const int *sizes) {
+XField *xCreateHeterogeneousArrayField(const char *name, int ndim, const int *sizes) {
   static const char *fn = "xCreateFieldArray";
 
   int count = xGetElementCount(ndim, sizes);
@@ -82,10 +84,12 @@ XField *xCreateFieldArray(const char *name, int ndim, const int *sizes) {
  * @return        A field containing a heterogeneous array of entries, or NULL if there
  *                was an error. The entries are initially empty, except for their names
  *                bearing '.' followed by the 1-based array index, e.g. '.1', '.2'...
+ *
+ * @sa xCreateHeterogeneousArrayField()
  */
-XField *xCreate1DFieldArray(const char *name, int size) {
+XField *xCreateHeterogeneous1DField(const char *name, int size) {
   const int sizes[X_MAX_DIMS] = { size };
-  return xCreateFieldArray(name, 1, sizes);
+  return xCreateHeterogeneousArrayField(name, 1, sizes);
 }
 
 /**
