@@ -48,6 +48,7 @@
 /// \endcond
 
 static XStructure *ParseObject(char **pos, int *lineNumber);
+static XField *ParseField(char **pos, int *lineNumber);
 static void *ParseValue(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS], int *lineNumber);
 static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS], int *lineNumber);
 static char *ParseString(char **pos, int *lineNumber);
@@ -109,6 +110,7 @@ int xjsonGetIndent() {
  * @param s     Pointer to structured data
  * @return      String JSON representation, or NULL if there was an error (errno set to EINVAL).
  *
+ * @sa xjsonFieldToString()
  * @sa xjsonSetIndent()
  * @sa xjsonParseAt()
  * @sa xjsonParseFile()
@@ -149,6 +151,57 @@ char *xjsonToString(const XStructure *s) {
   return str;
 }
 
+
+/**
+ * Converts an XField into its JSON representation. Conversion errors are reported to stderr
+ * or the altenate stream set by xSetErrorStream().
+ *
+ * @param f     Pointer to field
+ * @return      String JSON representation, or NULL if there was an error (errno set to EINVAL).
+ *
+ * @sa xjsonToString()
+ * @sa xjsonSetIndent()
+ * @sa xjsonParseAt()
+ * @sa xjsonParseFile()
+ * @sa xjsonParseFilename()
+ */
+char *xjsonFieldToString(const XField *f) {
+  char *str;
+
+  int n;
+
+  if(!f) {
+    x_error(0, X_NULL, "xjsonFieldToString", "input field is NULL");
+    return NULL;
+  }
+
+  if(!xerr) xerr = stderr;
+
+  n = GetFieldStringSize(0, f, FALSE);
+
+  if(n < 0) {
+    Error("%s\n", xErrorDescription(n));
+    errno = EINVAL;
+    return NULL;
+  }
+
+  str = (char *) malloc(n + 1);
+  if(!str) {
+    Error("Out of memory (need %ld bytes).\n", (long) (n+1));
+    return NULL;
+  }
+
+  n = PrintField("", f, str);
+  if (n < 0) {
+    free(str);
+    return NULL;
+  }
+
+  sprintf(&str[n], "\n");
+
+  return str;
+}
+
 /**
  * Parses a JSON object from the given parse position, returning the structured data
  * and updating the parse position. Parse errors are reported to stderr or the alternate
@@ -165,6 +218,7 @@ char *xjsonToString(const XStructure *s) {
  *                set to EINVAL).
  *                The lineNumber argument can be used to determine where the error occurred.
  *
+ * @sa xjsonParseFieldAt()
  * @sa xjsonToString()
  * @sa xjsonParseFile()
  * @sa xjsonParseFileName()
@@ -183,6 +237,43 @@ XStructure *xjsonParseAt(char **pos, int *lineNumber) {
   *lineNumber = 1;      // Start at line 1...
 
   return ParseObject(pos, lineNumber);
+}
+
+/**
+ * Parses a JSON field from the given parse position, returning the field's data in the xchange
+ * format and updating the parse position. Parse errors are reported to stderr or the alternate
+ * stream set by xSetErrorStream().
+ *
+ *
+ * @param[in,out] pos           Pointer to current parse position, which will be updated to point to after the last character consumed
+ *                              by the JSON parser.
+ * @param[out]    lineNumber    Optional pointer that holds a line number of the parse position, or NULL if not required.
+ *                              Line numbers may be useful to report where the parser run into an error if the parsing failed.
+ *                              Line numbers start at 1, and are counted from the initial parse position.
+ *
+ * @return        Structured data created from the JSON description, or NULL if there was an error parsing the data (errno is
+ *                set to EINVAL).
+ *                The lineNumber argument can be used to determine where the error occurred.
+ *
+ * @sa xjsonParseAt()
+ * @sa xjsonToString()
+ * @sa xjsonParseFile()
+ * @sa xjsonParseFileName()
+ */
+XField *xjsonParseFieldAt(char **pos, int *lineNumber) {
+  int n;
+
+  if(!pos) {
+    x_error(0, EINVAL, "xjsonParseAt", "'pos' parameter is NULL");
+    return NULL;
+  }
+
+  if(!xerr) xerr = stderr;
+
+  if(!lineNumber) lineNumber = &n;
+  *lineNumber = 1;      // Start at line 1...
+
+  return ParseField(pos, lineNumber);
 }
 
 /**
@@ -389,92 +480,102 @@ static char *GetToken(char *from) {
   return token;
 }
 
+static XField *ParseField(char **pos, int *lineNumber) {
+  XField *f;
+
+  *pos = SkipSpaces(*pos, lineNumber);
+
+  f = calloc(1, sizeof(XField));
+  x_check_alloc(f);
+
+  f->name = ParseString(pos, lineNumber);
+  *pos = SkipSpaces(*pos, lineNumber);
+
+  if(**pos != ':') {
+    char *token = GetToken(*pos);
+    Warning("[L.%d] Missing key:value separator ':' near '%s'\n", *lineNumber, token);
+    free(token);
+    xDestroyField(f);
+    return NULL;
+  }
+
+  (*pos)++;
+  *pos = SkipSpaces(*pos, lineNumber);
+
+  switch(**pos) {
+    case '{':
+      f->type = X_STRUCT;
+      f->value = (void *) ParseObject(pos, lineNumber);
+      break;
+    case '[':
+      f->value = ParseArray(pos, &f->type, &f->ndim, f->sizes, lineNumber);
+      break;
+    case '"': {
+      char **str = malloc(sizeof(char *));
+      x_check_alloc(str);
+
+      *str = ParseString(pos, lineNumber);
+      f->type = X_STRING;
+      f->value = (char *) str;
+      break;
+    }
+    default:
+      f->value = ParsePrimitive(pos, &f->type, lineNumber);
+  }
+
+  return f;
+}
+
 static XStructure *ParseObject(char **pos, int *lineNumber) {
-  char *next;
   XStructure *s;
 
-  next = *pos = SkipSpaces(*pos, lineNumber);
+  *pos = SkipSpaces(*pos, lineNumber);
 
-  if(*next != '{') {
-    char *bad = GetToken(next);
+  if(**pos != '{') {
+    char *bad = GetToken(*pos);
     Error("[L.%d] Expected '{', got \"%s\"\n", *lineNumber, bad);
     free(bad);
     return NULL;
   }
 
-  next++; // Opening {
+  (*pos)++; // Opening {
 
   s = (XStructure *) calloc(1, sizeof(XStructure));
   x_check_alloc(s);
 
-  while(*next) {
+  while(**pos) {
     XField *f;
 
-    next = SkipSpaces(next, lineNumber);
+    *pos = SkipSpaces(*pos, lineNumber);
 
-    if(*next == '}') {
-      next++;
+    if(**pos == '}') {
+      (*pos)++;
       break;
     }
 
-    if(*next == ',') {
+    if(**pos == ',') {
       Warning("[L.%d] Empty field.\n", *lineNumber);
-      next++;
+      (*pos)++;
       continue;
     }
 
-    f = calloc(1, sizeof(XField));
-    x_check_alloc(f);
-
-    f->name = ParseString(&next, lineNumber);
-    next = SkipSpaces(next, lineNumber);
-
-    if(*next != ':') {
-      char *token = GetToken(next);
-      Warning("[L.%d] Missing key:value separator ':' near '%s'\n", *lineNumber, token);
-      free(token);
-      continue;
-    }
-    next++;
-    next = SkipSpaces(next, lineNumber);
-
-    switch(*next) {
-      case '{':
-        f->type = X_STRUCT;
-        f->value = (void *) ParseObject(&next, lineNumber);
-        break;
-      case '[':
-        f->value = ParseArray(&next, &f->type, &f->ndim, f->sizes, lineNumber);
-        break;
-      case '"': {
-        char **str = malloc(sizeof(char *));
-        x_check_alloc(str);
-
-        *str = ParseString(&next, lineNumber);
-        f->type = X_STRING;
-        f->value = (char *) str;
-        break;
-      }
-      default:
-        f->value = ParsePrimitive(&next, &f->type, lineNumber);
-    }
+    f = ParseField(pos, lineNumber);
+    if(!f) break;
 
     f = xSetField(s, f);
     if(f) xDestroyField(f); // If duplicate field, destroy the prior one.
 
     // Spaces after field...
-    next = SkipSpaces(next, lineNumber);
+    *pos = SkipSpaces(*pos, lineNumber);
 
     // There should be either a comma or a closing bracket after the field...
-    if(*next == ',') next++;
-    else if(*next == '}') {
-      next++;
+    if(**pos == ',') (*pos)++;
+    else if(**pos == '}') {
+      (*pos)++;
       break;
     }
     else Warning("[L.%d] Missing comma or closing bracket after field.\n", *lineNumber);
   }
-
-  *pos = next;
 
   return s;
 }
@@ -885,38 +986,22 @@ static int PrintObject(const char *prefix, const XStructure *s, char *str) {
 static int GetFieldStringSize(int prefixSize, const XField *f, boolean ignoreName) {
   static const char *fn = "GetFieldStringSize";
 
-  int m;
+  int n = prefixSize, m;
 
   if(f == NULL) return 0;
+
   if(!ignoreName) {
     if(f->name == NULL) return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is NULL");
     if(*f->name == '\0') return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is empty");
+    m = GetJsonStringSize(f->name, TERMINATED_STRING) + 4;   // <"name"> + ': ' + <value> + ',\n'
+    prop_error(fn, m);
+    n += m;
   }
 
-  if(!f->value) m = 4; // "null"
-  else if(f->type == X_FIELD) {
-    const XField *e = (XField *) f->value;
-    int i;
-    for(m = 0, i = xGetElementCount(f->ndim, f->sizes); --i >= 0;) m += GetFieldStringSize(prefixSize, e, TRUE);
-  }
-  else if(f->ndim > 1) m = GetArrayStringSize(prefixSize, f->value, f->type, f->ndim, f->sizes);
-  else switch(f->type) {
-    case X_STRUCT: m = GetObjectStringSize(prefixSize, (XStructure *) f->value); break;
-    case X_STRING:
-    case X_RAW:
-      m = GetJsonStringSize((char *) f->value, TERMINATED_STRING);
-      break;
-    default: {
-      if (xGetElementCount(f->ndim, f->sizes) == 0) return 0;
-      m = xStringElementSizeOf(f->type);
-    }
-  }
-
+  m = GetArrayStringSize(prefixSize, f->value, f->type, f->ndim, f->sizes);
   prop_error(fn, m);
 
-  if(!ignoreName) m += GetJsonStringSize(f->name, TERMINATED_STRING) + 4;   // <"name"> + ': ' + <value> + ',\n'
-
-  return m;
+  return n + m; // termination
 }
 
 
@@ -959,15 +1044,36 @@ static __inline__ int SizeOf(XType type, int ndim, const int *sizes) {
 static int GetArrayStringSize(int prefixSize, char *ptr, XType type, int ndim, const int *sizes) {
   static const char *fn = "GetArrayStringSize";
 
-  if(!ptr) return x_error(X_NULL, EINVAL, fn, "data pointer is NULL");
+  if(!ptr) return prefixSize + 4; // null
   if(ndim < 0) return x_error(X_SIZE_INVALID, EINVAL, fn, "invalid ndim: %d", ndim);
 
   if(ndim == 0) {
     int m;
 
-    if(type == X_STRUCT) m = GetObjectStringSize(prefixSize, (XStructure *) ptr);
-    else if(type == X_STRING || type == X_RAW) m = GetJsonStringSize((char *) ptr, TERMINATED_STRING);
-    else return m = xStringElementSizeOf(type);
+    switch(type) {
+
+      case X_STRUCT:
+        m = GetObjectStringSize(prefixSize, (XStructure *) ptr);
+        break;
+
+      case X_STRING:
+      case X_RAW:
+        m = GetJsonStringSize(*(char **) ptr, TERMINATED_STRING);
+        prop_error(fn, m);
+        m += prefixSize;
+        break;
+
+      case X_FIELD: {
+        const XField *f = (XField *) ptr;
+        m = GetFieldStringSize(prefixSize, f, TRUE);
+        break;
+      }
+
+      default:
+        m = xStringElementSizeOf(type);
+        prop_error(fn, m);
+        m += prefixSize;
+    }
 
     prop_error(fn, m);
     return m;
@@ -979,13 +1085,18 @@ static int GetArrayStringSize(int prefixSize, char *ptr, XType type, int ndim, c
     int k;
 
     int n = 4;     // "[ " + .... +  " ]" or "[\n" + ... + "\n]"
-    if(newLine) n += prefixSize << 1;    // Indentations if on new lines
+    if(newLine) n += prefixSize + 1;            // '\n' + prefix
 
     for(k = 0; k < N; k++, ptr += rowSize) {
-      int m = GetArrayStringSize(prefixSize + ilen, ptr, type, ndim-1, &sizes[1]);
-      prop_error(fn, m);
+      XType eType = type;
 
-      if(newLine) n += prefixSize + ilen;
+      if(type == X_FIELD) {
+        const XField *f = (XField *) ptr;
+        eType = f->type;
+      }
+
+      int m = GetArrayStringSize(prefixSize + ilen, ptr, eType, ndim-1, &sizes[1]);
+      prop_error(fn, m);
       n += m + 3; // + " , " or " ,\n"
     }
     return n;
@@ -1024,8 +1135,8 @@ static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const
   }
   else {
     const int N = sizes[0];
-    const int rowSize = SizeOf(type, ndim-1, &sizes[1]);
-    const boolean newLine = IsNewLine(type, ndim);
+    const int rowSize = ptr ? SizeOf(type, ndim-1, &sizes[1]) : 0;
+    const boolean newLine = ptr ? IsNewLine(type, ndim) : FALSE;
 
     int k;
     char *rowPrefix;

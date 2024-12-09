@@ -23,9 +23,11 @@ void xjsonSetIndent(int nchars);
 int xjsonGetIndent();
 
 char *xjsonToString(const XStructure *s);
+char *xjsonFieldToString(const XField *f);
 XStructure *xjsonParseFilename(const char *fileName, int *lineNumber);
 XStructure *xjsonParseFile(FILE *file, size_t length, int *lineNumber);
 XStructure *xjsonParseAt(char **src, int *lineNumber);
+XField *xjsonParseFieldAt(char **src, int *lineNumber);
 void xjsonSetErrorStream(FILE *fp);
 
 char *xjsonEscapeString(const char *src, int maxLength);
