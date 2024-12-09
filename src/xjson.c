@@ -134,7 +134,7 @@ char *xjsonToString(const XStructure *s) {
     return NULL;
   }
 
-  str = (char *) malloc(n + 1);
+  str = (char *) malloc(n + 2);     // + '\n' + '\0'
   if(!str) {
     Error("Out of memory (need %ld bytes).\n", (long) (n+1));
     return NULL;
@@ -185,7 +185,7 @@ char *xjsonFieldToString(const XField *f) {
     return NULL;
   }
 
-  str = (char *) malloc(n + 1);
+  str = (char *) malloc(n + 1);  // + '\0'
   if(!str) {
     Error("Out of memory (need %ld bytes).\n", (long) (n+1));
     return NULL;
@@ -984,14 +984,14 @@ static int PrintObject(const char *prefix, const XStructure *s, char *str) {
 static int GetFieldStringSize(int prefixSize, const XField *f, boolean ignoreName) {
   static const char *fn = "GetFieldStringSize";
 
-  int n = prefixSize, m;
+  int n = prefixSize + 2, m;      // <value> + `,\n`
 
   if(f == NULL) return 0;
 
   if(!ignoreName) {
     if(f->name == NULL) return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is NULL");
     if(*f->name == '\0') return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is empty");
-    m = GetJsonStringSize(f->name, TERMINATED_STRING) + 4;   // <"name"> + ': ' + <value> + ',\n'
+    m = GetJsonStringSize(f->name, TERMINATED_STRING) + 2;   // <"name"> + ': '
     prop_error(fn, m);
     n += m;
   }
