@@ -500,6 +500,25 @@ XField *xCreateStringField(const char *name, const char *value) {
   return f;
 }
 
+/**
+ * Sets the optional subtype (e.g. mime type) for a field's content to a copy of the specified
+ * string value. The subtype can be used to add any application specific information on how the
+ * specified value should be used. For example it may indicate a mime type or an encoding.
+ * It is entirely up to the user as to what meaning the subtype has for their application.
+ *
+ * @param f       Pointer to a field
+ * @param type    The new subtype to be assigned to the field. A copy of the value is used rather
+ *                than the reference, so that the string that was supplied can be safely discarded
+ *                at any point after the call.
+ * @return        X_SUCCESS (0) if successful or else X_NULL if the intput field pointer is NULL.
+ */
+int xSetSubtype(XField *f, const char *type) {
+  if(!f) return x_error(X_NULL, EINVAL, "xSetSubtype", "input field is NULL");
+  if(f->subtype) free(f->subtype);
+  f->subtype = xStringCopyOf(type);
+
+  return X_SUCCESS;
+}
 
 /**
  * Checks if a given field has valid data.

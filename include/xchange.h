@@ -142,7 +142,8 @@ typedef struct XField {
   char *value;              ///< Pointer to designated local string content (or structure)...
                             ///< NOTE: it should normally be dynamically allocated, to work with xClearField() / xDestroyField().
   XType type;               ///< The underlyng data type
-  char *subtype;            ///< Descriptive subtype, such a a mime type (if any)
+  char *subtype;            ///< (optional) Descriptive subtype, such a a mime type or encoding (if any). It is
+                            ///< entirely up to the user / application to assing meaning to this field.
                             ///< NOTE: it should normally be dynamically allocated, to work with xClearField() / xDestroyField().
   int ndim;                 ///< The dimensionality of the data
   int sizes[X_MAX_DIMS];    ///< The sizes along each dimension
@@ -245,6 +246,7 @@ XField *xCreateStringField(const char *name, const char *value);
 XField *xCreate1DField(const char *name, XType type, int count, const void *values);
 XField *xCreateMixedArrayField(const char *name, int ndim, const int *sizes, XField *value);
 XField *xCreateMixed1DField(const char *name, int size, XField *value);
+int xSetSubtype(XField *f, const char *type);
 
 // Parsers / formatters
 boolean xParseBoolean(char *str, char **end);
