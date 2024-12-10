@@ -140,9 +140,9 @@ typedef struct XField {
   char *name;               ///< Pointer to a designated local name buffer. It may not contain a separator (see X_SEP).
   char *value;              ///< Pointer to designated local string content (or structure)...
   XType type;               ///< The underlyng data type
+  char *subtype;            ///< Descriptive subtype, such a a mime type (if any)
   int ndim;                 ///< The dimensionality of the data
   int sizes[X_MAX_DIMS];    ///< The sizes along each dimension
-  uint32_t flags;           ///< (optional) flags that specific data exchange mechanism may use, e.g. for BSON subtype.
   boolean isSerialized;     ///< Whether the fields is stored in serialized (string) format.
   struct XField *next;      ///< Pointer to the next linked element (if inside an XStructure).
 } XField;
@@ -150,7 +150,7 @@ typedef struct XField {
 /**
  * Static initializer for the XField data structure.
   */
-#define X_FIELD_INIT        {NULL}
+#define X_FIELD_INIT        {NULL, NULL, X_UNKNOWN, NULL, 0, {0}, FALSE, NULL}
 
 /**
  * \brief SMA-X structure object, containing a linked-list of XField elements.

@@ -813,6 +813,7 @@ void xClearField(XField *f) {
   }
 
   if(f->name != NULL) free(f->name);
+  if(f->subtype) free(f->subtype);
 
   memset(f, 0, sizeof(XField));
 }
