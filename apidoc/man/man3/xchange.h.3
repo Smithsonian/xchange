@@ -33,6 +33,10 @@ include/xchange.h
 .br
 .RI "Boolean 'false' value, if not already defined\&. "
 .ti -1c
+.RI "#define \fBINFINITY\fP   (1\&.0/0\&.0)"
+.br
+.RI "Infinity in case it's not already defined in math\&.h\&. "
+.ti -1c
 .RI "#define \fBMAX_DEBUG_ERROR_COUNT\fP   100"
 .br
 .RI "Stop reporting errors if the number of them exceeds this count\&. "
@@ -65,10 +69,6 @@ include/xchange.h
 .br
 .RI "single byte XType "
 .ti -1c
-.RI "#define \fBX_BYTE_HEX\fP"
-.br
-.RI "single byte XType in dexadecimal representation "
-.ti -1c
 .RI "#define \fBX_CHARS\fP(length)"
 .br
 .RI "A fixed-size sequence of 'length' bytes\&. "
@@ -81,7 +81,11 @@ include/xchange.h
 .br
 .RI "didn't quite work "
 .ti -1c
-.RI "#define \fBX_FIELD_INIT\fP   {NULL}"
+.RI "#define \fBX_FIELD\fP"
+.br
+.RI "XType for an \fBXField\fP or array thereof\&. "
+.ti -1c
+.RI "#define \fBX_FIELD_INIT\fP   {NULL, NULL, \fBX_UNKNOWN\fP, NULL, 0, {0}, \fBFALSE\fP, NULL}"
 .br
 .ti -1c
 .RI "#define \fBX_FLOAT\fP"
@@ -100,10 +104,6 @@ include/xchange.h
 .br
 .RI "native int XType (usually 16-bits) "
 .ti -1c
-.RI "#define \fBX_INT_HEX\fP"
-.br
-.RI "native int XType in hexadecimal representation "
-.ti -1c
 .RI "#define \fBX_INTERRUPTED\fP   (\-8)"
 .br
 .RI "a waiting call interrupted by user "
@@ -111,10 +111,6 @@ include/xchange.h
 .RI "#define \fBX_LONG\fP"
 .br
 .RI "64-bit int XType "
-.ti -1c
-.RI "#define \fBX_LONG_HEX\fP"
-.br
-.RI "64-bit int XType in hexadecimal representation "
 .ti -1c
 .RI "#define \fBX_MAX_DIMS\fP   20"
 .br
@@ -176,10 +172,6 @@ include/xchange.h
 .br
 .RI "native short XType (usually 16-bits) "
 .ti -1c
-.RI "#define \fBX_SHORT_HEX\fP"
-.br
-.RI "native short XType in hexadecimal representation "
-.ti -1c
 .RI "#define \fBX_SIZE_INVALID\fP   (\-23)"
 .br
 .RI "invalid data size "
@@ -190,7 +182,7 @@ include/xchange.h
 .ti -1c
 .RI "#define \fBX_STRUCT\fP"
 .br
-.RI "An \fBXStructure\fP XType\&. "
+.RI "XType for an \fBXStructure\fP or array thereof\&. "
 .ti -1c
 .RI "#define \fBX_STRUCT_INIT\fP   {NULL}"
 .br
@@ -269,6 +261,9 @@ include/xchange.h
 .RI "\fBXLookupTable\fP * \fBxAllocLookup\fP (unsigned int size)"
 .br
 .ti -1c
+.RI "void \fBxClearField\fP (\fBXField\fP *f)"
+.br
+.ti -1c
 .RI "void \fBxClearStruct\fP (\fBXStructure\fP *s)"
 .br
 .ti -1c
@@ -303,6 +298,12 @@ include/xchange.h
 .br
 .ti -1c
 .RI "\fBXLookupTable\fP * \fBxCreateLookup\fP (const \fBXStructure\fP *s, \fBboolean\fP recursive)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCreateMixed1DField\fP (const char *name, int size)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCreateMixedArrayField\fP (const char *name, int ndim, const int *sizes)"
 .br
 .ti -1c
 .RI "\fBXField\fP * \fBxCreateScalarField\fP (const char *name, \fBXType\fP type, const void *value)"
@@ -485,7 +486,7 @@ A Basic set of utilities to allow platform-independent structured data exchange 
 
 .SH "Macro Definition Documentation"
 .PP 
-.SS "#define X_FIELD_INIT   {NULL}"
+.SS "#define X_FIELD_INIT   {NULL, NULL, \fBX_UNKNOWN\fP, NULL, 0, {0}, \fBFALSE\fP, NULL}"
 Static initializer for the \fBXField\fP data structure\&. 
 .SS "#define X_STRUCT_INIT   {NULL}"
 Static initializer for an \fBXStructure\fP data structure\&. 
@@ -541,6 +542,22 @@ The new lookup table, or else NULL if there was an error\&.
 
 .PP
 References \fBFALSE\fP, \fBXLookupTable::priv\fP, and \fBx_error()\fP\&.
+.SS "void xClearField (\fBXField\fP * f)"
+Clears an X structure field, freeing up all referfenced resources\&. However, the field itself is kept, but its contents are reset\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIf\fP Pointer to the field to be cleared\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxDestroyField()\fP 
+.RE
+.PP
+
+.PP
+References \fBXField::name\fP, \fBXField::subtype\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_FIELD\fP, \fBX_STRUCT\fP, \fBxClearField()\fP, \fBxClearStruct()\fP, and \fBxGetFieldCount()\fP\&.
 .SS "void xClearStruct (\fBXStructure\fP * s)"
 Destroys the contents of an X structure, leaving the structure empty\&.
 .PP
@@ -793,6 +810,54 @@ The lookup table, or NULL if there was an error (errno will inform about the typ
 
 .PP
 References \fBx_error()\fP, \fBx_trace_null()\fP, \fBxAllocLookup()\fP, \fBxCountFields()\fP, and \fBxDeepCountFields()\fP\&.
+.SS "\fBXField\fP * xCreateMixed1DField (const char * name, int size)"
+Creates a field containing a 1D array of heterogeneous fields\&. Each element of the array may have a different type and/or size\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP The name of the array field 
+.br
+\fIsize\fP The number of heterogeneous fields in the array\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A field containing a heterogeneous array of entries, or NULL if there was an error\&. The entries are initially empty, except for their names bearing '\&.' followed by the 1-based array index, e\&.g\&. '\&.1', '\&.2'\&.\&.\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCreateMixedArrayField()\fP 
+.RE
+.PP
+
+.PP
+References \fBX_MAX_DIMS\fP, and \fBxCreateMixedArrayField()\fP\&.
+.SS "\fBXField\fP * xCreateMixedArrayField (const char * name, int ndim, const int * sizes)"
+Creates a field containing an array of heterogeneous fields\&. Each element of the array may have a different type and/or size\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP The name of the array field 
+.br
+\fIndim\fP The dimensionality of the heterogeneous components 
+.br
+\fIsizes\fP The individual sizes along each dimension 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A field containing a heterogeneous array of entries, or NULL if there was an error\&. The entries are initially empty, except for their names bearing '\&.' followed by the 1-based array index, e\&.g\&. '\&.1', '\&.2'\&.\&.\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCreateMixed1DField()\fP 
+.RE
+.PP
+
+.PP
+References \fBXField::name\fP, \fBx_error()\fP, \fBX_FIELD\fP, \fBx_trace_null()\fP, \fBxCreateField()\fP, \fBxGetElementCount()\fP, and \fBxStringCopyOf()\fP\&.
 .SS "\fBXField\fP * xCreateScalarField (const char * name, \fBXType\fP type, const void * value)"
 Creates a generic scalar field of a given name and native value\&. The structure will hold a copy of the value that is pointed at\&.
 .PP
@@ -862,16 +927,21 @@ The total number of fields present in the structure and all its sub-structures\&
 .PP
 References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBx_trace()\fP, \fBxDeepCountFields()\fP, and \fBxGetFieldCount()\fP\&.
 .SS "void xDestroyField (\fBXField\fP * f)"
-Destroys an X structure field, freeing up resources used\&. For
+Destroys an X structure field, freeing up all referenced resources, and destroying the field itself\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIf\fP Pointer to the field to be destroyed\&. 
+\fIf\fP Pointer to the field to be destroyed\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxClearField()\fP 
 .RE
 .PP
 
 .PP
-References \fBXField::name\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, \fBxClearStruct()\fP, and \fBxGetFieldCount()\fP\&.
+References \fBxClearField()\fP\&.
 .SS "void xDestroyLookup (\fBXLookupTable\fP * tab)"
 Destroys a lookup table, freeing up it's in-memory resources\&.
 .PP
@@ -914,7 +984,7 @@ Returns the storage byte size of a single element of a given type\&.
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_SHORT_HEX\fP, \fBX_STRING\fP, and \fBX_STRUCT\fP\&.
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBX_FIELD\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, and \fBX_STRUCT\fP\&.
 .SS "int xError (const char * fn, int code)"
 Prints a descriptive error message to stderr, and returns the error code\&.
 .PP
@@ -1365,7 +1435,7 @@ the floating-point value at the head of the string, or NAN if the input string i
 .PP
 
 .PP
-References \fBNAN\fP, and \fBx_error()\fP\&.
+References \fBINFINITY\fP, \fBNAN\fP, and \fBx_error()\fP\&.
 .SS "int xPrintDims (char * dst, int ndim, const int * sizes)"
 Serializes the dimensions to a string as a space-separated list of integers\&.
 .PP
@@ -1702,7 +1772,7 @@ Number of characters (including termination) required for the string representat
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_SHORT\fP, and \fBX_SHORT_HEX\fP\&.
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, and \fBX_SHORT\fP\&.
 .SS "char xTypeChar (\fBXType\fP type)"
 Returns the character of the field type\&. For X_CHAR types it returns 'C' (without the length specification), and for all other types it returns the constant XType value itself\&.
 .PP

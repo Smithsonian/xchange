@@ -10,5 +10,6 @@ var searchData=
   ['structured_20data_7',['Structured data',['../index.html#autotoc_md11',1,'']]],
   ['structures_8',['Large structures',['../index.html#autotoc_md19',1,'']]],
   ['substructures_20and_20elements_9',['Accessing substructures and elements',['../index.html#autotoc_md18',1,'']]],
-  ['support_10',['Debugging support',['../index.html#autotoc_md27',1,'']]]
+  ['subtype_10',['subtype',['../structXField.html#a2f076846fbd6b30183ba3ab61e3334e5',1,'XField']]],
+  ['support_11',['Debugging support',['../index.html#autotoc_md27',1,'']]]
 ];

@@ -131,6 +131,8 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a2b81d2bbe48788a9741e815cdaa336eb" id="r_a2b81d2bbe48788a9741e815cdaa336eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a2b81d2bbe48788a9741e815cdaa336eb">xClearField</a> (<a class="el" href="structXField.html">XField</a> *f)</td></tr>
+<tr class="separator:a2b81d2bbe48788a9741e815cdaa336eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae45c0a047c30a17aba84d2fc8c08a2dc" id="r_ae45c0a047c30a17aba84d2fc8c08a2dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#ae45c0a047c30a17aba84d2fc8c08a2dc">xClearStruct</a> (<a class="el" href="structXStructure.html">XStructure</a> *s)</td></tr>
 <tr class="separator:ae45c0a047c30a17aba84d2fc8c08a2dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab20a0213369a947a7e48ff45aabee3c0" id="r_ab20a0213369a947a7e48ff45aabee3c0"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#ab20a0213369a947a7e48ff45aabee3c0">xCopyIDToken</a> (const char *id)</td></tr>
@@ -153,6 +155,10 @@ Functions</h2></td></tr>
 <tr class="separator:aa4405d56659397e044b6d4fdda394dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4587dcd0157acce30373288e19f1237d" id="r_a4587dcd0157acce30373288e19f1237d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a4587dcd0157acce30373288e19f1237d">xCreateLongField</a> (const char *name, long long value)</td></tr>
 <tr class="separator:a4587dcd0157acce30373288e19f1237d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedd6e29ef66f9512db5b2fb89163063b" id="r_aedd6e29ef66f9512db5b2fb89163063b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#aedd6e29ef66f9512db5b2fb89163063b">xCreateMixed1DField</a> (const char *name, int size)</td></tr>
+<tr class="separator:aedd6e29ef66f9512db5b2fb89163063b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb011c92385269408efb6e5b8d16927c" id="r_abb011c92385269408efb6e5b8d16927c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#abb011c92385269408efb6e5b8d16927c">xCreateMixedArrayField</a> (const char *name, int ndim, const int *sizes)</td></tr>
+<tr class="separator:abb011c92385269408efb6e5b8d16927c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a965f7e58fd1c10570c6f6a472599b08f" id="r_a965f7e58fd1c10570c6f6a472599b08f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a965f7e58fd1c10570c6f6a472599b08f">xCreateScalarField</a> (const char *name, <a class="el" href="xchange_8h.html#a1c7e02eda23566a7891310fd09307a70">XType</a> type, const void *value)</td></tr>
 <tr class="separator:a965f7e58fd1c10570c6f6a472599b08f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9dc77bed0d8b738ba615019721a6a2b6" id="r_a9dc77bed0d8b738ba615019721a6a2b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6">xCreateStringField</a> (const char *name, const char *value)</td></tr>
@@ -207,6 +213,34 @@ Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>Nov 25, 2020 </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Attila Kovacs</dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a2b81d2bbe48788a9741e815cdaa336eb" name="a2b81d2bbe48788a9741e815cdaa336eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b81d2bbe48788a9741e815cdaa336eb">&#9670;&#160;</a></span>xClearField()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xClearField </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXField.html">XField</a> *&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clears an X structure field, freeing up all referfenced resources. However, the field itself is kept, but its contents are reset.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Pointer to the field to be cleared.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#a2f076846fbd6b30183ba3ab61e3334e5">XField::subtype</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#a7e4c8b651428f090a441804bd8b7673e">X_FIELD</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xstruct_8c.html#a2b81d2bbe48788a9741e815cdaa336eb">xClearField()</a>, <a class="el" href="xstruct_8c.html#ae45c0a047c30a17aba84d2fc8c08a2dc">xClearStruct()</a>, and <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>.</p>
+
+</div>
+</div>
 <a id="ae45c0a047c30a17aba84d2fc8c08a2dc" name="ae45c0a047c30a17aba84d2fc8c08a2dc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae45c0a047c30a17aba84d2fc8c08a2dc">&#9670;&#160;</a></span>xClearStruct()</h2>
 
@@ -621,6 +655,93 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aedd6e29ef66f9512db5b2fb89163063b" name="aedd6e29ef66f9512db5b2fb89163063b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedd6e29ef66f9512db5b2fb89163063b">&#9670;&#160;</a></span>xCreateMixed1DField()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structXField.html">XField</a> * xCreateMixed1DField </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a field containing a 1D array of heterogeneous fields. Each element of the array may have a different type and/or size.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the array field </td></tr>
+    <tr><td class="paramname">size</td><td>The number of heterogeneous fields in the array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A field containing a heterogeneous array of entries, or NULL if there was an error. The entries are initially empty, except for their names bearing '.' followed by the 1-based array index, e.g. '.1', '.2'...</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#abb011c92385269408efb6e5b8d16927c">xCreateMixedArrayField()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="xchange_8h.html#a910ee1c8cd983bf127f7ca2c705d7894">X_MAX_DIMS</a>, and <a class="el" href="xstruct_8c.html#abb011c92385269408efb6e5b8d16927c">xCreateMixedArrayField()</a>.</p>
+
+</div>
+</div>
+<a id="abb011c92385269408efb6e5b8d16927c" name="abb011c92385269408efb6e5b8d16927c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb011c92385269408efb6e5b8d16927c">&#9670;&#160;</a></span>xCreateMixedArrayField()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structXField.html">XField</a> * xCreateMixedArrayField </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ndim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int *&#160;</td>
+          <td class="paramname"><em>sizes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a field containing an array of heterogeneous fields. Each element of the array may have a different type and/or size.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the array field </td></tr>
+    <tr><td class="paramname">ndim</td><td>The dimensionality of the heterogeneous components </td></tr>
+    <tr><td class="paramname">sizes</td><td>The individual sizes along each dimension </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A field containing a heterogeneous array of entries, or NULL if there was an error. The entries are initially empty, except for their names bearing '.' followed by the 1-based array index, e.g. '.1', '.2'...</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#aedd6e29ef66f9512db5b2fb89163063b">xCreateMixed1DField()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a7e4c8b651428f090a441804bd8b7673e">X_FIELD</a>, <a class="el" href="xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31">x_trace_null()</a>, <a class="el" href="xstruct_8c.html#a42e4e75cbf8f721ef4b251c692dcd7cb">xCreateField()</a>, <a class="el" href="xchange_8c.html#ad35e0d8c0ebbb4948c233f96c54bd8d6">xGetElementCount()</a>, and <a class="el" href="xchange_8c.html#a01d730a1a98963816de2dd73e72957a5">xStringCopyOf()</a>.</p>
+
+</div>
+</div>
 <a id="a965f7e58fd1c10570c6f6a472599b08f" name="a965f7e58fd1c10570c6f6a472599b08f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a965f7e58fd1c10570c6f6a472599b08f">&#9670;&#160;</a></span>xCreateScalarField()</h2>
 
@@ -769,15 +890,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Destroys an X structure field, freeing up resources used. For</p>
+<p>Destroys an X structure field, freeing up all referenced resources, and destroying the field itself.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">f</td><td>Pointer to the field to be destroyed. </td></tr>
+    <tr><td class="paramname">f</td><td>Pointer to the field to be destroyed.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a2b81d2bbe48788a9741e815cdaa336eb">xClearField()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xstruct_8c.html#ae45c0a047c30a17aba84d2fc8c08a2dc">xClearStruct()</a>, and <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>.</p>
+<p class="reference">References <a class="el" href="xstruct_8c.html#a2b81d2bbe48788a9741e815cdaa336eb">xClearField()</a>.</p>
 
 </div>
 </div>

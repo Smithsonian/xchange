@@ -13,17 +13,12 @@ XField \- An SMA-X field, typically as part of an \fBXStructure\fP\&. A field ma
 
 .in +1c
 .ti -1c
-.RI "\fBint\fP \fBflags\fP"
-.br
-.RI "(optional) flags that specific data exchange mechanism may use, e\&.g\&. for BSON subtype\&. "
-.ti -1c
 .RI "\fBboolean\fP \fBisSerialized\fP"
 .br
 .RI "Whether the fields is stored in serialized (string) format\&. "
 .ti -1c
 .RI "\fBchar\fP * \fBname\fP"
 .br
-.RI "Pointer to a designated local name buffer\&. It may not contain a separator (see X_SEP)\&. "
 .ti -1c
 .RI "\fBint\fP \fBndim\fP"
 .br
@@ -37,13 +32,15 @@ XField \- An SMA-X field, typically as part of an \fBXStructure\fP\&. A field ma
 .br
 .RI "The sizes along each dimension\&. "
 .ti -1c
+.RI "\fBchar\fP * \fBsubtype\fP"
+.br
+.ti -1c
 .RI "\fBXType\fP \fBtype\fP"
 .br
 .RI "The underlyng data type\&. "
 .ti -1c
 .RI "\fBchar\fP * \fBvalue\fP"
 .br
-.RI "Pointer to designated local string content (or structure)\&.\&.\&. "
 .in -1c
 .SH "Detailed Description"
 .PP 
@@ -65,6 +62,14 @@ An SMA-X field, typically as part of an \fBXStructure\fP\&. A field may be a ref
 .RE
 .PP
 
+.SH "Field Documentation"
+.PP 
+.SS "\fBchar\fP* name"
+Pointer to a designated local name buffer\&. It may not contain a separator (see X_SEP)\&. NOTE: it should normally be dynamically allocated, to work with \fBxClearField()\fP / \fBxDestroyField()\fP\&. 
+.SS "\fBchar\fP* subtype"
+Descriptive subtype, such a a mime type (if any) NOTE: it should normally be dynamically allocated, to work with \fBxClearField()\fP / \fBxDestroyField()\fP\&. 
+.SS "\fBchar\fP* value"
+Pointer to designated local string content (or structure)\&.\&.\&. NOTE: it should normally be dynamically allocated, to work with \fBxClearField()\fP / \fBxDestroyField()\fP\&. 
 
 .SH "Author"
 .PP 

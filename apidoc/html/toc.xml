@@ -28,12 +28,12 @@
   <topic label="Data Structures" href="annotated.html">
     <topic label="Data Structures" href="annotated.html">
       <topic label="XField" href="structXField.html">
-        <topic label="flags" href="structXField.html#ac8bf36fe0577cba66bccda3a6f7e80a4"/>
         <topic label="isSerialized" href="structXField.html#aaa68a7e140a5370ed0eb52710744c341"/>
         <topic label="name" href="structXField.html#a5ac083a645d964373f022d03df4849c8"/>
         <topic label="ndim" href="structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1"/>
         <topic label="next" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565"/>
         <topic label="sizes" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d"/>
+        <topic label="subtype" href="structXField.html#a2f076846fbd6b30183ba3ab61e3334e5"/>
         <topic label="type" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9"/>
         <topic label="value" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61"/>
       </topic>
@@ -56,12 +56,12 @@
       <topic label="include" href="dir_d44c64559bbebec7f509842c48db8b23.html">
         <topic label="xchange.h" href="xchange_8h.html">
           <topic label="XField" href="structXField.html">
-            <topic label="flags" href="structXField.html#ac8bf36fe0577cba66bccda3a6f7e80a4"/>
             <topic label="isSerialized" href="structXField.html#aaa68a7e140a5370ed0eb52710744c341"/>
             <topic label="name" href="structXField.html#a5ac083a645d964373f022d03df4849c8"/>
             <topic label="ndim" href="structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1"/>
             <topic label="next" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565"/>
             <topic label="sizes" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d"/>
+            <topic label="subtype" href="structXField.html#a2f076846fbd6b30183ba3ab61e3334e5"/>
             <topic label="type" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9"/>
             <topic label="value" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61"/>
           </topic>
@@ -74,6 +74,7 @@
           </topic>
           <topic label="_TYPEDEF_BOOLEAN" href="xchange_8h.html#adbb2c6827fb22c643243e54992da6c70"/>
           <topic label="FALSE" href="xchange_8h.html#aa93f0eb578d23995850d61f7d61c55c1"/>
+          <topic label="INFINITY" href="xchange_8h.html#a956e2723d559858d08644ac99146e910"/>
           <topic label="MAX_DEBUG_ERROR_COUNT" href="xchange_8h.html#a73012d5991cc49ef05bf1d621a1cde55"/>
           <topic label="NAN" href="xchange_8h.html#a8abfcc76130f3f991d124dd22d7e69bc"/>
           <topic label="str_1" href="xchange_8h.html#a1f298f5039a547cea57a36c2ef616522"/>
@@ -82,19 +83,17 @@
           <topic label="X_ALREADY_OPEN" href="xchange_8h.html#a9e947ab368178c7e248b3cf8b26defa1"/>
           <topic label="X_BOOLEAN" href="xchange_8h.html#abe0465f7669775b6129551a7ef3300bc"/>
           <topic label="X_BYTE" href="xchange_8h.html#afb01219635d162589ae5aadb90702bb0"/>
-          <topic label="X_BYTE_HEX" href="xchange_8h.html#acbf44ad33891c1171b17aa6ab0616e82"/>
           <topic label="X_CHARS" href="xchange_8h.html#a76d723969626d4e25235eb24533e3e3a"/>
           <topic label="X_DOUBLE" href="xchange_8h.html#a849c7ccb02f63d8554323a889a3d8b4d"/>
           <topic label="X_FAILURE" href="xchange_8h.html#a1d4a0c99f979fd0ecf0e9dcb7191a8d7"/>
+          <topic label="X_FIELD" href="xchange_8h.html#a7e4c8b651428f090a441804bd8b7673e"/>
           <topic label="X_FIELD_INIT" href="xchange_8h.html#abf5d02e3f3ec45ae6fe1e6afd09690a5"/>
           <topic label="X_FLOAT" href="xchange_8h.html#a99605e05158426b1b44e924e42a1162c"/>
           <topic label="X_GROUP_INVALID" href="xchange_8h.html#a48c78a0e8290b2fd3701031ebce3fa15"/>
           <topic label="X_INCOMPLETE" href="xchange_8h.html#a888dbfa464548f0b65794e172713160b"/>
           <topic label="X_INT" href="xchange_8h.html#a4003d7fe06200f77805c52cc7db56784"/>
-          <topic label="X_INT_HEX" href="xchange_8h.html#abad9f4f63b244d716e52eb254da594b2"/>
           <topic label="X_INTERRUPTED" href="xchange_8h.html#a3942401de37f774e72393ffa73c9fb9f"/>
           <topic label="X_LONG" href="xchange_8h.html#a36405f1834eb7cd51a17f103b2942e21"/>
-          <topic label="X_LONG_HEX" href="xchange_8h.html#ad4a1893b1ededc4c1d627405736d00ff"/>
           <topic label="X_MAX_DIMS" href="xchange_8h.html#a910ee1c8cd983bf127f7ca2c705d7894"/>
           <topic label="X_MAX_ELEMENTS" href="xchange_8h.html#a7a5743ece908b043528077f499c42d57"/>
           <topic label="X_MAX_STRING_DIMS" href="xchange_8h.html#a319ecdfb71bd7ccda1c7049965a64d6d"/>
@@ -110,7 +109,6 @@
           <topic label="X_SEP" href="xchange_8h.html#a923cd66e2074f32817a3468c5617a440"/>
           <topic label="X_SEP_LENGTH" href="xchange_8h.html#a28120364666ec6054159012a58ba27af"/>
           <topic label="X_SHORT" href="xchange_8h.html#adfdc22097b12d42c040dcce8700d64b8"/>
-          <topic label="X_SHORT_HEX" href="xchange_8h.html#a52dcae6bbd1a52f73bda43847fc4d943"/>
           <topic label="X_SIZE_INVALID" href="xchange_8h.html#a816c5dad11d9bfd91a795ed1af30e732"/>
           <topic label="X_STRING" href="xchange_8h.html#a2443dd783d2728a3559361fba845e533"/>
           <topic label="X_STRUCT" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb"/>
@@ -132,6 +130,7 @@
           <topic label="XType" href="xchange_8h.html#a1c7e02eda23566a7891310fd09307a70"/>
           <topic label="xAlloc" href="xchange_8h.html#a3525be19588c2b740fc0dbd54a936dcb"/>
           <topic label="xAllocLookup" href="xchange_8h.html#a01a94b3210aed984dbee956fbb26fcfd"/>
+          <topic label="xClearField" href="xchange_8h.html#a2b81d2bbe48788a9741e815cdaa336eb"/>
           <topic label="xClearStruct" href="xchange_8h.html#ae45c0a047c30a17aba84d2fc8c08a2dc"/>
           <topic label="xCopyIDToken" href="xchange_8h.html#ab20a0213369a947a7e48ff45aabee3c0"/>
           <topic label="xCopyOfField" href="xchange_8h.html#afdb31906269568772fdf63adb6685fbc"/>
@@ -144,6 +143,8 @@
           <topic label="xCreateIntField" href="xchange_8h.html#aa4405d56659397e044b6d4fdda394dfa"/>
           <topic label="xCreateLongField" href="xchange_8h.html#a4587dcd0157acce30373288e19f1237d"/>
           <topic label="xCreateLookup" href="xchange_8h.html#af8bee9eeac947d7e36ea436252e8dc2d"/>
+          <topic label="xCreateMixed1DField" href="xchange_8h.html#aedd6e29ef66f9512db5b2fb89163063b"/>
+          <topic label="xCreateMixedArrayField" href="xchange_8h.html#abb011c92385269408efb6e5b8d16927c"/>
           <topic label="xCreateScalarField" href="xchange_8h.html#a965f7e58fd1c10570c6f6a472599b08f"/>
           <topic label="xCreateStringField" href="xchange_8h.html#a9dc77bed0d8b738ba615019721a6a2b6"/>
           <topic label="xCreateStruct" href="xchange_8h.html#a12112584a34e07f9ef7b08f6ef1bc865"/>
@@ -199,8 +200,10 @@
           <topic label="NULLDEV" href="xjson_8h.html#a5a5c8657f14c4fe6dc43c552af88d65d"/>
           <topic label="XJSON_INDENT" href="xjson_8h.html#ab69c52214e2e6daa2626bf8722f2d73e"/>
           <topic label="xjsonEscapeString" href="xjson_8h.html#aad83ebcc397046a875040dfc2297d892"/>
+          <topic label="xjsonFieldToString" href="xjson_8h.html#a42101fa63cb1c6e265f317e9b8719d5f"/>
           <topic label="xjsonGetIndent" href="xjson_8h.html#a9f11227a58e797a4a335331d94c8e888"/>
           <topic label="xjsonParseAt" href="xjson_8h.html#acdb7d242c80b4c9dbeedc62b479bfcc7"/>
+          <topic label="xjsonParseFieldAt" href="xjson_8h.html#ad27c7a065fa6c61354e3293606617889"/>
           <topic label="xjsonParseFile" href="xjson_8h.html#a5b542fdced2080503cdbf2cf9a071324"/>
           <topic label="xjsonParseFilename" href="xjson_8h.html#afff9ee9473a0c939d18dba977cfac075"/>
           <topic label="xjsonSetErrorStream" href="xjson_8h.html#a23a7bd364a80bc2bab9ce917ed5f22ea"/>
@@ -244,8 +247,10 @@
           <topic label="FALSE" href="xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1"/>
           <topic label="TRUE" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d"/>
           <topic label="xjsonEscapeString" href="xjson_8c.html#aad83ebcc397046a875040dfc2297d892"/>
+          <topic label="xjsonFieldToString" href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f"/>
           <topic label="xjsonGetIndent" href="xjson_8c.html#a9f11227a58e797a4a335331d94c8e888"/>
           <topic label="xjsonParseAt" href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3"/>
+          <topic label="xjsonParseFieldAt" href="xjson_8c.html#aacd36258562860dac1bcc8154cda47cf"/>
           <topic label="xjsonParseFile" href="xjson_8c.html#a9bdaf6099829f03eb2658342e856f0ad"/>
           <topic label="xjsonParseFilename" href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075"/>
           <topic label="xjsonSetErrorStream" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea"/>
@@ -267,6 +272,7 @@
         </topic>
         <topic label="xstruct.c" href="xstruct_8c.html">
           <topic label="__XCHANGE_INTERNAL_API__" href="xstruct_8c.html#ac36bd75f87a1614fb477a0fbcd5df1f3"/>
+          <topic label="xClearField" href="xstruct_8c.html#a2b81d2bbe48788a9741e815cdaa336eb"/>
           <topic label="xClearStruct" href="xstruct_8c.html#ae45c0a047c30a17aba84d2fc8c08a2dc"/>
           <topic label="xCopyIDToken" href="xstruct_8c.html#ab20a0213369a947a7e48ff45aabee3c0"/>
           <topic label="xCopyOfField" href="xstruct_8c.html#afdb31906269568772fdf63adb6685fbc"/>
@@ -278,6 +284,8 @@
           <topic label="xCreateField" href="xstruct_8c.html#a42e4e75cbf8f721ef4b251c692dcd7cb"/>
           <topic label="xCreateIntField" href="xstruct_8c.html#aa4405d56659397e044b6d4fdda394dfa"/>
           <topic label="xCreateLongField" href="xstruct_8c.html#a4587dcd0157acce30373288e19f1237d"/>
+          <topic label="xCreateMixed1DField" href="xstruct_8c.html#aedd6e29ef66f9512db5b2fb89163063b"/>
+          <topic label="xCreateMixedArrayField" href="xstruct_8c.html#abb011c92385269408efb6e5b8d16927c"/>
           <topic label="xCreateScalarField" href="xstruct_8c.html#a965f7e58fd1c10570c6f6a472599b08f"/>
           <topic label="xCreateStringField" href="xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6"/>
           <topic label="xCreateStruct" href="xstruct_8c.html#a12112584a34e07f9ef7b08f6ef1bc865"/>
@@ -311,6 +319,7 @@
         <topic label="b" href="globals_b.html"/>
         <topic label="e" href="globals_e.html"/>
         <topic label="f" href="globals_f.html"/>
+        <topic label="i" href="globals_i.html"/>
         <topic label="m" href="globals_m.html"/>
         <topic label="n" href="globals_n.html"/>
         <topic label="s" href="globals_s.html"/>

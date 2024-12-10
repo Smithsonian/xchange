@@ -23,6 +23,13 @@
     </member>
     <member kind="define">
       <type>#define</type>
+      <name>INFINITY</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a956e2723d559858d08644ac99146e910</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>MAX_DEBUG_ERROR_COUNT</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>a73012d5991cc49ef05bf1d621a1cde55</anchor>
@@ -79,13 +86,6 @@
     </member>
     <member kind="define">
       <type>#define</type>
-      <name>X_BYTE_HEX</name>
-      <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>acbf44ad33891c1171b17aa6ab0616e82</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
       <name>X_CHARS</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>a76d723969626d4e25235eb24533e3e3a</anchor>
@@ -103,6 +103,13 @@
       <name>X_FAILURE</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>a1d4a0c99f979fd0ecf0e9dcb7191a8d7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>X_FIELD</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a7e4c8b651428f090a441804bd8b7673e</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
@@ -142,13 +149,6 @@
     </member>
     <member kind="define">
       <type>#define</type>
-      <name>X_INT_HEX</name>
-      <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>abad9f4f63b244d716e52eb254da594b2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
       <name>X_INTERRUPTED</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>a3942401de37f774e72393ffa73c9fb9f</anchor>
@@ -159,13 +159,6 @@
       <name>X_LONG</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>a36405f1834eb7cd51a17f103b2942e21</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>X_LONG_HEX</name>
-      <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>ad4a1893b1ededc4c1d627405736d00ff</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
@@ -271,13 +264,6 @@
       <name>X_SHORT</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>adfdc22097b12d42c040dcce8700d64b8</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>X_SHORT_HEX</name>
-      <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>a52dcae6bbd1a52f73bda43847fc4d943</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
@@ -429,6 +415,13 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>xClearField</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a2b81d2bbe48788a9741e815cdaa336eb</anchor>
+      <arglist>(XField *f)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>xClearStruct</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>ae45c0a047c30a17aba84d2fc8c08a2dc</anchor>
@@ -510,6 +503,20 @@
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>af8bee9eeac947d7e36ea436252e8dc2d</anchor>
       <arglist>(const XStructure *s, boolean recursive)</arglist>
+    </member>
+    <member kind="function">
+      <type>XField *</type>
+      <name>xCreateMixed1DField</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>aedd6e29ef66f9512db5b2fb89163063b</anchor>
+      <arglist>(const char *name, int size)</arglist>
+    </member>
+    <member kind="function">
+      <type>XField *</type>
+      <name>xCreateMixedArrayField</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>abb011c92385269408efb6e5b8d16927c</anchor>
+      <arglist>(const char *name, int ndim, const int *sizes)</arglist>
     </member>
     <member kind="function">
       <type>XField *</type>
@@ -889,6 +896,13 @@
       <arglist>(const char *src, int maxLength)</arglist>
     </member>
     <member kind="function">
+      <type>char *</type>
+      <name>xjsonFieldToString</name>
+      <anchorfile>xjson_8h.html</anchorfile>
+      <anchor>a42101fa63cb1c6e265f317e9b8719d5f</anchor>
+      <arglist>(const XField *f)</arglist>
+    </member>
+    <member kind="function">
       <type>int</type>
       <name>xjsonGetIndent</name>
       <anchorfile>xjson_8h.html</anchorfile>
@@ -900,6 +914,13 @@
       <name>xjsonParseAt</name>
       <anchorfile>xjson_8h.html</anchorfile>
       <anchor>acdb7d242c80b4c9dbeedc62b479bfcc7</anchor>
+      <arglist>(char **src, int *lineNumber)</arglist>
+    </member>
+    <member kind="function">
+      <type>XField *</type>
+      <name>xjsonParseFieldAt</name>
+      <anchorfile>xjson_8h.html</anchorfile>
+      <anchor>ad27c7a065fa6c61354e3293606617889</anchor>
       <arglist>(char **src, int *lineNumber)</arglist>
     </member>
     <member kind="function">
@@ -1174,6 +1195,13 @@
       <arglist>(const char *src, int maxLength)</arglist>
     </member>
     <member kind="function">
+      <type>char *</type>
+      <name>xjsonFieldToString</name>
+      <anchorfile>xjson_8c.html</anchorfile>
+      <anchor>a42101fa63cb1c6e265f317e9b8719d5f</anchor>
+      <arglist>(const XField *f)</arglist>
+    </member>
+    <member kind="function">
       <type>int</type>
       <name>xjsonGetIndent</name>
       <anchorfile>xjson_8c.html</anchorfile>
@@ -1185,6 +1213,13 @@
       <name>xjsonParseAt</name>
       <anchorfile>xjson_8c.html</anchorfile>
       <anchor>af180900a4afeef713a3fdaeb77a9cba3</anchor>
+      <arglist>(char **pos, int *lineNumber)</arglist>
+    </member>
+    <member kind="function">
+      <type>XField *</type>
+      <name>xjsonParseFieldAt</name>
+      <anchorfile>xjson_8c.html</anchorfile>
+      <anchor>aacd36258562860dac1bcc8154cda47cf</anchor>
       <arglist>(char **pos, int *lineNumber)</arglist>
     </member>
     <member kind="function">
@@ -1320,6 +1355,13 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>xClearField</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>a2b81d2bbe48788a9741e815cdaa336eb</anchor>
+      <arglist>(XField *f)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>xClearStruct</name>
       <anchorfile>xstruct_8c.html</anchorfile>
       <anchor>ae45c0a047c30a17aba84d2fc8c08a2dc</anchor>
@@ -1394,6 +1436,20 @@
       <anchorfile>xstruct_8c.html</anchorfile>
       <anchor>a4587dcd0157acce30373288e19f1237d</anchor>
       <arglist>(const char *name, long long value)</arglist>
+    </member>
+    <member kind="function">
+      <type>XField *</type>
+      <name>xCreateMixed1DField</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>aedd6e29ef66f9512db5b2fb89163063b</anchor>
+      <arglist>(const char *name, int size)</arglist>
+    </member>
+    <member kind="function">
+      <type>XField *</type>
+      <name>xCreateMixedArrayField</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>abb011c92385269408efb6e5b8d16927c</anchor>
+      <arglist>(const char *name, int ndim, const int *sizes)</arglist>
     </member>
     <member kind="function">
       <type>XField *</type>
@@ -1568,13 +1624,6 @@
     <name>XField</name>
     <filename>structXField.html</filename>
     <member kind="variable">
-      <type>int</type>
-      <name>flags</name>
-      <anchorfile>structXField.html</anchorfile>
-      <anchor>ac8bf36fe0577cba66bccda3a6f7e80a4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
       <type>boolean</type>
       <name>isSerialized</name>
       <anchorfile>structXField.html</anchorfile>
@@ -1608,6 +1657,13 @@
       <anchorfile>structXField.html</anchorfile>
       <anchor>af743830ee6c7d5e81a0206b07238ca5d</anchor>
       <arglist>[X_MAX_DIMS]</arglist>
+    </member>
+    <member kind="variable">
+      <type>char *</type>
+      <name>subtype</name>
+      <anchorfile>structXField.html</anchorfile>
+      <anchor>a2f076846fbd6b30183ba3ab61e3334e5</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable">
       <type>XType</type>

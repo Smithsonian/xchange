@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['str_5f1_0',['str_1',['../xchange_8h.html#a1f298f5039a547cea57a36c2ef616522',1,'xchange.h']]],
-  ['str_5f2_1',['str_2',['../xchange_8h.html#a03b3076533e6967aaa48dcccf9ded4a0',1,'xchange.h']]]
+  ['nan_0',['NAN',['../xchange_8h.html#a8abfcc76130f3f991d124dd22d7e69bc',1,'xchange.h']]],
+  ['nulldev_1',['NULLDEV',['../xjson_8h.html#a5a5c8657f14c4fe6dc43c552af88d65d',1,'xjson.h']]]
 ];

@@ -241,7 +241,7 @@ Returns the storage byte size of a single element of a given type\&.
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_SHORT_HEX\fP, \fBX_STRING\fP, and \fBX_STRUCT\fP\&.
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBX_FIELD\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, and \fBX_STRUCT\fP\&.
 .SS "int xError (const char * fn, int code)"
 Prints a descriptive error message to stderr, and returns the error code\&.
 .PP
@@ -379,7 +379,7 @@ the floating-point value at the head of the string, or NAN if the input string i
 .PP
 
 .PP
-References \fBNAN\fP, and \fBx_error()\fP\&.
+References \fBINFINITY\fP, \fBNAN\fP, and \fBx_error()\fP\&.
 .SS "int xPrintDims (char * dst, int ndim, const int * sizes)"
 Serializes the dimensions to a string as a space-separated list of integers\&.
 .PP
@@ -497,7 +497,7 @@ Number of characters (including termination) required for the string representat
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_BYTE_HEX\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT_HEX\fP, \fBX_LONG\fP, \fBX_LONG_HEX\fP, \fBX_SHORT\fP, and \fBX_SHORT_HEX\fP\&.
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, and \fBX_SHORT\fP\&.
 .SS "char xTypeChar (\fBXType\fP type)"
 Returns the character of the field type\&. For X_CHAR types it returns 'C' (without the length specification), and for all other types it returns the constant XType value itself\&.
 .PP

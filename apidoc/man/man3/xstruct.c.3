@@ -19,6 +19,9 @@ src/xstruct.c \- A collection of commonly used functions for generic structured 
 
 .in +1c
 .ti -1c
+.RI "void \fBxClearField\fP (\fBXField\fP *f)"
+.br
+.ti -1c
 .RI "void \fBxClearStruct\fP (\fBXStructure\fP *s)"
 .br
 .ti -1c
@@ -50,6 +53,12 @@ src/xstruct.c \- A collection of commonly used functions for generic structured 
 .br
 .ti -1c
 .RI "\fBXField\fP * \fBxCreateLongField\fP (const char *name, long long value)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCreateMixed1DField\fP (const char *name, int size)"
+.br
+.ti -1c
+.RI "\fBXField\fP * \fBxCreateMixedArrayField\fP (const char *name, int ndim, const int *sizes)"
 .br
 .ti -1c
 .RI "\fBXField\fP * \fBxCreateScalarField\fP (const char *name, \fBXType\fP type, const void *value)"
@@ -143,6 +152,22 @@ Attila Kovacs
 
 .SH "Function Documentation"
 .PP 
+.SS "void xClearField (\fBXField\fP * f)"
+Clears an X structure field, freeing up all referfenced resources\&. However, the field itself is kept, but its contents are reset\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIf\fP Pointer to the field to be cleared\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxDestroyField()\fP 
+.RE
+.PP
+
+.PP
+References \fBXField::name\fP, \fBXField::subtype\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_FIELD\fP, \fBX_STRUCT\fP, \fBxClearField()\fP, \fBxClearStruct()\fP, and \fBxGetFieldCount()\fP\&.
 .SS "void xClearStruct (\fBXStructure\fP * s)"
 Destroys the contents of an X structure, leaving the structure empty\&.
 .PP
@@ -366,6 +391,54 @@ A newly created field with the supplied data, or NULL if there was an error\&.
 
 .PP
 References \fBX_LONG\fP, \fBx_trace_null()\fP, and \fBxCreateScalarField()\fP\&.
+.SS "\fBXField\fP * xCreateMixed1DField (const char * name, int size)"
+Creates a field containing a 1D array of heterogeneous fields\&. Each element of the array may have a different type and/or size\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP The name of the array field 
+.br
+\fIsize\fP The number of heterogeneous fields in the array\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A field containing a heterogeneous array of entries, or NULL if there was an error\&. The entries are initially empty, except for their names bearing '\&.' followed by the 1-based array index, e\&.g\&. '\&.1', '\&.2'\&.\&.\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCreateMixedArrayField()\fP 
+.RE
+.PP
+
+.PP
+References \fBX_MAX_DIMS\fP, and \fBxCreateMixedArrayField()\fP\&.
+.SS "\fBXField\fP * xCreateMixedArrayField (const char * name, int ndim, const int * sizes)"
+Creates a field containing an array of heterogeneous fields\&. Each element of the array may have a different type and/or size\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIname\fP The name of the array field 
+.br
+\fIndim\fP The dimensionality of the heterogeneous components 
+.br
+\fIsizes\fP The individual sizes along each dimension 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A field containing a heterogeneous array of entries, or NULL if there was an error\&. The entries are initially empty, except for their names bearing '\&.' followed by the 1-based array index, e\&.g\&. '\&.1', '\&.2'\&.\&.\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxCreateMixed1DField()\fP 
+.RE
+.PP
+
+.PP
+References \fBXField::name\fP, \fBx_error()\fP, \fBX_FIELD\fP, \fBx_trace_null()\fP, \fBxCreateField()\fP, \fBxGetElementCount()\fP, and \fBxStringCopyOf()\fP\&.
 .SS "\fBXField\fP * xCreateScalarField (const char * name, \fBXType\fP type, const void * value)"
 Creates a generic scalar field of a given name and native value\&. The structure will hold a copy of the value that is pointed at\&.
 .PP
@@ -435,16 +508,21 @@ The total number of fields present in the structure and all its sub-structures\&
 .PP
 References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBx_trace()\fP, \fBxDeepCountFields()\fP, and \fBxGetFieldCount()\fP\&.
 .SS "void xDestroyField (\fBXField\fP * f)"
-Destroys an X structure field, freeing up resources used\&. For
+Destroys an X structure field, freeing up all referenced resources, and destroying the field itself\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIf\fP Pointer to the field to be destroyed\&. 
+\fIf\fP Pointer to the field to be destroyed\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxClearField()\fP 
 .RE
 .PP
 
 .PP
-References \fBXField::name\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_STRUCT\fP, \fBxClearStruct()\fP, and \fBxGetFieldCount()\fP\&.
+References \fBxClearField()\fP\&.
 .SS "void xDestroyStruct (\fBXStructure\fP * s)"
 Destroys an X structure, freeing up resources used by name and value\&.
 .PP
