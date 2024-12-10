@@ -13,6 +13,7 @@
 #ifndef XCHANGE_H_
 #define XCHANGE_H_
 
+#include <stdint.h>
 
 /// API major version
 #define XCHANGE_MAJOR_VERSION  0
@@ -141,7 +142,7 @@ typedef struct XField {
   XType type;               ///< The underlyng data type
   int ndim;                 ///< The dimensionality of the data
   int sizes[X_MAX_DIMS];    ///< The sizes along each dimension
-  int flags;                ///< (optional) flags that specific data exchange mechanism may use, e.g. for BSON subtype.
+  uint32_t flags;           ///< (optional) flags that specific data exchange mechanism may use, e.g. for BSON subtype.
   boolean isSerialized;     ///< Whether the fields is stored in serialized (string) format.
   struct XField *next;      ///< Pointer to the next linked element (if inside an XStructure).
 } XField;
