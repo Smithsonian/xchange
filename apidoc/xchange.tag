@@ -508,15 +508,15 @@
       <type>XField *</type>
       <name>xCreateMixed1DField</name>
       <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>aedd6e29ef66f9512db5b2fb89163063b</anchor>
-      <arglist>(const char *name, int size)</arglist>
+      <anchor>a5b7c0e588603da8bd8893807408f51e3</anchor>
+      <arglist>(const char *name, int size, XField *value)</arglist>
     </member>
     <member kind="function">
       <type>XField *</type>
       <name>xCreateMixedArrayField</name>
       <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>abb011c92385269408efb6e5b8d16927c</anchor>
-      <arglist>(const char *name, int ndim, const int *sizes)</arglist>
+      <anchor>acf0823001995982977fe1e07b088c953</anchor>
+      <arglist>(const char *name, int ndim, const int *sizes, XField *value)</arglist>
     </member>
     <member kind="function">
       <type>XField *</type>
@@ -1441,15 +1441,15 @@
       <type>XField *</type>
       <name>xCreateMixed1DField</name>
       <anchorfile>xstruct_8c.html</anchorfile>
-      <anchor>aedd6e29ef66f9512db5b2fb89163063b</anchor>
-      <arglist>(const char *name, int size)</arglist>
+      <anchor>a0b37b00634177189d5e717e3c84820e3</anchor>
+      <arglist>(const char *name, int size, XField *array)</arglist>
     </member>
     <member kind="function">
       <type>XField *</type>
       <name>xCreateMixedArrayField</name>
       <anchorfile>xstruct_8c.html</anchorfile>
-      <anchor>abb011c92385269408efb6e5b8d16927c</anchor>
-      <arglist>(const char *name, int ndim, const int *sizes)</arglist>
+      <anchor>a7bb186343d1ff6dab01cc39e233b9069</anchor>
+      <arglist>(const char *name, int ndim, const int *sizes, XField *array)</arglist>
     </member>
     <member kind="function">
       <type>XField *</type>

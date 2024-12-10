@@ -55,10 +55,10 @@ src/xstruct.c \- A collection of commonly used functions for generic structured 
 .RI "\fBXField\fP * \fBxCreateLongField\fP (const char *name, long long value)"
 .br
 .ti -1c
-.RI "\fBXField\fP * \fBxCreateMixed1DField\fP (const char *name, int size)"
+.RI "\fBXField\fP * \fBxCreateMixed1DField\fP (const char *name, int size, \fBXField\fP *array)"
 .br
 .ti -1c
-.RI "\fBXField\fP * \fBxCreateMixedArrayField\fP (const char *name, int ndim, const int *sizes)"
+.RI "\fBXField\fP * \fBxCreateMixedArrayField\fP (const char *name, int ndim, const int *sizes, \fBXField\fP *array)"
 .br
 .ti -1c
 .RI "\fBXField\fP * \fBxCreateScalarField\fP (const char *name, \fBXType\fP type, const void *value)"
@@ -391,7 +391,7 @@ A newly created field with the supplied data, or NULL if there was an error\&.
 
 .PP
 References \fBX_LONG\fP, \fBx_trace_null()\fP, and \fBxCreateScalarField()\fP\&.
-.SS "\fBXField\fP * xCreateMixed1DField (const char * name, int size)"
+.SS "\fBXField\fP * xCreateMixed1DField (const char * name, int size, \fBXField\fP * array)"
 Creates a field containing a 1D array of heterogeneous fields\&. Each element of the array may have a different type and/or size\&.
 .PP
 \fBParameters\fP
@@ -399,6 +399,8 @@ Creates a field containing a 1D array of heterogeneous fields\&. Each element of
 \fIname\fP The name of the array field 
 .br
 \fIsize\fP The number of heterogeneous fields in the array\&. 
+.br
+\fIarray\fP The \fBXField\fP array of rows containing varying types and dimensions within them\&. 
 .RE
 .PP
 \fBReturns\fP
@@ -414,7 +416,7 @@ A field containing a heterogeneous array of entries, or NULL if there was an err
 
 .PP
 References \fBX_MAX_DIMS\fP, and \fBxCreateMixedArrayField()\fP\&.
-.SS "\fBXField\fP * xCreateMixedArrayField (const char * name, int ndim, const int * sizes)"
+.SS "\fBXField\fP * xCreateMixedArrayField (const char * name, int ndim, const int * sizes, \fBXField\fP * array)"
 Creates a field containing an array of heterogeneous fields\&. Each element of the array may have a different type and/or size\&.
 .PP
 \fBParameters\fP
@@ -424,6 +426,8 @@ Creates a field containing an array of heterogeneous fields\&. Each element of t
 \fIndim\fP The dimensionality of the heterogeneous components 
 .br
 \fIsizes\fP The individual sizes along each dimension 
+.br
+\fIarray\fP The \fBXField\fP array of elements containing varying types and dimensions within them\&. 
 .RE
 .PP
 \fBReturns\fP
@@ -438,7 +442,7 @@ A field containing a heterogeneous array of entries, or NULL if there was an err
 .PP
 
 .PP
-References \fBXField::name\fP, \fBx_error()\fP, \fBX_FIELD\fP, \fBx_trace_null()\fP, \fBxCreateField()\fP, \fBxGetElementCount()\fP, and \fBxStringCopyOf()\fP\&.
+References \fBXField::name\fP, \fBX_FIELD\fP, \fBx_trace_null()\fP, \fBxCreateField()\fP, \fBxGetElementCount()\fP, and \fBxStringCopyOf()\fP\&.
 .SS "\fBXField\fP * xCreateScalarField (const char * name, \fBXType\fP type, const void * value)"
 Creates a generic scalar field of a given name and native value\&. The structure will hold a copy of the value that is pointed at\&.
 .PP
@@ -583,7 +587,7 @@ Matching field from the structure or NULL if there is no match or one of the arg
 .PP
 
 .PP
-References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxGetField()\fP, \fBxMatchNextID()\fP, and \fBxNextIDToken()\fP\&.
+References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxGetField()\fP, \fBxMatchNextID()\fP, and \fBxNextIDToken()\fP\&.
 .SS "int xGetFieldCount (const \fBXField\fP * f)"
 Returns the total number of primitive elements in a field\&.
 .PP
