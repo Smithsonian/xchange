@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <li><a href="https://smithsonian.github.io/xchange">Project page</a> on github.io</li>
 </ul>
 <p>Author: Attila Kovacs</p>
-<p>Last Updated: 18 September 2024</p>
+<p>Last Updated: 10 December 2024</p>
 <h2><a class="anchor" id="autotoc_md3"></a>
 Table of Contents</h2>
 <ul>
@@ -284,14 +284,14 @@ Creating structure</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Set the &quot;property&quot; field in &quot;subsystem&quot;.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField</a>(sub, <span class="stringliteral">&quot;property&quot;</span>, <a class="code hl_function" href="xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6">xCreateStringField</a>(<span class="stringliteral">&quot;some value here&quot;</span>));</div>
-<div class="ttc" id="astructXStructure_html"><div class="ttname"><a href="structXStructure.html">XStructure</a></div><div class="ttdoc">SMA-X structure object, containing a linked-list of XField elements.</div><div class="ttdef"><b>Definition</b> xchange.h:165</div></div>
+<div class="ttc" id="astructXStructure_html"><div class="ttname"><a href="structXStructure.html">XStructure</a></div><div class="ttdoc">SMA-X structure object, containing a linked-list of XField elements.</div><div class="ttdef"><b>Definition</b> xchange.h:166</div></div>
 <div class="ttc" id="axstruct_8c_html_a12112584a34e07f9ef7b08f6ef1bc865"><div class="ttname"><a href="xstruct_8c.html#a12112584a34e07f9ef7b08f6ef1bc865">xCreateStruct</a></div><div class="ttdeci">XStructure * xCreateStruct()</div><div class="ttdef"><b>Definition</b> xstruct.c:28</div></div>
-<div class="ttc" id="axstruct_8c_html_ab1cb91bd6aa14c0dae9d24bfbe7b76f4"><div class="ttname"><a href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField</a></div><div class="ttdeci">XField * xSetField(XStructure *s, XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:697</div></div>
-<div class="ttc" id="axstruct_8c_html_ad84cbb4639f2fbfb604b698a86caf944"><div class="ttname"><a href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct</a></div><div class="ttdeci">XField * xSetSubstruct(XStructure *s, const char *name, XStructure *substruct)</div><div class="ttdef"><b>Definition</b> xstruct.c:552</div></div>
+<div class="ttc" id="axstruct_8c_html_ab1cb91bd6aa14c0dae9d24bfbe7b76f4"><div class="ttname"><a href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField</a></div><div class="ttdeci">XField * xSetField(XStructure *s, XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:716</div></div>
+<div class="ttc" id="axstruct_8c_html_ad84cbb4639f2fbfb604b698a86caf944"><div class="ttname"><a href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct</a></div><div class="ttdeci">XField * xSetSubstruct(XStructure *s, const char *name, XStructure *substruct)</div><div class="ttdef"><b>Definition</b> xstruct.c:571</div></div>
 </div><!-- fragment --><p>and then eventually destroyed after use as:</p>
 <div class="fragment"><div class="line"><span class="comment">// Free up all resources used by the structure &#39;s&#39;</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct</a>(s);</div>
-<div class="ttc" id="axstruct_8c_html_afe3fda2f392bae11e136e8c0c90f086d"><div class="ttname"><a href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct</a></div><div class="ttdeci">void xDestroyStruct(XStructure *s)</div><div class="ttdef"><b>Definition</b> xstruct.c:771</div></div>
+<div class="ttc" id="axstruct_8c_html_afe3fda2f392bae11e136e8c0c90f086d"><div class="ttname"><a href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct</a></div><div class="ttdeci">void xDestroyStruct(XStructure *s)</div><div class="ttdef"><b>Definition</b> xstruct.c:790</div></div>
 </div><!-- fragment --><p><a class="anchor" id="aggregate-ids"></a> </p>
 <h3><a class="anchor" id="autotoc_md17"></a>
 Aggregate IDs</h3>
@@ -325,11 +325,11 @@ Accessing substructures and elements</h3>
 <div class="fragment"><div class="line"><span class="comment">// Destroy the replaced fields if they are no longer needed.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(oldfield);</div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(oldsub);</div>
-<div class="ttc" id="axstruct_8c_html_ae0ce99c867b11bd14971031eec8ba4ad"><div class="ttname"><a href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a></div><div class="ttdeci">void xDestroyField(XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:819</div></div>
+<div class="ttc" id="axstruct_8c_html_ae0ce99c867b11bd14971031eec8ba4ad"><div class="ttname"><a href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a></div><div class="ttdeci">void xDestroyField(XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:838</div></div>
 </div><!-- fragment --><p>You can also remove existing fields from structures using <code><a class="el" href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField()</a></code>, e.g.</p>
 <div class="fragment"><div class="line"><span class="comment">// Remove and then destroy the field named &quot;blah&quot; in structure &#39;s&#39;.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(<a class="code hl_function" href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a>(s, <span class="stringliteral">&quot;blah&quot;</span>));</div>
-<div class="ttc" id="axstruct_8c_html_aec9f913cdb79d8653668a5d9bdda6ab1"><div class="ttname"><a href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a></div><div class="ttdeci">XField * xRemoveField(XStructure *s, const char *name)</div><div class="ttdef"><b>Definition</b> xstruct.c:599</div></div>
+<div class="ttc" id="axstruct_8c_html_aec9f913cdb79d8653668a5d9bdda6ab1"><div class="ttname"><a href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a></div><div class="ttdeci">XField * xRemoveField(XStructure *s, const char *name)</div><div class="ttdef"><b>Definition</b> xstruct.c:618</div></div>
 </div><!-- fragment --><h4><a class="anchor" id="autotoc_md19"></a>
 Large structures</h4>
 <p>The normal <code><a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a></code> and <code><a class="el" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct()</a></code> functions have computational costs that scale linearly with the number of direct fields in the structure. It is not much of an issue for structures that contain dozens of, or even a couple hundred, fields (per layer). For much larger structures, which have a fixed layout, there is an option for a potentially much more efficient hash-based lookup also. E.g. instead of <code><a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a></code> you may use <code><a class="el" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField()</a></code>:</p>
@@ -358,8 +358,8 @@ Iterating over elements</h4>
 <div class="line">  <span class="comment">// Process each field &#39;f&#39; here...</span></div>
 <div class="line">  ...</div>
 <div class="line">}</div>
-<div class="ttc" id="astructXField_html_ae1ebaf87eb62e6266b14908eee28e565"><div class="ttname"><a href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a></div><div class="ttdeci">struct XField * next</div><div class="ttdoc">Pointer to the next linked element (if inside an XStructure).</div><div class="ttdef"><b>Definition</b> xchange.h:150</div></div>
-<div class="ttc" id="astructXStructure_html_a501ae8af2201d9cfaa60e3af21ff58fc"><div class="ttname"><a href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a></div><div class="ttdeci">XField * firstField</div><div class="ttdoc">Pointer to the first field in this structure or NULL if the structure is empty.</div><div class="ttdef"><b>Definition</b> xchange.h:166</div></div>
+<div class="ttc" id="astructXField_html_ae1ebaf87eb62e6266b14908eee28e565"><div class="ttname"><a href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a></div><div class="ttdeci">struct XField * next</div><div class="ttdoc">Pointer to the next linked element (if inside an XStructure).</div><div class="ttdef"><b>Definition</b> xchange.h:151</div></div>
+<div class="ttc" id="astructXStructure_html_a501ae8af2201d9cfaa60e3af21ff58fc"><div class="ttname"><a href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a></div><div class="ttdeci">XField * firstField</div><div class="ttdoc">Pointer to the first field in this structure or NULL if the structure is empty.</div><div class="ttdef"><b>Definition</b> xchange.h:167</div></div>
 </div><!-- fragment --><p><a class="anchor" id="sorting-fields"></a> </p>
 <h3><a class="anchor" id="autotoc_md21"></a>
 Sorting fields</h3>
@@ -371,7 +371,7 @@ Sorting fields</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Reverse the order, recursively</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a>(s, <a class="code hl_define" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>);</div>
-<div class="ttc" id="axstruct_8c_html_ad32d8a3f211a3b101142879ae31146ec"><div class="ttname"><a href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a></div><div class="ttdeci">int xReverseFieldOrder(XStructure *s, boolean recursive)</div><div class="ttdef"><b>Definition</b> xstruct.c:1226</div></div>
+<div class="ttc" id="axstruct_8c_html_ad32d8a3f211a3b101142879ae31146ec"><div class="ttname"><a href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a></div><div class="ttdeci">int xReverseFieldOrder(XStructure *s, boolean recursive)</div><div class="ttdef"><b>Definition</b> xstruct.c:1245</div></div>
 </div><!-- fragment --><hr  />
 <p><a class="anchor" id="json-interchange"></a> </p>
 <h2><a class="anchor" id="autotoc_md23"></a>

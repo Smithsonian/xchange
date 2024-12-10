@@ -116,6 +116,7 @@ var xchange_8h =
     [ "xSetDebug", "xchange_8h.html#a6c1304b59a5882b2286e86c6837faead", null ],
     [ "xSetField", "xchange_8h.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4", null ],
     [ "xSetSubstruct", "xchange_8h.html#ad84cbb4639f2fbfb604b698a86caf944", null ],
+    [ "xSetSubtype", "xchange_8h.html#a6b7bdd2637d8a15a709e293d0c606699", null ],
     [ "xSetVerbose", "xchange_8h.html#afbe85067ddbc92577cd00ac8f6e3026f", null ],
     [ "xSortFields", "xchange_8h.html#aa1d006a2788adeb0fc9b4799297a69ff", null ],
     [ "xSortFieldsByName", "xchange_8h.html#a74d1f6b9b92ebe82353e75a3d7e9daae", null ],

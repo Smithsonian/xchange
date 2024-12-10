@@ -67,7 +67,7 @@ An SMA-X field, typically as part of an \fBXStructure\fP\&. A field may be a ref
 .SS "\fBchar\fP* name"
 Pointer to a designated local name buffer\&. It may not contain a separator (see X_SEP)\&. NOTE: it should normally be dynamically allocated, to work with \fBxClearField()\fP / \fBxDestroyField()\fP\&. 
 .SS "\fBchar\fP* subtype"
-Descriptive subtype, such a a mime type (if any) NOTE: it should normally be dynamically allocated, to work with \fBxClearField()\fP / \fBxDestroyField()\fP\&. 
+(optional) Descriptive subtype, such a a mime type or encoding (if any)\&. It is entirely up to the user / application to assing meaning to this field\&. NOTE: it should normally be dynamically allocated, to work with \fBxClearField()\fP / \fBxDestroyField()\fP\&. 
 .SS "\fBchar\fP* value"
 Pointer to designated local string content (or structure)\&.\&.\&. NOTE: it should normally be dynamically allocated, to work with \fBxClearField()\fP / \fBxDestroyField()\fP\&. 
 

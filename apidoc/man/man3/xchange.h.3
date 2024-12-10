@@ -426,6 +426,9 @@ include/xchange.h
 .RI "\fBXField\fP * \fBxSetSubstruct\fP (\fBXStructure\fP *s, const char *name, \fBXStructure\fP *substruct)"
 .br
 .ti -1c
+.RI "int \fBxSetSubtype\fP (\fBXField\fP *f, const char *type)"
+.br
+.ti -1c
 .RI "void \fBxSetVerbose\fP (\fBboolean\fP value)"
 .br
 .ti -1c
@@ -1656,6 +1659,24 @@ return The prior field stored under the same name or NULL\&. If there is an erro
 
 .PP
 References \fBXStructure::parent\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBx_trace_null()\fP, \fBxCreateScalarField()\fP, and \fBxSetField()\fP\&.
+.SS "int xSetSubtype (\fBXField\fP * f, const char * type)"
+Sets the optional subtype (e\&.g\&. mime type) for a field's content to a copy of the specified string value\&. The subtype can be used to add any application specific information on how the specified value should be used\&. For example it may indicate a mime type or an encoding\&. It is entirely up to the user as to what meaning the subtype has for their application\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIf\fP Pointer to a field 
+.br
+\fItype\fP The new subtype to be assigned to the field\&. A copy of the value is used rather than the reference, so that the string that was supplied can be safely discarded at any point after the call\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+X_SUCCESS (0) if successful or else X_NULL if the intput field pointer is NULL\&. 
+.RE
+.PP
+
+.PP
+References \fBXField::subtype\fP, \fBx_error()\fP, \fBX_NULL\fP, \fBX_SUCCESS\fP, and \fBxStringCopyOf()\fP\&.
 .SS "void xSetVerbose (\fBboolean\fP value)"
 Sets verbose output for the xchange library\&.
 .PP

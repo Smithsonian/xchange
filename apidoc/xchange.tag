@@ -799,6 +799,13 @@
       <arglist>(XStructure *s, const char *name, XStructure *substruct)</arglist>
     </member>
     <member kind="function">
+      <type>int</type>
+      <name>xSetSubtype</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a6b7bdd2637d8a15a709e293d0c606699</anchor>
+      <arglist>(XField *f, const char *type)</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>xSetVerbose</name>
       <anchorfile>xchange_8h.html</anchorfile>
@@ -1597,6 +1604,13 @@
       <anchorfile>xstruct_8c.html</anchorfile>
       <anchor>ad84cbb4639f2fbfb604b698a86caf944</anchor>
       <arglist>(XStructure *s, const char *name, XStructure *substruct)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xSetSubtype</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>a6b7bdd2637d8a15a709e293d0c606699</anchor>
+      <arglist>(XField *f, const char *type)</arglist>
     </member>
     <member kind="function">
       <type>int</type>

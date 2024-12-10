@@ -185,6 +185,7 @@
           <topic label="xSetDebug" href="xchange_8h.html#a6c1304b59a5882b2286e86c6837faead"/>
           <topic label="xSetField" href="xchange_8h.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4"/>
           <topic label="xSetSubstruct" href="xchange_8h.html#ad84cbb4639f2fbfb604b698a86caf944"/>
+          <topic label="xSetSubtype" href="xchange_8h.html#a6b7bdd2637d8a15a709e293d0c606699"/>
           <topic label="xSetVerbose" href="xchange_8h.html#afbe85067ddbc92577cd00ac8f6e3026f"/>
           <topic label="xSortFields" href="xchange_8h.html#aa1d006a2788adeb0fc9b4799297a69ff"/>
           <topic label="xSortFieldsByName" href="xchange_8h.html#a74d1f6b9b92ebe82353e75a3d7e9daae"/>
@@ -307,6 +308,7 @@
           <topic label="xReverseFieldOrder" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec"/>
           <topic label="xSetField" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4"/>
           <topic label="xSetSubstruct" href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944"/>
+          <topic label="xSetSubtype" href="xstruct_8c.html#a6b7bdd2637d8a15a709e293d0c606699"/>
           <topic label="xSortFields" href="xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff"/>
           <topic label="xSortFieldsByName" href="xstruct_8c.html#a74d1f6b9b92ebe82353e75a3d7e9daae"/>
           <topic label="xSplitID" href="xstruct_8c.html#acd6af91336f4b5501d0a0e3d5cf88ad3"/>

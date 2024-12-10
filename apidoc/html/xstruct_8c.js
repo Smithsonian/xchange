@@ -36,6 +36,7 @@ var xstruct_8c =
     [ "xReverseFieldOrder", "xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec", null ],
     [ "xSetField", "xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4", null ],
     [ "xSetSubstruct", "xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944", null ],
+    [ "xSetSubtype", "xstruct_8c.html#a6b7bdd2637d8a15a709e293d0c606699", null ],
     [ "xSortFields", "xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff", null ],
     [ "xSortFieldsByName", "xstruct_8c.html#a74d1f6b9b92ebe82353e75a3d7e9daae", null ],
     [ "xSplitID", "xstruct_8c.html#acd6af91336f4b5501d0a0e3d5cf88ad3", null ]

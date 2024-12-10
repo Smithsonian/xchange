@@ -474,6 +474,8 @@ Functions</h2></td></tr>
 <tr class="separator:ab1cb91bd6aa14c0dae9d24bfbe7b76f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad84cbb4639f2fbfb604b698a86caf944" id="r_ad84cbb4639f2fbfb604b698a86caf944"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct</a> (<a class="el" href="structXStructure.html">XStructure</a> *s, const char *name, <a class="el" href="structXStructure.html">XStructure</a> *substruct)</td></tr>
 <tr class="separator:ad84cbb4639f2fbfb604b698a86caf944"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b7bdd2637d8a15a709e293d0c606699" id="r_a6b7bdd2637d8a15a709e293d0c606699"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a6b7bdd2637d8a15a709e293d0c606699">xSetSubtype</a> (<a class="el" href="structXField.html">XField</a> *f, const char *type)</td></tr>
+<tr class="separator:a6b7bdd2637d8a15a709e293d0c606699"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbe85067ddbc92577cd00ac8f6e3026f" id="r_afbe85067ddbc92577cd00ac8f6e3026f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#afbe85067ddbc92577cd00ac8f6e3026f">xSetVerbose</a> (<a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a> value)</td></tr>
 <tr class="separator:afbe85067ddbc92577cd00ac8f6e3026f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1d006a2788adeb0fc9b4799297a69ff" id="r_aa1d006a2788adeb0fc9b4799297a69ff"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#aa1d006a2788adeb0fc9b4799297a69ff">xSortFields</a> (<a class="el" href="structXStructure.html">XStructure</a> *s, int(*cmp)(const <a class="el" href="structXField.html">XField</a> **f1, const <a class="el" href="structXField.html">XField</a> **f2), <a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a> recursive)</td></tr>
@@ -2686,6 +2688,45 @@ Variables</h2></td></tr>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct()</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="structXStructure.html#a82ba053944ce97d83d41c05f68ec4f3d">XStructure::parent</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31">x_trace_null()</a>, <a class="el" href="xstruct_8c.html#a965f7e58fd1c10570c6f6a472599b08f">xCreateScalarField()</a>, and <a class="el" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField()</a>.</p>
+
+</div>
+</div>
+<a id="a6b7bdd2637d8a15a709e293d0c606699" name="a6b7bdd2637d8a15a709e293d0c606699"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b7bdd2637d8a15a709e293d0c606699">&#9670;&#160;</a></span>xSetSubtype()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int xSetSubtype </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXField.html">XField</a> *&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the optional subtype (e.g. mime type) for a field's content to a copy of the specified string value. The subtype can be used to add any application specific information on how the specified value should be used. For example it may indicate a mime type or an encoding. It is entirely up to the user as to what meaning the subtype has for their application.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Pointer to a field </td></tr>
+    <tr><td class="paramname">type</td><td>The new subtype to be assigned to the field. A copy of the value is used rather than the reference, so that the string that was supplied can be safely discarded at any point after the call. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>X_SUCCESS (0) if successful or else X_NULL if the intput field pointer is NULL. </dd></dl>
+
+<p class="reference">References <a class="el" href="structXField.html#a2f076846fbd6b30183ba3ab61e3334e5">XField::subtype</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, <a class="el" href="xchange_8h.html#a7b2679c964ea5f2160380ed55654b873">X_SUCCESS</a>, and <a class="el" href="xchange_8c.html#a01d730a1a98963816de2dd73e72957a5">xStringCopyOf()</a>.</p>
 
 </div>
 </div>
