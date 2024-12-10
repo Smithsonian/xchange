@@ -85,13 +85,9 @@ typedef int XType;          ///< SMA-X data type.
 #define X_UNKNOWN           0       ///< Unknown XType (default)
 #define X_BOOLEAN           '?'     ///< \hideinitializer boolean XType
 #define X_BYTE              'B'     ///< \hideinitializer single byte XType
-#define X_BYTE_HEX          '#'     ///< \hideinitializer single byte XType in dexadecimal representation
 #define X_SHORT             'S'     ///< \hideinitializer native short XType (usually 16-bits)
-#define X_SHORT_HEX         'h'     ///< \hideinitializer native short XType in hexadecimal representation
 #define X_INT               'L'     ///< \hideinitializer native int XType (usually 16-bits)
-#define X_INT_HEX           'H'     ///< \hideinitializer native int XType in hexadecimal representation
 #define X_LONG              'Y'     ///< \hideinitializer 64-bit int XType
-#define X_LONG_HEX          'Z'     ///< \hideinitializer 64-bit int XType in hexadecimal representation
 #define X_FLOAT             'F'     ///< \hideinitializer 32-bit floating point XType
 #define X_DOUBLE            'D'     ///< \hideinitializer double-precision (64) bit floating point XType
 #define X_STRING            '$'     ///< \hideinitializer a terminated string XType

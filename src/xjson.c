@@ -760,13 +760,9 @@ static XType GetCommonType(XType t1, XType t2) {
   if(t1 == X_DOUBLE || t2 == X_DOUBLE) return X_DOUBLE;
   if(t1 == X_FLOAT || t2 == X_FLOAT) return X_FLOAT;
   if(t1 == X_LONG || t2 == X_LONG) return X_LONG;
-  if(t1 == X_LONG_HEX || t2 == X_LONG_HEX) return X_LONG;
   if(t1 == X_INT || t2 == X_INT) return X_INT;
-  if(t1 == X_INT_HEX || t2 == X_INT_HEX) return X_INT;
   if(t1 == X_SHORT || t2 == X_SHORT) return X_SHORT;
-  if(t1 == X_SHORT_HEX || t2 == X_SHORT_HEX) return X_SHORT;
   if(t1 == X_BYTE || t2 == X_BYTE) return X_BYTE;
-  if(t1 == X_BYTE_HEX || t2 == X_BYTE_HEX) return X_BYTE;
   if(t1 == X_BOOLEAN || t2 == X_BOOLEAN) return X_BOOLEAN;
   return X_UNKNOWN;
 }
@@ -1207,13 +1203,9 @@ static int PrintPrimitive(const void *ptr, XType type, char *str) {
   switch(type) {
     case X_BOOLEAN: return sprintf(str, (*(boolean *)ptr ? JSON_TRUE : JSON_FALSE));
     case X_BYTE: return sprintf(str, "%hhu", *(unsigned char *) ptr);
-    case X_BYTE_HEX: return sprintf(str, "0x%hhx", *(unsigned char *) ptr);
     case X_SHORT: return sprintf(str, "%hd", *(short *) ptr);
-    case X_SHORT_HEX: return sprintf(str, "0x%hx", *(unsigned short *) ptr);
     case X_INT: return sprintf(str, "%d", *(int *) ptr);
-    case X_INT_HEX: return sprintf(str, "0x%x", *(int *) ptr);
     case X_LONG: return sprintf(str, "%lld", *(long long *) ptr);
-    case X_LONG_HEX: return sprintf(str, "0x%llx", *(long long *) ptr);
     case X_FLOAT: return sprintf(str, "%.8g , ", *(float *) ptr);
     case X_DOUBLE: return xPrintDouble(str, *(double *) ptr);
     case X_STRING:

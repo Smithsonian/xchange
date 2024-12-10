@@ -75,8 +75,13 @@ prior to invoking `make`. The following build variables can be configured:
 
  - `CPPFLAGS`: C preprocessor flags, such as externally defined compiler constants.
  
- - `CFLAGS`: Flags to pass onto the C compiler (default: `-Os -Wall -std=c99`). Note, `-Iinclude` will be added 
+ - `CFLAGS`: Flags to pass onto the C compiler (default: `-g -Os -Wall`). Note, `-Iinclude` will be added 
    automatically.
+ 
+ - `CSTANDARD`: Optionally, specify the C standard to compile for, e.g. `c99` to compile for the C99 standard. If
+   defined then `-std=$(CSTANDARD)` is added to `CFLAGS` automatically.
+   
+ - `WEXTRA`: If set to 1, `-Wextra` is added to `CFLAGS` automatically.
    
  - `LDFLAGS`: Extra linker flags (default: _not set_). Note, `-lm` will be added automatically.
 
@@ -162,24 +167,17 @@ shows the (`XType`) types recognized by the library and their C equivalents etc.
  |------------------|--------------------------|----------------------------------------------------------|
  | `X_BOOLEAN`      | `boolean`<sup>*</sup>    | '`true`' or '`false`'                                    |
  | `X_BYTE`         | `char` or `int8_t`       | '`-128`' to  '`127`'                                     |
- | `X_BYTE_HEX`     | `char` or `[u]int8_t`    | '`0x0`' to  '`0xff`' (hexadecimal representation)        |
  | `X_SHORT`        | `short` or `int16_t`     | '`-32768`' to '`32767`'                                  |
- | `X_SHORT_HEX`    | `short` or `[u]int16_t`  | '`0x0`' to  '`0xffff`' (hexadecimal representation)      |
  | `X_INT`          | `int32_t`                | '`-2,147,483,648`' to '`2,147,483,647`'                  |
- | `X_INT_HEX`      | `[u]int32_t`             | '`0x0`' to  '`0xffffffff`' (hexadecimal representation)  |
  | `X_LONG`         | `long long` or `int64_t` | '`-9,223,372,036,854,775,808`' to '`9,223,372,036,854,775,807`' |
- | `X_LONG_HEX`     | `[u]int64_t`             | '`0x0`' to  '`0xffffffffffffffff`' (hex. representation) |
  | `X_FLOAT`        | `float`                  | `1`, `1.0`, `-1.234567e-33`                              |
  | `X_DOUBLE`       | `double`                 | `1`, `1.0`, `-1.2345678901234567e-111`                   |
  | `X_STRING`       | `char *`    	       | `Hello world!`, `line1\nline2\n` (0-terminated)          |
  | `X_CHARS(n) `    | `char[n]`                | Fixed-length character arrays (also w/o termination)     |
+ | `X_FIELD`        | `XField`                 | For irregular and/or heterogeneous arrays                |
  | `X_STRUCT`       | `XStructure`             | substructure                                             |
 
 <sup>*</sup> The `boolean` type is defined in `xchange.h`.
-
-The `[...]_HEX` types are meaningful only for ASCII representations, and are otherwise equivalent to the corresponding 
-regular integer-types of the same width. They are meant only as a way to explicitly define whether or not an integer 
-value is to be represented in hexadecimal format rather than the default decimal format.
 
 <a name="strings"></a>
 #### Strings

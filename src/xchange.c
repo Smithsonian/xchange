@@ -190,13 +190,9 @@ int xStringElementSizeOf(XType type) {
   else switch(type) {
     case X_BOOLEAN : l = 5; break;    // "false"
     case X_BYTE : l = 4; break;       // -255
-    case X_BYTE_HEX : l = 4; break;   // 0xff
     case X_SHORT : l = 6; break;      // -65536
-    case X_SHORT_HEX : l = 6; break;  // 0xffff
     case X_INT : l = 11; break;       // -2147483647
-    case X_INT_HEX : l = 10; break;   // 0xffffffff
     case X_LONG : l = 19; break;
-    case X_LONG_HEX : l = 18; break;
     case X_FLOAT : l = 16; break;     // 1 leading + 8 significant figs + 2 signs + 1 dot + 1 E + 3 exponent
     case X_DOUBLE : l = 25; break;    // 1 leading + 16 significant figs + (4) + 4 exponent
     default : return x_error(-1, EINVAL, "xStringElementSizeOf", "invalid type: %d", type);
@@ -217,15 +213,11 @@ int xElementSizeOf(XType type) {
   if(type < 0) return -type;
   switch(type) {
     case X_RAW: return sizeof(char *);
-    case X_BYTE:
-    case X_BYTE_HEX: return 1;
-    case X_SHORT:
-    case X_SHORT_HEX: return sizeof(short);
+    case X_BYTE: return 1;
+    case X_SHORT: return sizeof(short);
     case X_BOOLEAN: return sizeof(boolean);
-    case X_INT:
-    case X_INT_HEX: return sizeof(int);
-    case X_LONG:
-    case X_LONG_HEX: return sizeof(long long);
+    case X_INT: return sizeof(int);
+    case X_LONG: return sizeof(long long);
     case X_FLOAT: return sizeof(float);
     case X_DOUBLE: return sizeof(double);
     case X_STRUCT: return sizeof(XStructure);
