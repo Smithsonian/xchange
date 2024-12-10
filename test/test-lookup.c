@@ -10,7 +10,7 @@
 
 #include "xchange.h"
 
-int main(int argc, char *argv[]) {
+int main() {
   XStructure *s, *sys, *sub;
   XLookupTable *l;
   XField *f;

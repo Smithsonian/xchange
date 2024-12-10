@@ -51,7 +51,7 @@ static XStructure *createStruct() {
 
 
 
-int main(int argc, char *argv[]) {
+int main() {
   XStructure *s = createStruct(), *s1;
   char *str, *next, *str1;
 

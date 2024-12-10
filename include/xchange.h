@@ -243,8 +243,8 @@ XField *xCreateLongField(const char *name, long long value);
 XField *xCreateBooleanField(const char *name, boolean value);
 XField *xCreateStringField(const char *name, const char *value);
 XField *xCreate1DField(const char *name, XType type, int count, const void *values);
-XField *xCreateMixedArrayField(const char *name, int ndim, const int *sizes);
-XField *xCreateMixed1DField(const char *name, int size);
+XField *xCreateMixedArrayField(const char *name, int ndim, const int *sizes, XField *value);
+XField *xCreateMixed1DField(const char *name, int size, XField *value);
 
 // Parsers / formatters
 boolean xParseBoolean(char *str, char **end);

@@ -161,35 +161,37 @@ associated data type, a dimensionality, a shape (for multidimensional arrays).
 ### Basic data types
 
 The __xchange__ library supports most basic (primitive) data types used across programming languages. The table below 
-shows the (`XType`) types recognized by the library and their C equivalents etc.:
+shows the __xchange__ types recognized by the library and the corresponding pointer/array type values:
 
- | __xchange__ type | C type                   | Comment / example                                        |
- |------------------|--------------------------|----------------------------------------------------------|
- | `X_BOOLEAN`      | `boolean`<sup>*</sup>    | '`true`' or '`false`'                                    |
- | `X_BYTE`         | `char` or `int8_t`       | '`-128`' to  '`127`'                                     |
- | `X_SHORT`        | `short` or `int16_t`     | '`-32768`' to '`32767`'                                  |
- | `X_INT`          | `int32_t`                | '`-2,147,483,648`' to '`2,147,483,647`'                  |
- | `X_LONG`         | `long long` or `int64_t` | '`-9,223,372,036,854,775,808`' to '`9,223,372,036,854,775,807`' |
- | `X_FLOAT`        | `float`                  | `1`, `1.0`, `-1.234567e-33`                              |
- | `X_DOUBLE`       | `double`                 | `1`, `1.0`, `-1.2345678901234567e-111`                   |
- | `X_STRING`       | `char *`    	       | `Hello world!`, `line1\nline2\n` (0-terminated)          |
- | `X_CHARS(n) `    | `char[n]`                | Fixed-length character arrays (also w/o termination)     |
- | `X_FIELD`        | `XField`                 | For irregular and/or heterogeneous arrays                |
- | `X_STRUCT`       | `XStructure`             | substructure                                             |
+ | `XType`       | element type             | Comment / example                                               |
+ |---------------|--------------------------|-----------------------------------------------------------------|
+ | `X_BOOLEAN`   | `boolean`                | '`true`' or '`false`'                                           |
+ | `X_BYTE`      | `char` or `int8_t`       | '`-128`' to  '`127`'                                            |
+ | `X_SHORT`     | `short` or `int16_t`     | '`-32768`' to '`32767`'                                         |
+ | `X_INT`       | `int32_t`                | '`-2,147,483,648`' to '`2,147,483,647`'                         |
+ | `X_LONG`      | `long long` or `int64_t` | '`-9,223,372,036,854,775,808`' to '`9,223,372,036,854,775,807`' |
+ | `X_FLOAT`     | `float`                  | `1`, `1.0`, `-1.234567e-33`                                     |
+ | `X_DOUBLE`    | `double`                 | `1`, `1.0`, `-1.2345678901234567e-111`                          |
+ | `X_STRING`    | `char *`    	            | `Hello world!`, `line1\nline2\n` (0-terminated)                 |
+ | `X_CHARS(n) ` | `char[n]`                | Fixed-length character arrays (also w/o termination)            |
+ | `X_FIELD`     | `XField`                 | For irregular and/or heterogeneous arrays                       |
+ | `X_STRUCT`    | `XStructure`             | substructure                                                    |
 
-<sup>*</sup> The `boolean` type is defined in `xchange.h`.
+The `boolean` type is defined in `xchange.h`. The `XField.value` is a pointer / array of the given element type. So,
+an `XField` of type `X_DOUBLE` will have a `value` field that should be cast a `(double *)`, while for type `X_STRING`
+the value field shall be cast as `(char **)`.
 
 <a name="strings"></a>
 #### Strings
 
-Strings can be either fixed-length or else a 0-terminated sequence of ASCII characters. At its basic level the library 
+Strings can be either fixed-width or else a 0-terminated sequence of ASCII characters. At its basic level the library 
 does not impose any restriction of what ASCII characters may be used. However, we recommend that users stick to the 
 JSON convention, and represent special characters in escaped form. E.g. carriage return (`0xd`) as `\` followed by 
 `n`, tabs as `\` followed by `t`, etc. As a result a single backslash should also be escaped as two consecutive `\` 
 characters. You might use `xjsonEscapeString()` or `xjsonUnescapeString()` to perform the conversion to/from standard
 JSON representation.
 
-Fixed-length strings of up to _n_ characters are represented internally as the `XCHAR(n)` type. They may be 
+Fixed-width strings of up to _n_ characters are represented internally as the `XCHAR(n)` type. They may be 
 0-terminated as appropriate, or else represent exactly _n_ ASCII characters without explicit termination. 
 Alternatively, the `X_STRING` type represents ASCII strings of arbitrary length, up to the 0-termination character.
 
@@ -241,6 +243,17 @@ field. We could have declared `data` as a 1D array `double data[2 * 3 * 4] = ...
 containing doubles with storage for at least 24 elements. It is the `sizes` array, along with the dimensionality,
 which together define the number of elements used from it, and the shape of the array for __xchange__.
 
+Arrays of irregular shape or mixed element types can be represented by fields containing an array of `XField`
+entries:
+
+```c
+  XField *row1, row2, ...  		   // Heterogeneous entries, each wrapped in an `XField`
+  XField data[N] = { *row1, *row2, ... };  // The irregular / mixed-type array. 
+
+  XField *f = xCreateMixed1DField("my_array", N);
+```
+
+Or, use `xCreateMixedArrayField()` to create a multi-dimensional array of heterogeneous elements the same way.
 
 
 <a name="creating-structure"></a>

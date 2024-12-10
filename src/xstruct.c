@@ -41,30 +41,19 @@ XStructure *xCreateStruct() {
  * @param name    The name of the array field
  * @param ndim    The dimensionality of the heterogeneous components
  * @param sizes   The individual sizes along each dimension
+ * @param array   The XField array of elements containing varying types and dimensions within them.
  * @return        A field containing a heterogeneous array of entries, or NULL if there
  *                was an error. The entries are initially empty, except for their names
  *                bearing '.' followed by the 1-based array index, e.g. '.1', '.2'...
  *
  * @sa xCreateMixed1DField()
  */
-XField *xCreateMixedArrayField(const char *name, int ndim, const int *sizes) {
-  static const char *fn = "xCreateFieldArray";
-
+XField *xCreateMixedArrayField(const char *name, int ndim, const int *sizes, XField *array) {
   int count = xGetElementCount(ndim, sizes);
-  XField *array = NULL, *f;
-
-  if(count < 0) return x_trace_null(fn, NULL);
-
-  if(count) {
-    array = (XField *) calloc(count, sizeof(XField));
-    if(array == NULL) {
-      x_error(0, errno, fn, "alloc error (%d fields)", count);
-      return NULL;
-    }
-  }
+  XField *f;
 
   f = xCreateField(name, X_FIELD, ndim, sizes, array);
-  x_check_alloc(f);
+  if(f == NULL) return x_trace_null("xCreateMixedArrayField", NULL);
 
   while(--count >= 0) {
     char idx[20];
@@ -80,16 +69,17 @@ XField *xCreateMixedArrayField(const char *name, int ndim, const int *sizes) {
  * array may have a different type and/or size.
  *
  * @param name    The name of the array field
- * @param size   The number of heterogeneous fields in the array.
+ * @param size    The number of heterogeneous fields in the array.
+ * @param array   The XField array of rows containing varying types and dimensions within them.
  * @return        A field containing a heterogeneous array of entries, or NULL if there
  *                was an error. The entries are initially empty, except for their names
  *                bearing '.' followed by the 1-based array index, e.g. '.1', '.2'...
  *
  * @sa xCreateMixedArrayField()
  */
-XField *xCreateMixed1DField(const char *name, int size) {
+XField *xCreateMixed1DField(const char *name, int size, XField *array) {
   const int sizes[X_MAX_DIMS] = { size };
-  return xCreateMixedArrayField(name, 1, sizes);
+  return xCreateMixedArrayField(name, 1, sizes, array);
 }
 
 /**
@@ -278,7 +268,7 @@ XField *xGetField(const XStructure *s, const char *id) {
     if(!next) return e;
 
     if(e->type != X_STRUCT) return NULL;
-    return xGetField((XStructure *) e, next);
+    return xGetField((XStructure *) e->value, next);
   }
 
   return NULL;
