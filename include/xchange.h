@@ -138,9 +138,12 @@ typedef int boolean;               ///< boolean TRUE/FALSE data type.
  */
 typedef struct XField {
   char *name;               ///< Pointer to a designated local name buffer. It may not contain a separator (see X_SEP).
+                            ///< NOTE: it should normally be dynamically allocated, to work with xClearField() / xDestroyField().
   char *value;              ///< Pointer to designated local string content (or structure)...
+                            ///< NOTE: it should normally be dynamically allocated, to work with xClearField() / xDestroyField().
   XType type;               ///< The underlyng data type
   char *subtype;            ///< Descriptive subtype, such a a mime type (if any)
+                            ///< NOTE: it should normally be dynamically allocated, to work with xClearField() / xDestroyField().
   int ndim;                 ///< The dimensionality of the data
   int sizes[X_MAX_DIMS];    ///< The sizes along each dimension
   boolean isSerialized;     ///< Whether the fields is stored in serialized (string) format.
