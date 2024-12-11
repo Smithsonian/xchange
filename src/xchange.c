@@ -224,6 +224,8 @@ int xElementSizeOf(XType type) {
     case X_STRING: return sizeof(char *);
     case X_FIELD: return sizeof(XField);
   }
+
+  x_error(0, EINVAL, "xElementSizeOf", "invalid type: %d ('%c')", type, type);
   return 0;
 }
 

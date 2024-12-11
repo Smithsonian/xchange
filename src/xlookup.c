@@ -364,8 +364,8 @@ XLookupTable *xAllocLookup(unsigned int size) {
  * track fields added or removed after its creation, and so it is suited for accessing structures with a
  * fixed layout only.
  *
- * Since the lookup table contains references to the structure, you should not destroy the structure as long
- * as the lookup table is used.
+ * Since the lookup table contains references to the fields in the structure, you should not destroy the
+ * fields as long as the lookup table is used (but you may call free() the structure itself).
  *
  * Once the lookup table is no longer used, the caller should explicitly destroy it with `xDestroyLookup()`
  *

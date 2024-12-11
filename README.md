@@ -17,7 +17,7 @@
 
 # xchange 
 
-Platform-agnostic data exchange framework for C/C++ with built-in JSON parser/emitter support.
+Free platform-agnostic data exchange framework for C/C++, including a built-in JSON parser and emitter.
 
  - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html)
  - [Project page](https://smithsonian.github.io/xchange) on github.io
@@ -126,7 +126,7 @@ in your `LD_LIBRARY_PATH` (e.g. in `/usr/lib` or `/usr/local/lib`) you can simpl
 
 ```make
 myprog: ...
-	cc -o $@ $^ $(LDFLAGS) -lxchange 
+	$(CC) -o $@ $^ $(LDFLAGS) -lxchange 
 ```
 
 (Or, you might simply add `-lxchange` to `LDFLAGS` and use a more standard recipe.) And, in if you installed the 
@@ -168,7 +168,7 @@ shows the __xchange__ types recognized by the library and the corresponding poin
  | `X_BOOLEAN`   | `boolean`                | '`true`' or '`false`'                                           |
  | `X_BYTE`      | `char` or `int8_t`       | '`-128`' to  '`127`'                                            |
  | `X_SHORT`     | `short` or `int16_t`     | '`-32768`' to '`32767`'                                         |
- | `X_INT`       | `int32_t`                | '`-2,147,483,648`' to '`2,147,483,647`'                         |
+ | `X_INT`       | `int32_t` (`int`)        | '`-2,147,483,648`' to '`2,147,483,647`'                         |
  | `X_LONG`      | `long long` or `int64_t` | '`-9,223,372,036,854,775,808`' to '`9,223,372,036,854,775,807`' |
  | `X_FLOAT`     | `float`                  | `1`, `1.0`, `-1.234567e-33`                                     |
  | `X_DOUBLE`    | `double`                 | `1`, `1.0`, `-1.2345678901234567e-111`                          |
@@ -509,8 +509,7 @@ There are a number of ways this little library can evolve and grow in the not to
 paths forward are:
 
  - Add regression testing and code coverage tracking (high priority)
- - Add support for [BSON](https://bsonspec.org/spec.html) -- MongoDB's binary exchange format. (It may require 
-   expanding the `XType` struct for binary subtype.)
+ - Add support for [BSON](https://bsonspec.org/spec.html) -- MongoDB's binary exchange format.
  - Add support for 128-bit floating point types (`X_FLOAT128`).
  
 If you have an idea for a must have feature, please let me (Attila) know. Pull requests, for new features or fixes to

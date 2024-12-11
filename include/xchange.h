@@ -214,6 +214,7 @@ XField *xSetField(XStructure *s, XField *f);
 XField *xRemoveField(XStructure *s, const char *name);
 boolean xIsFieldValid(const XField *f);
 int xGetFieldCount(const XField *f);
+void *xGetElementAtIndex(const XField *f, int idx);
 int xCountFields(const XStructure *s);
 long xDeepCountFields(const XStructure *s);
 XStructure *xGetSubstruct(const XStructure *s, const char *id);

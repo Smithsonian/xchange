@@ -501,10 +501,10 @@ XField *xCreateStringField(const char *name, const char *value) {
 }
 
 /**
- * Sets the optional subtype (e.g. mime type) for a field's content to a copy of the specified
- * string value. The subtype can be used to add any application specific information on how the
- * specified value should be used. For example it may indicate a mime type or an encoding.
- * It is entirely up to the user as to what meaning the subtype has for their application.
+ * Sets the optional subtype for a field's content to a copy of the specified string value. The
+ * subtype can be used to add any application specific information on how the specified value
+ * should be used. For example it may indicate a mime type or an encoding. It is entirely up to
+ * the user as to what meaning the subtype has for their application.
  *
  * @param f       Pointer to a field
  * @param type    The new subtype to be assigned to the field. A copy of the value is used rather
@@ -547,8 +547,43 @@ boolean xIsFieldValid(const XField *f) {
  * @return      The total number of primitive elements contained in the field.
  */
 int xGetFieldCount(const XField *f) {
-  if(!f) return 0;
+  if(!f) {
+    x_error(0, EINVAL, "xGetFieldCount", "input field is NULL");
+    return 0;
+  }
   return xGetElementCount(f->ndim, f->sizes);
+}
+
+/**
+ * Returns a pointer to the array element at the specified index.
+ *
+ * @param f     Pointer to a field
+ * @param idx   the array index of the requested element
+ *
+ * @return      A pointer to the element at the given index, or NULL if there was an error.
+ */
+void *xGetElementAtIndex(const XField *f, int idx) {
+  static const char *fn = "xGetElementAtIndex";
+
+  int n, eSize;
+
+  if(idx < 0) {
+    x_error(0, EINVAL, fn, "negative index");
+    return NULL;
+  }
+
+  n = xGetFieldCount(f);
+  if(n < 0) return x_trace_null(fn, NULL);
+
+  if(idx + 1 >= n) {
+    x_error(0, EINVAL, fn, "index %d is out of bounds for element count %d", idx, n);
+    return NULL;
+  }
+
+  eSize = xElementSizeOf(f->type);
+  if(eSize < 0) return x_trace_null(fn, NULL);
+
+  return f->value + idx * eSize;
 }
 
 /**
