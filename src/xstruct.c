@@ -1025,7 +1025,10 @@ char *xCopyIDToken(const char *id) {
   char *token;
   int l;
 
-  if(!id) return NULL;
+  if(!id) {
+    x_error(X_NULL, EINVAL, "xCopyIDToken", "input ID is NULL");
+    return NULL;
+  }
 
   // Ignore leading separator.
   if(!strncmp(id, X_SEP, X_SEP_LENGTH)) id += X_SEP_LENGTH;
