@@ -173,6 +173,8 @@ Functions</h2></td></tr>
 <tr class="separator:afe3fda2f392bae11e136e8c0c90f086d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cbbd824406d862b2018e28a466ff318" id="r_a2cbbd824406d862b2018e28a466ff318"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a2cbbd824406d862b2018e28a466ff318">xGetAggregateID</a> (const char *table, const char *key)</td></tr>
 <tr class="separator:a2cbbd824406d862b2018e28a466ff318"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae683dbdc302ce2ce78f77c5301e09386" id="r_ae683dbdc302ce2ce78f77c5301e09386"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#ae683dbdc302ce2ce78f77c5301e09386">xGetElementAtIndex</a> (const <a class="el" href="structXField.html">XField</a> *f, int idx)</td></tr>
+<tr class="separator:ae683dbdc302ce2ce78f77c5301e09386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a442f155b0c6549549737510ce42bb66d" id="r_a442f155b0c6549549737510ce42bb66d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField</a> (const <a class="el" href="structXStructure.html">XStructure</a> *s, const char *id)</td></tr>
 <tr class="separator:a442f155b0c6549549737510ce42bb66d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1720e156de63fd0585224738ccbb5688" id="r_a1720e156de63fd0585224738ccbb5688"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount</a> (const <a class="el" href="structXField.html">XField</a> *f)</td></tr>
@@ -986,6 +988,45 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ae683dbdc302ce2ce78f77c5301e09386" name="ae683dbdc302ce2ce78f77c5301e09386"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae683dbdc302ce2ce78f77c5301e09386">&#9670;&#160;</a></span>xGetElementAtIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void * xGetElementAtIndex </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structXField.html">XField</a> *&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>idx</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns a pointer to the array element at the specified index.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Pointer to a field </td></tr>
+    <tr><td class="paramname">idx</td><td>the array index of the requested element</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the element at the given index, or NULL if there was an error. </dd></dl>
+
+<p class="reference">References <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31">x_trace_null()</a>, <a class="el" href="xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e">xElementSizeOf()</a>, and <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>.</p>
+
+</div>
+</div>
 <a id="a442f155b0c6549549737510ce42bb66d" name="a442f155b0c6549549737510ce42bb66d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a442f155b0c6549549737510ce42bb66d">&#9670;&#160;</a></span>xGetField()</h2>
 
@@ -1054,7 +1095,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The total number of primitive elements contained in the field. </dd></dl>
 
-<p class="reference">References <a class="el" href="structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1">XField::ndim</a>, <a class="el" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d">XField::sizes</a>, and <a class="el" href="xchange_8c.html#ad35e0d8c0ebbb4948c233f96c54bd8d6">xGetElementCount()</a>.</p>
+<p class="reference">References <a class="el" href="structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1">XField::ndim</a>, <a class="el" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d">XField::sizes</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, and <a class="el" href="xchange_8c.html#ad35e0d8c0ebbb4948c233f96c54bd8d6">xGetElementCount()</a>.</p>
 
 </div>
 </div>
@@ -1537,7 +1578,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sets the optional subtype (e.g. mime type) for a field's content to a copy of the specified string value. The subtype can be used to add any application specific information on how the specified value should be used. For example it may indicate a mime type or an encoding. It is entirely up to the user as to what meaning the subtype has for their application.</p>
+<p>Sets the optional subtype for a field's content to a copy of the specified string value. The subtype can be used to add any application specific information on how the specified value should be used. For example it may indicate a mime type or an encoding. It is entirely up to the user as to what meaning the subtype has for their application.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">f</td><td>Pointer to a field </td></tr>

@@ -596,6 +596,13 @@
       <arglist>(const char *group, const char *key)</arglist>
     </member>
     <member kind="function">
+      <type>void *</type>
+      <name>xGetElementAtIndex</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>ae683dbdc302ce2ce78f77c5301e09386</anchor>
+      <arglist>(const XField *f, int idx)</arglist>
+    </member>
+    <member kind="function">
       <type>int</type>
       <name>xGetElementCount</name>
       <anchorfile>xchange_8h.html</anchorfile>
@@ -1506,6 +1513,13 @@
       <anchorfile>xstruct_8c.html</anchorfile>
       <anchor>a2cbbd824406d862b2018e28a466ff318</anchor>
       <arglist>(const char *table, const char *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>void *</type>
+      <name>xGetElementAtIndex</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>ae683dbdc302ce2ce78f77c5301e09386</anchor>
+      <arglist>(const XField *f, int idx)</arglist>
     </member>
     <member kind="function">
       <type>XField *</type>

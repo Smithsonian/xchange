@@ -209,7 +209,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Creates a fast name lookup table for the fields of structure, with or without including fields of embedded substructures also. For structures with a large number of fields, such a lookup can significantly improve access times for retrieving specific fields from a structure. However, the lookup will not track fields added or removed after its creation, and so it is suited for accessing structures with a fixed layout only.</p>
-<p>Since the lookup table contains references to the structure, you should not destroy the structure as long as the lookup table is used.</p>
+<p>Since the lookup table contains references to the fields in the structure, you should not destroy the fields as long as the lookup table is used (but you may call free() the structure itself).</p>
 <p>Once the lookup table is no longer used, the caller should explicitly destroy it with <code><a class="el" href="xlookup_8c.html#a02ea2d67e4c540ad706edcc1b3a0431e">xDestroyLookup()</a></code></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

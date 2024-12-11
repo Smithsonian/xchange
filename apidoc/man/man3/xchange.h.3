@@ -339,6 +339,9 @@ include/xchange.h
 .RI "char * \fBxGetAggregateID\fP (const char *group, const char *key)"
 .br
 .ti -1c
+.RI "void * \fBxGetElementAtIndex\fP (const \fBXField\fP *f, int idx)"
+.br
+.ti -1c
 .RI "int \fBxGetElementCount\fP (int ndim, const int *sizes)"
 .br
 .ti -1c
@@ -787,7 +790,7 @@ References \fBX_LONG\fP, \fBx_trace_null()\fP, and \fBxCreateScalarField()\fP\&.
 .SS "\fBXLookupTable\fP * xCreateLookup (const \fBXStructure\fP * s, \fBboolean\fP recursive)"
 Creates a fast name lookup table for the fields of structure, with or without including fields of embedded substructures also\&. For structures with a large number of fields, such a lookup can significantly improve access times for retrieving specific fields from a structure\&. However, the lookup will not track fields added or removed after its creation, and so it is suited for accessing structures with a fixed layout only\&.
 .PP
-Since the lookup table contains references to the structure, you should not destroy the structure as long as the lookup table is used\&.
+Since the lookup table contains references to the fields in the structure, you should not destroy the fields as long as the lookup table is used (but you may call free() the structure itself)\&.
 .PP
 Once the lookup table is no longer used, the caller should explicitly destroy it with \fC\fBxDestroyLookup()\fP\fP
 .PP
@@ -991,7 +994,7 @@ Returns the storage byte size of a single element of a given type\&.
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBX_FIELD\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, and \fBX_STRUCT\fP\&.
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FIELD\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, and \fBX_STRUCT\fP\&.
 .SS "int xError (const char * fn, int code)"
 Prints a descriptive error message to stderr, and returns the error code\&.
 .PP
@@ -1049,6 +1052,24 @@ The aggregated ID, or NULL if both arguments were NULL themselves\&.
 
 .PP
 References \fBx_error()\fP, \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBxStringCopyOf()\fP\&.
+.SS "void * xGetElementAtIndex (const \fBXField\fP * f, int idx)"
+Returns a pointer to the array element at the specified index\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIf\fP Pointer to a field 
+.br
+\fIidx\fP the array index of the requested element
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A pointer to the element at the given index, or NULL if there was an error\&. 
+.RE
+.PP
+
+.PP
+References \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBx_trace_null()\fP, \fBxElementSizeOf()\fP, and \fBxGetFieldCount()\fP\&.
 .SS "int xGetElementCount (int ndim, const int * sizes)"
 Returns the total element count specified by along a number of dimensions\&. It ignores dimensions that have size components <= 0;
 .PP
@@ -1109,7 +1130,7 @@ The total number of primitive elements contained in the field\&.
 .PP
 
 .PP
-References \fBXField::ndim\fP, \fBXField::sizes\fP, and \fBxGetElementCount()\fP\&.
+References \fBXField::ndim\fP, \fBXField::sizes\fP, \fBx_error()\fP, and \fBxGetElementCount()\fP\&.
 .SS "\fBXStructure\fP * xGetSubstruct (const \fBXStructure\fP * s, const char * id)"
 Returns a substructure by the specified name, or NULL if no such sub-structure exists\&.
 .PP
@@ -1660,7 +1681,7 @@ return The prior field stored under the same name or NULL\&. If there is an erro
 .PP
 References \fBXStructure::parent\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBx_trace_null()\fP, \fBxCreateScalarField()\fP, and \fBxSetField()\fP\&.
 .SS "int xSetSubtype (\fBXField\fP * f, const char * type)"
-Sets the optional subtype (e\&.g\&. mime type) for a field's content to a copy of the specified string value\&. The subtype can be used to add any application specific information on how the specified value should be used\&. For example it may indicate a mime type or an encoding\&. It is entirely up to the user as to what meaning the subtype has for their application\&.
+Sets the optional subtype for a field's content to a copy of the specified string value\&. The subtype can be used to add any application specific information on how the specified value should be used\&. For example it may indicate a mime type or an encoding\&. It is entirely up to the user as to what meaning the subtype has for their application\&.
 .PP
 \fBParameters\fP
 .RS 4
