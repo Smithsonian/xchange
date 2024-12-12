@@ -178,7 +178,6 @@ char *xjsonFieldToString(const XField *f) {
   if(!xerr) xerr = stderr;
 
   n = GetFieldStringSize(0, f, FALSE);
-
   if(n < 0) {
     Error("%s\n", xErrorDescription(n));
     errno = EINVAL;
@@ -196,6 +195,8 @@ char *xjsonFieldToString(const XField *f) {
     free(str);
     return NULL;
   }
+
+  str[n-1] = '\0';
 
   return str;
 }
@@ -988,6 +989,7 @@ static int GetFieldStringSize(int prefixSize, const XField *f, boolean ignoreNam
     if(f->name == NULL) return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is NULL");
     if(*f->name == '\0') return x_error(X_NAME_INVALID, EINVAL, fn, "field->name is empty");
     m = GetJsonStringSize(f->name, TERMINATED_STRING) + 2;   // <"name"> + ': '
+
     prop_error(fn, m);
     n += m;
   }
@@ -1045,32 +1047,29 @@ static int GetArrayStringSize(int prefixSize, char *ptr, XType type, int ndim, c
     int m;
 
     switch(type) {
-
       case X_STRUCT:
         m = GetObjectStringSize(prefixSize, (XStructure *) ptr);
-        break;
+        prop_error(fn, m);
+        return m;
 
       case X_STRING:
       case X_RAW:
         m = GetJsonStringSize(*(char **) ptr, TERMINATED_STRING);
         prop_error(fn, m);
-        m += prefixSize;
-        break;
+        return m + prefixSize;
 
       case X_FIELD: {
         const XField *f = (XField *) ptr;
         m = GetFieldStringSize(prefixSize, f, TRUE);
-        break;
+        prop_error(fn, m);
+        return m;
       }
 
       default:
         m = xStringElementSizeOf(type);
         prop_error(fn, m);
-        m += prefixSize;
+        return m + prefixSize;
     }
-
-    prop_error(fn, m);
-    return m;
   }
   else {
     const int N = sizes[0];
@@ -1093,6 +1092,7 @@ static int GetArrayStringSize(int prefixSize, char *ptr, XType type, int ndim, c
       prop_error(fn, m);
       n += m + 3; // + " , " or " ,\n"
     }
+
     return n;
   }
 }
@@ -1238,7 +1238,7 @@ static int GetJsonStringSize(const char *src, int maxLength) {
   int i, n = 2; // ""
 
   if(maxLength < 0) {
-    for(i = 0; i < src[i]; i++)
+    for(i = 0; src[i]; i++)
       n += GetJsonBytes(src[i]);
   }
   else for(i = 0; i < maxLength && src[i]; i++)

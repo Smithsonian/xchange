@@ -494,8 +494,7 @@ XField *xCreateBooleanField(const char *name, boolean value) {
  * \return          A newly created field referencing the supplied string, or NULL if there was an error.
  */
 XField *xCreateStringField(const char *name, const char *value) {
-  const char *empty = "";
-  XField *f = xCreateScalarField(name, X_STRING, value ? &value : &empty);
+  XField *f = xCreateScalarField(name, X_STRING, value ? &value : NULL);
   if(!f) return x_trace_null("xCreateStringField", NULL);
   return f;
 }
