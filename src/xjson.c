@@ -120,11 +120,7 @@ char *xjsonToString(const XStructure *s) {
   char *str;
   int n;
 
-  if(!s) {
-    x_error(0, X_NULL, "xjsonToString", "input structure is NULL");
-    return NULL;
-  }
-
+  if(!s) return xStringCopyOf(JSON_NULL);
   if(!xerr) xerr = stderr;
 
   n = GetObjectStringSize(0, s);
@@ -170,11 +166,7 @@ char *xjsonFieldToString(const XField *f) {
 
   int n;
 
-  if(!f) {
-    x_error(0, X_NULL, "xjsonFieldToString", "input field is NULL");
-    return NULL;
-  }
-
+  if(!f) return xStringCopyOf(JSON_NULL);
   if(!xerr) xerr = stderr;
 
   n = GetFieldStringSize(0, f, FALSE);
@@ -197,7 +189,6 @@ char *xjsonFieldToString(const XField *f) {
   }
 
   str[n-1] = '\0';
-
   return str;
 }
 
@@ -1046,7 +1037,12 @@ static int GetArrayStringSize(int prefixSize, char *ptr, XType type, int ndim, c
   if(ndim == 0) {
     int m;
 
+    if(ptr == NULL) return sizeof(JSON_NULL);
+
     switch(type) {
+      case X_UNKNOWN:
+        return sizeof(JSON_NULL);
+
       case X_STRUCT:
         m = GetObjectStringSize(prefixSize, (XStructure *) ptr);
         prop_error(fn, m);
@@ -1081,15 +1077,9 @@ static int GetArrayStringSize(int prefixSize, char *ptr, XType type, int ndim, c
     if(newLine) n += prefixSize + 1;            // '\n' + prefix
 
     for(k = 0; k < N; k++, ptr += rowSize) {
-      XType eType = type;
-
-      if(type == X_FIELD) {
-        const XField *f = (XField *) ptr;
-        eType = f->type;
-      }
-
-      int m = GetArrayStringSize(prefixSize + ilen, ptr, eType, ndim-1, &sizes[1]);
+      int m = GetArrayStringSize(prefixSize + ilen, ptr, type, ndim-1, &sizes[1]);
       prop_error(fn, m);
+
       n += m + 3; // + " , " or " ,\n"
     }
 
@@ -1169,7 +1159,6 @@ static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const
       else {
         m = PrintArray(rowPrefix, ptr, type, ndim-1, &sizes[1], str);
       }
-
       if(m < 0) {
         free(rowPrefix);
         return x_trace(fn, NULL, m);       // Error code
@@ -1201,6 +1190,7 @@ static int PrintPrimitive(const void *ptr, XType type, char *str) {
   }
 
   switch(type) {
+    case X_UNKNOWN: return sprintf(str, JSON_NULL);
     case X_BOOLEAN: return sprintf(str, (*(boolean *)ptr ? JSON_TRUE : JSON_FALSE));
     case X_BYTE: return sprintf(str, "%hhu", *(unsigned char *) ptr);
     case X_SHORT: return sprintf(str, "%hd", *(short *) ptr);

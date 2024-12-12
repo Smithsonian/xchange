@@ -489,12 +489,12 @@ XField *xCreateBooleanField(const char *name, boolean value) {
  * Creates a field holding a single string value.
  *
  * \param name      Field name (it may not contain a separator X_SEP)
- * \param value     Associated value. NULL values will be treated as empty strings.
+ * \param value     Associated value (it may be NULL).
  *
  * \return          A newly created field referencing the supplied string, or NULL if there was an error.
  */
 XField *xCreateStringField(const char *name, const char *value) {
-  XField *f = xCreateScalarField(name, X_STRING, value ? &value : NULL);
+  XField *f = xCreateScalarField(name, X_STRING, &value);
   if(!f) return x_trace_null("xCreateStringField", NULL);
   return f;
 }
