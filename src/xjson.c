@@ -188,7 +188,6 @@ char *xjsonFieldToString(const XField *f) {
     return NULL;
   }
 
-  str[n-1] = '\0';
   return str;
 }
 
@@ -1031,17 +1030,15 @@ static __inline__ int SizeOf(XType type, int ndim, const int *sizes) {
 static int GetArrayStringSize(int prefixSize, char *ptr, XType type, int ndim, const int *sizes) {
   static const char *fn = "GetArrayStringSize";
 
-  if(!ptr) return prefixSize + 4; // null
+  if(!ptr) return prefixSize + sizeof(JSON_NULL); // null
   if(ndim < 0) return x_error(X_SIZE_INVALID, EINVAL, fn, "invalid ndim: %d", ndim);
 
   if(ndim == 0) {
     int m;
 
-    if(ptr == NULL) return sizeof(JSON_NULL);
-
     switch(type) {
       case X_UNKNOWN:
-        return sizeof(JSON_NULL);
+        return prefixSize + sizeof(JSON_NULL);
 
       case X_STRUCT:
         m = GetObjectStringSize(prefixSize, (XStructure *) ptr);
