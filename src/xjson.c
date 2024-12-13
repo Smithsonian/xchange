@@ -583,9 +583,35 @@ static char UnescapedChar(char c) {
   return c;
 }
 
+static int json2raw(const char *json, int maxlen, char *dst) {
+  int isEscaped = 0;
+  int i, l = 0;
+
+  for(i = 0; l < maxlen; i++) {
+     char c = json[i];
+
+     if(isEscaped) {
+       isEscaped = FALSE;
+       if(c == 'u') {
+         dst[l++] = '\\';     // Keep unicode as is...
+         dst[l++] = 'u';
+       }
+       else {
+         dst[l++] = UnescapedChar(c);
+       }
+     }
+     else if(c == '\0') break;
+     else if(c == '\\') isEscaped = TRUE;
+     else dst[l++] = c;
+   }
+
+   dst[l] = '\0';
+   return l;
+}
+
 static char *ParseString(char **pos, int *lineNumber) {
   int isEscaped = 0;
-  int i, k, l;
+  int i, l;
   char *next, *dst;
 
   next = *pos = SkipSpaces(*pos, lineNumber);
@@ -624,24 +650,7 @@ static char *ParseString(char **pos, int *lineNumber) {
     return NULL;
   }
 
-  for(i = k = 0; k < l; i++) {
-    char c = next[i];
-
-    if(isEscaped) {
-      isEscaped = FALSE;
-      if(c == 'u') {
-        dst[k++] = '\\';     // Keep unicode as is...
-        dst[k++] = 'u';
-      }
-      else {
-        dst[k++] = UnescapedChar(c);
-      }
-    }
-    else if(c == '\\') isEscaped = TRUE;
-    else dst[k++] = c;
-  }
-
-  dst[l] = '\0';
+  json2raw(next, l, dst);
 
   return dst;
 }
@@ -1250,23 +1259,33 @@ static char GetEscapedChar(char c) {
 }
 
 
-static int PrintString(const char *src, int maxLength, char *json) {
+static int raw2json(const char *src, int maxlen, char *json) {
+  char *next = json;
   int i;
+
+  for(i = 0; i < maxlen && src[i]; i++) switch(GetJsonBytes(src[i])) {
+    case 2:
+      *(next++) = '\\';
+      *(next++) = GetEscapedChar(src[i]);
+       break;
+    case 1:
+      *(next++) = src[i];
+      break;
+  }
+
+  *(next++) = '\0';
+
+  return next - json - 1;
+}
+
+static int PrintString(const char *src, int maxLength, char *json) {
   char *next = json;
 
   if(maxLength < 0) maxLength = INT_MAX;
 
   *(next++) = '"';
 
-  for(i = 0; i < maxLength && src[i]; i++) switch(GetJsonBytes(src[i])) {
-    case 2:
-      *(next++) = '\\';
-      *(next++) = GetEscapedChar(src[i]);
-      break;
-    case 1:
-      *(next++) = src[i];
-      break;
-  }
+  next += raw2json(src, maxLength, next);
 
   *(next++) = '"';
   *(next++) = '\0';
@@ -1284,10 +1303,10 @@ static int PrintString(const char *src, int maxLength, char *json) {
  * @return              The JSON representation of the original string, in which special characters
  *                      appear in escaped form (without the surrounding double quotes).
  *
- * @sa xjsonUnescapeString()
+ * @sa xjsonUnescape()
  */
-char *xjsonEscapeString(const char *src, int maxLength) {
-  static const char *fn = "xjsonEscapeString";
+char *xjsonEscape(const char *src, int maxLength) {
+  static const char *fn = "xjsonEscape";
 
   int size;
   char *json;
@@ -1305,10 +1324,7 @@ char *xjsonEscapeString(const char *src, int maxLength) {
     return NULL;
   }
 
-  if(PrintString(src, maxLength, json) != X_SUCCESS) {
-    free(json);
-    return x_trace_null(fn, NULL);
-  }
+  raw2json(src, maxLength, json);
 
   return json;
 }
@@ -1320,15 +1336,26 @@ char *xjsonEscapeString(const char *src, int maxLength) {
  *                appear in escaped form (without the surrounding double quotes).
  * @return        The native string, which may contain special characters.
  *
- * @sa xjsonEscapeString()
+ * @sa xjsonEscape()
  */
-char *xjsonUnescapeString(const char *str) {
-  int lineNumber = 0;
+char *xjsonUnescape(const char *str) {
+  static const char *fn = "xjsonUnescape";
+
+  char *raw;
+  int l;
 
   if(!str) {
-    x_error(0, EINVAL, "xjsonUnescapeString", "input string is NULL");
+    x_error(0, EINVAL, fn, "input string is NULL");
     return NULL;
   }
 
-  return ParseString((char **) &str, &lineNumber);
+  l = strlen(str);
+  raw = (char *) malloc(l + 1);
+  if(!raw) {
+    x_error(0, errno, fn, "alloc error (%d bytes)", (l + 1));
+    return NULL;
+  }
+
+  json2raw(str, l, raw);
+  return raw;
 }

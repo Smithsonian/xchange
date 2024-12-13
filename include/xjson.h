@@ -30,7 +30,7 @@ XStructure *xjsonParseAt(char **src, int *lineNumber);
 XField *xjsonParseFieldAt(char **src, int *lineNumber);
 void xjsonSetErrorStream(FILE *fp);
 
-char *xjsonEscapeString(const char *src, int maxLength);
-char *xjsonUnescapeString(const char *json);
+char *xjsonEscape(const char *src, int maxLength);
+char *xjsonUnescape(const char *json);
 
 #endif /* XJSON_H_ */
