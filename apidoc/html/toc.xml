@@ -201,7 +201,7 @@
         <topic label="xjson.h" href="xjson_8h.html">
           <topic label="NULLDEV" href="xjson_8h.html#a5a5c8657f14c4fe6dc43c552af88d65d"/>
           <topic label="XJSON_INDENT" href="xjson_8h.html#ab69c52214e2e6daa2626bf8722f2d73e"/>
-          <topic label="xjsonEscapeString" href="xjson_8h.html#aad83ebcc397046a875040dfc2297d892"/>
+          <topic label="xjsonEscape" href="xjson_8h.html#a92336f3031a90784e8667aaa7ad07ca2"/>
           <topic label="xjsonFieldToString" href="xjson_8h.html#a42101fa63cb1c6e265f317e9b8719d5f"/>
           <topic label="xjsonGetIndent" href="xjson_8h.html#a9f11227a58e797a4a335331d94c8e888"/>
           <topic label="xjsonParseAt" href="xjson_8h.html#acdb7d242c80b4c9dbeedc62b479bfcc7"/>
@@ -211,7 +211,7 @@
           <topic label="xjsonSetErrorStream" href="xjson_8h.html#a23a7bd364a80bc2bab9ce917ed5f22ea"/>
           <topic label="xjsonSetIndent" href="xjson_8h.html#a1f877c9790a53582cdda10659a3d033a"/>
           <topic label="xjsonToString" href="xjson_8h.html#a53128045970e973134867c96a6465abc"/>
-          <topic label="xjsonUnescapeString" href="xjson_8h.html#ad576b96ec3efe2b20bd762de0c5af751"/>
+          <topic label="xjsonUnescape" href="xjson_8h.html#a6a6e84911afbf9ff6e8c0ffaf228bbcb"/>
         </topic>
       </topic>
       <topic label="src" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">
@@ -248,7 +248,7 @@
           <topic label="__XCHANGE_INTERNAL_API__" href="xjson_8c.html#ac36bd75f87a1614fb477a0fbcd5df1f3"/>
           <topic label="FALSE" href="xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1"/>
           <topic label="TRUE" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d"/>
-          <topic label="xjsonEscapeString" href="xjson_8c.html#aad83ebcc397046a875040dfc2297d892"/>
+          <topic label="xjsonEscape" href="xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2"/>
           <topic label="xjsonFieldToString" href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f"/>
           <topic label="xjsonGetIndent" href="xjson_8c.html#a9f11227a58e797a4a335331d94c8e888"/>
           <topic label="xjsonParseAt" href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3"/>
@@ -258,7 +258,7 @@
           <topic label="xjsonSetErrorStream" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea"/>
           <topic label="xjsonSetIndent" href="xjson_8c.html#a1f877c9790a53582cdda10659a3d033a"/>
           <topic label="xjsonToString" href="xjson_8c.html#a53128045970e973134867c96a6465abc"/>
-          <topic label="xjsonUnescapeString" href="xjson_8c.html#ae11aed18561818c2e39a5709a8e3374d"/>
+          <topic label="xjsonUnescape" href="xjson_8c.html#aa94ae687d4c1775d35b03614ae2fcf62"/>
         </topic>
         <topic label="xlookup.c" href="xlookup_8c.html">
           <topic label="__XCHANGE_INTERNAL_API__" href="xlookup_8c.html#ac36bd75f87a1614fb477a0fbcd5df1f3"/>

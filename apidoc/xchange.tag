@@ -904,9 +904,9 @@
     </member>
     <member kind="function">
       <type>char *</type>
-      <name>xjsonEscapeString</name>
+      <name>xjsonEscape</name>
       <anchorfile>xjson_8h.html</anchorfile>
-      <anchor>aad83ebcc397046a875040dfc2297d892</anchor>
+      <anchor>a92336f3031a90784e8667aaa7ad07ca2</anchor>
       <arglist>(const char *src, int maxLength)</arglist>
     </member>
     <member kind="function">
@@ -974,9 +974,9 @@
     </member>
     <member kind="function">
       <type>char *</type>
-      <name>xjsonUnescapeString</name>
+      <name>xjsonUnescape</name>
       <anchorfile>xjson_8h.html</anchorfile>
-      <anchor>ad576b96ec3efe2b20bd762de0c5af751</anchor>
+      <anchor>a6a6e84911afbf9ff6e8c0ffaf228bbcb</anchor>
       <arglist>(const char *json)</arglist>
     </member>
   </compound>
@@ -1203,9 +1203,9 @@
     </member>
     <member kind="function">
       <type>char *</type>
-      <name>xjsonEscapeString</name>
+      <name>xjsonEscape</name>
       <anchorfile>xjson_8c.html</anchorfile>
-      <anchor>aad83ebcc397046a875040dfc2297d892</anchor>
+      <anchor>a92336f3031a90784e8667aaa7ad07ca2</anchor>
       <arglist>(const char *src, int maxLength)</arglist>
     </member>
     <member kind="function">
@@ -1273,9 +1273,9 @@
     </member>
     <member kind="function">
       <type>char *</type>
-      <name>xjsonUnescapeString</name>
+      <name>xjsonUnescape</name>
       <anchorfile>xjson_8c.html</anchorfile>
-      <anchor>ae11aed18561818c2e39a5709a8e3374d</anchor>
+      <anchor>aa94ae687d4c1775d35b03614ae2fcf62</anchor>
       <arglist>(const char *str)</arglist>
     </member>
   </compound>

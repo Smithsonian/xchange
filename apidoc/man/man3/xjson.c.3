@@ -27,7 +27,7 @@ src/xjson.c \- A set of functions for parsing and creating JSON description of d
 
 .in +1c
 .ti -1c
-.RI "char * \fBxjsonEscapeString\fP (const char *src, int maxLength)"
+.RI "char * \fBxjsonEscape\fP (const char *src, int maxLength)"
 .br
 .ti -1c
 .RI "char * \fBxjsonFieldToString\fP (const \fBXField\fP *f)"
@@ -57,7 +57,7 @@ src/xjson.c \- A set of functions for parsing and creating JSON description of d
 .RI "char * \fBxjsonToString\fP (const \fBXStructure\fP *s)"
 .br
 .ti -1c
-.RI "char * \fBxjsonUnescapeString\fP (const char *str)"
+.RI "char * \fBxjsonUnescape\fP (const char *str)"
 .br
 .in -1c
 .SH "Detailed Description"
@@ -79,7 +79,7 @@ Attila Kovacs
 
 .SH "Function Documentation"
 .PP 
-.SS "char * xjsonEscapeString (const char * src, int maxLength)"
+.SS "char * xjsonEscape (const char * src, int maxLength)"
 Converts a native string to its JSON representation\&.
 .PP
 \fBParameters\fP
@@ -96,12 +96,12 @@ The JSON representation of the original string, in which special characters appe
 .PP
 \fBSee also\fP
 .RS 4
-\fBxjsonUnescapeString()\fP 
+\fBxjsonUnescape()\fP 
 .RE
 .PP
 
 .PP
-References \fBx_error()\fP, \fBX_SUCCESS\fP, and \fBx_trace_null()\fP\&.
+References \fBx_error()\fP\&.
 .SS "char * xjsonFieldToString (const \fBXField\fP * f)"
 Converts an \fBXField\fP into its JSON representation\&. Conversion errors are reported to stderr or the altenate stream set by xSetErrorStream()\&.
 .PP
@@ -130,7 +130,7 @@ String JSON representation, or NULL if there was an error (errno set to EINVAL)\
 .PP
 
 .PP
-References \fBFALSE\fP, \fBx_error()\fP, \fBX_NULL\fP, and \fBxErrorDescription()\fP\&.
+References \fBFALSE\fP, \fBxErrorDescription()\fP, and \fBxStringCopyOf()\fP\&.
 .SS "int xjsonGetIndent ()"
 Returns the number of spaces per indentation when emitting JSON formatted output\&.
 .PP
@@ -316,8 +316,8 @@ String JSON representation, or NULL if there was an error (errno set to EINVAL)\
 .PP
 
 .PP
-References \fBx_error()\fP, \fBX_NULL\fP, and \fBxErrorDescription()\fP\&.
-.SS "char * xjsonUnescapeString (const char * str)"
+References \fBxErrorDescription()\fP, and \fBxStringCopyOf()\fP\&.
+.SS "char * xjsonUnescape (const char * str)"
 Converts a an escaped string in JSON representation to a native string
 .PP
 \fBParameters\fP
@@ -332,7 +332,7 @@ The native string, which may contain special characters\&.
 .PP
 \fBSee also\fP
 .RS 4
-\fBxjsonEscapeString()\fP 
+\fBxjsonEscape()\fP 
 .RE
 .PP
 
