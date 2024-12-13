@@ -587,7 +587,7 @@ static char UnescapedChar(char c) {
   return c;
 }
 
-static int json2raw(const char *json, int maxlen, char *dst) {
+static char *json2raw(const char *json, int maxlen, char *dst) {
   int isEscaped = 0;
   int i, l = 0;
 
@@ -602,7 +602,7 @@ static int json2raw(const char *json, int maxlen, char *dst) {
            if(unicode <= 0xFF) dst[l++] = (char) unicode;   // -> ASCII
            else l += sprintf(&dst[l], "\\u%04hx", unicode); // -> keep as is
          }
-         else Error("Unicode \\u without 4 digit hex");
+         else return "Unicode \\u without 4 digit hex";
        }
        else {
          dst[l++] = UnescapedChar(c);
@@ -614,7 +614,7 @@ static int json2raw(const char *json, int maxlen, char *dst) {
    }
 
    dst[l] = '\0';
-   return l;
+   return NULL;
 }
 
 static char *ParseString(char **pos, int *lineNumber) {
@@ -658,7 +658,8 @@ static char *ParseString(char **pos, int *lineNumber) {
     return NULL;
   }
 
-  json2raw(next, l, dst);
+  next = json2raw(next, l, dst);
+  if(next) Error("[L.%d] %s.\n", *lineNumber, next);
 
   return dst;
 }
@@ -1371,6 +1372,8 @@ char *xjsonUnescape(const char *str) {
     return NULL;
   }
 
-  json2raw(str, l, raw);
+  str = json2raw(str, l, raw);
+  if(str) x_error(0, EBADE, fn, str);
+
   return raw;
 }
