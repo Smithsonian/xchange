@@ -466,10 +466,10 @@ For example, for a numerical array field with 4 elements the above might generat
 ### Escaped string representations
 
 You might just want to use JSON-style escaping for strings, and `xjsonEscape()` / `xjsonUnescape()` can help with that 
-too:
+too. Suppose you have a C string that you want to escape...
 
 ```c
-  // If printed, this will be the 2 lines, like:
+  // This corresponds to 2 lines e.g. in a file, like:
   // 
   // "This has some
   //          special characters"
@@ -480,15 +480,16 @@ too:
   char *escaped = xjsonEscape(string);
 ```
 
-And the reverse, converting an escaped string to the C format:
+If you now print `escaped` to a file or the standard output, it will show up there are:
+
+```txt
+  \"This has some\n\t special characters\"
+```
+
+And the reverse, suppose you read back the above line from an input, containing the escaped form, and want to 
+reconstruct from it the original C string with the special characters in it:
 
 ```c
-   // If printed, this will be 1 line:
-   //
-   // \"This has some\n\t escaped characters\"
-   //
-   char *escaped = "\\"This has some\\n\\t escaped characters\\"\\n"
-  
    // And reverse, from escaped form to ASCII (e.g. `\` + `n` --> `\n`)
    char *string = xjsonUnescape(escaped);
 ```
