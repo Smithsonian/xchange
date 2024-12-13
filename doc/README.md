@@ -474,7 +474,7 @@ too:
   // "This has some
   //          special characters"
   //
-  char *string = "\t\"This has some\n\t special characters\"";
+  char *string = "\"This has some\n\t special characters\"";
   
   // Escape the special character, e.g. replace `\n` with `\` + `n` etc...
   char *escaped = xjsonEscape(string);

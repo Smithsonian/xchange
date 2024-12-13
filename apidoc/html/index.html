@@ -413,7 +413,7 @@ Escaped string representations</h3>
 <div class="line"><span class="comment">// &quot;This has some</span></div>
 <div class="line"><span class="comment">//          special characters&quot;</span></div>
 <div class="line"><span class="comment">//</span></div>
-<div class="line"><span class="keywordtype">char</span> *<span class="keywordtype">string</span> = <span class="stringliteral">&quot;\t\&quot;This has some\n\t special characters\&quot;&quot;</span>;</div>
+<div class="line"><span class="keywordtype">char</span> *<span class="keywordtype">string</span> = <span class="stringliteral">&quot;\&quot;This has some\n\t special characters\&quot;&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Escape the special character, e.g. replace `\n` with `\` + `n` etc...</span></div>
 <div class="line"><span class="keywordtype">char</span> *escaped = <a class="code hl_function" href="xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2">xjsonEscape</a>(<span class="keywordtype">string</span>);</div>
