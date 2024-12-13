@@ -433,11 +433,18 @@ structure (and its substructures) in descending alphabetical order:
 <a name="json-interchange"></a>
 ## JSON parser and emitter
 
-Once you have an `XStructure` data object, you can easily convert it to a JSON string representation, as:
+Once you have an `XStructure` or `XField` data object, you can easily convert them to JSON string representation, as:
 
 ```c
+  XStructure *s = ...
+
   // Obtain a JSON string representation of the structure 's'.
   char *json = xjsonToString(s);
+  
+  
+  XField *f = ...
+  // Obtain a JSON string representation of the structure 's'.
+  char *json2 = xjsonFieldToString(f);
 ```
 
 Or, you can do the reverse and create an `XStructure` from its JSON representation, either from a string (a 
@@ -458,6 +465,19 @@ or parse it from a file, which contains a JSON definition of the structured data
   if (s1 == NULL) {
      // Oops, there was some problem...
   }
+```
+
+Additionally, you might just want to use JSON-style escaping for strings, and `xjsonEscape()` / `xjsonUnescape()` can 
+help with that too:
+
+```c
+  char *string = "\t\"This has some special characters\"\n";
+  
+  // Escape the special character, e.g. replace `\n` with `\` + `n` etc...
+  char *escaped = xjsonEscape(string);
+  
+  // And reverse, from escaped form to ASCII (should be the same as the original string...)
+  char *string2 = xjsonUnescape(escaped);
 ```
 
 
