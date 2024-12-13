@@ -469,18 +469,20 @@ You might just want to use JSON-style escaping for strings, and `xjsonEscape()` 
 too. Suppose you have a C string that you want to escape...
 
 ```c
-  // This corresponds to 2 lines e.g. in a file, like:
-  // 
-  // "This has some
-  //          special characters"
-  //
   char *string = "\"This has some\n\t special characters\"";
   
   // Escape the special character, e.g. replace `\n` with `\` + `n` etc...
   char *escaped = xjsonEscape(string);
 ```
 
-If you now print `escaped` to a file or the standard output, it will show up there are:
+If you print `string` to a file or the standard output, it will show up as 2 lines:
+
+```txt
+  "This has some
+          special characters"
+```
+
+But if you now print `escaped` instead, that will show up as:
 
 ```txt
   \"This has some\n\t special characters\"
