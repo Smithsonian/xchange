@@ -43,6 +43,9 @@
 #define WARNING_PREFIX  "WARNING! XJSON "
 
 
+#define UNICODE_BYTES   6         ///< '\u####'
+
+
 #define Error(format, ARGS...)      fprintf(xerr ? xerr : stderr, ERROR_PREFIX format, ##ARGS)
 #define Warning(format, ARGS...)    fprintf(xerr ? xerr : stderr, WARNING_PREFIX format, ##ARGS)
 /// \endcond
@@ -574,6 +577,7 @@ static char UnescapedChar(char c) {
     case '\\': return '\\';
     case '"': return '\"';
     case '/': return '/';
+    case 'a': return '\a';  // not strictly JSON...
     case 'b': return '\b';
     case 'f': return '\f';
     case 'n': return '\n';
@@ -593,8 +597,12 @@ static int json2raw(const char *json, int maxlen, char *dst) {
      if(isEscaped) {
        isEscaped = FALSE;
        if(c == 'u') {
-         dst[l++] = '\\';     // Keep unicode as is...
-         dst[l++] = 'u';
+         unsigned short unicode;
+         if(sscanf(&json[i+1], "%hx", &unicode) == 1) {
+           if(unicode <= 0xFF) dst[l++] = (char) unicode;   // -> ASCII
+           else l += sprintf(&dst[l], "\\u%04hx", unicode); // -> keep as is
+         }
+         else Error("Unicode \\u without 4 digit hex");
        }
        else {
          dst[l++] = UnescapedChar(c);
@@ -1218,7 +1226,7 @@ static int GetJsonBytes(char c) {
     case '\n':
     case '\t':
     case '\r': return 2;
-    default: return 0;
+    default: return UNICODE_BYTES;
   }
 
   switch(c) {
@@ -1264,6 +1272,11 @@ static int raw2json(const char *src, int maxlen, char *json) {
   int i;
 
   for(i = 0; i < maxlen && src[i]; i++) switch(GetJsonBytes(src[i])) {
+    case UNICODE_BYTES:
+      *(next++) = '\\';
+      *(next++) = 'u';
+      next += sprintf(next, "00%02hhx", (unsigned char) src[i]);
+      break;
     case 2:
       *(next++) = '\\';
       *(next++) = GetEscapedChar(src[i]);
@@ -1315,6 +1328,8 @@ char *xjsonEscape(const char *src, int maxLength) {
     x_error(0, EINVAL, fn, "input string is NULL");
     return NULL;
   }
+
+  if(maxLength <= 0) maxLength = INT_MAX;
 
   size = GetJsonStringSize(src, maxLength);
 

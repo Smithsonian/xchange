@@ -55,7 +55,21 @@ int main() {
   XStructure *s = createStruct(), *s1;
   char *str, *next, *str1;
 
+  char *specials = "\\\"\r\n\t\b\f";
+
   xSetDebug(TRUE);
+
+  str = xjsonEscape(specials, 0);
+  if(strlen(str) != 2 * strlen(specials)) {
+    fprintf(stderr, "ERROR: '%s' has length %d, expected %d\n", str, (int) strlen(str), (int) strlen(specials));
+    return 1;
+  }
+
+  str = xjsonUnescape(str);
+  if(strcmp(specials, str) != 0) {
+    fprintf(stderr, "ERROR: unescaped string differs from original\n");
+    return 1;
+  }
 
   str = xjsonToString(s),
   printf("%s", str);
