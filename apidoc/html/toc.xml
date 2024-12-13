@@ -16,10 +16,13 @@
       </topic>
       <topic label="Sorting fields" href="index.html#autotoc_md21"/>
     </topic>
-    <topic label="JSON parser and emitter" href="index.html#autotoc_md23"/>
-    <topic label="Error handling" href="index.html#autotoc_md25"/>
-    <topic label="Debugging support" href="index.html#autotoc_md27"/>
-    <topic label="Future plans" href="index.html#autotoc_md28"/>
+    <topic label="JSON parser and emitter" href="index.html#autotoc_md23">
+      <topic label="Snippets" href="index.html#autotoc_md24"/>
+      <topic label="Escaped string representations" href="index.html#autotoc_md25"/>
+    </topic>
+    <topic label="Error handling" href="index.html#autotoc_md27"/>
+    <topic label="Debugging support" href="index.html#autotoc_md29"/>
+    <topic label="Future plans" href="index.html#autotoc_md30"/>
   </topic>
   <topic label="Changelog" href="md_CHANGELOG.html">
     <topic label="[Unreleased]" href="md_CHANGELOG.html#autotoc_md1"/>

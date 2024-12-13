@@ -416,22 +416,17 @@ structure (and its substructures) in descending alphabetical order:
 <a name="json-interchange"></a>
 ## JSON parser and emitter
 
-Once you have an `XStructure` or `XField` data object, you can easily convert them to JSON string representation, as:
+Once you have an `XStructure` data object, you can easily convert it to JSON string representation, as:
 
 ```c
   XStructure *s = ...
 
   // Obtain a JSON string representation of the structure 's'.
   char *json = xjsonToString(s);
-  
-  
-  XField *f = ...
-  // Obtain a JSON string snippet of the field 'f'.
-  char *json2 = xjsonFieldToString(f);
 ```
 
-Or, you can do the reverse and create an `XStructure` from its JSON representation, either from a string (a 
-0-terminated `char` array):
+The above produces a proper JSON document. Or, you can do the reverse and create an `XStructure` from its JSON 
+representation, either from a string (a 0-terminated `char` array):
 
 ```c
   int lineNumber = 0;
@@ -450,17 +445,52 @@ or parse it from a file, which contains a JSON definition of the structured data
   }
 ```
 
-Additionally, you might just want to use JSON-style escaping for strings, and `xjsonEscape()` / `xjsonUnescape()` can 
-help with that too:
+### Snippets
+
+Alternatively, you can also create partial JSON snippets for individual fields, e.g.:
+  
+```c
+  XField *f = ...
+  
+  // Obtain a JSON string snippet of the field 'f'.
+  char *json = xjsonFieldToString(f);
+```
+
+For example, for a numerical array field with 4 elements the above might generate something like:
+
+```json
+  "my-numbers": [ 1, 2, 3, 4]
+```
+
+
+### Escaped string representations
+
+You might just want to use JSON-style escaping for strings, and `xjsonEscape()` / `xjsonUnescape()` can help with that 
+too:
 
 ```c
-  char *string = "\t\"This has some special characters\"\n";
+  // If printed, this will be the 2 lines, like:
+  // 
+  // "This has some
+  //          special characters"
+  //
+  char *string = "\t\"This has some\n\t special characters\"";
   
   // Escape the special character, e.g. replace `\n` with `\` + `n` etc...
   char *escaped = xjsonEscape(string);
+```
+
+And the reverse, converting an escaped string to the C format:
+
+```c
+   // If printed, this will be 1 line:
+   //
+   // \"This has some\n\t escaped characters\"
+   //
+   char *escaped = "\\"This has some\\n\\t escaped characters\\"\\n"
   
-  // And reverse, from escaped form to ASCII (should be the same as the original string...)
-  char *string2 = xjsonUnescape(escaped);
+   // And reverse, from escaped form to ASCII (e.g. `\` + `n` --> `\n`)
+   char *string = xjsonUnescape(escaped);
 ```
 
 

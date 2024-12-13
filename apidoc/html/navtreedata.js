@@ -44,10 +44,13 @@ var NAVTREE =
         ] ],
         [ "Sorting fields", "index.html#autotoc_md21", null ]
       ] ],
-      [ "JSON parser and emitter", "index.html#autotoc_md23", null ],
-      [ "Error handling", "index.html#autotoc_md25", null ],
-      [ "Debugging support", "index.html#autotoc_md27", null ],
-      [ "Future plans", "index.html#autotoc_md28", null ],
+      [ "JSON parser and emitter", "index.html#autotoc_md23", [
+        [ "Snippets", "index.html#autotoc_md24", null ],
+        [ "Escaped string representations", "index.html#autotoc_md25", null ]
+      ] ],
+      [ "Error handling", "index.html#autotoc_md27", null ],
+      [ "Debugging support", "index.html#autotoc_md29", null ],
+      [ "Future plans", "index.html#autotoc_md30", null ],
       [ "[Unreleased]", "md_CHANGELOG.html#autotoc_md1", null ]
     ] ],
     [ "Contributing to the xchange library", "md_CONTRIBUTING.html", null ],
@@ -75,7 +78,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"xlookup_8c.html#a91a19055586ae79dee6d43c5de0cb32b"
+"xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
