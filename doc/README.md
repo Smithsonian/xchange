@@ -426,7 +426,7 @@ Once you have an `XStructure` or `XField` data object, you can easily convert th
   
   
   XField *f = ...
-  // Obtain a JSON string representation of the structure 's'.
+  // Obtain a JSON string snippet of the field 'f'.
   char *json2 = xjsonFieldToString(f);
 ```
 

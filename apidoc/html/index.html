@@ -384,23 +384,23 @@ JSON parser and emitter</h2>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_struct" href="structXField.html">XField</a> *f = ...</div>
-<div class="line"><span class="comment">// Obtain a JSON string representation of the structure &#39;s&#39;.</span></div>
+<div class="line"><span class="comment">// Obtain a JSON string snippet of the field &#39;f&#39;.</span></div>
 <div class="line">char *json2 = <a class="code hl_function" href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f">xjsonFieldToString</a>(f);</div>
-<div class="ttc" id="axjson_8c_html_a42101fa63cb1c6e265f317e9b8719d5f"><div class="ttname"><a href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f">xjsonFieldToString</a></div><div class="ttdeci">char * xjsonFieldToString(const XField *f)</div><div class="ttdef"><b>Definition</b> xjson.c:164</div></div>
-<div class="ttc" id="axjson_8c_html_a53128045970e973134867c96a6465abc"><div class="ttname"><a href="xjson_8c.html#a53128045970e973134867c96a6465abc">xjsonToString</a></div><div class="ttdeci">char * xjsonToString(const XStructure *s)</div><div class="ttdef"><b>Definition</b> xjson.c:119</div></div>
+<div class="ttc" id="axjson_8c_html_a42101fa63cb1c6e265f317e9b8719d5f"><div class="ttname"><a href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f">xjsonFieldToString</a></div><div class="ttdeci">char * xjsonFieldToString(const XField *f)</div><div class="ttdef"><b>Definition</b> xjson.c:167</div></div>
+<div class="ttc" id="axjson_8c_html_a53128045970e973134867c96a6465abc"><div class="ttname"><a href="xjson_8c.html#a53128045970e973134867c96a6465abc">xjsonToString</a></div><div class="ttdeci">char * xjsonToString(const XStructure *s)</div><div class="ttdef"><b>Definition</b> xjson.c:122</div></div>
 </div><!-- fragment --><p>Or, you can do the reverse and create an <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> from its JSON representation, either from a string (a 0-terminated <code>char</code> array):</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> lineNumber = 0;</div>
 <div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s1 = <a class="code hl_function" href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3">xjsonParseAt</a>(json, &amp;lineNumber);</div>
 <div class="line"><span class="keywordflow">if</span> (s1 == NULL) {</div>
 <div class="line">   <span class="comment">// Oops, there was some problem...</span></div>
 <div class="line">}</div>
-<div class="ttc" id="axjson_8c_html_af180900a4afeef713a3fdaeb77a9cba3"><div class="ttname"><a href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3">xjsonParseAt</a></div><div class="ttdeci">XStructure * xjsonParseAt(char **pos, int *lineNumber)</div><div class="ttdef"><b>Definition</b> xjson.c:215</div></div>
+<div class="ttc" id="axjson_8c_html_af180900a4afeef713a3fdaeb77a9cba3"><div class="ttname"><a href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3">xjsonParseAt</a></div><div class="ttdeci">XStructure * xjsonParseAt(char **pos, int *lineNumber)</div><div class="ttdef"><b>Definition</b> xjson.c:218</div></div>
 </div><!-- fragment --><p>or parse it from a file, which contains a JSON definition of the structured data:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s1 = <a class="code hl_function" href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075">xjsonParseFilename</a>(<span class="stringliteral">&quot;my-data.json&quot;</span>, &amp;lineNumber);</div>
 <div class="line"><span class="keywordflow">if</span> (s1 == NULL) {</div>
 <div class="line">   <span class="comment">// Oops, there was some problem...</span></div>
 <div class="line">}</div>
-<div class="ttc" id="axjson_8c_html_afff9ee9473a0c939d18dba977cfac075"><div class="ttname"><a href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075">xjsonParseFilename</a></div><div class="ttdeci">XStructure * xjsonParseFilename(const char *fileName, int *lineNumber)</div><div class="ttdef"><b>Definition</b> xjson.c:285</div></div>
+<div class="ttc" id="axjson_8c_html_afff9ee9473a0c939d18dba977cfac075"><div class="ttname"><a href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075">xjsonParseFilename</a></div><div class="ttdeci">XStructure * xjsonParseFilename(const char *fileName, int *lineNumber)</div><div class="ttdef"><b>Definition</b> xjson.c:288</div></div>
 </div><!-- fragment --><p>Additionally, you might just want to use JSON-style escaping for strings, and <code><a class="el" href="xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2">xjsonEscape()</a></code> / <code><a class="el" href="xjson_8c.html#aa94ae687d4c1775d35b03614ae2fcf62">xjsonUnescape()</a></code> can help with that too:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">char</span> *<span class="keywordtype">string</span> = <span class="stringliteral">&quot;\t\&quot;This has some special characters\&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
@@ -409,8 +409,8 @@ JSON parser and emitter</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// And reverse, from escaped form to ASCII (should be the same as the original string...)</span></div>
 <div class="line"><span class="keywordtype">char</span> *string2 = <a class="code hl_function" href="xjson_8c.html#aa94ae687d4c1775d35b03614ae2fcf62">xjsonUnescape</a>(escaped);</div>
-<div class="ttc" id="axjson_8c_html_a92336f3031a90784e8667aaa7ad07ca2"><div class="ttname"><a href="xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2">xjsonEscape</a></div><div class="ttdeci">char * xjsonEscape(const char *src, int maxLength)</div><div class="ttdef"><b>Definition</b> xjson.c:1308</div></div>
-<div class="ttc" id="axjson_8c_html_aa94ae687d4c1775d35b03614ae2fcf62"><div class="ttname"><a href="xjson_8c.html#aa94ae687d4c1775d35b03614ae2fcf62">xjsonUnescape</a></div><div class="ttdeci">char * xjsonUnescape(const char *str)</div><div class="ttdef"><b>Definition</b> xjson.c:1341</div></div>
+<div class="ttc" id="axjson_8c_html_a92336f3031a90784e8667aaa7ad07ca2"><div class="ttname"><a href="xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2">xjsonEscape</a></div><div class="ttdeci">char * xjsonEscape(const char *src, int maxLength)</div><div class="ttdef"><b>Definition</b> xjson.c:1322</div></div>
+<div class="ttc" id="axjson_8c_html_aa94ae687d4c1775d35b03614ae2fcf62"><div class="ttname"><a href="xjson_8c.html#aa94ae687d4c1775d35b03614ae2fcf62">xjsonUnescape</a></div><div class="ttdeci">char * xjsonUnescape(const char *str)</div><div class="ttdef"><b>Definition</b> xjson.c:1357</div></div>
 </div><!-- fragment --><hr  />
 <p><a class="anchor" id="error-handling"></a> </p>
 <h2><a class="anchor" id="autotoc_md25"></a>
