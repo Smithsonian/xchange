@@ -152,6 +152,60 @@ char *xjsonToString(const XStructure *s) {
 
 
 /**
+ * Converts an XField into its JSON representation, with the specified indentation of white spaces
+ * in front of every line. Conversion errors are reported to stderr or the altenate stream set by
+ * xSetErrorStream().
+ *
+ * @param indent  Number of white spaces to insert in front of each line.
+ * @param f       Pointer to field
+ * @return        String JSON representation, or NULL if there was an error (errno set to EINVAL).
+ *
+ * @sa xjsonFieldToString()
+ */
+char *xjsonFieldToIndentedString(int indent, const XField *f) {
+  static const char *fn = "xjsonFieldToIndentedString";
+
+  char *prefix, *str;
+  int n;
+
+  if(!f) return xStringCopyOf(JSON_NULL);
+  if(!xerr) xerr = stderr;
+  if(indent < 0) indent = 0;
+
+  n = GetFieldStringSize(indent, f, FALSE);
+  if(n < 0) {
+    Error("%s\n", xErrorDescription(n));
+    errno = EINVAL;
+    return NULL;
+  }
+
+  prefix = malloc(indent + 1);
+  if(!prefix) {
+    x_error(0, errno, fn, "alloc error (%d) bytes", (n + 1));
+    return NULL;
+  }
+  if(indent > 0) memset(prefix, ' ', indent);
+  prefix[indent] = '\0';
+
+  str = (char *) malloc(n + 1);  // + '\0'
+  if(!str) {
+    x_error(0, errno, fn, "alloc error (%d) bytes", (n + 1));
+    free(prefix);
+    return NULL;
+  }
+
+  n = PrintField(prefix, f, str);
+  free(prefix);
+
+  if (n < 0) {
+    free(str);
+    return NULL;
+  }
+
+  return str;
+}
+
+/**
  * Converts an XField into its JSON representation. Conversion errors are reported to stderr
  * or the altenate stream set by xSetErrorStream().
  *
@@ -165,33 +219,7 @@ char *xjsonToString(const XStructure *s) {
  * @sa xjsonParseFilename()
  */
 char *xjsonFieldToString(const XField *f) {
-  char *str;
-
-  int n;
-
-  if(!f) return xStringCopyOf(JSON_NULL);
-  if(!xerr) xerr = stderr;
-
-  n = GetFieldStringSize(0, f, FALSE);
-  if(n < 0) {
-    Error("%s\n", xErrorDescription(n));
-    errno = EINVAL;
-    return NULL;
-  }
-
-  str = (char *) malloc(n + 1);  // + '\0'
-  if(!str) {
-    Error("Out of memory (need %ld bytes).\n", (long) (n+1));
-    return NULL;
-  }
-
-  n = PrintField("", f, str);
-  if (n < 0) {
-    free(str);
-    return NULL;
-  }
-
-  return str;
+  return xjsonFieldToIndentedString(0, f);
 }
 
 /**

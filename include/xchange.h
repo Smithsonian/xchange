@@ -287,16 +287,6 @@ char *xStringCopyOf(const char *str);
 #  define NAN               (0.0/0.0)
 #endif
 
-#  ifndef THREAD_LOCAL
-#    if __STDC_VERSION__ >= 201112L
-#      define THREAD_LOCAL _Thread_local          ///< C11 standard for thread-local variables
-#    elif __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)
-#      define THREAD_LOCAL __thread               ///< pre C11 gcc >= 3.3 standard for thread-local variables
-#    else
-#      define THREAD_LOCAL                        ///< no thread-local variables
-#    endif
-#  endif
-
 int x_error(int ret, int en, const char *from, const char *desc, ...);
 int x_warn(const char *from, const char *desc, ...);
 int x_trace(const char *loc, const char *op, int n);
