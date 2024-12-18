@@ -47,6 +47,10 @@ static XLookupEntry *xGetLookupEntryAsync(const XLookupTable *tab, const char *k
   XLookupEntry *e;
 
   p = (XLookupPrivate *) tab->priv;
+  if(!p) {
+    x_error(0, EINVAL, "xGetLookupEntryAsync", "lookup table not initialized");
+    return NULL;
+  }
 
   for(e = p->table[(int) (hash % p->nBins)]; e != NULL; e=e->next) if(strcmp(e->key, key) == 0) return e;
 
@@ -103,7 +107,9 @@ static XField *xLookupRemoveAsync(XLookupTable *tab, const char *id) {
  * Returns the number of fields in the lookup table.
  *
  * @param tab   Pointer to the lookup table
- * @return      the number of fields stored.
+ * @return      the number of fields stored, or an error &lt;0 (usually X_NO_INIT) if the lookup
+ *              table is invalid
+ *
  */
 long xLookupCount(const XLookupTable *tab) {
   const XLookupPrivate *p;
@@ -124,7 +130,8 @@ long xLookupCount(const XLookupTable *tab) {
  * @param oldValue    (optional) pointer to a buffer in which to return the old field value (if any) stored
  *                    under the same name. It may be NULL if not needed.
  * @return            0 if successfully added a new field, 1 if updated an existing fields, or else
- *                    X_NULL if either of the arguments were NULL, or X_FAILURE if some other error.
+ *                    X_NULL if either of the arguments were NULL, or X_NO_INIT if the table was not
+ *                    properly initialized, or else X_FAILURE if some other error.
  *
  * @sa xLookupPutAll()
  * @sa xLookupRemove()
@@ -139,6 +146,8 @@ int xLookupPut(XLookupTable *tab, const char *prefix, const XField *field, XFiel
   if(!field) return x_error(X_NULL, EINVAL, fn, "input field is NULL");
 
   p = (XLookupPrivate *) tab->priv;
+  if(!p) return x_error(0, EINVAL, "xGetLookupEntryAsync", "lookup table not initialized");
+
   if(sem_wait(&p->sem) != 0) return x_error(X_FAILURE, errno, fn, "sem_wait() error");
 
   res = xLookupPutAsync(tab, prefix, field, oldValue);
@@ -169,6 +178,11 @@ XField *xLookupRemove(XLookupTable *tab, const char *id) {
   }
 
   p = (XLookupPrivate *) tab->priv;
+  if(!p) {
+    x_error(0, EINVAL, "xGetLookupEntryAsync", "lookup table not initialized");
+    return NULL;
+  }
+
   if(sem_wait(&p->sem) != 0) {
     x_error(0, errno, fn, "sem_wait() error");
     return NULL;
@@ -259,7 +273,7 @@ static int xLookupRemoveAllAsync(XLookupTable *tab, const char *prefix, const XS
  * @param s           The structure
  * @param recursive   Whether to include fields in all substructures recursively also.
  * @return            the number of fields added (&lt;=0), or else X_NULL if either of the arguments were NULL,
- *                    or X_FAILURE if some other error.
+ *                    or X_NO_INIT if the table was not initialized, or else X_FAILURE if some other error.
  *
  * @sa xLookupRemoveAll()
  */
@@ -273,6 +287,8 @@ int xLookupPutAll(XLookupTable *tab, const char *prefix, const XStructure *s, bo
   if(!s) return x_error(X_NULL, EINVAL, fn, "input structure is NULL");
 
   p = (XLookupPrivate *) tab->priv;
+  if(!p) return x_error(0, EINVAL, "xGetLookupEntryAsync", "lookup table not initialized");
+
   if(sem_wait(&p->sem) != 0) return x_error(X_FAILURE, errno, fn, "sem_wait() error");
 
   n = xLookupPutAllAsync(tab, prefix, s, recursive);
@@ -292,7 +308,7 @@ int xLookupPutAll(XLookupTable *tab, const char *prefix, const XStructure *s, bo
  * @param s           The structure
  * @param recursive   Whether to include fields in all substructures recursively also.
  * @return            the number of fields removed (&lt;=0), or else X_NULL if either of the arguments were NULL,
- *                    or X_FAILURE if some other error.
+ *                    or X_NO_INIT if the table was not initialized, or else X_FAILURE if some other error.
  *
  * @sa xLookupRemoveAll()
  */
@@ -306,6 +322,8 @@ int xLookupRemoveAll(XLookupTable *tab, const char *prefix, const XStructure *s,
   if(!s) return x_error(X_NULL, EINVAL, fn, "input structure is NULL");
 
   p = (XLookupPrivate *) tab->priv;
+  if(!p) return x_error(0, EINVAL, "xGetLookupEntryAsync", "lookup table not initialized");
+
   if(sem_wait(&p->sem) != 0) return x_error(X_FAILURE, errno, fn, "sem_wait() error");
 
   n = xLookupRemoveAllAsync(tab, prefix, s, recursive);
@@ -424,6 +442,11 @@ XField *xLookupField(const XLookupTable *tab, const char *id) {
   }
 
   p = (XLookupPrivate *) tab->priv;
+  if(!p) {
+    x_error(0, EINVAL, "xGetLookupEntryAsync", "lookup table not initialized");
+    return NULL;
+  }
+
   if(sem_wait(&p->sem) != 0) {
     x_error(0, errno, fn, "sem_wait() error");
     return NULL;
