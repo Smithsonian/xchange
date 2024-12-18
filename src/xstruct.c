@@ -923,7 +923,7 @@ void xClearStruct(XStructure *s) {
  * @return                  X_SUCCESS (0) if successful or else X_SIZE_INVALID if the ndim argument is NULL, or if it is greater than zero but
  *                          the sizes argument is NULL (errno set to EINVAL in both cases)
  *
- * @see xReduceAllDims()
+ * @see xReduceStruct()
  */
 int xReduceDims(int *ndim, int *sizes) {
   static const char *fn = "xReduceDims";
@@ -987,6 +987,9 @@ static int xUnwrapField(XField *f) {
  *
  * @param f     Pointer to a field
  * @return      X_SUCCESS (0) if successful, or else an xchange.h error code &lt;0.
+ *
+ * @sa xReduceStruct()
+ * @sa xReduceDims()
  */
 int xReduceField(XField *f) {
   if(!f) return x_error(X_NULL, EINVAL, "xReduceField", "input field is NULL");
@@ -997,7 +1000,6 @@ int xReduceField(XField *f) {
   else if(f->type == X_STRUCT) {
     XStructure *sub = (XStructure *) f->value;
     int i = xGetFieldCount(f);
-
     while(--i >= 0) xReduceStruct(&sub[i]);
   }
 
@@ -1013,7 +1015,7 @@ int xReduceField(XField *f) {
  * @return      X_SUCCESS (0) if successful or else X_STRUCT_INVALID if the argument is NULL (errno is
  *              also set to EINVAL)
  *
- * @see xReduceDims()
+ * @sa xReduceField()
  */
 int xReduceStruct(XStructure *s) {
   XField *f;
