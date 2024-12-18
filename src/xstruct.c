@@ -498,7 +498,7 @@ XField *xCreateLongField(const char *name, long long value) {
 XField *xCreateBooleanField(const char *name, boolean value) {
   XField *f = xCreateScalarField(name, X_BOOLEAN, &value);
   if(!f) return x_trace_null("xCreateBooleanField", NULL);
-    return f;
+  return f;
 }
 
 
@@ -970,7 +970,7 @@ static int xUnwrapField(XField *f) {
   if(nested->type == X_STRUCT) {
     XStructure *s = (XStructure *) nested->value;
     int i = xGetFieldCount(nested);
-    while(--i >= 0) xReduceAllDims(&s[i]);
+    while(--i >= 0) xReduceStruct(&s[i]);
   }
   else if(nested->type == X_FIELD) return xUnwrapField(nested);
 
@@ -979,6 +979,46 @@ static int xUnwrapField(XField *f) {
   if(f->value) free(f->value);
 
   *f = *nested;
+  return X_SUCCESS;
+}
+
+/**
+ * Reduces a field by eliminating extraneous dimensions, and/or wrapping recursively.
+ *
+ * @param f     Pointer to a field
+ * @return      X_SUCCESS (0) if successful, or else an xchange.h error code &lt;0.
+ */
+int xReduceField(XField *f) {
+  static const char *fn = "xReduceField";
+
+  if(!f) return x_error(X_NULL, EINVAL, fn, "input field is NULL");
+
+  xReduceDims(&f->ndim, f->sizes);
+
+  if(f->type == X_FIELD) xUnwrapField(f);
+  else if(f->type == X_STRUCT) {
+    XStructure *sub = (XStructure *) f->value;
+    int i = xGetFieldCount(f);
+
+    while(--i >= 0) {
+      int status = xReduceStruct(&sub[i]);
+      if(status < 0) {
+        char *id = (char *) malloc(strlen(f->name) + 20);
+
+        if(!id) {
+          status = x_error(X_FAILURE, errno, fn, "alloc error (%ld bytes)", (long) (strlen(f->name) + 20));
+
+          xDestroyField(f);
+          return status;
+        }
+
+        sprintf(id, "%s[%d]", f->name, i);
+        x_trace(fn, id, status);
+        free(id);
+      }
+    }
+  }
+
   return X_SUCCESS;
 }
 
@@ -993,10 +1033,11 @@ static int xUnwrapField(XField *f) {
  *
  * @see xReduceDims()
  */
-int xReduceAllDims(XStructure *s) {
-  static const char *fn;
+int xReduceStruct(XStructure *s) {
+  static const char *fn = "xReduceStruct";
 
   XField *f;
+  int status = X_SUCCESS;
 
   if(!s) return x_error(X_STRUCT_INVALID, EINVAL, fn, "input structure is NULL");
 
@@ -1008,7 +1049,6 @@ int xReduceAllDims(XStructure *s) {
     // We can eliminate the unnecessary nesting.
 
     XStructure *sub = (XStructure *) f->value;
-    int status;
     XField *sf;
 
     s->firstField = sub->firstField;
@@ -1019,7 +1059,7 @@ int xReduceAllDims(XStructure *s) {
       while(--i >= 0) ss[i].parent = s;
     }
 
-    status = xReduceAllDims(s);
+    status = xReduceStruct(s);
     if(status < 0) x_trace(fn, f->name, status);
 
     free(f);
@@ -1027,34 +1067,11 @@ int xReduceAllDims(XStructure *s) {
   }
 
   for(; f != NULL; f = f->next) {
-    xReduceDims(&f->ndim, f->sizes);
-
-    if(f->type == X_STRUCT) {
-      XStructure *sub = (XStructure *) f->value;
-      int i = xGetFieldCount(f);
-
-      while(--i >= 0) {
-        int status = xReduceAllDims(&sub[i]);
-        if(status < 0) {
-          char *id = (char *) malloc(strlen(f->name) + 20);
-
-          if(!id) {
-            status = x_error(X_FAILURE, errno, "xReduceAllDims", "alloc error (%ld bytes)", (long) (strlen(f->name) + 20));
-            xDestroyField(f);
-            return status;
-          }
-
-          sprintf(id, "%s[%d]", f->name, i);
-          x_trace(fn, id, status);
-          free(id);
-        }
-      }
-    }
-
-    else if(f->type == X_FIELD) xUnwrapField(f);
+    int st = xReduceField(f);
+    if(!status) status = st;
   }
 
-  return 0;
+  return X_SUCCESS;
 }
 
 
@@ -1334,8 +1351,8 @@ static int XFieldNameCmp(const XField **f1, const XField **f2) {
  * @sa xReverseFieldOrder()
  */
 int xSortFieldsByName(XStructure *s, boolean recursive) {
- prop_error("xSortFieldsByName", xSortFields(s, XFieldNameCmp, recursive));
- return X_SUCCESS;
+  prop_error("xSortFieldsByName", xSortFields(s, XFieldNameCmp, recursive));
+  return X_SUCCESS;
 }
 
 /**

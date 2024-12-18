@@ -220,7 +220,8 @@ long xDeepCountFields(const XStructure *s);
 XStructure *xGetSubstruct(const XStructure *s, const char *id);
 XField *xSetSubstruct(XStructure *s, const char *name, XStructure *substruct);
 int xReduceDims(int *ndim, int *sizes);
-int xReduceAllDims(XStructure *s);
+int xReduceStruct(XStructure *s);
+int xReduceField(XField *f);
 
 // Sorting, ordering
 int xSortFields(XStructure *s, int (*cmp)(const XField **f1, const XField **f2), boolean recursive);
