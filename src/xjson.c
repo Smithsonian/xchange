@@ -70,8 +70,8 @@ static int PrintString(const char *src, int maxLength, char *json);
 
 static FILE *xerr;     ///< File / stream, which errors are printed to. A NULL will print to stderr
 
-static char *indent = XJSON_INDENT;
-static int ilen = sizeof(XJSON_INDENT) - 1;
+static char *indent;
+static int ilen;
 
 /**
  * Sets the number of spaces per indentation when emitting JSON formatted output.
@@ -83,15 +83,23 @@ static int ilen = sizeof(XJSON_INDENT) - 1;
  * @sa xjsonToString()
  */
 void xjsonSetIndent(int nchars) {
+  char *old;
+
   if(nchars < 0) nchars = 0;
 
-  indent = (char *) malloc(nchars + 1);
-  x_check_alloc(indent);
+  old = indent;
+  indent = (char *) realloc(indent, nchars + 1);
 
-  memset(indent, ' ', nchars);
-  indent[nchars] = '\0';
-
-  ilen = nchars;
+  if(indent) {
+    if(nchars > 0) memset(indent, ' ', nchars);
+    indent[nchars] = '\0';
+    ilen = nchars;
+  }
+  else {
+    x_error(0, errno, "xjsonSetIndent", "alloc error (%d bytes)", (nchars + 1));
+    indent = old;
+    ilen = old ? strlen(old) : 0;
+  }
 }
 
 /**
@@ -103,7 +111,12 @@ void xjsonSetIndent(int nchars) {
  * @sa xjsonToString()
  */
 int xjsonGetIndent() {
-  return ilen;
+  return indent ? ilen : XJSON_DEFAULT_INDENT;
+}
+
+static char *GetIndent() {
+  if(!indent) xjsonSetIndent(XJSON_DEFAULT_INDENT);
+  return indent;
 }
 
 /**
@@ -994,7 +1007,7 @@ static int PrintObject(const char *prefix, const XStructure *s, char *str) {
   fieldPrefix = malloc(strlen(prefix) + ilen + 1);
   x_check_alloc(fieldPrefix);
 
-  sprintf(fieldPrefix, "%s%s", prefix, indent);
+  sprintf(fieldPrefix, "%s%s", prefix, GetIndent());
 
   n += sprintf(str, "{\n");
 
@@ -1172,7 +1185,7 @@ static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const
     rowPrefix = malloc(strlen(prefix) + ilen + 1);
     x_check_alloc(rowPrefix);
 
-    sprintf(rowPrefix, "%s%s", prefix, indent);
+    sprintf(rowPrefix, "%s%s", prefix, GetIndent());
 
     // Special case: empty array
     if(N == 0) {
