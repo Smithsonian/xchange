@@ -758,17 +758,24 @@
     </member>
     <member kind="function">
       <type>int</type>
-      <name>xReduceAllDims</name>
-      <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>acc31fe75f06a6e0e469fba3a57c4fb25</anchor>
-      <arglist>(XStructure *s)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
       <name>xReduceDims</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>a36fb99b219c5a61db1d1c3d630277987</anchor>
       <arglist>(int *ndim, int *sizes)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xReduceField</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a3a47073404ef29ef9d533f7ad77b40d7</anchor>
+      <arglist>(XField *f)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xReduceStruct</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a12fafe4020caa0baeaaf2698e8490874</anchor>
+      <arglist>(XStructure *s)</arglist>
     </member>
     <member kind="function">
       <type>XField *</type>
@@ -897,9 +904,9 @@
     </member>
     <member kind="define">
       <type>#define</type>
-      <name>XJSON_INDENT</name>
+      <name>XJSON_DEFAULT_INDENT</name>
       <anchorfile>xjson_8h.html</anchorfile>
-      <anchor>ab69c52214e2e6daa2626bf8722f2d73e</anchor>
+      <anchor>a2c3bb6f2c4cfef06527f0a66c855b6cc</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
@@ -908,6 +915,13 @@
       <anchorfile>xjson_8h.html</anchorfile>
       <anchor>a92336f3031a90784e8667aaa7ad07ca2</anchor>
       <arglist>(const char *src, int maxLength)</arglist>
+    </member>
+    <member kind="function">
+      <type>char *</type>
+      <name>xjsonFieldToIndentedString</name>
+      <anchorfile>xjson_8h.html</anchorfile>
+      <anchor>a01bc599d67f70636a813b103a20170ac</anchor>
+      <arglist>(int indent, const XField *f)</arglist>
     </member>
     <member kind="function">
       <type>char *</type>
@@ -1207,6 +1221,13 @@
       <anchorfile>xjson_8c.html</anchorfile>
       <anchor>a92336f3031a90784e8667aaa7ad07ca2</anchor>
       <arglist>(const char *src, int maxLength)</arglist>
+    </member>
+    <member kind="function">
+      <type>char *</type>
+      <name>xjsonFieldToIndentedString</name>
+      <anchorfile>xjson_8c.html</anchorfile>
+      <anchor>a01bc599d67f70636a813b103a20170ac</anchor>
+      <arglist>(int indent, const XField *f)</arglist>
     </member>
     <member kind="function">
       <type>char *</type>
@@ -1579,17 +1600,24 @@
     </member>
     <member kind="function">
       <type>int</type>
-      <name>xReduceAllDims</name>
-      <anchorfile>xstruct_8c.html</anchorfile>
-      <anchor>acc31fe75f06a6e0e469fba3a57c4fb25</anchor>
-      <arglist>(XStructure *s)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
       <name>xReduceDims</name>
       <anchorfile>xstruct_8c.html</anchorfile>
       <anchor>a36fb99b219c5a61db1d1c3d630277987</anchor>
       <arglist>(int *ndim, int *sizes)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xReduceField</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>a3a47073404ef29ef9d533f7ad77b40d7</anchor>
+      <arglist>(XField *f)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>xReduceStruct</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>a12fafe4020caa0baeaaf2698e8490874</anchor>
+      <arglist>(XStructure *s)</arglist>
     </member>
     <member kind="function">
       <type>XField *</type>

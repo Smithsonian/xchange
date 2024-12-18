@@ -4,6 +4,7 @@ var xjson_8c =
     [ "FALSE", "xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1", null ],
     [ "TRUE", "xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d", null ],
     [ "xjsonEscape", "xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2", null ],
+    [ "xjsonFieldToIndentedString", "xjson_8c.html#a01bc599d67f70636a813b103a20170ac", null ],
     [ "xjsonFieldToString", "xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f", null ],
     [ "xjsonGetIndent", "xjson_8c.html#a9f11227a58e797a4a335331d94c8e888", null ],
     [ "xjsonParseAt", "xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3", null ],

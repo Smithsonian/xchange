@@ -191,10 +191,12 @@ Functions</h2></td></tr>
 <tr class="separator:a90aae0dafd1d461877eef63c9c730592"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af436eb535b32fa88ab4e600c0a37c19d" id="r_af436eb535b32fa88ab4e600c0a37c19d"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#af436eb535b32fa88ab4e600c0a37c19d">xNextIDToken</a> (const char *id)</td></tr>
 <tr class="separator:af436eb535b32fa88ab4e600c0a37c19d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc31fe75f06a6e0e469fba3a57c4fb25" id="r_acc31fe75f06a6e0e469fba3a57c4fb25"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#acc31fe75f06a6e0e469fba3a57c4fb25">xReduceAllDims</a> (<a class="el" href="structXStructure.html">XStructure</a> *s)</td></tr>
-<tr class="separator:acc31fe75f06a6e0e469fba3a57c4fb25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36fb99b219c5a61db1d1c3d630277987" id="r_a36fb99b219c5a61db1d1c3d630277987"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987">xReduceDims</a> (int *ndim, int *sizes)</td></tr>
 <tr class="separator:a36fb99b219c5a61db1d1c3d630277987"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a47073404ef29ef9d533f7ad77b40d7" id="r_a3a47073404ef29ef9d533f7ad77b40d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a3a47073404ef29ef9d533f7ad77b40d7">xReduceField</a> (<a class="el" href="structXField.html">XField</a> *f)</td></tr>
+<tr class="separator:a3a47073404ef29ef9d533f7ad77b40d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12fafe4020caa0baeaaf2698e8490874" id="r_a12fafe4020caa0baeaaf2698e8490874"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#a12fafe4020caa0baeaaf2698e8490874">xReduceStruct</a> (<a class="el" href="structXStructure.html">XStructure</a> *s)</td></tr>
+<tr class="separator:a12fafe4020caa0baeaaf2698e8490874"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec9f913cdb79d8653668a5d9bdda6ab1" id="r_aec9f913cdb79d8653668a5d9bdda6ab1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a> (<a class="el" href="structXStructure.html">XStructure</a> *s, const char *name)</td></tr>
 <tr class="separator:aec9f913cdb79d8653668a5d9bdda6ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad32d8a3f211a3b101142879ae31146ec" id="r_ad32d8a3f211a3b101142879ae31146ec"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a> (<a class="el" href="structXStructure.html">XStructure</a> *s, <a class="el" href="xchange_8h.html#a621c38f1f10a1c565d897e3178b16d6e">boolean</a> recursive)</td></tr>
@@ -326,7 +328,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A fully independent (deep) copy of the argument or NULL if the input field is NULL.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#ad78b2fb3d6d1474c8a44c57575a6e13b">xCopyOfStruct()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#aaa68a7e140a5370ed0eb52710744c341">XField::isSerialized</a>, <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#adb72c72467963a6ace1632638a8a6a7b">X_RAW</a>, <a class="el" href="xchange_8h.html#a2443dd783d2728a3559361fba845e533">X_STRING</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31">x_trace_null()</a>, <a class="el" href="xstruct_8c.html#ad78b2fb3d6d1474c8a44c57575a6e13b">xCopyOfStruct()</a>, <a class="el" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField()</a>, <a class="el" href="xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e">xElementSizeOf()</a>, <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>, and <a class="el" href="xchange_8c.html#a01d730a1a98963816de2dd73e72957a5">xStringCopyOf()</a>.</p>
+<p class="reference">References <a class="el" href="structXField.html#aaa68a7e140a5370ed0eb52710744c341">XField::isSerialized</a>, <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#adb72c72467963a6ace1632638a8a6a7b">X_RAW</a>, <a class="el" href="xchange_8h.html#a2443dd783d2728a3559361fba845e533">X_STRING</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31">x_trace_null()</a>, <a class="el" href="xstruct_8c.html#ad78b2fb3d6d1474c8a44c57575a6e13b">xCopyOfStruct()</a>, <a class="el" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField()</a>, <a class="el" href="xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e">xElementSizeOf()</a>, <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>, and <a class="el" href="xchange_8c.html#a01d730a1a98963816de2dd73e72957a5">xStringCopyOf()</a>.</p>
 
 </div>
 </div>
@@ -575,7 +577,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A newly created field with the copy of the supplied data, or NULL if there was an error. </dd></dl>
 
-<p class="reference">References <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1">XField::ndim</a>, <a class="el" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d">XField::sizes</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a910ee1c8cd983bf127f7ca2c705d7894">X_MAX_DIMS</a>, <a class="el" href="xchange_8h.html#adb72c72467963a6ace1632638a8a6a7b">X_RAW</a>, <a class="el" href="xchange_8h.html#a2443dd783d2728a3559361fba845e533">X_STRING</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField()</a>, <a class="el" href="xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e">xElementSizeOf()</a>, <a class="el" href="xchange_8c.html#ad35e0d8c0ebbb4948c233f96c54bd8d6">xGetElementCount()</a>, <a class="el" href="xstruct_8c.html#ab9a9fbc1235164bfeed5fbba1f7d8692">xLastSeparator()</a>, and <a class="el" href="xchange_8c.html#a01d730a1a98963816de2dd73e72957a5">xStringCopyOf()</a>.</p>
+<p class="reference">References <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1">XField::ndim</a>, <a class="el" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d">XField::sizes</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a910ee1c8cd983bf127f7ca2c705d7894">X_MAX_DIMS</a>, <a class="el" href="xchange_8h.html#adb72c72467963a6ace1632638a8a6a7b">X_RAW</a>, <a class="el" href="xchange_8h.html#a2443dd783d2728a3559361fba845e533">X_STRING</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31">x_trace_null()</a>, <a class="el" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField()</a>, <a class="el" href="xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e">xElementSizeOf()</a>, <a class="el" href="xchange_8c.html#ad35e0d8c0ebbb4948c233f96c54bd8d6">xGetElementCount()</a>, <a class="el" href="xstruct_8c.html#ab9a9fbc1235164bfeed5fbba1f7d8692">xLastSeparator()</a>, and <a class="el" href="xchange_8c.html#a01d730a1a98963816de2dd73e72957a5">xStringCopyOf()</a>.</p>
 
 </div>
 </div>
@@ -1137,7 +1139,7 @@ Functions</h2></td></tr>
 <dd>
 <a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, and <a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a>.</p>
+<p class="reference">References <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, and <a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a>.</p>
 
 </div>
 </div>
@@ -1307,35 +1309,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="acc31fe75f06a6e0e469fba3a57c4fb25" name="acc31fe75f06a6e0e469fba3a57c4fb25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc31fe75f06a6e0e469fba3a57c4fb25">&#9670;&#160;</a></span>xReduceAllDims()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int xReduceAllDims </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
-          <td class="paramname"><em>s</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Recursively eliminates unneccessary embedding of singular structures inside a structure as well as reduces the dimension of all array fields with <a class="el" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987">xReduceDims()</a>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">s</td><td>Pointer to a structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>X_SUCCESS (0) if successful or else X_STRUCT_INVALID if the argument is NULL (errno is also set to EINVAL)</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987">xReduceDims()</a> </dd></dl>
-
-<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#a5ac083a645d964373f022d03df4849c8">XField::name</a>, <a class="el" href="structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1">XField::ndim</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="structXStructure.html#a82ba053944ce97d83d41c05f68ec4f3d">XStructure::parent</a>, <a class="el" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d">XField::sizes</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8h.html#af4b6e6d9baf3e6767041faa3e356af7a">X_STRUCT_INVALID</a>, <a class="el" href="xchange_8c.html#a9b61b8b8b3ef0f7cc0b96ab499265c74">x_trace()</a>, <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>, <a class="el" href="xstruct_8c.html#acc31fe75f06a6e0e469fba3a57c4fb25">xReduceAllDims()</a>, and <a class="el" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987">xReduceDims()</a>.</p>
-
-</div>
-</div>
 <a id="a36fb99b219c5a61db1d1c3d630277987" name="a36fb99b219c5a61db1d1c3d630277987"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a36fb99b219c5a61db1d1c3d630277987">&#9670;&#160;</a></span>xReduceDims()</h2>
 
@@ -1370,9 +1343,69 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>X_SUCCESS (0) if successful or else X_SIZE_INVALID if the ndim argument is NULL, or if it is greater than zero but the sizes argument is NULL (errno set to EINVAL in both cases)</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#acc31fe75f06a6e0e469fba3a57c4fb25">xReduceAllDims()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a12fafe4020caa0baeaaf2698e8490874">xReduceStruct()</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a816c5dad11d9bfd91a795ed1af30e732">X_SIZE_INVALID</a>, and <a class="el" href="xchange_8h.html#a7b2679c964ea5f2160380ed55654b873">X_SUCCESS</a>.</p>
+
+</div>
+</div>
+<a id="a3a47073404ef29ef9d533f7ad77b40d7" name="a3a47073404ef29ef9d533f7ad77b40d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a47073404ef29ef9d533f7ad77b40d7">&#9670;&#160;</a></span>xReduceField()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int xReduceField </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXField.html">XField</a> *&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reduces a field by eliminating extraneous dimensions, and/or wrapping recursively.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Pointer to a field </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>X_SUCCESS (0) if successful, or else an <a class="el" href="xchange_8h.html">xchange.h</a> error code &lt;0.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a12fafe4020caa0baeaaf2698e8490874">xReduceStruct()</a> </dd>
+<dd>
+<a class="el" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987">xReduceDims()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXField.html#a0d9c8cbc461c7cf86cad8e548f195bd1">XField::ndim</a>, <a class="el" href="structXField.html#af743830ee6c7d5e81a0206b07238ca5d">XField::sizes</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a7e4c8b651428f090a441804bd8b7673e">X_FIELD</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8h.html#a7b2679c964ea5f2160380ed55654b873">X_SUCCESS</a>, <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>, <a class="el" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987">xReduceDims()</a>, and <a class="el" href="xstruct_8c.html#a12fafe4020caa0baeaaf2698e8490874">xReduceStruct()</a>.</p>
+
+</div>
+</div>
+<a id="a12fafe4020caa0baeaaf2698e8490874" name="a12fafe4020caa0baeaaf2698e8490874"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12fafe4020caa0baeaaf2698e8490874">&#9670;&#160;</a></span>xReduceStruct()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int xReduceStruct </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Recursively eliminates unneccessary embedding of singular structures inside a structure as well as reduces the dimension of all array fields with <a class="el" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987">xReduceDims()</a>. It will also eliminate the unnecessary wrapping of a singular array into a single <a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Pointer to a structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>X_SUCCESS (0) if successful or else X_STRUCT_INVALID if the argument is NULL (errno is also set to EINVAL)</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a3a47073404ef29ef9d533f7ad77b40d7">xReduceField()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="structXStructure.html#a82ba053944ce97d83d41c05f68ec4f3d">XStructure::parent</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8h.html#af4b6e6d9baf3e6767041faa3e356af7a">X_STRUCT_INVALID</a>, <a class="el" href="xchange_8h.html#a7b2679c964ea5f2160380ed55654b873">X_SUCCESS</a>, <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>, <a class="el" href="xstruct_8c.html#a3a47073404ef29ef9d533f7ad77b40d7">xReduceField()</a>, and <a class="el" href="xstruct_8c.html#a12fafe4020caa0baeaaf2698e8490874">xReduceStruct()</a>.</p>
 
 </div>
 </div>
@@ -1637,7 +1670,7 @@ Functions</h2></td></tr>
 <dd>
 <a class="el" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8h.html#a7b2679c964ea5f2160380ed55654b873">X_SUCCESS</a>, <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>, and <a class="el" href="xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff">xSortFields()</a>.</p>
+<p class="reference">References <a class="el" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a>, <a class="el" href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a>, <a class="el" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a1d4a0c99f979fd0ecf0e9dcb7191a8d7">X_FAILURE</a>, <a class="el" href="xchange_8h.html#aadbbe3ae01369cbddf4d57d430b33133">X_NULL</a>, <a class="el" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb">X_STRUCT</a>, <a class="el" href="xchange_8h.html#a7b2679c964ea5f2160380ed55654b873">X_SUCCESS</a>, <a class="el" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688">xGetFieldCount()</a>, and <a class="el" href="xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff">xSortFields()</a>.</p>
 
 </div>
 </div>

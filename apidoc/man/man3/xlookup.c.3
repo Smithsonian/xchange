@@ -140,7 +140,7 @@ Returns the number of fields in the lookup table\&.
 .PP
 \fBReturns\fP
 .RS 4
-the number of fields stored\&. 
+the number of fields stored, or an error <0 (usually X_NO_INIT) if the lookup table is invalid 
 .RE
 .PP
 
@@ -189,7 +189,7 @@ Puts a field into the lookup table with the specified aggregate ID prefix\&. For
 .PP
 \fBReturns\fP
 .RS 4
-0 if successfully added a new field, 1 if updated an existing fields, or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error\&.
+0 if successfully added a new field, 1 if updated an existing fields, or else X_NULL if either of the arguments were NULL, or X_NO_INIT if the table was not properly initialized, or else X_FAILURE if some other error\&.
 .RE
 .PP
 \fBSee also\fP
@@ -218,7 +218,7 @@ Puts all fields from a structure into the lookup table with the specified aggreg
 .PP
 \fBReturns\fP
 .RS 4
-the number of fields added (<=0), or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error\&.
+the number of fields added (<=0), or else X_NULL if either of the arguments were NULL, or X_NO_INIT if the table was not initialized, or else X_FAILURE if some other error\&.
 .RE
 .PP
 \fBSee also\fP
@@ -270,7 +270,7 @@ Removes all fields of a structure from the lookup table with the specified aggre
 .PP
 \fBReturns\fP
 .RS 4
-the number of fields removed (<=0), or else X_NULL if either of the arguments were NULL, or X_FAILURE if some other error\&.
+the number of fields removed (<=0), or else X_NULL if either of the arguments were NULL, or X_NO_INIT if the table was not initialized, or else X_FAILURE if some other error\&.
 .RE
 .PP
 \fBSee also\fP

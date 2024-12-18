@@ -447,12 +447,12 @@ or parse it from a file, which contains a JSON definition of the structured data
 
 ### Snippets
 
-Alternatively, you can also create partial JSON snippets for individual fields, e.g.:
+Alternatively, you can also create partial JSON fragments for individual fields, e.g.:
   
 ```c
   XField *f = ...
   
-  // Obtain a JSON string snippet of the field 'f'.
+  // Obtain a JSON fragment for the field 'f'.
   char *json = xjsonFieldToString(f);
 ```
 

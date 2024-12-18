@@ -182,8 +182,9 @@
           <topic label="xPrintDims" href="xchange_8h.html#aced93c2ca8cef260663ff1f9cfc0140e"/>
           <topic label="xPrintDouble" href="xchange_8h.html#a3eb8c827cfc2139687d175649284f7be"/>
           <topic label="xPrintFloat" href="xchange_8h.html#a9ee406a1c0c8d1076620ae4f77695216"/>
-          <topic label="xReduceAllDims" href="xchange_8h.html#acc31fe75f06a6e0e469fba3a57c4fb25"/>
           <topic label="xReduceDims" href="xchange_8h.html#a36fb99b219c5a61db1d1c3d630277987"/>
+          <topic label="xReduceField" href="xchange_8h.html#a3a47073404ef29ef9d533f7ad77b40d7"/>
+          <topic label="xReduceStruct" href="xchange_8h.html#a12fafe4020caa0baeaaf2698e8490874"/>
           <topic label="xRemoveField" href="xchange_8h.html#aec9f913cdb79d8653668a5d9bdda6ab1"/>
           <topic label="xReverseFieldOrder" href="xchange_8h.html#ad32d8a3f211a3b101142879ae31146ec"/>
           <topic label="xSetDebug" href="xchange_8h.html#a6c1304b59a5882b2286e86c6837faead"/>
@@ -203,8 +204,9 @@
         </topic>
         <topic label="xjson.h" href="xjson_8h.html">
           <topic label="NULLDEV" href="xjson_8h.html#a5a5c8657f14c4fe6dc43c552af88d65d"/>
-          <topic label="XJSON_INDENT" href="xjson_8h.html#ab69c52214e2e6daa2626bf8722f2d73e"/>
+          <topic label="XJSON_DEFAULT_INDENT" href="xjson_8h.html#a2c3bb6f2c4cfef06527f0a66c855b6cc"/>
           <topic label="xjsonEscape" href="xjson_8h.html#a92336f3031a90784e8667aaa7ad07ca2"/>
+          <topic label="xjsonFieldToIndentedString" href="xjson_8h.html#a01bc599d67f70636a813b103a20170ac"/>
           <topic label="xjsonFieldToString" href="xjson_8h.html#a42101fa63cb1c6e265f317e9b8719d5f"/>
           <topic label="xjsonGetIndent" href="xjson_8h.html#a9f11227a58e797a4a335331d94c8e888"/>
           <topic label="xjsonParseAt" href="xjson_8h.html#acdb7d242c80b4c9dbeedc62b479bfcc7"/>
@@ -252,6 +254,7 @@
           <topic label="FALSE" href="xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1"/>
           <topic label="TRUE" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d"/>
           <topic label="xjsonEscape" href="xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2"/>
+          <topic label="xjsonFieldToIndentedString" href="xjson_8c.html#a01bc599d67f70636a813b103a20170ac"/>
           <topic label="xjsonFieldToString" href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f"/>
           <topic label="xjsonGetIndent" href="xjson_8c.html#a9f11227a58e797a4a335331d94c8e888"/>
           <topic label="xjsonParseAt" href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3"/>
@@ -307,8 +310,9 @@
           <topic label="xLastSeparator" href="xstruct_8c.html#ab9a9fbc1235164bfeed5fbba1f7d8692"/>
           <topic label="xMatchNextID" href="xstruct_8c.html#a90aae0dafd1d461877eef63c9c730592"/>
           <topic label="xNextIDToken" href="xstruct_8c.html#af436eb535b32fa88ab4e600c0a37c19d"/>
-          <topic label="xReduceAllDims" href="xstruct_8c.html#acc31fe75f06a6e0e469fba3a57c4fb25"/>
           <topic label="xReduceDims" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987"/>
+          <topic label="xReduceField" href="xstruct_8c.html#a3a47073404ef29ef9d533f7ad77b40d7"/>
+          <topic label="xReduceStruct" href="xstruct_8c.html#a12fafe4020caa0baeaaf2698e8490874"/>
           <topic label="xRemoveField" href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1"/>
           <topic label="xReverseFieldOrder" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec"/>
           <topic label="xSetField" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4"/>

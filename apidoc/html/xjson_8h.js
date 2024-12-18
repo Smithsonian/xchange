@@ -1,8 +1,9 @@
 var xjson_8h =
 [
     [ "NULLDEV", "xjson_8h.html#a5a5c8657f14c4fe6dc43c552af88d65d", null ],
-    [ "XJSON_INDENT", "xjson_8h.html#ab69c52214e2e6daa2626bf8722f2d73e", null ],
+    [ "XJSON_DEFAULT_INDENT", "xjson_8h.html#a2c3bb6f2c4cfef06527f0a66c855b6cc", null ],
     [ "xjsonEscape", "xjson_8h.html#a92336f3031a90784e8667aaa7ad07ca2", null ],
+    [ "xjsonFieldToIndentedString", "xjson_8h.html#a01bc599d67f70636a813b103a20170ac", null ],
     [ "xjsonFieldToString", "xjson_8h.html#a42101fa63cb1c6e265f317e9b8719d5f", null ],
     [ "xjsonGetIndent", "xjson_8h.html#a9f11227a58e797a4a335331d94c8e888", null ],
     [ "xjsonParseAt", "xjson_8h.html#acdb7d242c80b4c9dbeedc62b479bfcc7", null ],

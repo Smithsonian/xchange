@@ -141,6 +141,8 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a92336f3031a90784e8667aaa7ad07ca2" id="r_a92336f3031a90784e8667aaa7ad07ca2"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2">xjsonEscape</a> (const char *src, int maxLength)</td></tr>
 <tr class="separator:a92336f3031a90784e8667aaa7ad07ca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01bc599d67f70636a813b103a20170ac" id="r_a01bc599d67f70636a813b103a20170ac"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xjson_8c.html#a01bc599d67f70636a813b103a20170ac">xjsonFieldToIndentedString</a> (int indent, const <a class="el" href="structXField.html">XField</a> *f)</td></tr>
+<tr class="separator:a01bc599d67f70636a813b103a20170ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42101fa63cb1c6e265f317e9b8719d5f" id="r_a42101fa63cb1c6e265f317e9b8719d5f"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f">xjsonFieldToString</a> (const <a class="el" href="structXField.html">XField</a> *f)</td></tr>
 <tr class="separator:a42101fa63cb1c6e265f317e9b8719d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f11227a58e797a4a335331d94c8e888" id="r_a9f11227a58e797a4a335331d94c8e888"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xjson_8c.html#a9f11227a58e797a4a335331d94c8e888">xjsonGetIndent</a> ()</td></tr>
@@ -207,6 +209,46 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a01bc599d67f70636a813b103a20170ac" name="a01bc599d67f70636a813b103a20170ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01bc599d67f70636a813b103a20170ac">&#9670;&#160;</a></span>xjsonFieldToIndentedString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * xjsonFieldToIndentedString </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>indent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structXField.html">XField</a> *&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Converts an <a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a> into its JSON representation, with the specified indentation of white spaces in front of every line. Conversion errors are reported to stderr or the altenate stream set by xSetErrorStream().</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">indent</td><td>Number of white spaces to insert in front of each line. </td></tr>
+    <tr><td class="paramname">f</td><td>Pointer to field </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>String JSON representation, or NULL if there was an error (errno set to EINVAL).</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f">xjsonFieldToString()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription()</a>, and <a class="el" href="xchange_8c.html#a01d730a1a98963816de2dd73e72957a5">xStringCopyOf()</a>.</p>
+
+</div>
+</div>
 <a id="a42101fa63cb1c6e265f317e9b8719d5f" name="a42101fa63cb1c6e265f317e9b8719d5f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a42101fa63cb1c6e265f317e9b8719d5f">&#9670;&#160;</a></span>xjsonFieldToString()</h2>
 
@@ -240,7 +282,7 @@ Functions</h2></td></tr>
 <dd>
 <a class="el" href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075">xjsonParseFilename()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>, <a class="el" href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription()</a>, and <a class="el" href="xchange_8c.html#a01d730a1a98963816de2dd73e72957a5">xStringCopyOf()</a>.</p>
+<p class="reference">References <a class="el" href="xjson_8c.html#a01bc599d67f70636a813b103a20170ac">xjsonFieldToIndentedString()</a>.</p>
 
 </div>
 </div>
@@ -263,6 +305,8 @@ Functions</h2></td></tr>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xjson_8c.html#a1f877c9790a53582cdda10659a3d033a">xjsonSetIndent()</a> </dd>
 <dd>
 <a class="el" href="xjson_8c.html#a53128045970e973134867c96a6465abc">xjsonToString()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="xjson_8h.html#a2c3bb6f2c4cfef06527f0a66c855b6cc">XJSON_DEFAULT_INDENT</a>.</p>
 
 </div>
 </div>
@@ -505,6 +549,8 @@ xjsonParseFileName() </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="xjson_8c.html#a9f11227a58e797a4a335331d94c8e888">xjsonGetIndent()</a> </dd>
 <dd>
 <a class="el" href="xjson_8c.html#a53128045970e973134867c96a6465abc">xjsonToString()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>.</p>
 
 </div>
 </div>

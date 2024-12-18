@@ -14,15 +14,18 @@ include/xjson.h
 .br
 .RI "null device on system "
 .ti -1c
-.RI "#define \fBXJSON_INDENT\fP   '  '"
+.RI "#define \fBXJSON_DEFAULT_INDENT\fP   2"
 .br
-.RI "Indentation for nested elements\&. "
+.RI "Number of characters to indent\&. "
 .in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
 .RI "char * \fBxjsonEscape\fP (const char *src, int maxLength)"
+.br
+.ti -1c
+.RI "char * \fBxjsonFieldToIndentedString\fP (int indent, const \fBXField\fP *f)"
 .br
 .ti -1c
 .RI "char * \fBxjsonFieldToString\fP (const \fBXField\fP *f)"
@@ -95,6 +98,29 @@ The JSON representation of the original string, in which special characters appe
 
 .PP
 References \fBx_error()\fP\&.
+.SS "char * xjsonFieldToIndentedString (int indent, const \fBXField\fP * f)"
+Converts an \fBXField\fP into its JSON representation, with the specified indentation of white spaces in front of every line\&. Conversion errors are reported to stderr or the altenate stream set by xSetErrorStream()\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIindent\fP Number of white spaces to insert in front of each line\&. 
+.br
+\fIf\fP Pointer to field 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+String JSON representation, or NULL if there was an error (errno set to EINVAL)\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxjsonFieldToString()\fP 
+.RE
+.PP
+
+.PP
+References \fBFALSE\fP, \fBx_error()\fP, \fBxErrorDescription()\fP, and \fBxStringCopyOf()\fP\&.
 .SS "char * xjsonFieldToString (const \fBXField\fP * f)"
 Converts an \fBXField\fP into its JSON representation\&. Conversion errors are reported to stderr or the altenate stream set by xSetErrorStream()\&.
 .PP
@@ -123,7 +149,7 @@ String JSON representation, or NULL if there was an error (errno set to EINVAL)\
 .PP
 
 .PP
-References \fBFALSE\fP, \fBxErrorDescription()\fP, and \fBxStringCopyOf()\fP\&.
+References \fBxjsonFieldToIndentedString()\fP\&.
 .SS "int xjsonGetIndent ()"
 Returns the number of spaces per indentation when emitting JSON formatted output\&.
 .PP
@@ -140,6 +166,8 @@ Returns the number of spaces per indentation when emitting JSON formatted output
 .RE
 .PP
 
+.PP
+References \fBXJSON_DEFAULT_INDENT\fP\&.
 .SS "\fBXStructure\fP * xjsonParseAt (char ** pos, int * lineNumber)"
 Parses a JSON object from the given parse position, returning the structured data and updating the parse position\&. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream()\&.
 .PP
@@ -281,6 +309,8 @@ Sets the number of spaces per indentation when emitting JSON formatted output\&.
 .RE
 .PP
 
+.PP
+References \fBx_error()\fP\&.
 .SS "char * xjsonToString (const \fBXStructure\fP * s)"
 Converts structured data into its JSON representation\&. Conversion errors are reported to stderr or the altenate stream set by xSetErrorStream()\&.
 .PP

@@ -45,6 +45,6 @@ var searchData=
   ['xchange_5frelease_5fstring_42',['XCHANGE_RELEASE_STRING',['../xchange_8h.html#a1cda2967190e2d61c5560bf6b43d930d',1,'xchange.h']]],
   ['xchange_5fversion_5fstring_43',['XCHANGE_VERSION_STRING',['../xchange_8h.html#a2e8ac004db0f6cb82e1b7a13b79380c5',1,'xchange.h']]],
   ['xdprintf_44',['xdprintf',['../xchange_8h.html#a2b0edfea798e9e08122f09dba5f189f8',1,'xchange.h']]],
-  ['xjson_5findent_45',['XJSON_INDENT',['../xjson_8h.html#ab69c52214e2e6daa2626bf8722f2d73e',1,'xjson.h']]],
+  ['xjson_5fdefault_5findent_45',['XJSON_DEFAULT_INDENT',['../xjson_8h.html#a2c3bb6f2c4cfef06527f0a66c855b6cc',1,'xjson.h']]],
   ['xvprintf_46',['xvprintf',['../xchange_8h.html#a1f038bf7ddb58819805cfc44162cb403',1,'xchange.h']]]
 ];
