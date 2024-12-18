@@ -991,6 +991,8 @@ static int xUnwrapField(XField *f) {
 int xReduceField(XField *f) {
   static const char *fn = "xReduceField";
 
+  int status = X_SUCCESS;
+
   if(!f) return x_error(X_NULL, EINVAL, fn, "input field is NULL");
 
   xReduceDims(&f->ndim, f->sizes);
@@ -1001,25 +1003,15 @@ int xReduceField(XField *f) {
     int i = xGetFieldCount(f);
 
     while(--i >= 0) {
-      int status = xReduceStruct(&sub[i]);
-      if(status < 0) {
-        char *id = (char *) malloc(strlen(f->name) + 20);
-
-        if(!id) {
-          status = x_error(X_FAILURE, errno, fn, "alloc error (%ld bytes)", (long) (strlen(f->name) + 20));
-
-          xDestroyField(f);
-          return status;
-        }
-
-        sprintf(id, "%s[%d]", f->name, i);
-        x_trace(fn, id, status);
-        free(id);
+      int stat = xReduceStruct(&sub[i]);
+      if(stat < 0) {
+        x_trace(fn, f->name, status);
+        if(!status) status = stat;
       }
     }
   }
 
-  return X_SUCCESS;
+  return status;
 }
 
 /**
@@ -1050,6 +1042,7 @@ int xReduceStruct(XStructure *s) {
 
     XStructure *sub = (XStructure *) f->value;
     XField *sf;
+    int stat;
 
     s->firstField = sub->firstField;
 
@@ -1059,8 +1052,11 @@ int xReduceStruct(XStructure *s) {
       while(--i >= 0) ss[i].parent = s;
     }
 
-    status = xReduceStruct(s);
-    if(status < 0) x_trace(fn, f->name, status);
+    stat = xReduceStruct(s);
+    if(stat < 0) {
+      x_trace(fn, f->name, stat);
+      if(!status) status = stat;
+    }
 
     free(f);
     return status;
@@ -1071,7 +1067,7 @@ int xReduceStruct(XStructure *s) {
     if(!status) status = st;
   }
 
-  return X_SUCCESS;
+  return status;
 }
 
 
