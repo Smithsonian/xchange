@@ -989,11 +989,7 @@ static int xUnwrapField(XField *f) {
  * @return      X_SUCCESS (0) if successful, or else an xchange.h error code &lt;0.
  */
 int xReduceField(XField *f) {
-  static const char *fn = "xReduceField";
-
-  int status = X_SUCCESS;
-
-  if(!f) return x_error(X_NULL, EINVAL, fn, "input field is NULL");
+  if(!f) return x_error(X_NULL, EINVAL, "xReduceField", "input field is NULL");
 
   xReduceDims(&f->ndim, f->sizes);
 
@@ -1002,16 +998,10 @@ int xReduceField(XField *f) {
     XStructure *sub = (XStructure *) f->value;
     int i = xGetFieldCount(f);
 
-    while(--i >= 0) {
-      int stat = xReduceStruct(&sub[i]);
-      if(stat < 0) {
-        x_trace(fn, f->name, status);
-        if(!status) status = stat;
-      }
-    }
+    while(--i >= 0) xReduceStruct(&sub[i]);
   }
 
-  return status;
+  return X_SUCCESS;
 }
 
 /**
@@ -1026,12 +1016,9 @@ int xReduceField(XField *f) {
  * @see xReduceDims()
  */
 int xReduceStruct(XStructure *s) {
-  static const char *fn = "xReduceStruct";
-
   XField *f;
-  int status = X_SUCCESS;
 
-  if(!s) return x_error(X_STRUCT_INVALID, EINVAL, fn, "input structure is NULL");
+  if(!s) return x_error(X_STRUCT_INVALID, EINVAL, "xReduceStruct", "input structure is NULL");
 
   f = s->firstField;
   if(!f) return X_SUCCESS;
@@ -1042,7 +1029,6 @@ int xReduceStruct(XStructure *s) {
 
     XStructure *sub = (XStructure *) f->value;
     XField *sf;
-    int stat;
 
     s->firstField = sub->firstField;
 
@@ -1052,22 +1038,15 @@ int xReduceStruct(XStructure *s) {
       while(--i >= 0) ss[i].parent = s;
     }
 
-    stat = xReduceStruct(s);
-    if(stat < 0) {
-      x_trace(fn, f->name, stat);
-      if(!status) status = stat;
-    }
+    xReduceStruct(s);
 
     free(f);
-    return status;
+    return X_SUCCESS;
   }
 
-  for(; f != NULL; f = f->next) {
-    int st = xReduceField(f);
-    if(!status) status = st;
-  }
+  for(; f != NULL; f = f->next) xReduceField(f);
 
-  return status;
+  return X_SUCCESS;
 }
 
 
