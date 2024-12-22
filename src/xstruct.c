@@ -1007,9 +1007,9 @@ int xReduceField(XField *f) {
 }
 
 /**
- * Recursively eliminates unneccessary embedding of singular structures inside a structure as well as reduces the
- * dimension of all array fields with xReduceDims(). It will also eliminate the unnecessary wrapping of a singular
- * array into a single XField.
+ * Recursively eliminates unneccessary embedding of singular structures inside a structure and reduces the
+ * dimensions of array fields with xReduceDims(), recursively. It will also eliminate the unnecessary wrapping
+ * of a singular array into a single XField.
  *
  * @param s     Pointer to a structure.
  * @return      X_SUCCESS (0) if successful or else X_STRUCT_INVALID if the argument is NULL (errno is

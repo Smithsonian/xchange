@@ -1097,10 +1097,10 @@ static int GetArrayStringSize(int prefixSize, char *ptr, XType type, int ndim, c
 
     switch(type) {
       case X_UNKNOWN:
-        return prefixSize + sizeof(JSON_NULL);
+        return sizeof(JSON_NULL);
 
       case X_STRUCT:
-        m = GetObjectStringSize(prefixSize, (XStructure *) ptr);
+        m = GetObjectStringSize(prefixSize + ilen, (XStructure *) ptr);
         prop_error(fn, m);
         return m;
 
@@ -1108,11 +1108,11 @@ static int GetArrayStringSize(int prefixSize, char *ptr, XType type, int ndim, c
       case X_RAW:
         m = GetJsonStringSize(*(char **) ptr, TERMINATED_STRING);
         prop_error(fn, m);
-        return m + prefixSize;
+        return m;
 
       case X_FIELD: {
         const XField *f = (XField *) ptr;
-        m = GetFieldStringSize(prefixSize, f, TRUE);
+        m = GetFieldStringSize(prefixSize + ilen, f, TRUE);
         prop_error(fn, m);
         return m;
       }
@@ -1120,7 +1120,7 @@ static int GetArrayStringSize(int prefixSize, char *ptr, XType type, int ndim, c
       default:
         m = xStringElementSizeOf(type);
         prop_error(fn, m);
-        return m + prefixSize;
+        return m;
     }
   }
   else {
