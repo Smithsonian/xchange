@@ -32,7 +32,12 @@ INSTALL_TARGETS := install-headers
 
 # Build for distribution
 .PHONY: distro
-distro: shared $(DOC_TARGETS)
+ifeq ($(STATICLINK),1)
+distro: static
+else
+distro: shared
+endif
+distro: $(DOC_TARGETS)
 
 # Shared libraries (versioned and unversioned)
 .PHONY: shared
