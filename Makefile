@@ -58,7 +58,7 @@ all: libs $(DOC_TARGETS) check
 # Run regression tests
 .PHONY: test
 test: $(LIB)/libxchange.a
-	make -C test
+	$(MAKE) -C test
 
 # 'test" + 'analyze'
 .PHONY: check
@@ -67,19 +67,19 @@ check: test analyze
 # Static code analysis via Facebook's infer
 .PHONY: infer
 infer: clean
-	infer run -- make shared
+	infer run -- $(MAKE) shared
 
 # Remove intermediates
 .PHONY: clean
 clean:
 	rm -f $(OBJECTS) README-xchange.md gmon.out
-	make -C test clean
+	$(MAKE) -C test clean
 
 # Remove all generated files
 .PHONY: distclean
 distclean: clean
 	rm -f $(LIB)/libxchange.so* $(LIB)/libxchange.a
-	make -C test distclean
+	$(MAKE) -C test distclean
 
 # ----------------------------------------------------------------------------
 # The nitty-gritty stuff below

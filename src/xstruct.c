@@ -237,7 +237,7 @@ XField *xCopyOfField(const XField *f) {
 
 
 /**
- * Return the field by the specified name, or NULL if no such field exists.
+ * Return the referfence to the field by the specified name, or NULL if no such field exists.
  *
  * \param s     Structure from which to retrieve a given field.
  * \param id    Name or aggregate ID of the field to retrieve

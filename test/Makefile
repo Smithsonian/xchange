@@ -19,7 +19,7 @@ run: tests
 	$(BIN)/test-json
 
 $(BIN)/test-%: $(OBJ)/test-%.o $(LIB)/libxchange.a
-	make $(BIN)
+	$(MAKE) $(BIN)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 .PHONY: clean-test

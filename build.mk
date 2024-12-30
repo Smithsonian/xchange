@@ -11,7 +11,7 @@ $(OBJ)/%.o: %.c $(OBJ) Makefile
 
 # Share library recipe
 $(LIB)/%.so.$(SO_VERSION):
-	@make $(LIB)
+	@$(MAKE) $(LIB)
 	$(CC) -o $@ $(CPPFLAGS) $(CFLAGS) $^ -shared -fPIC -Wl,-soname,$(subst $(LIB)/,,$@) $(LDFLAGS)
 
 # Unversioned shared libs (for linking against)
@@ -21,7 +21,7 @@ $(LIB)/lib%.so:
 
 # Static library: *.a
 $(LIB)/%.a:
-	@make $(LIB)
+	@$(MAKE) $(LIB)
 	ar -rc $@ $^
 	ranlib $@
 
