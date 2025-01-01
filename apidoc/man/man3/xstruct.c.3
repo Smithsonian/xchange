@@ -82,10 +82,16 @@ src/xstruct.c \- A collection of commonly used functions for generic structured 
 .RI "char * \fBxGetAggregateID\fP (const char *table, const char *key)"
 .br
 .ti -1c
-.RI "double \fBxGetAsDouble\fP (const \fBXStructure\fP *s, const char *id)"
+.RI "double \fBxGetAsDouble\fP (const \fBXField\fP *f)"
 .br
 .ti -1c
-.RI "long \fBxGetAsLong\fP (const \fBXStructure\fP *s, const char *id, long defaultValue)"
+.RI "double \fBxGetAsDoubleAtIndex\fP (const \fBXField\fP *f, int idx)"
+.br
+.ti -1c
+.RI "long \fBxGetAsLong\fP (const \fBXField\fP *f, long defaultValue)"
+.br
+.ti -1c
+.RI "long \fBxGetAsLongAtIndex\fP (const \fBXField\fP *f, int idx, long defaultValue)"
 .br
 .ti -1c
 .RI "void * \fBxGetElementAtIndex\fP (const \fBXField\fP *f, int idx)"
@@ -576,21 +582,19 @@ The aggregated ID, or NULL if both arguments were NULL themselves\&.
 
 .PP
 References \fBx_error()\fP, \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBxStringCopyOf()\fP\&.
-.SS "double xGetAsDouble (const \fBXStructure\fP * s, const char * id)"
-Return a double-precision floating point value associated to the field by the specified name, or else NAN if the field cannot be represented as a decimal value\&. This call will use widening conversions as necessary to convert between numerical types (e\&.g\&. \fCshort\fP to \fCdouble\fP), while for string values will attempt to parse a decomal value\&.
+.SS "double xGetAsDouble (const \fBXField\fP * f)"
+Return a double-precision floating point value associated to the field, or else NAN if the field cannot be represented as a decimal value\&. This call will use widening conversions as necessary to convert between numerical types (e\&.g\&. \fCshort\fP to \fCdouble\fP), while for string values will attempt to parse a decomal value\&.
 .PP
 If the field is an array, the first element is converted and returned\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIs\fP Structure from which to retrieve a given field\&. 
-.br
-\fIid\fP Name or aggregate ID of the field to retrieve\&.
+\fIf\fP Pointer to field
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-The value of the field, represented as a double-precision floating point value, if possible, or else NAN\&.
+The value of the field, represented as a double-precision floating point value, if possible, or else NAN\&. In case of error \fCerrno\fP will be set to a non-zero value indicating the type of error\&.
 .RE
 .PP
 \fBSee also\fP
@@ -600,34 +604,88 @@ The value of the field, represented as a double-precision floating point value, 
 .PP
 
 .PP
-References \fBXField::isSerialized\fP, \fBNAN\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, \fBx_trace_null()\fP, \fBxElementSizeOf()\fP, \fBxGetField()\fP, and \fBxIsCharSequence()\fP\&.
-.SS "long xGetAsLong (const \fBXStructure\fP * s, const char * id, long defaultValue)"
-Return an integer value associated to the field by the specified name, or else the specified default value if the field cannot be represented as an integer\&. This call will use both widening and narrowing conversions, and rounding, as necessary to convert between numerical types (e\&.g\&. \fCfloat\fP to \fClong\fP), while for string values will attempt to parse an integer value\&.
+References \fBx_trace_null()\fP, and \fBxGetAsDoubleAtIndex()\fP\&.
+.SS "double xGetAsDoubleAtIndex (const \fBXField\fP * f, int idx)"
+Return a double-precision floating point value associated to the field, or else NAN if the element cannot be represented as a decimal value\&. This call will use widening conversions as necessary to convert between numerical types (e\&.g\&. \fCshort\fP to \fCdouble\fP), while for string values will attempt to parse a decomal value\&.
 .PP
 If the field is an array, the first element is converted and returned\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIs\fP Structure from which to retrieve a given field\&. 
+\fIf\fP Pointer to field 
 .br
-\fIid\fP Name or aggregate ID of the field to retrieve\&. 
+\fIidx\fP Array index (zero-based) of the element of interest\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The value of the field, represented as a double-precision floating point value, if possible, or else NAN\&. In case of error \fCerrno\fP will be set to a non-zero value indicating the type of error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxGetAsDouble()\fP 
+.PP
+\fBxGetAsLongAtIndex()\fP 
+.RE
+.PP
+
+.PP
+References \fBXField::isSerialized\fP, \fBNAN\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, \fBx_trace_null()\fP, \fBxElementSizeOf()\fP, \fBxGetElementAtIndex()\fP, and \fBxIsCharSequence()\fP\&.
+.SS "long xGetAsLong (const \fBXField\fP * f, long defaultValue)"
+Return an integer value associated to the field, or else the specified default value if the field cannot be represented as an integer\&. This call will use both widening and narrowing conversions, and rounding, as necessary to convert between numerical types (e\&.g\&. \fCfloat\fP to \fClong\fP), while for string values will attempt to parse an integer value\&.
+.PP
+If the field is an array, the first element is converted and returned\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIf\fP Pointer to a field\&. 
 .br
 \fIdefaultValue\fP The value to return if the structure contains no field with the specified ID, or if it cannot be represented as an integer though narrowing or widening conversions, rounding, or through parsing\&.
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-The value of the field, represented as an integer, if possible, or else the specified default value\&.
+The value of the field, represented as an integer, if possible, or else the specified default value\&. In case of error \fCerrno\fP will be set to a non-zero value indicating the type of error\&.
 .RE
 .PP
 \fBSee also\fP
 .RS 4
+\fBxGetAsLongAtIndex()\fP 
+.PP
 \fBxGetAsDouble()\fP 
 .RE
 .PP
 
 .PP
-References \fBXField::isSerialized\fP, \fBNAN\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, \fBx_trace()\fP, \fBxElementSizeOf()\fP, \fBxGetField()\fP, and \fBxIsCharSequence()\fP\&.
+References \fBx_trace()\fP, and \fBxGetAsLongAtIndex()\fP\&.
+.SS "long xGetAsLongAtIndex (const \fBXField\fP * f, int idx, long defaultValue)"
+Return an integer value associated to the value at the specified array index in the field, or else the specified default value if the element cannot be represented as an integer\&. This call will use both widening and narrowing conversions, and rounding, as necessary to convert between numerical types (e\&.g\&. \fCfloat\fP to \fClong\fP), while for string values will attempt to parse an integer value\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIf\fP Pointer to a field\&. 
+.br
+\fIidx\fP Array index (zero-based) of the element of interest\&. 
+.br
+\fIdefaultValue\fP The value to return if the structure contains no field with the specified ID, or if it cannot be represented as an integer though narrowing or widening conversions, rounding, or through parsing\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The value of the field, represented as an integer, if possible, or else the specified default value\&. In case of error \fCerrno\fP will be set to a non-zero value indicating the type of error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxGetAsLong()\fP 
+.PP
+\fBxGetAsDoubleAtIndex()\fP 
+.RE
+.PP
+
+.PP
+References \fBXField::isSerialized\fP, \fBNAN\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, \fBx_trace()\fP, \fBxElementSizeOf()\fP, \fBxGetElementAtIndex()\fP, and \fBxIsCharSequence()\fP\&.
 .SS "void * xGetElementAtIndex (const \fBXField\fP * f, int idx)"
 Returns a pointer to the array element at the specified index\&.
 .PP
@@ -640,7 +698,14 @@ Returns a pointer to the array element at the specified index\&.
 .PP
 \fBReturns\fP
 .RS 4
-A pointer to the element at the given index, or NULL if there was an error\&. 
+A pointer to the element at the given index, or NULL if there was an error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxGetAsLongAtIndex()\fP 
+.PP
+\fBxGetAsDoubleAtIndex()\fP 
 .RE
 .PP
 

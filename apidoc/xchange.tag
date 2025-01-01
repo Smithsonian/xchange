@@ -599,15 +599,29 @@
       <type>double</type>
       <name>xGetAsDouble</name>
       <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>afbdf1037becd273141c12740949f7956</anchor>
-      <arglist>(const XStructure *s, const char *id)</arglist>
+      <anchor>aebc8ee4733de2abb4ba41c725a3e6c2b</anchor>
+      <arglist>(const XField *f)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>xGetAsDoubleAtIndex</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>aa8cf23d1d1685d5ba1d1b589d1e5c567</anchor>
+      <arglist>(const XField *f, int idx)</arglist>
     </member>
     <member kind="function">
       <type>long</type>
       <name>xGetAsLong</name>
       <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>a79b6df0c30e56eadffc714d458712674</anchor>
-      <arglist>(const XStructure *s, const char *id, long defaultValue)</arglist>
+      <anchor>ae9fbb705ce77cec34188dd1baf596797</anchor>
+      <arglist>(const XField *f, long defaultValue)</arglist>
+    </member>
+    <member kind="function">
+      <type>long</type>
+      <name>xGetAsLongAtIndex</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a23cc993336df0815333a58476b472713</anchor>
+      <arglist>(const XField *f, int idx, long defaultValue)</arglist>
     </member>
     <member kind="function">
       <type>void *</type>
@@ -1553,15 +1567,29 @@
       <type>double</type>
       <name>xGetAsDouble</name>
       <anchorfile>xstruct_8c.html</anchorfile>
-      <anchor>afbdf1037becd273141c12740949f7956</anchor>
-      <arglist>(const XStructure *s, const char *id)</arglist>
+      <anchor>aebc8ee4733de2abb4ba41c725a3e6c2b</anchor>
+      <arglist>(const XField *f)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>xGetAsDoubleAtIndex</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>aa8cf23d1d1685d5ba1d1b589d1e5c567</anchor>
+      <arglist>(const XField *f, int idx)</arglist>
     </member>
     <member kind="function">
       <type>long</type>
       <name>xGetAsLong</name>
       <anchorfile>xstruct_8c.html</anchorfile>
-      <anchor>a79b6df0c30e56eadffc714d458712674</anchor>
-      <arglist>(const XStructure *s, const char *id, long defaultValue)</arglist>
+      <anchor>ae9fbb705ce77cec34188dd1baf596797</anchor>
+      <arglist>(const XField *f, long defaultValue)</arglist>
+    </member>
+    <member kind="function">
+      <type>long</type>
+      <name>xGetAsLongAtIndex</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>a23cc993336df0815333a58476b472713</anchor>
+      <arglist>(const XField *f, int idx, long defaultValue)</arglist>
     </member>
     <member kind="function">
       <type>void *</type>
