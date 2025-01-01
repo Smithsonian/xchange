@@ -297,10 +297,13 @@ XField *xGetField(const XStructure *s, const char *id) {
  * \sa xGetAsDouble()
  */
 long xGetAsLong(const XStructure *s, const char *id, long defaultValue) {
+  static const char *fn = "xGetAsLong";
+
   XField *f = xGetField(s, id);
 
-  if(!f) return x_trace("xGetLong", NULL, defaultValue);
-  if(!f->value) return defaultValue;
+  if(!f) return errno ? x_trace(fn, NULL, defaultValue) : defaultValue;
+  if(f->isSerialized) return x_error(defaultValue, ENOSR, fn, "cannot convert serialized field");
+  if(!f->value) return x_error(defaultValue, EFAULT, fn, "null value");
 
   if(xIsCharSequence(f->type)) {
     long l = defaultValue;
@@ -359,13 +362,23 @@ long xGetAsLong(const XStructure *s, const char *id, long defaultValue) {
  * \sa xGetAsLong()
  */
 double xGetAsDouble(const XStructure *s, const char *id) {
+  static const char *fn = "xGetAsDouble";
+
   XField *f = xGetField(s, id);
   if(!f) {
-    x_trace_null("xGetDouble", NULL);
+    if(errno) x_trace_null(fn, NULL);
     return NAN;
   }
 
-  if(!f->value) return NAN;
+  if(f->isSerialized) {
+    x_error(0, ENOSR, fn, "cannot convert serialized field");
+    return NAN;
+  }
+
+  if(!f->value) {
+    x_error(0, EFAULT, fn, "null value");
+    return NAN;
+  }
 
   if(xIsCharSequence(f->type)) {
     char fmt[20];
