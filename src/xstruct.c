@@ -237,7 +237,7 @@ XField *xCopyOfField(const XField *f) {
 
 
 /**
- * Return the referfence to the field by the specified name, or NULL if no such field exists.
+ * Return the reference to the field by the specified name, or NULL if no such field exists.
  *
  * \param s     Structure from which to retrieve a given field.
  * \param id    Name or aggregate ID of the field to retrieve
@@ -245,6 +245,8 @@ XField *xCopyOfField(const XField *f) {
  * \return      Matching field from the structure or NULL if there is no match or one of
  *              the arguments is NULL.
  *
+ * \sa xGetAsLong()
+ * \sa xGetAsDouble()
  * \sa xLookupField()
  * \sa xSetField()
  * \sa xGetSubstruct()
@@ -273,6 +275,139 @@ XField *xGetField(const XStructure *s, const char *id) {
 
   return NULL;
 }
+
+/**
+ * Return an integer value associated to the field by the specified name, or else the specified
+ * default value if the field cannot be represented as an integer. This call will use both
+ * widening and narrowing conversions, and rounding, as necessary to convert between numerical
+ * types (e.g. `float` to `long`), while for string values will attempt to parse an integer value.
+ *
+ * If the field is an array, the first element is converted and returned.
+ *
+ * @param s                 Structure from which to retrieve a given field.
+ * @param id                Name or aggregate ID of the field to retrieve.
+ * @param defaultValue      The value to return if the structure contains no field with the
+ *                          specified ID, or if it cannot be represented as an integer
+ *                          though narrowing or widening conversions, rounding, or through
+ *                          parsing.
+ *
+ * @return      The value of the field, represented as an integer, if possible, or else the
+ *              specified default value.
+ *
+ * \sa xGetAsDouble()
+ */
+long xGetAsLong(const XStructure *s, const char *id, long defaultValue) {
+  XField *f = xGetField(s, id);
+
+  if(!f) return x_trace("xGetLong", NULL, defaultValue);
+  if(!f->value) return defaultValue;
+
+  if(xIsCharSequence(f->type)) {
+    long l = defaultValue;
+    char fmt[20];
+
+    sprintf(fmt, "%%%dd", xElementSizeOf(f->type));
+    if(sscanf((char *) f->value, fmt, &l) != 1) {
+      double d = NAN;
+      sprintf(fmt, "%%%dlf", xElementSizeOf(f->type));
+      if(sscanf((char *) f->value, fmt, &d) == 1) return (long) floor(d + 0.5);
+    }
+
+    return l;
+  }
+
+  switch(f->type) {
+    case X_BOOLEAN: return *(boolean *) f->value;
+    case X_BYTE: return *(int8_t *) f->value;
+    case X_SHORT: return *(short *) f->value;
+    case X_INT: return *(int *) f->value;
+    case X_LONG: return *(long *) f->value;
+    case X_FLOAT: {
+      const float *x = (float *) (void *) f->value;
+      return (long) floor(*x + 0.5);
+    }
+    case X_DOUBLE: {
+      const double *x = (double *) (void *) f->value;
+      return (long) floor(*x + 0.5);
+    }
+    case X_STRING:
+    case X_RAW: {
+      double d = 0.0;
+      errno = 0;
+      d = strtod(f->value, NULL);
+      return (errno ? defaultValue : d);
+
+    }
+    default: return defaultValue;
+  }
+}
+
+/**
+ * Return a double-precision floating point value associated to the field by the specified name, or
+ * else NAN if the field cannot be represented as a decimal value. This call will use
+ * widening conversions as necessary to convert between numerical types (e.g. `short` to `double`),
+ * while for string values will attempt to parse a decomal value.
+ *
+ * If the field is an array, the first element is converted and returned.
+ *
+ * @param s                 Structure from which to retrieve a given field.
+ * @param id                Name or aggregate ID of the field to retrieve.
+ *
+ * @return      The value of the field, represented as a double-precision floating point value, if
+ *              possible, or else NAN.
+ *
+ * \sa xGetAsLong()
+ */
+double xGetAsDouble(const XStructure *s, const char *id) {
+  XField *f = xGetField(s, id);
+  if(!f) {
+    x_trace_null("xGetDouble", NULL);
+    return NAN;
+  }
+
+  if(!f->value) return NAN;
+
+  if(xIsCharSequence(f->type)) {
+    char fmt[20];
+    double d = NAN;
+    sprintf(fmt, "%%%dlf", xElementSizeOf(f->type));
+    sscanf((char *) f->value, fmt, &d);
+    return d;
+  }
+
+  if(xIsCharSequence(f->type)) {
+    double d = 0.0;
+    errno = 0;
+    d = strtod(f->value, NULL);
+    if(errno) return NAN;
+    return d;
+  }
+
+  switch(f->type) {
+    case X_BOOLEAN: return *(boolean *) f->value;
+    case X_BYTE: return *(int8_t *) f->value;
+    case X_SHORT: return *(short *) f->value;
+    case X_INT: return *(int *) f->value;
+    case X_LONG: return *(long *) f->value;
+    case X_FLOAT: {
+      const float *x = (float *) (void *) f->value;
+      return (long) floor(*x + 0.5);
+    }
+    case X_DOUBLE: {
+      const double *x = (double *) (void *) f->value;
+      return (long) floor(*x + 0.5);
+    }
+    case X_STRING:
+    case X_RAW: {
+      double d = 0.0;
+      errno = 0;
+      d = strtod(f->value, NULL);
+      return (errno ? NAN : d);
+    }
+    default: return NAN;
+  }
+}
+
 
 /**
  * Returns a substructure by the specified name, or NULL if no such sub-structure exists.

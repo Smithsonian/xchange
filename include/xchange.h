@@ -211,6 +211,8 @@ void xClearField(XField *f);
 void xDestroyField(XField *f);
 XField *xGetField(const XStructure *s, const char *name);
 XField *xSetField(XStructure *s, XField *f);
+long xGetAsLong(const XStructure *s, const char *id, long defaultValue);
+double xGetAsDouble(const XStructure *s, const char *id);
 XField *xRemoveField(XStructure *s, const char *name);
 boolean xIsFieldValid(const XField *f);
 int xGetFieldCount(const XField *f);
