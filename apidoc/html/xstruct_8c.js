@@ -22,6 +22,8 @@ var xstruct_8c =
     [ "xDestroyField", "xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad", null ],
     [ "xDestroyStruct", "xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d", null ],
     [ "xGetAggregateID", "xstruct_8c.html#a2cbbd824406d862b2018e28a466ff318", null ],
+    [ "xGetAsDouble", "xstruct_8c.html#afbdf1037becd273141c12740949f7956", null ],
+    [ "xGetAsLong", "xstruct_8c.html#a79b6df0c30e56eadffc714d458712674", null ],
     [ "xGetElementAtIndex", "xstruct_8c.html#ae683dbdc302ce2ce78f77c5301e09386", null ],
     [ "xGetField", "xstruct_8c.html#a442f155b0c6549549737510ce42bb66d", null ],
     [ "xGetFieldCount", "xstruct_8c.html#a1720e156de63fd0585224738ccbb5688", null ],

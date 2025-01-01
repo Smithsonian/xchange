@@ -416,6 +416,10 @@ Functions</h2></td></tr>
 <tr class="separator:acc701c734a3b95d356660ca5ee16a96a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32e104d7a23090f8ae0e6ea3cc55a84f" id="r_a32e104d7a23090f8ae0e6ea3cc55a84f"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a32e104d7a23090f8ae0e6ea3cc55a84f">xGetAggregateID</a> (const char *group, const char *key)</td></tr>
 <tr class="separator:a32e104d7a23090f8ae0e6ea3cc55a84f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbdf1037becd273141c12740949f7956" id="r_afbdf1037becd273141c12740949f7956"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#afbdf1037becd273141c12740949f7956">xGetAsDouble</a> (const <a class="el" href="structXStructure.html">XStructure</a> *s, const char *id)</td></tr>
+<tr class="separator:afbdf1037becd273141c12740949f7956"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79b6df0c30e56eadffc714d458712674" id="r_a79b6df0c30e56eadffc714d458712674"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#a79b6df0c30e56eadffc714d458712674">xGetAsLong</a> (const <a class="el" href="structXStructure.html">XStructure</a> *s, const char *id, long defaultValue)</td></tr>
+<tr class="separator:a79b6df0c30e56eadffc714d458712674"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae683dbdc302ce2ce78f77c5301e09386" id="r_ae683dbdc302ce2ce78f77c5301e09386"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#ae683dbdc302ce2ce78f77c5301e09386">xGetElementAtIndex</a> (const <a class="el" href="structXField.html">XField</a> *f, int idx)</td></tr>
 <tr class="separator:ae683dbdc302ce2ce78f77c5301e09386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad35e0d8c0ebbb4948c233f96c54bd8d6" id="r_ad35e0d8c0ebbb4948c233f96c54bd8d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8h.html#ad35e0d8c0ebbb4948c233f96c54bd8d6">xGetElementCount</a> (int ndim, const int *sizes)</td></tr>
@@ -1576,6 +1580,95 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="afbdf1037becd273141c12740949f7956" name="afbdf1037becd273141c12740949f7956"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbdf1037becd273141c12740949f7956">&#9670;&#160;</a></span>xGetAsDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double xGetAsDouble </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return a double-precision floating point value associated to the field by the specified name, or else NAN if the field cannot be represented as a decimal value. This call will use widening conversions as necessary to convert between numerical types (e.g. <code>short</code> to <code>double</code>), while for string values will attempt to parse a decomal value.</p>
+<p>If the field is an array, the first element is converted and returned.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Structure from which to retrieve a given field. </td></tr>
+    <tr><td class="paramname">id</td><td>Name or aggregate ID of the field to retrieve.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The value of the field, represented as a double-precision floating point value, if possible, or else NAN.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a79b6df0c30e56eadffc714d458712674">xGetAsLong()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXField.html#aaa68a7e140a5370ed0eb52710744c341">XField::isSerialized</a>, <a class="el" href="xchange_8h.html#a8abfcc76130f3f991d124dd22d7e69bc">NAN</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#abe0465f7669775b6129551a7ef3300bc">X_BOOLEAN</a>, <a class="el" href="xchange_8h.html#afb01219635d162589ae5aadb90702bb0">X_BYTE</a>, <a class="el" href="xchange_8h.html#a849c7ccb02f63d8554323a889a3d8b4d">X_DOUBLE</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a99605e05158426b1b44e924e42a1162c">X_FLOAT</a>, <a class="el" href="xchange_8h.html#a4003d7fe06200f77805c52cc7db56784">X_INT</a>, <a class="el" href="xchange_8h.html#a36405f1834eb7cd51a17f103b2942e21">X_LONG</a>, <a class="el" href="xchange_8h.html#adb72c72467963a6ace1632638a8a6a7b">X_RAW</a>, <a class="el" href="xchange_8h.html#adfdc22097b12d42c040dcce8700d64b8">X_SHORT</a>, <a class="el" href="xchange_8h.html#a2443dd783d2728a3559361fba845e533">X_STRING</a>, <a class="el" href="xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31">x_trace_null()</a>, <a class="el" href="xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e">xElementSizeOf()</a>, <a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a>, and <a class="el" href="xchange_8c.html#adcc86baacb3ddebcc529e269223274b8">xIsCharSequence()</a>.</p>
+
+</div>
+</div>
+<a id="a79b6df0c30e56eadffc714d458712674" name="a79b6df0c30e56eadffc714d458712674"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79b6df0c30e56eadffc714d458712674">&#9670;&#160;</a></span>xGetAsLong()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long xGetAsLong </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structXStructure.html">XStructure</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>defaultValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return an integer value associated to the field by the specified name, or else the specified default value if the field cannot be represented as an integer. This call will use both widening and narrowing conversions, and rounding, as necessary to convert between numerical types (e.g. <code>float</code> to <code>long</code>), while for string values will attempt to parse an integer value.</p>
+<p>If the field is an array, the first element is converted and returned.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Structure from which to retrieve a given field. </td></tr>
+    <tr><td class="paramname">id</td><td>Name or aggregate ID of the field to retrieve. </td></tr>
+    <tr><td class="paramname">defaultValue</td><td>The value to return if the structure contains no field with the specified ID, or if it cannot be represented as an integer though narrowing or widening conversions, rounding, or through parsing.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The value of the field, represented as an integer, if possible, or else the specified default value.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#afbdf1037becd273141c12740949f7956">xGetAsDouble()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structXField.html#aaa68a7e140a5370ed0eb52710744c341">XField::isSerialized</a>, <a class="el" href="xchange_8h.html#a8abfcc76130f3f991d124dd22d7e69bc">NAN</a>, <a class="el" href="structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9">XField::type</a>, <a class="el" href="structXField.html#a4e9aec275e566b978a3ccb4e043d8c61">XField::value</a>, <a class="el" href="xchange_8h.html#abe0465f7669775b6129551a7ef3300bc">X_BOOLEAN</a>, <a class="el" href="xchange_8h.html#afb01219635d162589ae5aadb90702bb0">X_BYTE</a>, <a class="el" href="xchange_8h.html#a849c7ccb02f63d8554323a889a3d8b4d">X_DOUBLE</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, <a class="el" href="xchange_8h.html#a99605e05158426b1b44e924e42a1162c">X_FLOAT</a>, <a class="el" href="xchange_8h.html#a4003d7fe06200f77805c52cc7db56784">X_INT</a>, <a class="el" href="xchange_8h.html#a36405f1834eb7cd51a17f103b2942e21">X_LONG</a>, <a class="el" href="xchange_8h.html#adb72c72467963a6ace1632638a8a6a7b">X_RAW</a>, <a class="el" href="xchange_8h.html#adfdc22097b12d42c040dcce8700d64b8">X_SHORT</a>, <a class="el" href="xchange_8h.html#a2443dd783d2728a3559361fba845e533">X_STRING</a>, <a class="el" href="xchange_8c.html#a9b61b8b8b3ef0f7cc0b96ab499265c74">x_trace()</a>, <a class="el" href="xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e">xElementSizeOf()</a>, <a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a>, and <a class="el" href="xchange_8c.html#adcc86baacb3ddebcc529e269223274b8">xIsCharSequence()</a>.</p>
+
+</div>
+</div>
 <a id="ae683dbdc302ce2ce78f77c5301e09386" name="ae683dbdc302ce2ce78f77c5301e09386"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae683dbdc302ce2ce78f77c5301e09386">&#9670;&#160;</a></span>xGetElementAtIndex()</h2>
 
@@ -1679,7 +1772,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Return the field by the specified name, or NULL if no such field exists.</p>
+<p>Return the reference to the field by the specified name, or NULL if no such field exists.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">s</td><td>Structure from which to retrieve a given field. </td></tr>
@@ -1688,7 +1781,11 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Matching field from the structure or NULL if there is no match or one of the arguments is NULL.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField()</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xstruct_8c.html#a79b6df0c30e56eadffc714d458712674">xGetAsLong()</a> </dd>
+<dd>
+<a class="el" href="xstruct_8c.html#afbdf1037becd273141c12740949f7956">xGetAsDouble()</a> </dd>
+<dd>
+<a class="el" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField()</a> </dd>
 <dd>
 <a class="el" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField()</a> </dd>
 <dd>
@@ -2546,7 +2643,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Recursively eliminates unneccessary embedding of singular structures inside a structure as well as reduces the dimension of all array fields with <a class="el" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987">xReduceDims()</a>. It will also eliminate the unnecessary wrapping of a singular array into a single <a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a>.</p>
+<p>Recursively eliminates unneccessary embedding of singular structures inside a structure and reduces the dimensions of array fields with <a class="el" href="xstruct_8c.html#a36fb99b219c5a61db1d1c3d630277987">xReduceDims()</a>, recursively. It will also eliminate the unnecessary wrapping of a singular array into a single <a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">s</td><td>Pointer to a structure. </td></tr>

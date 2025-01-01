@@ -339,6 +339,12 @@ include/xchange.h
 .RI "char * \fBxGetAggregateID\fP (const char *group, const char *key)"
 .br
 .ti -1c
+.RI "double \fBxGetAsDouble\fP (const \fBXStructure\fP *s, const char *id)"
+.br
+.ti -1c
+.RI "long \fBxGetAsLong\fP (const \fBXStructure\fP *s, const char *id, long defaultValue)"
+.br
+.ti -1c
 .RI "void * \fBxGetElementAtIndex\fP (const \fBXField\fP *f, int idx)"
 .br
 .ti -1c
@@ -1055,6 +1061,58 @@ The aggregated ID, or NULL if both arguments were NULL themselves\&.
 
 .PP
 References \fBx_error()\fP, \fBX_SEP\fP, \fBX_SEP_LENGTH\fP, and \fBxStringCopyOf()\fP\&.
+.SS "double xGetAsDouble (const \fBXStructure\fP * s, const char * id)"
+Return a double-precision floating point value associated to the field by the specified name, or else NAN if the field cannot be represented as a decimal value\&. This call will use widening conversions as necessary to convert between numerical types (e\&.g\&. \fCshort\fP to \fCdouble\fP), while for string values will attempt to parse a decomal value\&.
+.PP
+If the field is an array, the first element is converted and returned\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Structure from which to retrieve a given field\&. 
+.br
+\fIid\fP Name or aggregate ID of the field to retrieve\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The value of the field, represented as a double-precision floating point value, if possible, or else NAN\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxGetAsLong()\fP 
+.RE
+.PP
+
+.PP
+References \fBXField::isSerialized\fP, \fBNAN\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, \fBx_trace_null()\fP, \fBxElementSizeOf()\fP, \fBxGetField()\fP, and \fBxIsCharSequence()\fP\&.
+.SS "long xGetAsLong (const \fBXStructure\fP * s, const char * id, long defaultValue)"
+Return an integer value associated to the field by the specified name, or else the specified default value if the field cannot be represented as an integer\&. This call will use both widening and narrowing conversions, and rounding, as necessary to convert between numerical types (e\&.g\&. \fCfloat\fP to \fClong\fP), while for string values will attempt to parse an integer value\&.
+.PP
+If the field is an array, the first element is converted and returned\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP Structure from which to retrieve a given field\&. 
+.br
+\fIid\fP Name or aggregate ID of the field to retrieve\&. 
+.br
+\fIdefaultValue\fP The value to return if the structure contains no field with the specified ID, or if it cannot be represented as an integer though narrowing or widening conversions, rounding, or through parsing\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The value of the field, represented as an integer, if possible, or else the specified default value\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxGetAsDouble()\fP 
+.RE
+.PP
+
+.PP
+References \fBXField::isSerialized\fP, \fBNAN\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, \fBx_trace()\fP, \fBxElementSizeOf()\fP, \fBxGetField()\fP, and \fBxIsCharSequence()\fP\&.
 .SS "void * xGetElementAtIndex (const \fBXField\fP * f, int idx)"
 Returns a pointer to the array element at the specified index\&.
 .PP
@@ -1092,7 +1150,7 @@ Total element count specified by the dimensions\&. Defaults to 1\&.
 .PP
 References \fBx_error()\fP, and \fBX_MAX_DIMS\fP\&.
 .SS "\fBXField\fP * xGetField (const \fBXStructure\fP * s, const char * id)"
-Return the field by the specified name, or NULL if no such field exists\&.
+Return the reference to the field by the specified name, or NULL if no such field exists\&.
 .PP
 \fBParameters\fP
 .RS 4
@@ -1108,6 +1166,10 @@ Matching field from the structure or NULL if there is no match or one of the arg
 .PP
 \fBSee also\fP
 .RS 4
+\fBxGetAsLong()\fP 
+.PP
+\fBxGetAsDouble()\fP 
+.PP
 \fBxLookupField()\fP 
 .PP
 \fBxSetField()\fP 
@@ -1570,7 +1632,7 @@ X_SUCCESS (0) if successful, or else an \fBxchange\&.h\fP error code <0\&.
 .PP
 References \fBXField::ndim\fP, \fBXField::sizes\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_FIELD\fP, \fBX_NULL\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxGetFieldCount()\fP, \fBxReduceDims()\fP, and \fBxReduceStruct()\fP\&.
 .SS "int xReduceStruct (\fBXStructure\fP * s)"
-Recursively eliminates unneccessary embedding of singular structures inside a structure as well as reduces the dimension of all array fields with \fBxReduceDims()\fP\&. It will also eliminate the unnecessary wrapping of a singular array into a single \fBXField\fP\&.
+Recursively eliminates unneccessary embedding of singular structures inside a structure and reduces the dimensions of array fields with \fBxReduceDims()\fP, recursively\&. It will also eliminate the unnecessary wrapping of a singular array into a single \fBXField\fP\&.
 .PP
 \fBParameters\fP
 .RS 4

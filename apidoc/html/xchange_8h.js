@@ -87,6 +87,8 @@ var xchange_8h =
     [ "xError", "xchange_8h.html#a606c4844e51124bee155e30bac8ca885", null ],
     [ "xErrorDescription", "xchange_8h.html#acc701c734a3b95d356660ca5ee16a96a", null ],
     [ "xGetAggregateID", "xchange_8h.html#a32e104d7a23090f8ae0e6ea3cc55a84f", null ],
+    [ "xGetAsDouble", "xchange_8h.html#afbdf1037becd273141c12740949f7956", null ],
+    [ "xGetAsLong", "xchange_8h.html#a79b6df0c30e56eadffc714d458712674", null ],
     [ "xGetElementAtIndex", "xchange_8h.html#ae683dbdc302ce2ce78f77c5301e09386", null ],
     [ "xGetElementCount", "xchange_8h.html#ad35e0d8c0ebbb4948c233f96c54bd8d6", null ],
     [ "xGetField", "xchange_8h.html#ad3f1d50fc0f1553b806bedbd17d2206e", null ],

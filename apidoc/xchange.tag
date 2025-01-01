@@ -596,6 +596,20 @@
       <arglist>(const char *group, const char *key)</arglist>
     </member>
     <member kind="function">
+      <type>double</type>
+      <name>xGetAsDouble</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>afbdf1037becd273141c12740949f7956</anchor>
+      <arglist>(const XStructure *s, const char *id)</arglist>
+    </member>
+    <member kind="function">
+      <type>long</type>
+      <name>xGetAsLong</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a79b6df0c30e56eadffc714d458712674</anchor>
+      <arglist>(const XStructure *s, const char *id, long defaultValue)</arglist>
+    </member>
+    <member kind="function">
       <type>void *</type>
       <name>xGetElementAtIndex</name>
       <anchorfile>xchange_8h.html</anchorfile>
@@ -1534,6 +1548,20 @@
       <anchorfile>xstruct_8c.html</anchorfile>
       <anchor>a2cbbd824406d862b2018e28a466ff318</anchor>
       <arglist>(const char *table, const char *key)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>xGetAsDouble</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>afbdf1037becd273141c12740949f7956</anchor>
+      <arglist>(const XStructure *s, const char *id)</arglist>
+    </member>
+    <member kind="function">
+      <type>long</type>
+      <name>xGetAsLong</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>a79b6df0c30e56eadffc714d458712674</anchor>
+      <arglist>(const XStructure *s, const char *id, long defaultValue)</arglist>
     </member>
     <member kind="function">
       <type>void *</type>
