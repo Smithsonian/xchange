@@ -826,7 +826,7 @@ void *xGetElementAtIndex(const XField *f, int idx) {
   eSize = xElementSizeOf(f->type);
   if(eSize < 0) return x_trace_null(fn, NULL);
 
-  return f->value + idx * eSize;
+  return (char *) f->value + idx * eSize;
 }
 
 /**

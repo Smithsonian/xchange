@@ -139,7 +139,7 @@ typedef int boolean;               ///< boolean TRUE/FALSE data type.
 typedef struct XField {
   char *name;               ///< Pointer to a designated local name buffer. It may not contain a separator (see X_SEP).
                             ///< NOTE: it should normally be dynamically allocated, to work with xClearField() / xDestroyField().
-  char *value;              ///< Pointer to designated local string content (or structure)...
+  void *value;              ///< Pointer to designated local string content (or structure)...
                             ///< NOTE: it should normally be dynamically allocated, to work with xClearField() / xDestroyField().
   XType type;               ///< The underlyng data type
   char *subtype;            ///< (optional) Descriptive subtype, such a a mime type or encoding (if any). It is
