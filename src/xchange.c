@@ -165,13 +165,63 @@ void xSetDebug(boolean value) {
 /**
  * Checks if the type represents a fixed-size character / binary sequence.
  *
- * \param type      X-Change type to check.
+ * \param type      xchange type to check.
  *
- * \return          TRUE if it is a type for a (fixed size) character array, otherwise FALSE.
+ * \return          TRUE (1) if it is a type for a (fixed size) character array, otherwise FALSE (0).
  *
  */
 boolean xIsCharSequence(XType type) {
   return type < 0;
+}
+
+/**
+ * Checks if the type represents a signed integer value of any width.
+ *
+ * @param type    xchange type to check.
+ * @return        TRUE (1) if the type is for an integer value, or else FALSE (0)
+ *
+ * @sa xIsDecimal()
+ * @sa xIsNumeric()
+ * @sa xGetAsLong()
+ */
+boolean xIsInteger(XType type) {
+  switch(type) {
+    case X_BOOLEAN :
+      case X_BYTE :
+      case X_SHORT :
+      case X_INT :
+      case X_LONG :
+        return TRUE;
+      default:
+        return FALSE;
+  }
+}
+
+/**
+ * Checks if the type represents a floating-point value of any width.
+ *
+ * @param type    xchange type to check.
+ * @return        TRUE (1) if the type is for a floating-point value, or else FALSE (0)
+ *
+ * @sa xIsInteger()
+ * @sa xIsNumeric()
+ * @sa xGetAsDouble()
+ */
+boolean xIsDecimal(XType type) {
+  return (type == X_FLOAT || type == X_DOUBLE);
+}
+
+/**
+ * Checks if the type represents a numerical value.
+ *
+ * @param type    xchange type to check.
+ * @return        TRUE (1) if the type is for a number value, or else FALSE (0)
+ *
+ * @sa xIsInteger()
+ * @sa xIsDecimal()
+ */
+boolean xIsNumeric(XType type) {
+  return (xIsInteger(type) || xIsDecimal(type));
 }
 
 /**

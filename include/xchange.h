@@ -268,6 +268,9 @@ int xPrintDims(char *dst, int ndim, const int *sizes);
 // Low-level utilities ---------------------------------------->
 char xTypeChar(XType type);
 boolean xIsCharSequence(XType type);
+boolean xIsInteger(XType type);
+boolean xIsDecimal(XType type);
+boolean xIsNumeric(XType type);
 char *xLastSeparator(const char *id);
 char *xNextIDToken(const char *id);
 char *xCopyIDToken(const char *id);
