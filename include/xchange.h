@@ -217,8 +217,11 @@ int xGetFieldCount(const XField *f);
 void *xGetElementAtIndex(const XField *f, int idx);
 long xGetAsLongAtIndex(const XField *f, int idx, long defaultValue);
 double xGetAsDoubleAtIndex(const XField *f, int idx);
+char *xGetStringAtIndex(const XField *f, int idx);
 long xGetAsLong(const XField *f, long defaultValue);
 double xGetAsDouble(const XField *f);
+char *xGetStringValue(const XField *f);
+
 int xCountFields(const XStructure *s);
 long xDeepCountFields(const XStructure *s);
 XStructure *xGetSubstruct(const XStructure *s, const char *id);

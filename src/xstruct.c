@@ -277,7 +277,7 @@ XField *xGetField(const XStructure *s, const char *id) {
 }
 
 /**
- * Return an integer value associated to the field, or else the specified default value if the
+ * Return a signed integer value associated to the field, or else the specified default value if the
  * field cannot be represented as an integer. This call will use both widening and narrowing
  * conversions, and rounding, as necessary to convert between numerical types (e.g. `float` to
  * `long`), while for string values will attempt to parse an integer value.
@@ -296,6 +296,7 @@ XField *xGetField(const XStructure *s, const char *id) {
  *
  * @sa xGetAsLongAtIndex()
  * @sa xGetAsDouble()
+ * @sa xGetStringValue()
  *
  */
 long xGetAsLong(const XField *f, long defaultValue) {
@@ -309,7 +310,7 @@ long xGetAsLong(const XField *f, long defaultValue) {
 }
 
 /**
- * Return an integer value associated to the value at the specified array index in the field,
+ * Return a signed integer value associated to the value at the specified array index in the field,
  * or else the specified default value if the element cannot be represented as an integer. This
  * call will use both widening and narrowing conversions, and rounding, as necessary to convert
  * between numerical types (e.g. `float` to `long`), while for string values will attempt to
@@ -328,6 +329,7 @@ long xGetAsLong(const XField *f, long defaultValue) {
  *
  * @sa xGetAsLong()
  * @sa xGetAsDoubleAtIndex()
+ * @sa xGetStringAtIndex()
  */
 long xGetAsLongAtIndex(const XField *f, int idx, long defaultValue) {
   static const char *fn = "xGetAsLongAtIndex";
@@ -400,7 +402,9 @@ long xGetAsLongAtIndex(const XField *f, int idx, long defaultValue) {
  *              possible, or else NAN. In case of error `errno` will be set to a non-zero value
  *              indicating the type of error.
  *
- * \sa xGetAsLong()
+ * @sa xGetAsDoubleAtIndex()
+ * @sa xGetAsLong()
+ * @sa xGetStringValue()
  */
 double xGetAsDouble(const XField *f) {
   double x;
@@ -417,8 +421,6 @@ double xGetAsDouble(const XField *f) {
  * convert between numerical types (e.g. `short` to `double`), while for string values will attempt
  * to parse a decomal value.
  *
- * If the field is an array, the first element is converted and returned.
- *
  * @param f     Pointer to field
  * @param idx   Array index (zero-based) of the element of interest.
  *
@@ -428,6 +430,7 @@ double xGetAsDouble(const XField *f) {
  *
  * @sa xGetAsDouble()
  * @sa xGetAsLongAtIndex()
+ * @sa xGetStringAtIndex()
  */
 double xGetAsDoubleAtIndex(const XField *f, int idx) {
   static const char *fn = "xGetAsDoubleAtIndex";
@@ -498,6 +501,85 @@ double xGetAsDoubleAtIndex(const XField *f, int idx) {
   }
 }
 
+/**
+ * Returns a reference to the string value stored in the field, or else NULL if the element is not string
+ * typed. Only fields containing X_STRING or X_RAW type values, or fixed-sized character sequences
+ * (XCHARS(n) type), can will return a pointer reference to the value. Or, if the field is in serialized form,
+ * then the pointer to the serialized value is returned.For fixed-length character sequences the string
+ * pointed at may not be null-terminated.
+ *
+ * If the field is an array, the first element is returned.
+ *
+ * @param f                 Pointer to field
+ *
+ * @return      Pointer to the string value of the field or NULL. In case of error `errno` will be set to
+ *              a non-zero value indicating the type of error.
+ *
+ * @sa xGetStringAtIndex()
+ * @sa xGetAsLong()
+ * @sa xGetAsDouble()
+ */
+char *xGetStringValue(const XField *f) {
+  char *str;
+
+  errno = 0;
+  str = xGetStringAtIndex(f, 0);
+  if(errno) x_trace_null("xGetStringValue", NULL);
+  return str;
+}
+
+/**
+ * Returns a reference to the string value at the specified array index in the field, or else NULL if
+ * the element is not string typed, or if the index is out of bounds. Only fields containing X_STRING
+ * or X_RAW type values, or fixed-sized character sequences (XCHARS(n) type), can will return a pointer
+ * reference to the value. Or, if the field is in serialized form, then the pointer to the serialized
+ * value is returned. For fixed-length character sequences the string pointed at may not be
+ * null-terminated.
+ *
+ * @param f     Pointer to field
+ * @param idx   Array index (zero-based) of the element of interest.
+ *
+ * @return      Pointer to the string value of the field or NULL. In case of error `errno` will be set to
+ *              a non-zero value indicating the type of error.
+ *
+ * @sa xGetStringValue()
+ * @sa xGetAsLongAtIndex()
+ * @sa xGetDoubleAtIndex()
+ */
+char *xGetStringAtIndex(const XField *f, int idx) {
+  static const char *fn = "xGetStringAtIndex";
+
+  const void *ptr;
+
+  if(!f) {
+    x_error(0, EINVAL, fn, "input field is NULL");
+    return NULL;
+  }
+
+  if(!f->value) {
+    x_error(0, EFAULT, fn, "field has NULL value");
+    return NULL;
+  }
+
+  if(f->isSerialized) return (char *) f->value;
+
+  if(f->type != X_STRING && f->type != X_RAW && !xIsCharSequence(f->type)) {
+    x_error(0, EINVAL, fn, "field is not string: type %d\n", f->type);
+    return NULL;
+  }
+
+  errno = 0;
+
+  ptr = xGetElementAtIndex(f, idx);
+  if(!ptr) {
+    if(errno) x_trace_null(fn, NULL);
+    return NULL;
+  }
+
+  if(xIsCharSequence(f->type)) return (char *) ptr;
+
+  return *(char **) ptr;
+}
 
 /**
  * Returns a substructure by the specified name, or NULL if no such sub-structure exists.
@@ -804,6 +886,7 @@ int xGetFieldCount(const XField *f) {
  *
  * @sa xGetAsLongAtIndex()
  * @sa xGetAsDoubleAtIndex()
+ * @sa xGetStringAtIndex()
  */
 void *xGetElementAtIndex(const XField *f, int idx) {
   static const char *fn = "xGetElementAtIndex";
