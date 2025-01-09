@@ -908,11 +908,12 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
 
     for(i = 0; i < n; i++) {
       char idx[20];
+      XField *nextField;
 
       // Name is . + 1-based index, e.g. ".1", ".2"...
       sprintf(idx, ".%d", (i + 1));
 
-      XField *nextField = e->next;
+      nextField = e->next;
       array[i] = *e;
       array[i].name = xStringCopyOf(idx);
       array[i].next = NULL;
