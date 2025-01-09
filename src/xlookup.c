@@ -207,10 +207,13 @@ static int xLookupPutAllAsync(XLookupTable *tab, const char *prefix, const XStru
 
     if(f->type == X_STRUCT && recursive) {
       XStructure *sub = (XStructure *) f->value;
-      char *p1 = (char *) malloc(lp + strlen(f->value) + 2 * sizeof(X_SEP) + 12);
+      char *p1;
+      int count;
+
+      p1 = (char *) malloc(lp + strlen(f->value) + 2 * sizeof(X_SEP) + 12);
       x_check_alloc(p1);
 
-      int count = xGetFieldCount(f);
+      count = xGetFieldCount(f);
       while(--count >= 0) {
         int n = 0;
         if(prefix) n = sprintf(p1, "%s" X_SEP, prefix);
@@ -241,10 +244,13 @@ static int xLookupRemoveAllAsync(XLookupTable *tab, const char *prefix, const XS
 
     if(f->type == X_STRUCT && recursive) {
       XStructure *sub = (XStructure *) f->value;
-      char *p1 = (char *) malloc(lp + strlen(f->value) + 2 * sizeof(X_SEP) + 12);
+      char *p1;
+      int count;
+
+      p1 = (char *) malloc(lp + strlen(f->value) + 2 * sizeof(X_SEP) + 12);
       x_check_alloc(p1);
 
-      int count = xGetFieldCount(f);
+      count = xGetFieldCount(f);
       while(--count >= 0) {
         int n = 0;
         if(prefix) n = sprintf(p1, "%s" X_SEP, prefix);
