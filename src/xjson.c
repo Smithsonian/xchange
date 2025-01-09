@@ -1415,7 +1415,7 @@ char *xjsonUnescape(const char *str) {
   }
 
   str = json2raw(str, l, raw);
-  if(str) x_error(0, EBADE, fn, str);
+  if(str) x_error(0, EBADMSG, fn, str);
 
   return raw;
 }
