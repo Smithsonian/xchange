@@ -652,6 +652,20 @@
       <arglist>(const XField *f)</arglist>
     </member>
     <member kind="function">
+      <type>char *</type>
+      <name>xGetStringAtIndex</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a3035f9e6bd1b2993e0d19e0017f537fe</anchor>
+      <arglist>(const XField *f, int idx)</arglist>
+    </member>
+    <member kind="function">
+      <type>char *</type>
+      <name>xGetStringValue</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a387880bb4397076346323c0f0a0030f9</anchor>
+      <arglist>(const XField *f)</arglist>
+    </member>
+    <member kind="function">
       <type>XStructure *</type>
       <name>xGetSubstruct</name>
       <anchorfile>xchange_8h.html</anchorfile>
@@ -667,10 +681,31 @@
     </member>
     <member kind="function">
       <type>boolean</type>
+      <name>xIsDecimal</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>abe2b4b1a0b9239eb0e3777644af52f9e</anchor>
+      <arglist>(XType type)</arglist>
+    </member>
+    <member kind="function">
+      <type>boolean</type>
       <name>xIsFieldValid</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>aec6e78e07733ca246ca485b0fcf02d21</anchor>
       <arglist>(const XField *f)</arglist>
+    </member>
+    <member kind="function">
+      <type>boolean</type>
+      <name>xIsInteger</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>af41871e24afe60ccd56301144f636fa3</anchor>
+      <arglist>(XType type)</arglist>
+    </member>
+    <member kind="function">
+      <type>boolean</type>
+      <name>xIsNumeric</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a261bad510220a6d0e955d8daeffaa1db</anchor>
+      <arglist>(XType type)</arglist>
     </member>
     <member kind="function">
       <type>boolean</type>
@@ -1109,6 +1144,27 @@
       <name>xIsCharSequence</name>
       <anchorfile>xchange_8c.html</anchorfile>
       <anchor>adcc86baacb3ddebcc529e269223274b8</anchor>
+      <arglist>(XType type)</arglist>
+    </member>
+    <member kind="function">
+      <type>boolean</type>
+      <name>xIsDecimal</name>
+      <anchorfile>xchange_8c.html</anchorfile>
+      <anchor>abe2b4b1a0b9239eb0e3777644af52f9e</anchor>
+      <arglist>(XType type)</arglist>
+    </member>
+    <member kind="function">
+      <type>boolean</type>
+      <name>xIsInteger</name>
+      <anchorfile>xchange_8c.html</anchorfile>
+      <anchor>af41871e24afe60ccd56301144f636fa3</anchor>
+      <arglist>(XType type)</arglist>
+    </member>
+    <member kind="function">
+      <type>boolean</type>
+      <name>xIsNumeric</name>
+      <anchorfile>xchange_8c.html</anchorfile>
+      <anchor>a261bad510220a6d0e955d8daeffaa1db</anchor>
       <arglist>(XType type)</arglist>
     </member>
     <member kind="function">
@@ -1613,6 +1669,20 @@
       <arglist>(const XField *f)</arglist>
     </member>
     <member kind="function">
+      <type>char *</type>
+      <name>xGetStringAtIndex</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>a3035f9e6bd1b2993e0d19e0017f537fe</anchor>
+      <arglist>(const XField *f, int idx)</arglist>
+    </member>
+    <member kind="function">
+      <type>char *</type>
+      <name>xGetStringValue</name>
+      <anchorfile>xstruct_8c.html</anchorfile>
+      <anchor>a387880bb4397076346323c0f0a0030f9</anchor>
+      <arglist>(const XField *f)</arglist>
+    </member>
+    <member kind="function">
       <type>XStructure *</type>
       <name>xGetSubstruct</name>
       <anchorfile>xstruct_8c.html</anchorfile>
@@ -1785,10 +1855,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>char *</type>
+      <type>void *</type>
       <name>value</name>
       <anchorfile>structXField.html</anchorfile>
-      <anchor>a4e9aec275e566b978a3ccb4e043d8c61</anchor>
+      <anchor>a0f61d63b009d0880a89c843bd50d8d76</anchor>
       <arglist></arglist>
     </member>
   </compound>

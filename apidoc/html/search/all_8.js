@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['ids_0',['Aggregate IDs',['../index.html#autotoc_md17',1,'']]],
-  ['infinity_1',['INFINITY',['../xchange_8h.html#a956e2723d559858d08644ac99146e910',1,'xchange.h']]],
-  ['introduction_2',['Introduction',['../index.html#autotoc_md5',1,'']]],
-  ['isserialized_3',['isSerialized',['../structXField.html#aaa68a7e140a5370ed0eb52710744c341',1,'XField']]],
-  ['iterating_20over_20elements_4',['Iterating over elements',['../index.html#autotoc_md20',1,'']]]
+  ['eixplicit_5fparse_5fspecial_5fdoubles_0',['EIXPLICIT_PARSE_SPECIAL_DOUBLES',['../xchange_8c.html#acc843123b41c0889b5b328a538b8c6ca',1,'xchange.c']]],
+  ['elements_1',['elements',['../index.html#autotoc_md18',1,'Accessing substructures and elements'],['../index.html#autotoc_md20',1,'Iterating over elements']]],
+  ['emitter_2',['JSON parser and emitter',['../index.html#autotoc_md23',1,'']]],
+  ['error_20handling_3',['Error handling',['../index.html#autotoc_md27',1,'']]],
+  ['escaped_20string_20representations_4',['Escaped string representations',['../index.html#autotoc_md25',1,'']]]
 ];

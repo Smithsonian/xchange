@@ -39,7 +39,7 @@ XField \- An SMA-X field, typically as part of an \fBXStructure\fP\&. A field ma
 .br
 .RI "The underlyng data type\&. "
 .ti -1c
-.RI "\fBchar\fP * \fBvalue\fP"
+.RI "\fBvoid\fP * \fBvalue\fP"
 .br
 .in -1c
 .SH "Detailed Description"
@@ -68,7 +68,7 @@ An SMA-X field, typically as part of an \fBXStructure\fP\&. A field may be a ref
 Pointer to a designated local name buffer\&. It may not contain a separator (see X_SEP)\&. NOTE: it should normally be dynamically allocated, to work with \fBxClearField()\fP / \fBxDestroyField()\fP\&. 
 .SS "\fBchar\fP* subtype"
 (optional) Descriptive subtype, such a a mime type or encoding (if any)\&. It is entirely up to the user / application to assing meaning to this field\&. NOTE: it should normally be dynamically allocated, to work with \fBxClearField()\fP / \fBxDestroyField()\fP\&. 
-.SS "\fBchar\fP* value"
+.SS "\fBvoid\fP* value"
 Pointer to designated local string content (or structure)\&.\&.\&. NOTE: it should normally be dynamically allocated, to work with \fBxClearField()\fP / \fBxDestroyField()\fP\&. 
 
 .SH "Author"

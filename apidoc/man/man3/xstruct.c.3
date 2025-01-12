@@ -103,6 +103,12 @@ src/xstruct.c \- A collection of commonly used functions for generic structured 
 .RI "int \fBxGetFieldCount\fP (const \fBXField\fP *f)"
 .br
 .ti -1c
+.RI "char * \fBxGetStringAtIndex\fP (const \fBXField\fP *f, int idx)"
+.br
+.ti -1c
+.RI "char * \fBxGetStringValue\fP (const \fBXField\fP *f)"
+.br
+.ti -1c
 .RI "\fBXStructure\fP * \fBxGetSubstruct\fP (const \fBXStructure\fP *s, const char *id)"
 .br
 .ti -1c
@@ -599,7 +605,11 @@ The value of the field, represented as a double-precision floating point value, 
 .PP
 \fBSee also\fP
 .RS 4
+\fBxGetAsDoubleAtIndex()\fP 
+.PP
 \fBxGetAsLong()\fP 
+.PP
+\fBxGetStringValue()\fP 
 .RE
 .PP
 
@@ -607,8 +617,6 @@ The value of the field, represented as a double-precision floating point value, 
 References \fBx_trace_null()\fP, and \fBxGetAsDoubleAtIndex()\fP\&.
 .SS "double xGetAsDoubleAtIndex (const \fBXField\fP * f, int idx)"
 Return a double-precision floating point value associated to the field, or else NAN if the element cannot be represented as a decimal value\&. This call will use widening conversions as necessary to convert between numerical types (e\&.g\&. \fCshort\fP to \fCdouble\fP), while for string values will attempt to parse a decomal value\&.
-.PP
-If the field is an array, the first element is converted and returned\&.
 .PP
 \fBParameters\fP
 .RS 4
@@ -627,13 +635,15 @@ The value of the field, represented as a double-precision floating point value, 
 \fBxGetAsDouble()\fP 
 .PP
 \fBxGetAsLongAtIndex()\fP 
+.PP
+\fBxGetStringAtIndex()\fP 
 .RE
 .PP
 
 .PP
 References \fBXField::isSerialized\fP, \fBNAN\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, \fBx_trace_null()\fP, \fBxElementSizeOf()\fP, \fBxGetElementAtIndex()\fP, and \fBxIsCharSequence()\fP\&.
 .SS "long xGetAsLong (const \fBXField\fP * f, long defaultValue)"
-Return an integer value associated to the field, or else the specified default value if the field cannot be represented as an integer\&. This call will use both widening and narrowing conversions, and rounding, as necessary to convert between numerical types (e\&.g\&. \fCfloat\fP to \fClong\fP), while for string values will attempt to parse an integer value\&.
+Return a signed integer value associated to the field, or else the specified default value if the field cannot be represented as an integer\&. This call will use both widening and narrowing conversions, and rounding, as necessary to convert between numerical types (e\&.g\&. \fCfloat\fP to \fClong\fP), while for string values will attempt to parse an integer value\&.
 .PP
 If the field is an array, the first element is converted and returned\&.
 .PP
@@ -654,13 +664,15 @@ The value of the field, represented as an integer, if possible, or else the spec
 \fBxGetAsLongAtIndex()\fP 
 .PP
 \fBxGetAsDouble()\fP 
+.PP
+\fBxGetStringValue()\fP 
 .RE
 .PP
 
 .PP
 References \fBx_trace()\fP, and \fBxGetAsLongAtIndex()\fP\&.
 .SS "long xGetAsLongAtIndex (const \fBXField\fP * f, int idx, long defaultValue)"
-Return an integer value associated to the value at the specified array index in the field, or else the specified default value if the element cannot be represented as an integer\&. This call will use both widening and narrowing conversions, and rounding, as necessary to convert between numerical types (e\&.g\&. \fCfloat\fP to \fClong\fP), while for string values will attempt to parse an integer value\&.
+Return a signed integer value associated to the value at the specified array index in the field, or else the specified default value if the element cannot be represented as an integer\&. This call will use both widening and narrowing conversions, and rounding, as necessary to convert between numerical types (e\&.g\&. \fCfloat\fP to \fClong\fP), while for string values will attempt to parse an integer value\&.
 .PP
 \fBParameters\fP
 .RS 4
@@ -681,6 +693,8 @@ The value of the field, represented as an integer, if possible, or else the spec
 \fBxGetAsLong()\fP 
 .PP
 \fBxGetAsDoubleAtIndex()\fP 
+.PP
+\fBxGetStringAtIndex()\fP 
 .RE
 .PP
 
@@ -706,6 +720,8 @@ A pointer to the element at the given index, or NULL if there was an error\&.
 \fBxGetAsLongAtIndex()\fP 
 .PP
 \fBxGetAsDoubleAtIndex()\fP 
+.PP
+\fBxGetStringAtIndex()\fP 
 .RE
 .PP
 
@@ -758,6 +774,60 @@ The total number of primitive elements contained in the field\&.
 
 .PP
 References \fBXField::ndim\fP, \fBXField::sizes\fP, \fBx_error()\fP, and \fBxGetElementCount()\fP\&.
+.SS "char * xGetStringAtIndex (const \fBXField\fP * f, int idx)"
+Returns a reference to the string value at the specified array index in the field, or else NULL if the element is not string typed, or if the index is out of bounds\&. Only fields containing X_STRING or X_RAW type values, or fixed-sized character sequences (XCHARS(n) type), can will return a pointer reference to the value\&. Or, if the field is in serialized form, then the pointer to the serialized value is returned\&. For fixed-length character sequences the string pointed at may not be null-terminated\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIf\fP Pointer to field 
+.br
+\fIidx\fP Array index (zero-based) of the element of interest\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Pointer to the string value of the field or NULL\&. In case of error \fCerrno\fP will be set to a non-zero value indicating the type of error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxGetStringValue()\fP 
+.PP
+\fBxGetAsLongAtIndex()\fP 
+.PP
+xGetDoubleAtIndex() 
+.RE
+.PP
+
+.PP
+References \fBXField::isSerialized\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBx_trace_null()\fP, \fBxGetElementAtIndex()\fP, and \fBxIsCharSequence()\fP\&.
+.SS "char * xGetStringValue (const \fBXField\fP * f)"
+Returns a reference to the string value stored in the field, or else NULL if the element is not string typed\&. Only fields containing X_STRING or X_RAW type values, or fixed-sized character sequences (XCHARS(n) type), can will return a pointer reference to the value\&. Or, if the field is in serialized form, then the pointer to the serialized value is returned\&.For fixed-length character sequences the string pointed at may not be null-terminated\&.
+.PP
+If the field is an array, the first element is returned\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIf\fP Pointer to field
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Pointer to the string value of the field or NULL\&. In case of error \fCerrno\fP will be set to a non-zero value indicating the type of error\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxGetStringAtIndex()\fP 
+.PP
+\fBxGetAsLong()\fP 
+.PP
+\fBxGetAsDouble()\fP 
+.RE
+.PP
+
+.PP
+References \fBx_trace_null()\fP, and \fBxGetStringAtIndex()\fP\&.
 .SS "\fBXStructure\fP * xGetSubstruct (const \fBXStructure\fP * s, const char * id)"
 Returns a substructure by the specified name, or NULL if no such sub-structure exists\&.
 .PP

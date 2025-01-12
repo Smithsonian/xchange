@@ -52,6 +52,15 @@ src/xchange.c \- A collection of commonly used functions for standard data excha
 .RI "\fBboolean\fP \fBxIsCharSequence\fP (\fBXType\fP type)"
 .br
 .ti -1c
+.RI "\fBboolean\fP \fBxIsDecimal\fP (\fBXType\fP type)"
+.br
+.ti -1c
+.RI "\fBboolean\fP \fBxIsInteger\fP (\fBXType\fP type)"
+.br
+.ti -1c
+.RI "\fBboolean\fP \fBxIsNumeric\fP (\fBXType\fP type)"
+.br
+.ti -1c
 .RI "\fBboolean\fP \fBxIsVerbose\fP ()"
 .br
 .ti -1c
@@ -299,15 +308,88 @@ Checks if the type represents a fixed-size character / binary sequence\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fItype\fP X-Change type to check\&.
+\fItype\fP xchange type to check\&.
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-TRUE if it is a type for a (fixed size) character array, otherwise FALSE\&. 
+TRUE (1) if it is a type for a (fixed size) character array, otherwise FALSE (0)\&. 
 .RE
 .PP
 
+.SS "\fBboolean\fP xIsDecimal (\fBXType\fP type)"
+Checks if the type represents a floating-point value of any width\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP xchange type to check\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+TRUE (1) if the type is for a floating-point value, or else FALSE (0)
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxIsInteger()\fP 
+.PP
+\fBxIsNumeric()\fP 
+.PP
+\fBxGetAsDouble()\fP 
+.RE
+.PP
+
+.PP
+References \fBX_DOUBLE\fP, and \fBX_FLOAT\fP\&.
+.SS "\fBboolean\fP xIsInteger (\fBXType\fP type)"
+Checks if the type represents a signed integer value of any width\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP xchange type to check\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+TRUE (1) if the type is for an integer value, or else FALSE (0)
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxIsDecimal()\fP 
+.PP
+\fBxIsNumeric()\fP 
+.PP
+\fBxGetAsLong()\fP 
+.RE
+.PP
+
+.PP
+References \fBFALSE\fP, \fBTRUE\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_INT\fP, \fBX_LONG\fP, and \fBX_SHORT\fP\&.
+.SS "\fBboolean\fP xIsNumeric (\fBXType\fP type)"
+Checks if the type represents a numerical value\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP xchange type to check\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+TRUE (1) if the type is for a number value, or else FALSE (0)
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBxIsInteger()\fP 
+.PP
+\fBxIsDecimal()\fP 
+.RE
+.PP
+
+.PP
+References \fBxIsDecimal()\fP, and \fBxIsInteger()\fP\&.
 .SS "\fBboolean\fP xIsVerbose ()"
 Checks if verbosity is enabled for the xchange library\&.
 .PP

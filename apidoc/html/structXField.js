@@ -7,5 +7,5 @@ var structXField =
     [ "sizes", "structXField.html#af743830ee6c7d5e81a0206b07238ca5d", null ],
     [ "subtype", "structXField.html#a2f076846fbd6b30183ba3ab61e3334e5", null ],
     [ "type", "structXField.html#a6535ecc7e6d29e64f0d34cd926823fd9", null ],
-    [ "value", "structXField.html#a4e9aec275e566b978a3ccb4e043d8c61", null ]
+    [ "value", "structXField.html#a0f61d63b009d0880a89c843bd50d8d76", null ]
 ];
