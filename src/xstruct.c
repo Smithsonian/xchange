@@ -810,10 +810,11 @@ XField *xCreateBooleanField(const char *name, boolean value) {
 
 
 /**
- * Creates a field holding a single string value.
+ * Creates a field holding a single string value. The field will hold a copy of the supplied
+ * value, so the caller may destroy the string safely after the call.
  *
  * \param name      Field name (it may not contain a separator X_SEP)
- * \param value     Associated value (it may be NULL).
+ * \param value     Associated value (it may be NULL). The string will be copied, not referenced.
  *
  * \return          A newly created field referencing the supplied string, or NULL if there was an error.
  */
