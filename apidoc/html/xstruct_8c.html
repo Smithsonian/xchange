@@ -845,11 +845,11 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Creates a field holding a single string value.</p>
+<p>Creates a field holding a single string value. The field will hold a copy of the supplied value, so the caller may destroy the string safely after the call.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>Field name (it may not contain a separator X_SEP) </td></tr>
-    <tr><td class="paramname">value</td><td>Associated value (it may be NULL).</td></tr>
+    <tr><td class="paramname">value</td><td>Associated value (it may be NULL). The string will be copied, not referenced.</td></tr>
   </table>
   </dd>
 </dl>

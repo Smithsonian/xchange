@@ -223,7 +223,7 @@ include/xchange.h
 .br
 .RI "Integer sub version of the release\&. "
 .ti -1c
-.RI "#define \fBXCHANGE_RELEASE_STRING\fP   '\-rc1'"
+.RI "#define \fBXCHANGE_RELEASE_STRING\fP   '\-devel'"
 .br
 .RI "Additional release information in version, e\&.g\&. '-1', or '-rc1'\&. "
 .ti -1c
@@ -919,13 +919,13 @@ A newly created field with the supplied data, or NULL if there was an error\&.
 .PP
 References \fBx_trace_null()\fP, and \fBxCreateField()\fP\&.
 .SS "\fBXField\fP * xCreateStringField (const char * name, const char * value)"
-Creates a field holding a single string value\&.
+Creates a field holding a single string value\&. The field will hold a copy of the supplied value, so the caller may destroy the string safely after the call\&.
 .PP
 \fBParameters\fP
 .RS 4
 \fIname\fP Field name (it may not contain a separator X_SEP) 
 .br
-\fIvalue\fP Associated value (it may be NULL)\&.
+\fIvalue\fP Associated value (it may be NULL)\&. The string will be copied, not referenced\&.
 .RE
 .PP
 \fBReturns\fP
