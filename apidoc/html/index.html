@@ -176,17 +176,17 @@ Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;</h2>
 <h2><a class="anchor" id="autotoc_md11"></a>
 Structured data</h2>
 <ul>
-<li><a class="el" href="index.html#data-types">Basic data types</a></li>
-<li><a class="el" href="index.html#scalars">Scalars</a></li>
-<li><a class="el" href="index.html#arrays">Arrays</a></li>
-<li><a class="el" href="index.html#creating-structure">Creating structure</a></li>
-<li><a class="el" href="index.html#aggregate-ids">Aggregate IDs</a></li>
+<li><a class="el" href="index.html#xchange-data-types">Basic data types</a></li>
+<li><a class="el" href="index.html#xchange-scalars">Scalars</a></li>
+<li><a class="el" href="index.html#xchange-arrays">Arrays</a></li>
+<li><a class="el" href="index.html#xchange-creating-structure">Creating structure</a></li>
+<li><a class="el" href="index.html#xchange-aggregate-ids">Aggregate IDs</a></li>
 <li><a class="el" href="index.html#accessing-data">Accessing substructures and elements</a></li>
 <li><a class="el" href="index.html#sorting-fields">Sorting fields</a></li>
 </ul>
 <p>The <b>xchange</b> library defines the <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> type to represent structured data. It is defined in <code><a class="el" href="xchange_8h.html">xchange.h</a></code>, but as a user you really do not need to know much about its layout, as you probably want to avoid low-level direct access to its elements. Rather, you should be using the functions of the <b>xchange</b> API to create, modify, or access data within.</p>
 <p>Under the hood, the <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> contains a linked list of fields, each an <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> data type to represent a single element, or an array of elements, of the above mentioned types, including embedded <code>Xstructure</code>s. In this way, an <code>Xstructure</code> can easily represent a multi-level hierarchy of a composite data object. Each <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> has a name/ID, an associated data type, a dimensionality, a shape (for multidimensional arrays).</p>
-<p><a class="anchor" id="data-types"></a> </p>
+<p><a class="anchor" id="xchange-data-types"></a> </p>
 <h3><a class="anchor" id="autotoc_md12"></a>
 Basic data types</h3>
 <p>The <b>xchange</b> library supports most basic (primitive) data types used across programming languages. The table below shows the <b>xchange</b> types recognized by the library and the corresponding pointer/array type values:</p>
@@ -217,12 +217,12 @@ Basic data types</h3>
 <td class="markdownTableBodyNone"><code>X_STRUCT</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code>   </td><td class="markdownTableBodyNone">substructure   </td></tr>
 </table>
 <p>The <code>boolean</code> type is defined in <code><a class="el" href="xchange_8h.html">xchange.h</a></code>. The <code><a class="el" href="structXField.html#a0f61d63b009d0880a89c843bd50d8d76">XField.value</a></code> is a pointer / array of the given element type. So, an <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> of type <code>X_DOUBLE</code> will have a <code>value</code> field that should be cast a <code>(double *)</code>, while for type <code>X_STRING</code> the value field shall be cast as <code>(char **)</code>.</p>
-<p><a class="anchor" id="strings"></a> </p>
+<p><a class="anchor" id="xchange-strings"></a> </p>
 <h4><a class="anchor" id="autotoc_md13"></a>
 Strings</h4>
 <p>Strings can be either fixed-width or else a 0-terminated sequence of ASCII characters. At its basic level the library does not impose any restriction of what ASCII characters may be used. However, we recommend that users stick to the JSON convention, and represent special characters in escaped form. E.g. carriage return (<code>0xd</code>) as <code>\</code> followed by <code>n</code>, tabs as <code>\</code> followed by <code>t</code>, etc. As a result a single backslash should also be escaped as two consecutive <code>\</code> characters. You might use <code>xjsonEscapeString()</code> or <code>xjsonUnescapeString()</code> to perform the conversion to/from standard JSON representation.</p>
 <p>Fixed-width strings of up to <em>n</em> characters are represented internally as the <code>XCHAR(n)</code> type. They may be 0-terminated as appropriate, or else represent exactly <em>n</em> ASCII characters without explicit termination. Alternatively, the <code>X_STRING</code> type represents ASCII strings of arbitrary length, up to the 0-termination character.</p>
-<p><a class="anchor" id="scalars"></a> </p>
+<p><a class="anchor" id="xchange-scalars"></a> </p>
 <h3><a class="anchor" id="autotoc_md14"></a>
 Scalars</h3>
 <p>You can create scalar fields easily, e.g.:</p>
@@ -245,7 +245,7 @@ Scalars</h3>
 <div class="ttc" id="axstruct_8c_html_ad2fa86a7d296f1efa6b41079bc2a6b65"><div class="ttname"><a href="xstruct_8c.html#ad2fa86a7d296f1efa6b41079bc2a6b65">xCreateBooleanField</a></div><div class="ttdeci">XField * xCreateBooleanField(const char *name, boolean value)</div><div class="ttdef"><b>Definition</b> xstruct.c:805</div></div>
 </div><!-- fragment --><p>Under the hood, scalar values are a special case of arrays containing a single element. Scalars have dimension zero i.e., a shape defined by an empty integer array, e.g. <code>int shape[0]</code> in a corresponding <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> element.</p>
 <p>In this way scalars are distinguished from true arrays containing just a single elements, which have dimensionality &lt;=1 and shapes e.g., <code>int shape[1] = {1}</code> or <code>int shape[2] = {1, 1}</code>. The difference, while subtle, becomes more obvious when serializing the array, e.g. to JSON. A scalar floating point value of 1.04, for example, will appear as <code>1.04</code> in JSON, whereas the 1D and 2D single-element arrays will be serialized as <code>{ 1.04 }</code> or <code>{{ 1.04 }}</code>, respectively.</p>
-<p><a class="anchor" id="arrays"></a> </p>
+<p><a class="anchor" id="xchange-arrays"></a> </p>
 <h3><a class="anchor" id="autotoc_md15"></a>
 Arrays</h3>
 <p>The <b>xchange</b> library supports array data types in one or more dimensions (up to 20 dimensions). For example, to create a field for 2&times;3&times;4 array of <code>double</code>s, you may have something along:</p>
@@ -264,7 +264,7 @@ Arrays</h3>
 <div class="line"><a class="code hl_struct" href="structXField.html">XField</a> *f = <a class="code hl_function" href="xstruct_8c.html#a0b37b00634177189d5e717e3c84820e3">xCreateMixed1DField</a>(<span class="stringliteral">&quot;my_array&quot;</span>, N);</div>
 <div class="ttc" id="axstruct_8c_html_a0b37b00634177189d5e717e3c84820e3"><div class="ttname"><a href="xstruct_8c.html#a0b37b00634177189d5e717e3c84820e3">xCreateMixed1DField</a></div><div class="ttdeci">XField * xCreateMixed1DField(const char *name, int size, XField *array)</div><div class="ttdef"><b>Definition</b> xstruct.c:77</div></div>
 </div><!-- fragment --><p>Or, use <code><a class="el" href="xstruct_8c.html#a7bb186343d1ff6dab01cc39e233b9069">xCreateMixedArrayField()</a></code> to create a multi-dimensional array of heterogeneous elements the same way.</p>
-<p><a class="anchor" id="creating-structure"></a> </p>
+<p><a class="anchor" id="xchange-creating-structure"></a> </p>
 <h3><a class="anchor" id="autotoc_md16"></a>
 Creating structure</h3>
 <p>Structures should always be created by calling <code><a class="el" href="xstruct_8c.html#a12112584a34e07f9ef7b08f6ef1bc865">xCreateStruct()</a></code> (or else by an appropriate de-serialization function such as <code><a class="el" href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3">xjsonParseAt()</a></code>, or as a copy via <code>xCopyStruct()</code>). Once the structure is no longer used it should be explicitly destroyed (freed) by calling <code><a class="el" href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct()</a></code>. Named substructures can be added to any structure with <code><a class="el" href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct()</a></code>, and named fields via <code><a class="el" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField()</a></code>. That is the gist of it. So for example, the skeleton structure from the example above can be created programatically as:</p>
@@ -291,7 +291,7 @@ Creating structure</h3>
 <div class="fragment"><div class="line"><span class="comment">// Free up all resources used by the structure &#39;s&#39;</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct</a>(s);</div>
 <div class="ttc" id="axstruct_8c_html_afe3fda2f392bae11e136e8c0c90f086d"><div class="ttname"><a href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct</a></div><div class="ttdeci">void xDestroyStruct(XStructure *s)</div><div class="ttdef"><b>Definition</b> xstruct.c:1152</div></div>
-</div><!-- fragment --><p><a class="anchor" id="aggregate-ids"></a> </p>
+</div><!-- fragment --><p><a class="anchor" id="xchange-aggregate-ids"></a> </p>
 <h3><a class="anchor" id="autotoc_md17"></a>
 Aggregate IDs</h3>
 <p>Since the <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> data type can represent hierarchies of arbitrary depth, and named at every level of the hierarchy, we can uniquely identify any particular field, at any level, with an aggregate ID, which concatenates the field names each every level, top-down, with a separator. The convention of <b>xchange</b> is to use colon (':') as the separator. Consider an example structure (in JSON notation):</p>

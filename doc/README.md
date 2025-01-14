@@ -118,11 +118,11 @@ __xchange__ library elsewhere, you can simply add the location to `LD_LIBRARY_PA
 <a name="structured-data"></a>
 ## Structured data
 
- - [Basic data types](#data-types)
- - [Scalars](#scalars)
- - [Arrays](#arrays)
- - [Creating structure](#creating-structure)
- - [Aggregate IDs](#aggregate-ids)
+ - [Basic data types](#xchange-data-types)
+ - [Scalars](#xchange-scalars)
+ - [Arrays](#xchange-arrays)
+ - [Creating structure](#xchange-creating-structure)
+ - [Aggregate IDs](#xchange-aggregate-ids)
  - [Accessing substructures and elements](#accessing-data)
  - [Sorting fields](#sorting-fields)
 
@@ -137,7 +137,7 @@ element, or an array of elements, of the above mentioned types, including embedd
 `Xstructure` can easily represent a multi-level hierarchy of a composite data object. Each `XField` has a name/ID, an 
 associated data type, a dimensionality, a shape (for multidimensional arrays).
 
-<a name="data-types"></a>
+<a name="xchange-data-types"></a>
 ### Basic data types
 
 The __xchange__ library supports most basic (primitive) data types used across programming languages. The table below 
@@ -161,7 +161,7 @@ The `boolean` type is defined in `xchange.h`. The `XField.value` is a pointer / 
 an `XField` of type `X_DOUBLE` will have a `value` field that should be cast a `(double *)`, while for type `X_STRING`
 the value field shall be cast as `(char **)`.
 
-<a name="strings"></a>
+<a name="xchange-strings"></a>
 #### Strings
 
 Strings can be either fixed-width or else a 0-terminated sequence of ASCII characters. At its basic level the library 
@@ -175,7 +175,7 @@ Fixed-width strings of up to _n_ characters are represented internally as the `X
 0-terminated as appropriate, or else represent exactly _n_ ASCII characters without explicit termination. 
 Alternatively, the `X_STRING` type represents ASCII strings of arbitrary length, up to the 0-termination character.
 
-<a name="scalars"></a>
+<a name="xchange-scalars"></a>
 ### Scalars
 
 You can create scalar fields easily, e.g.:
@@ -204,7 +204,7 @@ obvious when serializing the array, e.g. to JSON. A scalar floating point value 
 respectively.
 
 
-<a name="arrays"></a>
+<a name="xchange-arrays"></a>
 ### Arrays
 
 The __xchange__ library supports array data types in one or more dimensions (up to 20 dimensions). For example, to
@@ -236,7 +236,7 @@ entries:
 Or, use `xCreateMixedArrayField()` to create a multi-dimensional array of heterogeneous elements the same way.
 
 
-<a name="creating-structure"></a>
+<a name="xchange-creating-structure"></a>
 ### Creating structure
 
 Structures should always be created by calling `xCreateStruct()` (or else by an appropriate de-serialization 
@@ -271,7 +271,7 @@ and then eventually destroyed after use as:
   xDestroyStruct(s);
 ```
 
-<a name="aggregate-ids"></a>
+<a name="xchange-aggregate-ids"></a>
 ### Aggregate IDs
 
 Since the `XStructure` data type can represent hierarchies of arbitrary depth, and named at every level of the 
