@@ -30,7 +30,12 @@ static XStructure *createStruct() {
   XField *f1 = xCreate1DField(".1", X_INT, 2, i1);
   XField *f2 = xCreate1DField(".3", X_BOOLEAN, 1, b3);
   XField *f3 = xCreate1DField(".2", X_STRING, 3, s2);
-  XField fa[] = {*f1, *f2, *f3 };
+  XField fa[] = { *f1, *f2, *f3 };
+
+  // Discard the unused containers (we only used their content...)
+  free(f1);
+  free(f2);
+  free(f3);
 
   xSetField(s, xCreateBooleanField("bool", 1));
   xSetField(s, xCreateStringField("string", "Hello world!"));
@@ -65,11 +70,14 @@ int main() {
     return 1;
   }
 
-  str = xjsonUnescape(str);
-  if(strcmp(specials, str) != 0) {
+  str1 = xjsonUnescape(str);
+  if(strcmp(specials, str1) != 0) {
     fprintf(stderr, "ERROR: unescaped string differs from original\n");
     return 1;
   }
+
+  free(str);
+  free(str1);
 
   str = xjsonToString(s),
   printf("%s", str);
@@ -83,6 +91,12 @@ int main() {
     printf(" str1: %s\n\n", str1);
     return 1;
   }
+
+  free(str);
+  free(str1);
+
+  xDestroyStruct(s);
+  xDestroyStruct(s1);
 
   printf("OK\n");
 

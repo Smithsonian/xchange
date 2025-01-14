@@ -239,8 +239,8 @@ int xStringElementSizeOf(XType type) {
   if(type < 0) l = -type;
   else switch(type) {
     case X_BOOLEAN : l = 5; break;    // "false"
-    case X_BYTE : l = 4; break;       // -255
-    case X_SHORT : l = 6; break;      // -65536
+    case X_BYTE : l = 4; break;       // -128
+    case X_SHORT : l = 6; break;      // -32768
     case X_INT : l = 11; break;       // -2147483647
     case X_LONG : l = 19; break;
     case X_FLOAT : l = 16; break;     // 1 leading + 8 significant figs + 2 signs + 1 dot + 1 E + 3 exponent

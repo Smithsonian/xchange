@@ -849,7 +849,12 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
     isValid = (e->value || errno != EINVAL);
 
     if(isValid) n++;
+    else {
+      xDestroyField(e);
+      continue;
+    }
 
+    // Add to the tail of the list...
     if(!last) first = e;
     else last->next = e;
     last = e;
@@ -886,9 +891,8 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
       char *token = GetToken(next);
       Warning("[L.%d] Expected ',' or ']', got \"%s\".\n", *lineNumber, token);
       free(token);
-
       *pos = next;
-      return NULL;
+      goto cleanup; // @suppress("Goto statement used")
     }
   }
 
@@ -908,16 +912,23 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
 
     for(i = 0; i < n; i++) {
       char idx[20];
-      XField *nextField;
+      XField *nextField = e->next;
 
       // Name is . + 1-based index, e.g. ".1", ".2"...
       sprintf(idx, ".%d", (i + 1));
 
-      nextField = e->next;
       array[i] = *e;
       array[i].name = xStringCopyOf(idx);
       array[i].next = NULL;
+
       free(e);
+      e = nextField;
+    }
+
+    // Discard any unassigned elements
+    while(e) {
+      XField *nextField = e->next;
+      xDestroyField(e);
       e = nextField;
     }
 
@@ -954,7 +965,7 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
       data = calloc(eCount, eSize);
       if(!data) {
         Error("[L.%d] Out of memory (array data).\n", *lineNumber);
-        return NULL;
+        goto cleanup; // @suppress("Goto statement used")
       }
     }
 
@@ -965,12 +976,31 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
       if(e->value) {
         memcpy(data + i * rowSize, *type == X_FIELD ? (char *) e : e->value, rowSize);
         free(e->value);
+        e->value = NULL;
       }
-      free(e);
+      xDestroyField(e);
+    }
+
+    // Discard unused parsed elements
+    while(first) {
+      XField *nextField = first->next;
+      xDestroyField(first);
+      first = nextField;
     }
 
     return data;
   }
+
+  // -------------------------------------------------------------------------
+  cleanup:
+
+  while(first) {
+    XField *e = first;
+    first = e->next;
+    xDestroyField(e);
+  }
+
+  return NULL;
 }
 
 
@@ -1182,12 +1212,6 @@ static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const
     int k;
     char *rowPrefix;
 
-    // Indentation for elements...
-    rowPrefix = malloc(strlen(prefix) + ilen + 1);
-    x_check_alloc(rowPrefix);
-
-    sprintf(rowPrefix, "%s%s", prefix, GetIndent());
-
     // Special case: empty array
     if(N == 0) {
       for(k = ndim; --k >= 0; ) *(str++) = '[';
@@ -1195,6 +1219,12 @@ static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const
       for(k = ndim; --k >= 0; ) *(str++) = ']';
       return str - str0;
     }
+
+    // Indentation for elements...
+    rowPrefix = malloc(strlen(prefix) + ilen + 1);
+    x_check_alloc(rowPrefix);
+
+    sprintf(rowPrefix, "%s%s", prefix, GetIndent());
 
     *(str++) = '[';                                     // Opening bracket at current position...
 

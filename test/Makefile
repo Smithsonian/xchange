@@ -1,5 +1,4 @@
 # Use the parent directories for libraries and headers.
-LIB = ../lib
 INC = ../include
 BUILD_MODE = debug
 
