@@ -1906,9 +1906,9 @@
     <title>xchange</title>
     <filename>index.html</filename>
     <docanchor file="index.html">md_README-xchange</docanchor>
-    <docanchor file="index.html">introduction</docanchor>
-    <docanchor file="index.html">building</docanchor>
-    <docanchor file="index.html">linking</docanchor>
+    <docanchor file="index.html">xchange-introduction</docanchor>
+    <docanchor file="index.html">building-xchange</docanchor>
+    <docanchor file="index.html">xchange-linking</docanchor>
     <docanchor file="index.html">structured-data</docanchor>
     <docanchor file="index.html">data-types</docanchor>
     <docanchor file="index.html">strings</docanchor>
@@ -1919,8 +1919,8 @@
     <docanchor file="index.html">accessing-data</docanchor>
     <docanchor file="index.html">sorting-fields</docanchor>
     <docanchor file="index.html">json-interchange</docanchor>
-    <docanchor file="index.html">error-handling</docanchor>
-    <docanchor file="index.html">debugging-support</docanchor>
-    <docanchor file="index.html">future-plans</docanchor>
+    <docanchor file="index.html">xchange-error-handling</docanchor>
+    <docanchor file="index.html">xchange-debugging-support</docanchor>
+    <docanchor file="index.html">xchange-future-plans</docanchor>
   </compound>
 </tagfile>

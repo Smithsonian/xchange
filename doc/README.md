@@ -11,19 +11,19 @@ Updated for 1.0 and later releases.
 
 ## Table of Contents
 
- - [Introduction](#introduction)
- - [Building](#building)
- - [Linking your application against `xchange`](#linking)
+ - [Introduction](#xchange-introduction)
+ - [Building](#building-xchange)
+ - [Linking your application against `xchange`](#xchange-linking)
  - [Structured data](#structured-data)
  - [JSON parser and emitter](#json-interchange)
- - [Error handling](#error-handling)
- - [Debugging support](#debugging-support)
- - [Future plans](#future-plans) 
+ - [Error handling](#xchange-error-handling)
+ - [Debugging support](#xchange-debugging-support)
+ - [Future plans](#xchange-future-plans) 
 
 
 -----------------------------------------------------------------------------
 
-<a name="introduction"></a>
+<a name="xchange-introduction"></a>
 ## Introduction
 
 The __xchange__ library provides a free framework for platform independent data exchange for structured data in C/C++, 
@@ -42,7 +42,7 @@ repository on GitHub.
 
 -----------------------------------------------------------------------------
 
-<a name="building"></a>
+<a name="building-xchange"></a>
 ## Building
 
 The __xchange__ library can be built either as a shared (`libxchange.so[.1]`) and as a static (`libxchange.a`) library, 
@@ -97,7 +97,7 @@ Or, to stage the installation (to `/usr`) under a 'build root':
 
 -----------------------------------------------------------------------------
 
-<a name="linking"></a>
+<a name="xchange-linking"></a>
 ## Linking your application against `xchange`
 
 Provided you have installed the shared (`libxchange.so`) or static (`libxchange.a`) library in a location that is
@@ -496,7 +496,7 @@ reconstruct from it the original C string with the special characters in it:
 
 -----------------------------------------------------------------------------
 
-<a name="error-handling"></a>
+<a name="xchange-error-handling"></a>
 ## Error handling
 
 The functions that can encounter an error will return either one of the error codes defined in `xchange.h`, or 
@@ -518,7 +518,7 @@ The JSON parser can also sink its error messages to a designated file or stream,
  
  -----------------------------------------------------------------------------
  
-<a name="debugging-support"></a>
+<a name="xchange-debugging-support"></a>
 ## Debugging support
 
 You can enable verbose output of the __xchange__ library with `xSetVerbose(boolean)`. When enabled, it will produce 
@@ -535,7 +535,7 @@ __xchange__ may use these macros to produce their own verbose and/or debugging o
 settings. 
 
 
-<a name="future-plans"></a>
+<a name="xchange-future-plans"></a>
 ## Future plans
 
 There are a number of ways this little library can evolve and grow in the not too distant future. Some of the obvious
