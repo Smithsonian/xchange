@@ -1166,8 +1166,7 @@ void xDestroyStruct(XStructure *s) {
 void xClearField(XField *f) {
   if(!f) return;
 
-  if(f->value) {
-
+  if(f->value != NULL) {
     if(f->type == X_STRUCT) {
       XStructure *sub = (XStructure *) f->value;
       int i = xGetFieldCount(f);
@@ -1178,6 +1177,12 @@ void xClearField(XField *f) {
       XField *array = (XField *) f->value;
       int i;
       for(i = xGetFieldCount(f); --i >=0;) xClearField(&array[i]);
+    }
+
+    if(f->type == X_STRING || f->type == X_RAW) {
+      char **str = (char **) f->value;
+      int i = xGetFieldCount(f);
+      while(--i >= 0) if(str[i]) free(str[i]);
     }
 
     free(f->value);
