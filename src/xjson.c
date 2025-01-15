@@ -849,10 +849,6 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
     isValid = (e->value || errno != EINVAL);
 
     if(isValid) n++;
-    else {
-      xDestroyField(e);
-      continue;
-    }
 
     // Add to the tail of the list...
     if(!last) first = e;
