@@ -17,6 +17,8 @@
 
 # xchange 
 
+[![DOI](https://zenodo.org/badge/796202092.svg)](https://doi.org/10.5281/zenodo.14634824)
+
 Free platform-agnostic data exchange framework for C/C++, including a built-in JSON parser and emitter.
 
  - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html)

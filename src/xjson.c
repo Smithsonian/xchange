@@ -875,7 +875,7 @@ static void *ParseArray(char **pos, XType *type, int *ndim, int sizes[X_MAX_DIMS
       }
     }
 
-    // After the value there must be either a comma or or closing ]
+    // After the value there must be either a comma or a closing bracket
     next = SkipSpaces(next, lineNumber);
     if(*next == ',') {
       if(!isValid) n++;  // Treat empty intermediate entries as NULL
