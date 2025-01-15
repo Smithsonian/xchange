@@ -163,10 +163,10 @@ shows the __xchange__ types recognized by the library and the corresponding poin
  | `XType`       | element type             | Comment / example                                               |
  |---------------|--------------------------|-----------------------------------------------------------------|
  | `X_BOOLEAN`   | `boolean`                | '`true`' or '`false`'                                           |
- | `X_BYTE`      | `char` or `int8_t`       | '`-128`' to  '`127`'                                            |
- | `X_SHORT`     | `short` or `int16_t`     | '`-32768`' to '`32767`'                                         |
- | `X_INT`       | `int32_t` (`int`)        | '`-2,147,483,648`' to '`2,147,483,647`'                         |
- | `X_LONG`      | `long long` or `int64_t` | '`-9,223,372,036,854,775,808`' to '`9,223,372,036,854,775,807`' |
+ | `X_BYTE`      | `char`                   | '`-128`' to  '`127`'                                            |
+ | `X_SHORT`     | `short`                  | '`-32768`' to '`32767`' (typically)                             |
+ | `X_INT`       | `int`                    | '`-2,147,483,648`' to '`2,147,483,647`' (typically)             |
+ | `X_LONG`      | `long long`              | '`-9,223,372,036,854,775,808`' to '`9,223,372,036,854,775,807`' |
  | `X_FLOAT`     | `float`                  | `1`, `1.0`, `-1.234567e-33`                                     |
  | `X_DOUBLE`    | `double`                 | `1`, `1.0`, `-1.2345678901234567e-111`                          |
  | `X_STRING`    | `char *`    	            | `Hello world!`, `line1\nline2\n` (0-terminated)                 |

@@ -224,6 +224,16 @@ boolean xIsNumeric(XType type) {
   return (xIsInteger(type) || xIsDecimal(type));
 }
 
+static int xStringSizeForIntBytes(int bytes) {
+  switch(bytes) {
+    case 1: return 4;   // -128
+    case 2: return 6;   // -32768
+    case 4: return 11;  // -2147483647
+    case 8: return 19;  // −9223372036854775807
+    default : return x_error(-1, EINVAL, "xStringSizeForIntBytes", "invalid bytes: %d", bytes);
+  }
+}
+
 /**
  * Returns the number of characters, including a '\0' termination that a single element of the
  * might be expected to fill.
@@ -239,10 +249,10 @@ int xStringElementSizeOf(XType type) {
   if(type < 0) l = -type;
   else switch(type) {
     case X_BOOLEAN : l = 5; break;    // "false"
-    case X_BYTE : l = 4; break;       // -128
-    case X_SHORT : l = 6; break;      // -32768
-    case X_INT : l = 11; break;       // -2147483647
-    case X_LONG : l = 19; break;
+    case X_BYTE : return xStringSizeForIntBytes(sizeof(char));
+    case X_SHORT : return xStringSizeForIntBytes(sizeof(short));
+    case X_INT : return xStringSizeForIntBytes(sizeof(int));
+    case X_LONG : return xStringSizeForIntBytes(sizeof(long long));
     case X_FLOAT : l = 16; break;     // 1 leading + 8 significant figs + 2 signs + 1 dot + 1 E + 3 exponent
     case X_DOUBLE : l = 25; break;    // 1 leading + 16 significant figs + (4) + 4 exponent
     default : return x_error(-1, EINVAL, "xStringElementSizeOf", "invalid type: %d", type);
@@ -263,7 +273,7 @@ int xElementSizeOf(XType type) {
   if(type < 0) return -type;
   switch(type) {
     case X_RAW: return sizeof(char *);
-    case X_BYTE: return 1;
+    case X_BYTE: return sizeof(char);
     case X_SHORT: return sizeof(short);
     case X_BOOLEAN: return sizeof(boolean);
     case X_INT: return sizeof(int);
