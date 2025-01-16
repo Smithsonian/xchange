@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <semaphore.h>
+#include <pthread.h>
 
 #define __XCHANGE_INTERNAL_API__      ///< Use internal definitions
 #include "xchange.h"
@@ -29,7 +29,7 @@ typedef struct {
   XLookupEntry **table;
   int nBins;
   int nEntries;
-  sem_t sem;
+  pthread_mutex_t mutex;
 } XLookupPrivate;
 
 /// \endcond
@@ -148,10 +148,10 @@ int xLookupPut(XLookupTable *tab, const char *prefix, const XField *field, XFiel
   p = (XLookupPrivate *) tab->priv;
   if(!p) return x_error(0, EINVAL, "xGetLookupEntryAsync", "lookup table not initialized");
 
-  if(sem_wait(&p->sem) != 0) return x_error(X_FAILURE, errno, fn, "sem_wait() error");
+  if(pthread_mutex_lock(&p->mutex) != 0) return x_error(X_FAILURE, errno, fn, "sem_wait() error");
 
   res = xLookupPutAsync(tab, prefix, field, oldValue);
-  sem_post(&p->sem);
+  pthread_mutex_unlock(&p->mutex);
 
   return res;
 }
@@ -183,13 +183,13 @@ XField *xLookupRemove(XLookupTable *tab, const char *id) {
     return NULL;
   }
 
-  if(sem_wait(&p->sem) != 0) {
+  if(pthread_mutex_lock(&p->mutex) != 0) {
     x_error(0, errno, fn, "sem_wait() error");
     return NULL;
   }
 
   f = xLookupRemoveAsync(tab, id);
-  sem_post(&p->sem);
+  pthread_mutex_unlock(&p->mutex);
 
   return f;
 }
@@ -295,10 +295,10 @@ int xLookupPutAll(XLookupTable *tab, const char *prefix, const XStructure *s, bo
   p = (XLookupPrivate *) tab->priv;
   if(!p) return x_error(0, EINVAL, "xGetLookupEntryAsync", "lookup table not initialized");
 
-  if(sem_wait(&p->sem) != 0) return x_error(X_FAILURE, errno, fn, "sem_wait() error");
+  if(pthread_mutex_lock(&p->mutex) != 0) return x_error(X_FAILURE, errno, fn, "sem_wait() error");
 
   n = xLookupPutAllAsync(tab, prefix, s, recursive);
-  sem_post(&p->sem);
+  pthread_mutex_unlock(&p->mutex);
 
   prop_error(fn, n);
   return n;
@@ -330,10 +330,10 @@ int xLookupRemoveAll(XLookupTable *tab, const char *prefix, const XStructure *s,
   p = (XLookupPrivate *) tab->priv;
   if(!p) return x_error(0, EINVAL, "xGetLookupEntryAsync", "lookup table not initialized");
 
-  if(sem_wait(&p->sem) != 0) return x_error(X_FAILURE, errno, fn, "sem_wait() error");
+  if(pthread_mutex_lock(&p->mutex) != 0) return x_error(X_FAILURE, errno, fn, "sem_wait() error");
 
   n = xLookupRemoveAllAsync(tab, prefix, s, recursive);
-  sem_post(&p->sem);
+  pthread_mutex_unlock(&p->mutex);
 
   prop_error(fn, n);
   return n;
@@ -371,7 +371,7 @@ XLookupTable *xAllocLookup(unsigned int size) {
   x_check_alloc(p->table);
 
   p->nBins = n;
-  sem_init(&p->sem, FALSE, 1);
+  pthread_mutex_init(&p->mutex, NULL);
 
   tab = (XLookupTable *) calloc(1, sizeof(XLookupTable));
   x_check_alloc(tab);
@@ -453,13 +453,13 @@ XField *xLookupField(const XLookupTable *tab, const char *id) {
     return NULL;
   }
 
-  if(sem_wait(&p->sem) != 0) {
+  if(pthread_mutex_lock(&p->mutex) != 0) {
     x_error(0, errno, fn, "sem_wait() error");
     return NULL;
   }
 
   e = xGetLookupEntryAsync(tab, id, xGetHash(id));
-  sem_post(&p->sem);
+  pthread_mutex_unlock(&p->mutex);
 
   return e ? e->field : NULL;
 }
@@ -495,7 +495,7 @@ void xDestroyLookup(XLookupTable *tab) {
     }
 
     free(p->table);
-    sem_destroy(&p->sem);
+    pthread_mutex_destroy(&p->mutex);
   }
 
   free(tab);

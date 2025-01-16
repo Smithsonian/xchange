@@ -53,9 +53,6 @@ CHECKOPTS ?= --enable=performance,warning,portability,style --language=c \
 # Below are some generated constants based on the one that were set above
 # ============================================================================
 
-# Link against math libs (for e.g. isnan())
-LDFLAGS += -lm
-
 # Search for files in the designated locations
 vpath %.h $(INC)
 vpath %.c $(SRC)

@@ -14,6 +14,9 @@ include config.mk
 # The version of the shared .so libraries
 SO_VERSION := 1
 
+# Link with math libs (NAN) and pthread (mutex)
+LDFLAGS += -lm -lpthread
+
 # Check if there is a doxygen we can run
 ifndef DOXYGEN
   DOXYGEN := $(shell which doxygen)
@@ -89,6 +92,7 @@ SOURCES = $(SRC)/xchange.c $(SRC)/xstruct.c $(SRC)/xlookup.c $(SRC)/xjson.c
 
 # Generate a list of object (obj/*.o) files from the input sources
 OBJECTS := $(subst .c,.o,$(subst $(SRC),$(OBJ),$(SOURCES)))
+
 
 $(LIB)/libxchange.so: $(LIB)/libxchange.so.$(SO_VERSION)
 

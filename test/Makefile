@@ -2,6 +2,8 @@
 INC = ../include
 BUILD_MODE = debug
 
+LDFLAGS += -lm
+
 # Load the common Makefile definitions...
 include ../config.mk
 
