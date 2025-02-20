@@ -33,6 +33,8 @@ endif
 
 INSTALL_TARGETS := install-headers
 
+export
+
 # Build for distribution
 .PHONY: distro
 ifeq ($(STATICLINK),1)
@@ -60,8 +62,7 @@ all: libs $(DOC_TARGETS) check
 
 # Run regression tests
 .PHONY: test
-test: $(LIB)/libxchange.a
-	$(MAKE) -C test
+test: tests run
 
 # 'test" + 'analyze'
 .PHONY: check
@@ -76,13 +77,33 @@ infer: clean
 .PHONY: clean
 clean:
 	rm -f $(OBJECTS) README-xchange.md gmon.out
-	$(MAKE) -C test clean
 
 # Remove all generated files
 .PHONY: distclean
 distclean: clean
 	rm -f $(LIB)/libxchange.so* $(LIB)/libxchange.a
-	$(MAKE) -C test distclean
+
+# Test programs
+.PHONY: tests
+tests: $(BIN)/test-struct $(BIN)/test-lookup $(BIN)/test-json
+
+# Run tests
+.PHONY: run
+run: static tests
+	$(BIN)/test-struct
+	$(BIN)/test-lookup
+	$(BIN)/test-json
+
+# Compile tests
+$(BIN)/test-%: $(OBJ)/test-%.o $(LIB)/libxchange.a
+	$(MAKE) $(BIN)
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+.PHONY: clean-test
+clean-test:
+	rm -rf bin
+
+clean: clean-test
 
 # ----------------------------------------------------------------------------
 # The nitty-gritty stuff below
@@ -207,4 +228,4 @@ Makefile: config.mk build.mk
 
 include build.mk
 
-	
+vpath %.c test

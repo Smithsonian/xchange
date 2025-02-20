@@ -1,0 +1,40 @@
+name: Tests
+
+on: 
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - 'include/**'
+      - 'Makefile'
+      - '*.mk'
+      - '.github/workflows/test.yml'
+
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - 'include/**'
+      - 'Makefile'
+      - '*.mk'
+      - '.github/workflows/test.yml'
+
+jobs:
+
+  build:
+    name: Regression tests
+
+    runs-on: ubuntu-latest
+    env:
+      LIB: ${{ github.workspace }}/lib
+      LD_LIBRARY_PATH: ${{ github.workspace }}/lib
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build and run tests
+      run: make test
+
+      
+   

@@ -1,4 +1,5 @@
 ![Build Status](https://github.com/Smithsonian/xchange/actions/workflows/build.yml/badge.svg)
+![Tests](https://github.com/Smithsonian/xchange/actions/workflows/test.yml/badge.svg)
 ![Static Analysis](https://github.com/Smithsonian/xchange/actions/workflows/analyze.yml/badge.svg)
 <a href="https://smithsonian.github.io/xchange/apidoc/html/files.html">
  ![API documentation](https://github.com/Smithsonian/xchange/actions/workflows/dox.yml/badge.svg)
