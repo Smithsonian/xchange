@@ -490,8 +490,8 @@ static int TokenMatch(char *a, char *b) {
 boolean xParseBoolean(char *str, char **end) {
   static const char *fn = "xParseBoolean";
 
-  static char *true[] = { "true", "t", "on", "yes", "y", "enabled", "active", NULL };
-  static char *false[] = { "false", "f", "off", "no", "n", "disabled", "invactive", NULL };
+  static char *trues[] = { "true", "t", "on", "yes", "y", "enabled", "active", NULL };
+  static char *falses[] = { "false", "f", "off", "no", "n", "disabled", "invactive", NULL };
 
   int i;
   long l;
@@ -505,13 +505,13 @@ boolean xParseBoolean(char *str, char **end) {
 
   if(end) *end = str;
 
-  for(i = 0; true[i]; i++) if(TokenMatch(str, true[i])) {
-    if(end) *end = str + strlen(true[i]);
+  for(i = 0; trues[i]; i++) if(TokenMatch(str, trues[i])) {
+    if(end) *end = str + strlen(trues[i]);
     return TRUE;
   }
 
-  for(i = 0; false[i]; i++) if(TokenMatch(str, false[i])) {
-    if(end) *end = str + strlen(false[i]);
+  for(i = 0; falses[i]; i++) if(TokenMatch(str, falses[i])) {
+    if(end) *end = str + strlen(falses[i]);
     return FALSE;
   }
 
