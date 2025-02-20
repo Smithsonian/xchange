@@ -741,11 +741,21 @@ static void *ParsePrimitive(char **pos, XType *type, int *lineNumber) {
   errno = 0;
   ll = strtoll(next, &end, 0);
   if(end == *pos && !errno) {
-    long long *value = (long long *) malloc(sizeof(long));
-    x_check_alloc(value);
-    *value = ll;
-    *type = (ll == (int) ll) ? X_INT : X_LONG;
-    return value;
+    if(ll == (int) ll) {
+      // If we can represent as int, then prefer it.
+      int *value = (int *) malloc(sizeof(int));
+      x_check_alloc(value);
+      *value = (int) ll;
+      *type = X_INT;
+      return value;
+    }
+    else {
+      long long *value = (long long *) malloc(sizeof(long long));
+      x_check_alloc(value);
+      *value = ll;
+      *type = X_LONG;
+      return value;
+    }
   }
 
   // Try parse as double...
