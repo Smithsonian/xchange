@@ -20,7 +20,7 @@
 
 [![DOI](https://zenodo.org/badge/796202092.svg)](https://doi.org/10.5281/zenodo.14634824)
 
-Free platform-agnostic data exchange framework for C/C++, including a built-in JSON parser and emitter.
+Structured data representation and JSON support for C/C++.
 
  - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html)
  - [Project page](https://smithsonian.github.io/xchange) on github.io
@@ -46,8 +46,9 @@ Updated for 1.0 and later releases.
 <a name="xchange-introduction"></a>
 ## Introduction
 
-The __xchange__ library provides a free framework for platform independent data exchange for structured data in C/C++, 
-and includes a JSON parser and emitter. It is free to use, in any way you like, without licensing restrictions.
+The __xchange__ library provides a free framework for platform independent structured data representation and exchange
+in C/C++, and includes supports for JSON parsing and generation. It is free to use, in any way you like, without 
+licensing restrictions.
 
 While there are many excellent libraries out there that offer such capabilities for C++ and/or other object-oriented 
 languages, support for structured data exchange is notably rare for standard C. The __xchange__ library aims to fill 

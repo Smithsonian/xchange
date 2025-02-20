@@ -71,7 +71,7 @@ static int PrintString(const char *src, int maxLength, char *json);
 static FILE *xerr;     ///< File / stream, which errors are printed to. A NULL will print to stderr
 
 static char *indent;   ///< use xjsonGetIndent() for non-null access.
-static int ilen;
+static int ilen = XJSON_DEFAULT_INDENT;
 
 /**
  * Sets the number of spaces per indentation when emitting JSON formatted output.
@@ -110,7 +110,7 @@ void xjsonSetIndent(int nchars) {
  * @sa xjsonToString()
  */
 int xjsonGetIndent() {
-  return indent ? ilen : XJSON_DEFAULT_INDENT;
+  return ilen;
 }
 
 static char *GetIndent() {
