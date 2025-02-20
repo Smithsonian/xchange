@@ -70,7 +70,7 @@ static int PrintString(const char *src, int maxLength, char *json);
 
 static FILE *xerr;     ///< File / stream, which errors are printed to. A NULL will print to stderr
 
-static char *indent;
+static char *indent;   ///< use xjsonGetIndent() for non-null access.
 static int ilen;
 
 /**
@@ -83,11 +83,10 @@ static int ilen;
  * @sa xjsonToString()
  */
 void xjsonSetIndent(int nchars) {
-  char *old;
+  char *old = indent;
 
   if(nchars < 0) nchars = 0;
 
-  old = indent;
   indent = (char *) realloc(indent, nchars + 1);
 
   if(indent) {
@@ -162,7 +161,6 @@ char *xjsonToString(const XStructure *s) {
 
   return str;
 }
-
 
 /**
  * Converts an XField into its JSON representation, with the specified indentation of white spaces
@@ -1031,7 +1029,7 @@ static int PrintObject(const char *prefix, const XStructure *s, char *str) {
 
   if(!s->firstField) return sprintf(&str[n], "{ }");
 
-  fieldPrefix = malloc(strlen(prefix) + ilen + 1);
+  fieldPrefix = (char *) malloc(strlen(prefix) + xjsonGetIndent() + 1);
   x_check_alloc(fieldPrefix);
 
   sprintf(fieldPrefix, "%s%s", prefix, GetIndent());
@@ -1217,7 +1215,7 @@ static int PrintArray(const char *prefix, char *ptr, XType type, int ndim, const
     }
 
     // Indentation for elements...
-    rowPrefix = malloc(strlen(prefix) + ilen + 1);
+    rowPrefix = (char *) malloc(strlen(prefix) + xjsonGetIndent() + 2);
     x_check_alloc(rowPrefix);
 
     sprintf(rowPrefix, "%s%s", prefix, GetIndent());
