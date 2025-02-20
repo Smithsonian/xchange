@@ -1,5 +1,7 @@
 <img src="/xchange/resources/CfA-logo.png" alt="CfA logo" width="400" height="67" align="right">
 <br clear="all">
+[![DOI](https://zenodo.org/badge/796202092.svg)](https://doi.org/10.5281/zenodo.14634824)
+
 Free platform-agnostic data exchange framework for C/C++, including a built-in JSON parser and emitter.
 
  - [API documentation](https://smithsonian.github.io/xchange/apidoc/html/files.html)
@@ -63,7 +65,7 @@ prior to invoking `make`. The following build variables can be configured:
    
  - `WEXTRA`: If set to 1, `-Wextra` is added to `CFLAGS` automatically.
    
- - `LDFLAGS`: Extra linker flags (default: _not set_). Note, `-lm` will be added automatically.
+ - `LDFLAGS`: Extra linker flags (default: _not set_). Note, `-lm -lpthread` will be added automatically.
 
  - `CHECKEXTRA`: Extra options to pass to `cppcheck` for the `make check` target
 
@@ -146,10 +148,10 @@ shows the __xchange__ types recognized by the library and the corresponding poin
  | `XType`       | element type             | Comment / example                                               |
  |---------------|--------------------------|-----------------------------------------------------------------|
  | `X_BOOLEAN`   | `boolean`                | '`true`' or '`false`'                                           |
- | `X_BYTE`      | `char` or `int8_t`       | '`-128`' to  '`127`'                                            |
- | `X_SHORT`     | `short` or `int16_t`     | '`-32768`' to '`32767`'                                         |
- | `X_INT`       | `int32_t` (`int`)        | '`-2,147,483,648`' to '`2,147,483,647`'                         |
- | `X_LONG`      | `long long` or `int64_t` | '`-9,223,372,036,854,775,808`' to '`9,223,372,036,854,775,807`' |
+ | `X_BYTE`      | `char`                   | '`-128`' to  '`127`'                                            |
+ | `X_SHORT`     | `short`                  | '`-32768`' to '`32767`' (typically)                             |
+ | `X_INT`       | `int`                    | '`-2,147,483,648`' to '`2,147,483,647`' (typically)             |
+ | `X_LONG`      | `long long`              | '`-9,223,372,036,854,775,808`' to '`9,223,372,036,854,775,807`' |
  | `X_FLOAT`     | `float`                  | `1`, `1.0`, `-1.234567e-33`                                     |
  | `X_DOUBLE`    | `double`                 | `1`, `1.0`, `-1.2345678901234567e-111`                          |
  | `X_STRING`    | `char *`    	            | `Hello world!`, `line1\nline2\n` (0-terminated)                 |

@@ -223,7 +223,7 @@ include/xchange.h
 .br
 .RI "Integer sub version of the release\&. "
 .ti -1c
-.RI "#define \fBXCHANGE_RELEASE_STRING\fP   '\-devel'"
+.RI "#define \fBXCHANGE_RELEASE_STRING\fP   '\-rc2'"
 .br
 .RI "Additional release information in version, e\&.g\&. '-1', or '-rc1'\&. "
 .ti -1c
@@ -575,7 +575,7 @@ The new lookup table, or else NULL if there was an error\&.
 .PP
 
 .PP
-References \fBFALSE\fP, \fBXLookupTable::priv\fP, and \fBx_error()\fP\&.
+References \fBXLookupTable::priv\fP, and \fBx_error()\fP\&.
 .SS "void xClearField (\fBXField\fP * f)"
 Clears an X structure field, freeing up all referfenced resources\&. However, the field itself is kept, but its contents are reset\&.
 .PP
@@ -591,7 +591,7 @@ Clears an X structure field, freeing up all referfenced resources\&. However, th
 .PP
 
 .PP
-References \fBXField::name\fP, \fBXField::subtype\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_FIELD\fP, \fBX_STRUCT\fP, \fBxClearField()\fP, \fBxClearStruct()\fP, and \fBxGetFieldCount()\fP\&.
+References \fBXField::name\fP, \fBXField::subtype\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_FIELD\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, \fBxClearField()\fP, \fBxClearStruct()\fP, and \fBxGetFieldCount()\fP\&.
 .SS "void xClearStruct (\fBXStructure\fP * s)"
 Destroys the contents of an X structure, leaving the structure empty\&.
 .PP

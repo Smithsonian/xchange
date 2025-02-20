@@ -115,7 +115,8 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">xchange </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README-xchange"></a> Free platform-agnostic data exchange framework for C/C++, including a built-in JSON parser and emitter.</p>
+<div class="textblock"><p><a class="anchor" id="md_README-xchange"></a> <a href="https://doi.org/10.5281/zenodo.14634824"><img src="https://zenodo.org/badge/796202092.svg" alt="DOI" style="pointer-events: none;" class="inline"/></a></p>
+<p>Free platform-agnostic data exchange framework for C/C++, including a built-in JSON parser and emitter.</p>
 <ul>
 <li><a href="https://smithsonian.github.io/xchange/apidoc/html/files.html">API documentation</a></li>
 <li><a href="https://smithsonian.github.io/xchange">Project page</a> on github.io</li>
@@ -153,7 +154,7 @@ Building</h2>
 <li><code>CFLAGS</code>: Flags to pass onto the C compiler (default: <code>-g -Os -Wall</code>). Note, <code>-Iinclude</code> will be added automatically.</li>
 <li><code>CSTANDARD</code>: Optionally, specify the C standard to compile for, e.g. <code>c99</code> to compile for the C99 standard. If defined then <code>-std=$(CSTANDARD)</code> is added to <code>CFLAGS</code> automatically.</li>
 <li><code>WEXTRA</code>: If set to 1, <code>-Wextra</code> is added to <code>CFLAGS</code> automatically.</li>
-<li><code>LDFLAGS</code>: Extra linker flags (default: <em>not set</em>). Note, <code>-lm</code> will be added automatically.</li>
+<li><code>LDFLAGS</code>: Extra linker flags (default: <em>not set</em>). Note, <code>-lm -lpthread</code> will be added automatically.</li>
 <li><code>CHECKEXTRA</code>: Extra options to pass to <code>cppcheck</code> for the <code>make check</code> target</li>
 </ul>
 <p>After configuring, you can simply run <code>make</code>, which will build the <code>shared</code> (<code>lib/libxchange.so[.1]</code>) and <code>static</code> (<code>lib/libxchange.a</code>) libraries, local HTML documentation (provided <code>doxygen</code> is available), and performs static analysis via the <code>check</code> target. Or, you may build just the components you are interested in, by specifying the desired <code>make</code> target(s). (You can use <code>make help</code> to get a summary of the available <code>make</code> targets).</p>
@@ -196,13 +197,13 @@ Basic data types</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>X_BOOLEAN</code>   </td><td class="markdownTableBodyNone"><code>boolean</code>   </td><td class="markdownTableBodyNone">'<code>true</code>' or '<code>false</code>'    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>X_BYTE</code>   </td><td class="markdownTableBodyNone"><code>char</code> or <code>int8_t</code>   </td><td class="markdownTableBodyNone">'<code>-128</code>' to '<code>127</code>'    </td></tr>
+<td class="markdownTableBodyNone"><code>X_BYTE</code>   </td><td class="markdownTableBodyNone"><code>char</code>   </td><td class="markdownTableBodyNone">'<code>-128</code>' to '<code>127</code>'    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_SHORT</code>   </td><td class="markdownTableBodyNone"><code>short</code> or <code>int16_t</code>   </td><td class="markdownTableBodyNone">'<code>-32768</code>' to '<code>32767</code>'    </td></tr>
+<td class="markdownTableBodyNone"><code>X_SHORT</code>   </td><td class="markdownTableBodyNone"><code>short</code>   </td><td class="markdownTableBodyNone">'<code>-32768</code>' to '<code>32767</code>' (typically)    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>X_INT</code>   </td><td class="markdownTableBodyNone"><code>int32_t</code> (<code>int</code>)   </td><td class="markdownTableBodyNone">'<code>-2,147,483,648</code>' to '<code>2,147,483,647</code>'    </td></tr>
+<td class="markdownTableBodyNone"><code>X_INT</code>   </td><td class="markdownTableBodyNone"><code>int</code>   </td><td class="markdownTableBodyNone">'<code>-2,147,483,648</code>' to '<code>2,147,483,647</code>' (typically)    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_LONG</code>   </td><td class="markdownTableBodyNone"><code>long long</code> or <code>int64_t</code>   </td><td class="markdownTableBodyNone">'<code>-9,223,372,036,854,775,808</code>' to '<code>9,223,372,036,854,775,807</code>'    </td></tr>
+<td class="markdownTableBodyNone"><code>X_LONG</code>   </td><td class="markdownTableBodyNone"><code>long long</code>   </td><td class="markdownTableBodyNone">'<code>-9,223,372,036,854,775,808</code>' to '<code>9,223,372,036,854,775,807</code>'    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>X_FLOAT</code>   </td><td class="markdownTableBodyNone"><code>float</code>   </td><td class="markdownTableBodyNone"><code>1</code>, <code>1.0</code>, <code>-1.234567e-33</code>    </td></tr>
 <tr class="markdownTableRowOdd">
@@ -324,7 +325,7 @@ Accessing substructures and elements</h3>
 <div class="fragment"><div class="line"><span class="comment">// Destroy the replaced fields if they are no longer needed.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(oldfield);</div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(oldsub);</div>
-<div class="ttc" id="axstruct_8c_html_ae0ce99c867b11bd14971031eec8ba4ad"><div class="ttname"><a href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a></div><div class="ttdeci">void xDestroyField(XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:1200</div></div>
+<div class="ttc" id="axstruct_8c_html_ae0ce99c867b11bd14971031eec8ba4ad"><div class="ttname"><a href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a></div><div class="ttdeci">void xDestroyField(XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:1205</div></div>
 </div><!-- fragment --><p>You can also remove existing fields from structures using <code><a class="el" href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField()</a></code>, e.g.</p>
 <div class="fragment"><div class="line"><span class="comment">// Remove and then destroy the field named &quot;blah&quot; in structure &#39;s&#39;.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(<a class="code hl_function" href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a>(s, <span class="stringliteral">&quot;blah&quot;</span>));</div>
@@ -370,7 +371,7 @@ Sorting fields</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Reverse the order, recursively</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a>(s, <a class="code hl_define" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>);</div>
-<div class="ttc" id="axstruct_8c_html_ad32d8a3f211a3b101142879ae31146ec"><div class="ttname"><a href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a></div><div class="ttdeci">int xReverseFieldOrder(XStructure *s, boolean recursive)</div><div class="ttdef"><b>Definition</b> xstruct.c:1658</div></div>
+<div class="ttc" id="axstruct_8c_html_ad32d8a3f211a3b101142879ae31146ec"><div class="ttname"><a href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a></div><div class="ttdeci">int xReverseFieldOrder(XStructure *s, boolean recursive)</div><div class="ttdef"><b>Definition</b> xstruct.c:1663</div></div>
 </div><!-- fragment --><hr  />
 <p><a class="anchor" id="json-interchange"></a> </p>
 <h2><a class="anchor" id="autotoc_md23"></a>
@@ -380,20 +381,20 @@ JSON parser and emitter</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Obtain a JSON string representation of the structure &#39;s&#39;.</span></div>
 <div class="line">char *json = <a class="code hl_function" href="xjson_8c.html#a53128045970e973134867c96a6465abc">xjsonToString</a>(s);</div>
-<div class="ttc" id="axjson_8c_html_a53128045970e973134867c96a6465abc"><div class="ttname"><a href="xjson_8c.html#a53128045970e973134867c96a6465abc">xjsonToString</a></div><div class="ttdeci">char * xjsonToString(const XStructure *s)</div><div class="ttdef"><b>Definition</b> xjson.c:135</div></div>
+<div class="ttc" id="axjson_8c_html_a53128045970e973134867c96a6465abc"><div class="ttname"><a href="xjson_8c.html#a53128045970e973134867c96a6465abc">xjsonToString</a></div><div class="ttdeci">char * xjsonToString(const XStructure *s)</div><div class="ttdef"><b>Definition</b> xjson.c:134</div></div>
 </div><!-- fragment --><p>The above produces a proper JSON document. Or, you can do the reverse and create an <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> from its JSON representation, either from a string (a 0-terminated <code>char</code> array):</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> lineNumber = 0;</div>
 <div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s1 = <a class="code hl_function" href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3">xjsonParseAt</a>(json, &amp;lineNumber);</div>
 <div class="line"><span class="keywordflow">if</span> (s1 == NULL) {</div>
 <div class="line">   <span class="comment">// Oops, there was some problem...</span></div>
 <div class="line">}</div>
-<div class="ttc" id="axjson_8c_html_af180900a4afeef713a3fdaeb77a9cba3"><div class="ttname"><a href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3">xjsonParseAt</a></div><div class="ttdeci">XStructure * xjsonParseAt(char **pos, int *lineNumber)</div><div class="ttdef"><b>Definition</b> xjson.c:259</div></div>
+<div class="ttc" id="axjson_8c_html_af180900a4afeef713a3fdaeb77a9cba3"><div class="ttname"><a href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3">xjsonParseAt</a></div><div class="ttdeci">XStructure * xjsonParseAt(char **pos, int *lineNumber)</div><div class="ttdef"><b>Definition</b> xjson.c:257</div></div>
 </div><!-- fragment --><p>or parse it from a file, which contains a JSON definition of the structured data:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s1 = <a class="code hl_function" href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075">xjsonParseFilename</a>(<span class="stringliteral">&quot;my-data.json&quot;</span>, &amp;lineNumber);</div>
 <div class="line"><span class="keywordflow">if</span> (s1 == NULL) {</div>
 <div class="line">   <span class="comment">// Oops, there was some problem...</span></div>
 <div class="line">}</div>
-<div class="ttc" id="axjson_8c_html_afff9ee9473a0c939d18dba977cfac075"><div class="ttname"><a href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075">xjsonParseFilename</a></div><div class="ttdeci">XStructure * xjsonParseFilename(const char *fileName, int *lineNumber)</div><div class="ttdef"><b>Definition</b> xjson.c:329</div></div>
+<div class="ttc" id="axjson_8c_html_afff9ee9473a0c939d18dba977cfac075"><div class="ttname"><a href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075">xjsonParseFilename</a></div><div class="ttdeci">XStructure * xjsonParseFilename(const char *fileName, int *lineNumber)</div><div class="ttdef"><b>Definition</b> xjson.c:327</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md24"></a>
 Snippets</h3>
 <p>Alternatively, you can also create partial JSON fragments for individual fields, e.g.:</p>
@@ -401,7 +402,7 @@ Snippets</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Obtain a JSON fragment for the field &#39;f&#39;.</span></div>
 <div class="line">char *json = <a class="code hl_function" href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f">xjsonFieldToString</a>(f);</div>
-<div class="ttc" id="axjson_8c_html_a42101fa63cb1c6e265f317e9b8719d5f"><div class="ttname"><a href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f">xjsonFieldToString</a></div><div class="ttdeci">char * xjsonFieldToString(const XField *f)</div><div class="ttdef"><b>Definition</b> xjson.c:234</div></div>
+<div class="ttc" id="axjson_8c_html_a42101fa63cb1c6e265f317e9b8719d5f"><div class="ttname"><a href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f">xjsonFieldToString</a></div><div class="ttdeci">char * xjsonFieldToString(const XField *f)</div><div class="ttdef"><b>Definition</b> xjson.c:232</div></div>
 </div><!-- fragment --><p>For example, for a numerical array field with 4 elements the above might generate something like:</p>
 <div class="fragment"><div class="line">&quot;my-numbers&quot;: [ 1, 2, 3, 4]</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md25"></a>
@@ -411,7 +412,7 @@ Escaped string representations</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Escape the special character, e.g. replace `\n` with `\` + `n` etc...</span></div>
 <div class="line"><span class="keywordtype">char</span> *escaped = <a class="code hl_function" href="xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2">xjsonEscape</a>(<span class="keywordtype">string</span>);</div>
-<div class="ttc" id="axjson_8c_html_a92336f3031a90784e8667aaa7ad07ca2"><div class="ttname"><a href="xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2">xjsonEscape</a></div><div class="ttdeci">char * xjsonEscape(const char *src, int maxLength)</div><div class="ttdef"><b>Definition</b> xjson.c:1364</div></div>
+<div class="ttc" id="axjson_8c_html_a92336f3031a90784e8667aaa7ad07ca2"><div class="ttname"><a href="xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2">xjsonEscape</a></div><div class="ttdeci">char * xjsonEscape(const char *src, int maxLength)</div><div class="ttdef"><b>Definition</b> xjson.c:1388</div></div>
 </div><!-- fragment --><p>If you print <code>string</code> to a file or the standard output, it will show up as 2 lines:</p>
 <div class="fragment"><div class="line"><span class="stringliteral">&quot;This has some</span></div>
 <div class="line"><span class="stringliteral">        special characters&quot;</span></div>
@@ -420,7 +421,7 @@ Escaped string representations</h3>
 </div><!-- fragment --><p>And the reverse, suppose you read back the above line from an input, containing the escaped form, and want to reconstruct from it the original C string with the special characters in it:</p>
 <div class="fragment"><div class="line"><span class="comment">// And reverse, from escaped form to ASCII (e.g. `\` + `n` --&gt; `\n`)</span></div>
 <div class="line"><span class="keywordtype">char</span> *<span class="keywordtype">string</span> = <a class="code hl_function" href="xjson_8c.html#aa94ae687d4c1775d35b03614ae2fcf62">xjsonUnescape</a>(escaped);</div>
-<div class="ttc" id="axjson_8c_html_aa94ae687d4c1775d35b03614ae2fcf62"><div class="ttname"><a href="xjson_8c.html#aa94ae687d4c1775d35b03614ae2fcf62">xjsonUnescape</a></div><div class="ttdeci">char * xjsonUnescape(const char *str)</div><div class="ttdef"><b>Definition</b> xjson.c:1399</div></div>
+<div class="ttc" id="axjson_8c_html_aa94ae687d4c1775d35b03614ae2fcf62"><div class="ttname"><a href="xjson_8c.html#aa94ae687d4c1775d35b03614ae2fcf62">xjsonUnescape</a></div><div class="ttdeci">char * xjsonUnescape(const char *str)</div><div class="ttdef"><b>Definition</b> xjson.c:1423</div></div>
 </div><!-- fragment --><hr  />
 <p><a class="anchor" id="xchange-error-handling"></a> </p>
 <h2><a class="anchor" id="autotoc_md27"></a>
@@ -433,8 +434,8 @@ Error handling</h2>
 <div class="line">  fprintf(stderr, <span class="stringliteral">&quot;WARNING! %s&quot;</span>, <a class="code hl_function" href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription</a>(status));</div>
 <div class="line">  ...</div>
 <div class="line">}</div>
-<div class="ttc" id="axchange_8c_html_a7e2e177c11fe7f44ca5ce11f316c0ad9"><div class="ttname"><a href="xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9">xParseDouble</a></div><div class="ttdeci">double xParseDouble(const char *str, char **tail)</div><div class="ttdef"><b>Definition</b> xchange.c:548</div></div>
-<div class="ttc" id="axchange_8c_html_acc701c734a3b95d356660ca5ee16a96a"><div class="ttname"><a href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription</a></div><div class="ttdeci">const char * xErrorDescription(int code)</div><div class="ttdef"><b>Definition</b> xchange.c:680</div></div>
+<div class="ttc" id="axchange_8c_html_a7e2e177c11fe7f44ca5ce11f316c0ad9"><div class="ttname"><a href="xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9">xParseDouble</a></div><div class="ttdeci">double xParseDouble(const char *str, char **tail)</div><div class="ttdef"><b>Definition</b> xchange.c:558</div></div>
+<div class="ttc" id="axchange_8c_html_acc701c734a3b95d356660ca5ee16a96a"><div class="ttname"><a href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription</a></div><div class="ttdeci">const char * xErrorDescription(int code)</div><div class="ttdef"><b>Definition</b> xchange.c:690</div></div>
 <div class="ttc" id="axchange_8h_html_a7b2679c964ea5f2160380ed55654b873"><div class="ttname"><a href="xchange_8h.html#a7b2679c964ea5f2160380ed55654b873">X_SUCCESS</a></div><div class="ttdeci">#define X_SUCCESS</div><div class="ttdoc">hooray!</div><div class="ttdef"><b>Definition</b> xchange.h:58</div></div>
 </div><!-- fragment --><p>The JSON parser can also sink its error messages to a designated file or stream, which can be set by <code><a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream(FILE *)</a></code>.</p>
 <hr  />

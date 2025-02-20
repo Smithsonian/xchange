@@ -84,7 +84,7 @@ The new lookup table, or else NULL if there was an error\&.
 .PP
 
 .PP
-References \fBFALSE\fP, \fBXLookupTable::priv\fP, and \fBx_error()\fP\&.
+References \fBXLookupTable::priv\fP, and \fBx_error()\fP\&.
 .SS "\fBXLookupTable\fP * xCreateLookup (const \fBXStructure\fP * s, \fBboolean\fP recursive)"
 Creates a fast name lookup table for the fields of structure, with or without including fields of embedded substructures also\&. For structures with a large number of fields, such a lookup can significantly improve access times for retrieving specific fields from a structure\&. However, the lookup will not track fields added or removed after its creation, and so it is suited for accessing structures with a fixed layout only\&.
 .PP
