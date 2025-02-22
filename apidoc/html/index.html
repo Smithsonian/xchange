@@ -116,7 +116,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README-xchange"></a> <a href="https://doi.org/10.5281/zenodo.14634824"><img src="https://zenodo.org/badge/796202092.svg" alt="DOI" style="pointer-events: none;" class="inline"/></a></p>
-<p>Free platform-agnostic data exchange framework for C/C++, including a built-in JSON parser and emitter.</p>
+<p>Structured data representation and JSON support for C/C++.</p>
 <ul>
 <li><a href="https://smithsonian.github.io/xchange/apidoc/html/files.html">API documentation</a></li>
 <li><a href="https://smithsonian.github.io/xchange">Project page</a> on github.io</li>
@@ -139,8 +139,9 @@ Table of Contents</h2>
 <p><a class="anchor" id="xchange-introduction"></a> </p>
 <h2><a class="anchor" id="autotoc_md5"></a>
 Introduction</h2>
-<p>The <b>xchange</b> library provides a free framework for platform independent data exchange for structured data in C/C++, and includes a JSON parser and emitter. It is free to use, in any way you like, without licensing restrictions.</p>
+<p>The <b>xchange</b> library provides a free framework for platform independent structured data representation and exchange in C/C++, and includes supports for JSON parsing and generation. It is free to use, in any way you like, without licensing restrictions.</p>
 <p>While there are many excellent libraries out there that offer such capabilities for C++ and/or other object-oriented languages, support for structured data exchange is notably rare for standard C. The <b>xchange</b> library aims to fill that niche, by providing a data exchange framework with a C99-compatible API that supports the interchange of arbitrary structured data between different platforms and different serialization formats with ease. The <b>xchange</b> library also provides support for JSON formatting and parsing using the C99 standard out of the box. All that in a light-weight and fast package.</p>
+<p>For JSON parsing end emitting, <b>xchange</b> provides a higher-level data model than <b>cjson</b>, and includes a suite of high-level functions for accessing and manipulating JSON data both with less code and with cleaner code.</p>
 <p>The <b>xchange</b> library was created, and is maintained, by Attila Kovács at the Center for Astrophysics | Harvard &amp; Smithsonian, and it is available through the <a href="https://github.com/Smithsonian/xchange">Smithsonian/xchange</a> repository on GitHub.</p>
 <hr  />
 <p><a class="anchor" id="building-xchange"></a> </p>
