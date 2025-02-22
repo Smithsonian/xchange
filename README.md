@@ -57,6 +57,9 @@ arbitrary structured data between different platforms and different serializatio
 library also provides support for JSON formatting and parsing using the C99 standard out of the box. All that in a 
 light-weight and fast package.
 
+For JSON parsing end emitting, __xchange__ provides a higher-level data model than __cjson__, and includes a suite of 
+high-level functions for accessing and manipulating JSON data both with less code and with cleaner code.
+
 The __xchange__ library was created, and is maintained, by Attila Kovács at the Center for Astrophysics \| Harvard 
 &amp; Smithsonian, and it is available through the [Smithsonian/xchange](https://github.com/Smithsonian/xchange) 
 repository on GitHub. 
