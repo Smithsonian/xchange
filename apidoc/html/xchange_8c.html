@@ -920,10 +920,10 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Prints a double precision number, restricted to IEEE double-precision range. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead. For values that exceed the IEEE double precision range, "nan" will be printed.</p>
+<p>Prints a double precision number, restricted to legal double-precision range. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead. For values that exceed the legal double precision range, "-inf" or "inf" will be used as appropriate, and NAN values will be printed as "nan".</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">str</td><td>Pointer to buffer for printed value. </td></tr>
+    <tr><td class="paramname">str</td><td>Pointer to buffer for printed value. It should have at least 25 bytes of space allocated after the specidied address. </td></tr>
     <tr><td class="paramname">value</td><td>Value to print. </td></tr>
   </table>
   </dd>
@@ -959,10 +959,10 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Prints a single-precision number, restricted to IEEE single-precision range. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead. For values that exceed the IEEE double precision range, "nan" will be printed.</p>
+<p>Prints a single-precision number, restricted to the legal single-precision range. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead. For values that exceed the legal double precision range, "-inf" or "inf" will be used as appropriate, and NAN values will be printed as "nan".</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">str</td><td>Pointer to buffer for printed value. </td></tr>
+    <tr><td class="paramname">str</td><td>Pointer to buffer for printed value. It should have at least 16 bytes of space allocated after the specified address. </td></tr>
     <tr><td class="paramname">value</td><td>Value to print. </td></tr>
   </table>
   </dd>

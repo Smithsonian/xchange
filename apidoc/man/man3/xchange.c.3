@@ -483,11 +483,11 @@ Number of characters written into the destination buffer, not counting the strin
 .PP
 References \fBx_error()\fP, and \fBX_MAX_DIMS\fP\&.
 .SS "int xPrintDouble (char * str, double value)"
-Prints a double precision number, restricted to IEEE double-precision range\&. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead\&. For values that exceed the IEEE double precision range, 'nan' will be printed\&.
+Prints a double precision number, restricted to legal double-precision range\&. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead\&. For values that exceed the legal double precision range, '-inf' or 'inf' will be used as appropriate, and NAN values will be printed as 'nan'\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIstr\fP Pointer to buffer for printed value\&. 
+\fIstr\fP Pointer to buffer for printed value\&. It should have at least 25 bytes of space allocated after the specidied address\&. 
 .br
 \fIvalue\fP Value to print\&. 
 .RE
@@ -501,11 +501,11 @@ Number of characters printed into the buffer, or -1 if there was an error\&.
 .PP
 References \fBx_error()\fP\&.
 .SS "int xPrintFloat (char * str, float value)"
-Prints a single-precision number, restricted to IEEE single-precision range\&. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead\&. For values that exceed the IEEE double precision range, 'nan' will be printed\&.
+Prints a single-precision number, restricted to the legal single-precision range\&. If the native value has abolute value smaller than the smallest non-zero value, then 0 will printed instead\&. For values that exceed the legal double precision range, '-inf' or 'inf' will be used as appropriate, and NAN values will be printed as 'nan'\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIstr\fP Pointer to buffer for printed value\&. 
+\fIstr\fP Pointer to buffer for printed value\&. It should have at least 16 bytes of space allocated after the specified address\&. 
 .br
 \fIvalue\fP Value to print\&. 
 .RE
