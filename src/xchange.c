@@ -599,12 +599,13 @@ double xParseDouble(const char *str, char **tail) {
 }
 
 /**
- * Prints a double precision number, restricted to IEEE double-precision range. If the native
+ * Prints a double precision number, restricted to legal double-precision range. If the native
  * value has abolute value smaller than the smallest non-zero value, then 0 will printed instead.
- * For values that exceed the IEEE double precision range, "nan" will be printed.
+ * For values that exceed the legal double precision range, "-inf" or "inf" will be used as
+ * appropriate, and NAN values will be printed as "nan".
  *
- *
- * @param str       Pointer to buffer for printed value.
+ * @param str       Pointer to buffer for printed value. It should have at least 25 bytes of
+ *                  space allocated after the specidied address.
  * @param value     Value to print.
  * @return          Number of characters printed into the buffer, or -1 if there was an error.
  */
@@ -622,12 +623,13 @@ int xPrintDouble(char *str, double value) {
 }
 
 /**
- * Prints a single-precision number, restricted to IEEE single-precision range. If the native
+ * Prints a single-precision number, restricted to the legal single-precision range. If the native
  * value has abolute value smaller than the smallest non-zero value, then 0 will printed instead.
- * For values that exceed the IEEE double precision range, "nan" will be printed.
+ * For values that exceed the legal double precision range, "-inf" or "inf" will be used as
+ * appropriate, and NAN values will be printed as "nan".
  *
- *
- * @param str       Pointer to buffer for printed value.
+ * @param str       Pointer to buffer for printed value. It should have at least 16 bytes of
+ *                  space allocated after the specified address.
  * @param value     Value to print.
  * @return          Number of characters printed into the buffer.
  */
