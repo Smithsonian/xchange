@@ -148,7 +148,7 @@ shows the unique __xchange__ types recognized by the library and the correspondi
  | `X_INT16`     | `int16_t`                | '`-32768`' to '`32767`'                                         |
  | `X_INT32`     | `int32_t`                | '`-2,147,483,648`' to '`2,147,483,647`'                         |
  | `X_INT64`     | `int64_t`                | '`-9,223,372,036,854,775,808`' to '`9,223,372,036,854,775,807`' |
- | `X_FLOAT`     | `float`                  | `1`, `1.0`, `-1.234567e-33`                                     |
+ | `X_FLOAT`     | `float`                  | `1`, `1.0`, `-1.234567e-28`                                     |
  | `X_DOUBLE`    | `double`                 | `1`, `1.0`, `-1.2345678901234567e-111`                          |
  | `X_STRING`    | `char *`    	            | `Hello world!`, `line1\nline2\n` (0-terminated)                 |
  | `X_CHARS(n) ` | `char[n]`                | Fixed-length character arrays (also w/o termination)            |
