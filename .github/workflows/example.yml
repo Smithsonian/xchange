@@ -1,0 +1,29 @@
+name: Examples
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'examples/**'
+      - '.github/workflows/example.yml'
+
+  pull_request:
+    paths:
+      - 'examples/**'
+      - '.github/workflows/example.yml'
+
+jobs:
+  build:
+    name: Check examples
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Compile example.c
+      run: |
+        gcc -c -Wall -Werror -Iinclude examples/example.c
+
+    - name: Compile example-escape.c
+      run: |
+        gcc -c -Wall -Werror -Iinclude examples/example-escape.c

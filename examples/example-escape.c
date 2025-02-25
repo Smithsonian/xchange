@@ -11,11 +11,17 @@
  * @author Attila Kovacs
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "xchange.h"
+#include "xjson.h"
 
 int main() {
   const char *cstring = "\\Hello \n\tWorld!";    // A C string contained special characters
 
-  char *escaped, escaped5;    // JSON escaped strings
+  char *escaped, *escaped5;   // JSON escaped strings
   char *unescaped;            // Unescaped C string
 
   printf(" Original  : '%s'\n", cstring);
