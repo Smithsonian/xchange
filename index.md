@@ -1,18 +1,14 @@
 ---
-excerpt: xchange is a structured data exchange framework with JSON support for C/C++ library.
+excerpt: structured data representation and JSON support for C/C++.
 ---
 
 <img src="/xchange/resources/CfA-logo.png" alt="CfA logo" width="400" height="67" align="right"><br clear="all">
 
-The __xchange__ library provides a framework for platform independent data exchange for structured data in C/C++, and
-includes a JSON parser and emitter. 
+The __xchange__ library provides structured data representation and exchange in C/C++, and includes support for JSON 
+parsing and generation. It is free to use, in any way you like, without licensing restrictions.
 
-While there are many excellent libraries out there that offer such capabilities for C++ and/or other object-oriented 
-languages, support for structured data exchange is notably rare for standard C. The __xchange__ library aims to fill 
-that niche, by providing a data exchange framework with a C90-compatible API that supports the interchange of 
-arbitrary structured data between different platforms and different serialization formats with ease. The __xchange__ 
-library also provides support for JSON formatting and parsing using the C90 standard out of the box. All that in a 
-light-weight and fast package.
+For JSON parsing end emitting, __xchange__ provides a higher-level data model than __cjson__, with high-level 
+functions for accessing and manipulating data both with less code and with cleaner code.
 
 The __xchange__ library was created, and is maintained, by Attila Kovács at the Center for Astrophysics \| Harvard 
 &amp; Smithsonian, and it is available through the [Smithsonian/xchange](https://github.com/Smithsonian/xchange) 
