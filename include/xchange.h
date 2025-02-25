@@ -153,7 +153,6 @@ typedef int boolean;               ///< boolean TRUE/FALSE data type.
 #  endif
 #endif
 
-
 /**
  * \brief An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure itself.
  *
@@ -329,7 +328,6 @@ int x_error(int ret, int en, const char *from, const char *desc, ...);
 int x_warn(const char *from, const char *desc, ...);
 int x_trace(const char *loc, const char *op, int n);
 void *x_trace_null(const char *loc, const char *op);
-
 
 /**
  * Propagates an error (if any) with an offset. If the error is non-zero, it returns with the offset

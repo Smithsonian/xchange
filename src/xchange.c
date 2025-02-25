@@ -185,8 +185,6 @@ boolean xIsCharSequence(XType type) {
  * @sa xGetAsLong()
  */
 boolean xIsInteger(XType type) {
-  if(type == X_INT) return TRUE;
-
   switch(type) {
     case X_BOOLEAN:
       case X_BYTE:
@@ -248,8 +246,6 @@ static int xStringSizeForIntBytes(int bytes) {
 int xStringElementSizeOf(XType type) {
   int l = 0; // default
 
-  if(type == X_INT) return xStringSizeForIntBytes(sizeof(int));
-
   if(type < 0) l = -type;
   else switch(type) {
     case X_BOOLEAN: l = 5; break;    // "false"
@@ -274,8 +270,6 @@ int xStringElementSizeOf(XType type) {
  *
  */
 int xElementSizeOf(XType type) {
-  if(type == X_INT) return sizeof(int);
-
   if(type < 0) return -type;
   switch(type) {
     case X_RAW: return sizeof(char *);

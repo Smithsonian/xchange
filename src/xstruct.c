@@ -362,8 +362,6 @@ long xGetAsLongAtIndex(const XField *f, int idx, long defaultValue) {
     return l;
   }
 
-  if(f->type == X_INT) return *(int *) ptr;
-
   switch(f->type) {
     case X_BOOLEAN: return *(boolean *) ptr;
     case X_BYTE: return *(int8_t *) ptr;
@@ -480,8 +478,6 @@ double xGetAsDoubleAtIndex(const XField *f, int idx) {
     if(errno) return NAN;
     return d;
   }
-
-  if(f->type == X_INT) return *(int *) ptr;
 
   switch(f->type) {
     case X_BOOLEAN: return *(boolean *) ptr;
