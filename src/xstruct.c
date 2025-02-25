@@ -658,7 +658,7 @@ XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, c
   n = count * xElementSizeOf(type);
 
   if(n < 0) {
-    x_error(0, ERANGE, fn, "invalid size: count=%d, eSize=%d", xGetElementCount(ndim, sizes), xElementSizeOf(type));
+    x_error(0, ERANGE, fn, "invalid size: count=%ld, eSize=%d", xGetElementCount(ndim, sizes), xElementSizeOf(type));
     return NULL;
   }
 
