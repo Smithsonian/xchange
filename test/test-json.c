@@ -79,7 +79,7 @@ int main() {
   free(str);
   free(str1);
 
-  str = xjsonToString(s),
+  str = xjsonToString(s);
   printf("%s", str);
 
   next = str;
