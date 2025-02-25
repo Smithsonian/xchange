@@ -71,6 +71,8 @@ static int xLookupPutAsync(XLookupTable *tab, const char *prefix, const XField *
   }
 
   e = (XLookupEntry *) calloc(1, sizeof(XLookupEntry));
+  x_check_alloc(e);
+
   e->hash = hash;
   e->key = (char *) id;
   e->field = (XField *) field;
