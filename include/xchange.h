@@ -24,7 +24,7 @@
 #define XCHANGE_PATCHLEVEL     0
 
 /// Additional release information in version, e.g. "-1", or "-rc1".
-#define XCHANGE_RELEASE_STRING "-rc4"
+#define XCHANGE_RELEASE_STRING "-devel"
 
 
 #ifdef str_2
@@ -212,7 +212,7 @@ XField *xGetField(const XStructure *s, const char *name);
 XField *xSetField(XStructure *s, XField *f);
 XField *xRemoveField(XStructure *s, const char *name);
 boolean xIsFieldValid(const XField *f);
-int xGetFieldCount(const XField *f);
+long xGetFieldCount(const XField *f);
 void *xGetElementAtIndex(const XField *f, int idx);
 long xGetAsLongAtIndex(const XField *f, int idx, long defaultValue);
 double xGetAsDoubleAtIndex(const XField *f, int idx);
@@ -278,7 +278,7 @@ char *xGetAggregateID(const char *group, const char *key);
 int xSplitID(char *id, char **pKey);
 int xElementSizeOf(XType type);
 int xStringElementSizeOf(XType type);
-int xGetElementCount(int ndim, const int *sizes);
+long xGetElementCount(int ndim, const int *sizes);
 void *xAlloc(XType type, int count);
 void xZero(void *buf, XType type, int count);
 char *xStringCopyOf(const char *str);

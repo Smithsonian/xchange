@@ -311,8 +311,9 @@ char xTypeChar(XType type) {
  *
  * \return          Total element count specified by the dimensions. Defaults to 1.
  */
-int xGetElementCount(int ndim, const int *sizes) {
-  int i, N = 1;
+long xGetElementCount(int ndim, const int *sizes) {
+  int i;
+  long N = 1L;
 
   if(ndim > 0 && !sizes)
     return x_error(1, EINVAL, "xGetElementCount", "input 'sizes' is NULL (ndim = %d)", ndim);

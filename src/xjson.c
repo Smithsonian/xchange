@@ -129,7 +129,7 @@ static char *GetIndent() {
  * @sa xjsonSetIndent()
  * @sa xjsonParseAt()
  * @sa xjsonParseFile()
- * @sa xjsonParseFilename()
+ * @sa xjsonParsePath()
  */
 char *xjsonToString(const XStructure *s) {
   char *str;
@@ -227,7 +227,7 @@ char *xjsonFieldToIndentedString(int indent, const XField *f) {
  * @sa xjsonSetIndent()
  * @sa xjsonParseAt()
  * @sa xjsonParseFile()
- * @sa xjsonParseFilename()
+ * @sa xjsonParsePath()
  */
 char *xjsonFieldToString(const XField *f) {
   return xjsonFieldToIndentedString(0, f);
@@ -312,7 +312,7 @@ XField *xjsonParseFieldAt(char **pos, int *lineNumber) {
  * Parse errors are reported to stderr or the alternate stream set by xSetErrorStream().
  *
  *
- * @param[in]  fileName     File name/path to parse.
+ * @param[in]  path         File name/path to parse.
  * @param[out] lineNumber   Optional pointer that holds a line number of the parse position, or NULL if not required.
  *                          Line numbers may be useful to report where the parser run into an error if the parsing failed.
  *                          Line numbers start at 1, and are counted from the initial parse position.
@@ -324,26 +324,26 @@ XField *xjsonParseFieldAt(char **pos, int *lineNumber) {
  * @sa xjsonParseAt()
  * @sa xjsonToString()
  */
-XStructure *xjsonParseFilename(const char *fileName, int *lineNumber) {
+XStructure *xjsonParsePath(const char *path, int *lineNumber) {
   FILE *fp;
   struct stat st;
   XStructure *s;
 
-  if(!fileName) {
-    x_error(0, EINVAL, "xjsonParseFilename", "fileName is NULL");
+  if(!path) {
+    x_error(0, EINVAL, "xjsonParsePath", "fileName is NULL");
     return NULL;
   }
 
-  if(xIsVerbose()) fprintf(stderr, "XJSON: Parsing %s.\n", fileName);
+  if(xIsVerbose()) fprintf(stderr, "XJSON: Parsing %s.\n", path);
 
-  fp = fopen(fileName, "r");
+  fp = fopen(path, "r");
   if(!fp) {
     Error("Cannot open file (%s).\n", strerror(errno));
     *lineNumber = -1;
     return NULL;
   }
 
-  stat(fileName, &st);
+  stat(path, &st);
   s = xjsonParseFile(fp, st.st_size, lineNumber);
 
   fclose(fp);
@@ -368,7 +368,7 @@ XStructure *xjsonParseFilename(const char *fileName, int *lineNumber) {
  * @return     Structured data created from the JSON description, or NULL if there was an error parsing the data
  *             (errno is set to EINVAL). The lineNumber argument can be used to determine where the error occurred).
  *
- * @sa xjsonParseFilename()
+ * @sa xjsonParsePath()
  * @sa xjsonParseAt()
  * @sa xjsonToString()
  */

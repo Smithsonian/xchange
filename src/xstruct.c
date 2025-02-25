@@ -869,7 +869,7 @@ boolean xIsFieldValid(const XField *f) {
  * @param f     The field
  * @return      The total number of primitive elements contained in the field.
  */
-int xGetFieldCount(const XField *f) {
+long xGetFieldCount(const XField *f) {
   if(!f) {
     x_error(0, EINVAL, "xGetFieldCount", "input field is NULL");
     return 0;
@@ -902,7 +902,7 @@ void *xGetElementAtIndex(const XField *f, int idx) {
   n = xGetFieldCount(f);
   if(n < 0) return x_trace_null(fn, NULL);
 
-  if(idx + 1 >= n) {
+  if(idx >= n) {
     x_error(0, EINVAL, fn, "index %d is out of bounds for element count %d", idx, n);
     return NULL;
   }
