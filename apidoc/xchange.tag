@@ -149,9 +149,37 @@
     </member>
     <member kind="define">
       <type>#define</type>
+      <name>X_INT16</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a3bb3051d3e40b57dc6ef5f1592cc8c75</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>X_INT32</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a247a3094d14d18583d42abba83d0d9a5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>X_INT64</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>ad9343538ba7ef4aff10d4bed7353be9d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>X_INTERRUPTED</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>a3942401de37f774e72393ffa73c9fb9f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>X_LLONG</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a32d6187065d543d5d6fb6e1bcd33efdc</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">

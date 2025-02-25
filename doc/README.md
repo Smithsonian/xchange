@@ -145,9 +145,13 @@ shows the __xchange__ types recognized by the library and the corresponding poin
  |---------------|--------------------------|-----------------------------------------------------------------|
  | `X_BOOLEAN`   | `boolean`                | '`true`' or '`false`'                                           |
  | `X_BYTE`      | `char`                   | '`-128`' to  '`127`'                                            |
- | `X_SHORT`     | `short`                  | '`-32768`' to '`32767`' (typically)                             |
- | `X_INT`       | `int`                    | '`-2,147,483,648`' to '`2,147,483,647`' (typically)             |
- | `X_LONG`      | `long long`              | '`-9,223,372,036,854,775,808`' to '`9,223,372,036,854,775,807`' |
+ | `X_SHORT`     | `short`                  | at least 16-bits                                                |
+ | `X_INT`       | `int`                    | at least 16-bits                                                |
+ | `X_LONG`      | `long`                   | at least 32-bits                                                |
+ | `X_LLONG`     | `long long`              | at least 64-bits                                                |
+ | `X_INT16`     | `int16_t`                | '`-32768`' to '`32767`'                                         |
+ | `X_INT32`     | `int32_t`                | '`-2,147,483,648`' to '`2,147,483,647`'                         |
+ | `X_INT64`     | `int64_t`                | '`-9,223,372,036,854,775,808`' to '`9,223,372,036,854,775,807`' |
  | `X_FLOAT`     | `float`                  | `1`, `1.0`, `-1.234567e-33`                                     |
  | `X_DOUBLE`    | `double`                 | `1`, `1.0`, `-1.2345678901234567e-111`                          |
  | `X_STRING`    | `char *`    	            | `Hello world!`, `line1\nline2\n` (0-terminated)                 |
@@ -158,6 +162,7 @@ shows the __xchange__ types recognized by the library and the corresponding poin
 The `boolean` type is defined in `xchange.h`. The `XField.value` is a pointer / array of the given element type. So,
 an `XField` of type `X_DOUBLE` will have a `value` field that should be cast a `(double *)`, while for type `X_STRING`
 the value field shall be cast as `(char **)`.
+
 
 <a name="xchange-strings"></a>
 #### Strings

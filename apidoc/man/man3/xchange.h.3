@@ -63,11 +63,11 @@ include/xchange.h
 .ti -1c
 .RI "#define \fBX_BOOLEAN\fP"
 .br
-.RI "boolean XType "
+.RI "\fCboolean\fP XType "
 .ti -1c
 .RI "#define \fBX_BYTE\fP"
 .br
-.RI "single byte XType "
+.RI "single \fCbyte\fP XType "
 .ti -1c
 .RI "#define \fBX_CHARS\fP(length)"
 .br
@@ -102,15 +102,31 @@ include/xchange.h
 .ti -1c
 .RI "#define \fBX_INT\fP"
 .br
-.RI "native int XType (usually 16-bits) "
+.RI "native \fCint\fP XType when it is 16-bits wide "
+.ti -1c
+.RI "#define \fBX_INT16\fP"
+.br
+.RI "16-bit integer Xtype "
+.ti -1c
+.RI "#define \fBX_INT32\fP"
+.br
+.RI "32-bit integer Xtype "
+.ti -1c
+.RI "#define \fBX_INT64\fP"
+.br
+.RI "64-bit integer Xtype "
 .ti -1c
 .RI "#define \fBX_INTERRUPTED\fP   (\-8)"
 .br
 .RI "a waiting call interrupted by user "
 .ti -1c
+.RI "#define \fBX_LLONG\fP"
+.br
+.RI "native \fClong long\fP XType when it is 32-bits wide "
+.ti -1c
 .RI "#define \fBX_LONG\fP"
 .br
-.RI "64-bit int XType "
+.RI "native \fClong\fP XType when it is 32-bits wide "
 .ti -1c
 .RI "#define \fBX_MAX_DIMS\fP   20"
 .br
@@ -170,7 +186,7 @@ include/xchange.h
 .ti -1c
 .RI "#define \fBX_SHORT\fP"
 .br
-.RI "native short XType (usually 16-bits) "
+.RI "native \fCshort\fP XType when it is 16-bits wide "
 .ti -1c
 .RI "#define \fBX_SIZE_INVALID\fP   (\-23)"
 .br
@@ -814,7 +830,7 @@ A newly created field with the supplied data, or NULL if there was an error\&.
 .PP
 
 .PP
-References \fBX_LONG\fP, \fBx_trace_null()\fP, and \fBxCreateScalarField()\fP\&.
+References \fBX_LLONG\fP, \fBx_trace_null()\fP, and \fBxCreateScalarField()\fP\&.
 .SS "\fBXLookupTable\fP * xCreateLookup (const \fBXStructure\fP * s, \fBboolean\fP recursive)"
 Creates a fast name lookup table for the fields of structure, with or without including fields of embedded substructures also\&. For structures with a large number of fields, such a lookup can significantly improve access times for retrieving specific fields from a structure\&. However, the lookup will not track fields added or removed after its creation, and so it is suited for accessing structures with a fixed layout only\&.
 .PP
@@ -1022,7 +1038,7 @@ Returns the storage byte size of a single element of a given type\&.
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBX_FIELD\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, and \fBX_STRUCT\fP\&.
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBX_FIELD\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT16\fP, \fBX_INT32\fP, \fBX_INT64\fP, \fBX_RAW\fP, \fBX_STRING\fP, and \fBX_STRUCT\fP\&.
 .SS "int xError (const char * fn, int code)"
 Prints a descriptive error message to stderr, and returns the error code\&.
 .PP
@@ -1133,7 +1149,7 @@ The value of the field, represented as a double-precision floating point value, 
 .PP
 
 .PP
-References \fBXField::isSerialized\fP, \fBNAN\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, \fBx_trace_null()\fP, \fBxElementSizeOf()\fP, \fBxGetElementAtIndex()\fP, and \fBxIsCharSequence()\fP\&.
+References \fBXField::isSerialized\fP, \fBNAN\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT16\fP, \fBX_INT32\fP, \fBX_INT64\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBx_trace_null()\fP, \fBxElementSizeOf()\fP, \fBxGetElementAtIndex()\fP, and \fBxIsCharSequence()\fP\&.
 .SS "long xGetAsLong (const \fBXField\fP * f, long defaultValue)"
 Return a signed integer value associated to the field, or else the specified default value if the field cannot be represented as an integer\&. This call will use both widening and narrowing conversions, and rounding, as necessary to convert between numerical types (e\&.g\&. \fCfloat\fP to \fClong\fP), while for string values will attempt to parse an integer value\&.
 .PP
@@ -1191,7 +1207,7 @@ The value of the field, represented as an integer, if possible, or else the spec
 .PP
 
 .PP
-References \fBXField::isSerialized\fP, \fBNAN\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, \fBX_RAW\fP, \fBX_SHORT\fP, \fBX_STRING\fP, \fBx_trace()\fP, \fBxElementSizeOf()\fP, \fBxGetElementAtIndex()\fP, and \fBxIsCharSequence()\fP\&.
+References \fBXField::isSerialized\fP, \fBNAN\fP, \fBXField::type\fP, \fBXField::value\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT16\fP, \fBX_INT32\fP, \fBX_INT64\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBx_trace()\fP, \fBxElementSizeOf()\fP, \fBxGetElementAtIndex()\fP, and \fBxIsCharSequence()\fP\&.
 .SS "void * xGetElementAtIndex (const \fBXField\fP * f, int idx)"
 Returns a pointer to the array element at the specified index\&.
 .PP
@@ -1442,7 +1458,7 @@ TRUE (1) if the type is for an integer value, or else FALSE (0)
 .PP
 
 .PP
-References \fBFALSE\fP, \fBTRUE\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_INT\fP, \fBX_LONG\fP, and \fBX_SHORT\fP\&.
+References \fBFALSE\fP, \fBTRUE\fP, \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_INT\fP, \fBX_INT16\fP, \fBX_INT32\fP, and \fBX_INT64\fP\&.
 .SS "\fBboolean\fP xIsNumeric (\fBXType\fP type)"
 Checks if the type represents a numerical value\&.
 .PP
@@ -2121,7 +2137,7 @@ Number of characters (including termination) required for the string representat
 .PP
 
 .PP
-References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_LONG\fP, and \fBX_SHORT\fP\&.
+References \fBX_BOOLEAN\fP, \fBX_BYTE\fP, \fBX_DOUBLE\fP, \fBx_error()\fP, \fBX_FLOAT\fP, \fBX_INT\fP, \fBX_INT16\fP, \fBX_INT32\fP, and \fBX_INT64\fP\&.
 .SS "char xTypeChar (\fBXType\fP type)"
 Returns the character of the field type\&. For X_CHAR types it returns 'C' (without the length specification), and for all other types it returns the constant XType value itself\&.
 .PP
