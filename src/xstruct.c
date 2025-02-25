@@ -362,12 +362,14 @@ long xGetAsLongAtIndex(const XField *f, int idx, long defaultValue) {
     return l;
   }
 
+  if(f->type == X_INT) return *(int *) ptr;
+
   switch(f->type) {
     case X_BOOLEAN: return *(boolean *) ptr;
     case X_BYTE: return *(int8_t *) ptr;
-    case X_SHORT: return *(short *) ptr;
-    case X_INT: return *(int *) ptr;
-    case X_LONG: return *(long *) ptr;
+    case X_INT16: return *(int16_t *) ptr;
+    case X_INT32: return *(int32_t *) ptr;
+    case X_INT64: return *(int64_t *) ptr;
     case X_FLOAT: {
       const float *x = (float *) ptr;
       return (long) floor(*x + 0.5);
@@ -384,7 +386,10 @@ long xGetAsLongAtIndex(const XField *f, int idx, long defaultValue) {
       return (errno ? defaultValue : d);
 
     }
-    default: return defaultValue;
+    default:
+
+
+      return defaultValue;
   }
 }
 
@@ -476,12 +481,14 @@ double xGetAsDoubleAtIndex(const XField *f, int idx) {
     return d;
   }
 
+  if(f->type == X_INT) return *(int *) ptr;
+
   switch(f->type) {
     case X_BOOLEAN: return *(boolean *) ptr;
     case X_BYTE: return *(int8_t *) ptr;
-    case X_SHORT: return *(short *) ptr;
-    case X_INT: return *(int *) ptr;
-    case X_LONG: return *(long *) ptr;
+    case X_INT16: return *(int16_t *) ptr;
+    case X_INT32: return *(int32_t *) ptr;
+    case X_INT64: return *(int64_t *) ptr;
     case X_FLOAT: {
       const float *x = (float *) ptr;
       return (long) floor(*x + 0.5);
@@ -788,7 +795,7 @@ XField *xCreateIntField(const char *name, int value) {
  * @sa xCreateIntField()
  */
 XField *xCreateLongField(const char *name, long long value) {
-  XField *f = xCreateScalarField(name, X_LONG, &value);
+  XField *f = xCreateScalarField(name, X_LLONG, &value);
   if(!f) return x_trace_null("xCreateLongField", NULL);
   return f;
 }

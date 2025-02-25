@@ -13,6 +13,7 @@
 #define XCHANGE_H_
 
 #include <stdint.h>
+#include <limits.h>
 
 /// API major version
 #define XCHANGE_MAJOR_VERSION  1
@@ -83,17 +84,46 @@ typedef int XType;          ///< SMA-X data type.
 
 #define X_CHARS(length)      (-(length))    ///< \hideinitializer A fixed-size sequence of 'length' bytes.
 #define X_UNKNOWN           0       ///< Unknown XType (default)
-#define X_BOOLEAN           '?'     ///< \hideinitializer boolean XType
-#define X_BYTE              'B'     ///< \hideinitializer single byte XType
-#define X_SHORT             'S'     ///< \hideinitializer native short XType (usually 16-bits)
-#define X_INT               'L'     ///< \hideinitializer native int XType (usually 16-bits)
-#define X_LONG              'Y'     ///< \hideinitializer 64-bit int XType
+#define X_BOOLEAN           '?'     ///< \hideinitializer `boolean` XType
+#define X_BYTE              'B'     ///< \hideinitializer single `byte` XType
+#define X_INT16             'S'     ///< \hideinitializer 16-bit integer Xtype
+#define X_INT32             'L'     ///< \hideinitializer 32-bit integer Xtype
+#define X_INT64             'Y'     ///< \hideinitializer 64-bit integer Xtype
 #define X_FLOAT             'F'     ///< \hideinitializer 32-bit floating point XType
 #define X_DOUBLE            'D'     ///< \hideinitializer double-precision (64) bit floating point XType
 #define X_STRING            '$'     ///< \hideinitializer a terminated string XType
 #define X_RAW               'R'     ///< \hideinitializer raw Redis (string) value XType, as stored in database
 #define X_STRUCT            'X'     ///< \hideinitializer XType for an XStructure or array thereof
 #define X_FIELD             '-'     ///< \hideinitializer XType for an XField or array thereof
+
+// Platform-specific width integer types
+#if SHRT_MAX == INT16_MAX
+#  define X_SHORT             X_INT16     ///< \hideinitializer native `short` XType when it is 16-bits wide
+#elif SHRT_MAX == INT32_MAX
+#  define X_SHORT             X_INT32     ///< \hideinitializer native `short` XType when it is 32-bits wide
+#elif SHRT_MAX == INT64_MAX
+#  define X_SHORT             X_INT64     ///< \hideinitializer native `short` XType when it is 64-bits wide
+#endif
+
+#if INT_MAX == INT16_MAX
+#  define X_INT               X_INT16     ///< \hideinitializer native `int` XType when it is 16-bits wide
+#elif INT_MAX == INT32_MAX
+#  define X_INT               X_INT32     ///< \hideinitializer native `int` XType when it is 32-bits wide
+#elif INT_MAX == INT64_MAX
+#  define X_INT               X_INT64     ///< \hideinitializer native `int` XType when it is 64-bits wide
+#endif
+
+#if LONG_MAX == INT32_MAX
+#  define X_LONG              X_INT32     ///< \hideinitializer native `long` XType when it is 32-bits wide
+#elif LONG_MAX == INT64_MAX
+#  define X_LONG              X_INT64     ///< \hideinitializer native `long` XType when it is 64-bits wide
+#endif
+
+#if LLONG_MAX == INT32_MAX
+#  define X_LLONG             X_INT32     ///< \hideinitializer native `long long` XType when it is 32-bits wide
+#elif LLONG_MAX == INT64_MAX
+#  define X_LLONG             X_INT64     ///< \hideinitializer native `long long` XType when it is 64-bits wide
+#endif
 
 #define X_SEP               ":"             ///< sepatator for patterning of notification channels, e.g. "changed:<table>:<key>"
 #define X_SEP_LENGTH         (sizeof(X_SEP) - 1)    ///< String length of hierarchical separator.
