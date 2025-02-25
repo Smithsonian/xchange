@@ -190,7 +190,7 @@ Structured data</h2>
 <p><a class="anchor" id="xchange-data-types"></a> </p>
 <h3><a class="anchor" id="autotoc_md12"></a>
 Basic data types</h3>
-<p>The <b>xchange</b> library supports most basic (primitive) data types used across programming languages. The table below shows the <b>xchange</b> types recognized by the library and the corresponding pointer/array type values:</p>
+<p>The <b>xchange</b> library supports most basic (primitive) data types used across programming languages. The table below shows the unique <b>xchange</b> types recognized by the library and the corresponding pointer/array type values:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone"><code>XType</code>   </th><th class="markdownTableHeadNone">element type   </th><th class="markdownTableHeadNone">Comment / example    </th></tr>
@@ -198,14 +198,6 @@ Basic data types</h3>
 <td class="markdownTableBodyNone"><code>X_BOOLEAN</code>   </td><td class="markdownTableBodyNone"><code>boolean</code>   </td><td class="markdownTableBodyNone">'<code>true</code>' or '<code>false</code>'    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>X_BYTE</code>   </td><td class="markdownTableBodyNone"><code>char</code>   </td><td class="markdownTableBodyNone">'<code>-128</code>' to '<code>127</code>'    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_SHORT</code>   </td><td class="markdownTableBodyNone"><code>short</code>   </td><td class="markdownTableBodyNone">at least 16-bits    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>X_INT</code>   </td><td class="markdownTableBodyNone"><code>int</code>   </td><td class="markdownTableBodyNone">at least 16-bits    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_LONG</code>   </td><td class="markdownTableBodyNone"><code>long</code>   </td><td class="markdownTableBodyNone">at least 32-bits    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>X_LLONG</code>   </td><td class="markdownTableBodyNone"><code>long long</code>   </td><td class="markdownTableBodyNone">at least 64-bits    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>X_INT16</code>   </td><td class="markdownTableBodyNone"><code>int16_t</code>   </td><td class="markdownTableBodyNone">'<code>-32768</code>' to '<code>32767</code>'    </td></tr>
 <tr class="markdownTableRowEven">
@@ -226,6 +218,19 @@ Basic data types</h3>
 <td class="markdownTableBodyNone"><code>X_STRUCT</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code>   </td><td class="markdownTableBodyNone">substructure   </td></tr>
 </table>
 <p>The <code>boolean</code> type is defined in <code><a class="el" href="xchange_8h.html">xchange.h</a></code>. The <code><a class="el" href="structXField.html#a0f61d63b009d0880a89c843bd50d8d76">XField.value</a></code> is a pointer / array of the given element type. So, an <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> of type <code>X_DOUBLE</code> will have a <code>value</code> field that should be cast a <code>(double *)</code>, while for type <code>X_STRING</code> the value field shall be cast as <code>(char **)</code>.</p>
+<p>Additionally, the <b>xchange</b> also defines derivatives types, for native integer types, whose widths are platform dependent. Hence, these alias the matching unique types by the C preprocessor during compilation:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"><code>XType</code>   </th><th class="markdownTableHeadNone">native type   </th><th class="markdownTableHeadNone">Comment / example    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>X_SHORT</code>   </td><td class="markdownTableBodyNone"><code>short</code>   </td><td class="markdownTableBodyNone">at least 16-bits    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>X_INT</code>   </td><td class="markdownTableBodyNone"><code>int</code>   </td><td class="markdownTableBodyNone">at least 16-bits    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>X_LONG</code>   </td><td class="markdownTableBodyNone"><code>long</code>   </td><td class="markdownTableBodyNone">at least 32-bits    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>X_LLONG</code>   </td><td class="markdownTableBodyNone"><code>long long</code>   </td><td class="markdownTableBodyNone">at least 64-bits   </td></tr>
+</table>
 <p><a class="anchor" id="xchange-strings"></a> </p>
 <h4><a class="anchor" id="autotoc_md13"></a>
 Strings</h4>
