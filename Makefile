@@ -168,7 +168,7 @@ INSTALL_PROGRAM ?= install
 INSTALL_DATA ?= install -m 644
 
 .PHONY: install
-install: install-libs install-headers install-html
+install: install-libs install-headers install-html install-examples
 
 .PHONY: install-libs
 install-libs:
@@ -199,6 +199,13 @@ ifneq ($(wildcard apidoc/html/search/*),)
 else
 	@echo "WARNING! Skipping apidoc install: needs doxygen and 'local-dox'"
 endif
+
+.PHONY: install-examples
+install-examples:
+	@echo "installing examples to $(DESTDIR)$(docdir)"
+	install -d $(DESTDIR)$(docdir)
+	$(INSTALL_DATA) -D examples/* $(DESTDIR)$(docdir)/
+
 
 # Built-in help screen for `make help`
 .PHONY: help
