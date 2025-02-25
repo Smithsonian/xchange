@@ -98,31 +98,29 @@ typedef int XType;          ///< SMA-X data type.
 
 // Platform-specific width integer types
 #if SHRT_MAX == INT16_MAX
-#  define X_SHORT             X_INT16     ///< \hideinitializer native `short` XType when it is 16-bits wide
+#  define X_SHORT             X_INT16     ///< \hideinitializer native `short` XType
 #elif SHRT_MAX == INT32_MAX
-#  define X_SHORT             X_INT32     ///< \hideinitializer native `short` XType when it is 32-bits wide
+#  define X_SHORT             X_INT32     ///< \hideinitializer native `short` XType
 #elif SHRT_MAX == INT64_MAX
-#  define X_SHORT             X_INT64     ///< \hideinitializer native `short` XType when it is 64-bits wide
+#  define X_SHORT             X_INT64     ///< \hideinitializer native `short` XType
 #endif
 
 #if INT_MAX == INT16_MAX
-#  define X_INT               X_INT16     ///< \hideinitializer native `int` XType when it is 16-bits wide
+#  define X_INT               X_INT16     ///< \hideinitializer native `int` XType
 #elif INT_MAX == INT32_MAX
-#  define X_INT               X_INT32     ///< \hideinitializer native `int` XType when it is 32-bits wide
+#  define X_INT               X_INT32     ///< \hideinitializer native `int` XType
 #elif INT_MAX == INT64_MAX
-#  define X_INT               X_INT64     ///< \hideinitializer native `int` XType when it is 64-bits wide
+#  define X_INT               X_INT64     ///< \hideinitializer native `int` XType
 #endif
 
 #if LONG_MAX == INT32_MAX
-#  define X_LONG              X_INT32     ///< \hideinitializer native `long` XType when it is 32-bits wide
+#  define X_LONG              X_INT32     ///< \hideinitializer native `long` XType
 #elif LONG_MAX == INT64_MAX
-#  define X_LONG              X_INT64     ///< \hideinitializer native `long` XType when it is 64-bits wide
+#  define X_LONG              X_INT64     ///< \hideinitializer native `long` XType
 #endif
 
-#if LLONG_MAX == INT32_MAX
-#  define X_LLONG             X_INT32     ///< \hideinitializer native `long long` XType when it is 32-bits wide
-#elif LLONG_MAX == INT64_MAX
-#  define X_LLONG             X_INT64     ///< \hideinitializer native `long long` XType when it is 64-bits wide
+#if LLONG_MAX == INT64_MAX
+#  define X_LLONG             X_INT64     ///< \hideinitializer native `long long` XType
 #endif
 
 #define X_SEP               ":"             ///< sepatator for patterning of notification channels, e.g. "changed:<table>:<key>"
