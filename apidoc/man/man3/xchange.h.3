@@ -223,7 +223,7 @@ include/xchange.h
 .br
 .RI "Integer sub version of the release\&. "
 .ti -1c
-.RI "#define \fBXCHANGE_RELEASE_STRING\fP   '\-rc4'"
+.RI "#define \fBXCHANGE_RELEASE_STRING\fP   '\-devel'"
 .br
 .RI "Additional release information in version, e\&.g\&. '-1', or '-rc1'\&. "
 .ti -1c
@@ -354,13 +354,13 @@ include/xchange.h
 .RI "void * \fBxGetElementAtIndex\fP (const \fBXField\fP *f, int idx)"
 .br
 .ti -1c
-.RI "int \fBxGetElementCount\fP (int ndim, const int *sizes)"
+.RI "long \fBxGetElementCount\fP (int ndim, const int *sizes)"
 .br
 .ti -1c
 .RI "\fBXField\fP * \fBxGetField\fP (const \fBXStructure\fP *s, const char *name)"
 .br
 .ti -1c
-.RI "int \fBxGetFieldCount\fP (const \fBXField\fP *f)"
+.RI "long \fBxGetFieldCount\fP (const \fBXField\fP *f)"
 .br
 .ti -1c
 .RI "char * \fBxGetStringAtIndex\fP (const \fBXField\fP *f, int idx)"
@@ -1219,7 +1219,7 @@ A pointer to the element at the given index, or NULL if there was an error\&.
 
 .PP
 References \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBx_trace_null()\fP, \fBxElementSizeOf()\fP, and \fBxGetFieldCount()\fP\&.
-.SS "int xGetElementCount (int ndim, const int * sizes)"
+.SS "long xGetElementCount (int ndim, const int * sizes)"
 Returns the total element count specified by along a number of dimensions\&. It ignores dimensions that have size components <= 0;
 .PP
 \fBParameters\fP
@@ -1268,7 +1268,7 @@ Matching field from the structure or NULL if there is no match or one of the arg
 
 .PP
 References \fBXStructure::firstField\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_STRUCT\fP, \fBX_SUCCESS\fP, \fBxGetField()\fP, \fBxMatchNextID()\fP, and \fBxNextIDToken()\fP\&.
-.SS "int xGetFieldCount (const \fBXField\fP * f)"
+.SS "long xGetFieldCount (const \fBXField\fP * f)"
 Returns the total number of primitive elements in a field\&.
 .PP
 \fBParameters\fP

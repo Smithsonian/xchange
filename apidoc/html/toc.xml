@@ -164,9 +164,9 @@
           <topic label="xGetAsLong" href="xchange_8h.html#ae9fbb705ce77cec34188dd1baf596797"/>
           <topic label="xGetAsLongAtIndex" href="xchange_8h.html#a23cc993336df0815333a58476b472713"/>
           <topic label="xGetElementAtIndex" href="xchange_8h.html#ae683dbdc302ce2ce78f77c5301e09386"/>
-          <topic label="xGetElementCount" href="xchange_8h.html#ad35e0d8c0ebbb4948c233f96c54bd8d6"/>
+          <topic label="xGetElementCount" href="xchange_8h.html#abd33468c427ffa1b24c357f652651ae0"/>
           <topic label="xGetField" href="xchange_8h.html#ad3f1d50fc0f1553b806bedbd17d2206e"/>
-          <topic label="xGetFieldCount" href="xchange_8h.html#a1720e156de63fd0585224738ccbb5688"/>
+          <topic label="xGetFieldCount" href="xchange_8h.html#aa2db2b2201bca0c646fa26daa44143e3"/>
           <topic label="xGetStringAtIndex" href="xchange_8h.html#a3035f9e6bd1b2993e0d19e0017f537fe"/>
           <topic label="xGetStringValue" href="xchange_8h.html#a387880bb4397076346323c0f0a0030f9"/>
           <topic label="xGetSubstruct" href="xchange_8h.html#a97a58e33c4730e272af459dfb7f016f9"/>
@@ -221,7 +221,7 @@
           <topic label="xjsonParseAt" href="xjson_8h.html#acdb7d242c80b4c9dbeedc62b479bfcc7"/>
           <topic label="xjsonParseFieldAt" href="xjson_8h.html#ad27c7a065fa6c61354e3293606617889"/>
           <topic label="xjsonParseFile" href="xjson_8h.html#a5b542fdced2080503cdbf2cf9a071324"/>
-          <topic label="xjsonParseFilename" href="xjson_8h.html#afff9ee9473a0c939d18dba977cfac075"/>
+          <topic label="xjsonParsePath" href="xjson_8h.html#af5a54c0bbd41dcd4c82562c25769b398"/>
           <topic label="xjsonSetErrorStream" href="xjson_8h.html#a23a7bd364a80bc2bab9ce917ed5f22ea"/>
           <topic label="xjsonSetIndent" href="xjson_8h.html#a1f877c9790a53582cdda10659a3d033a"/>
           <topic label="xjsonToString" href="xjson_8h.html#a53128045970e973134867c96a6465abc"/>
@@ -240,7 +240,7 @@
           <topic label="xElementSizeOf" href="xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e"/>
           <topic label="xError" href="xchange_8c.html#a606c4844e51124bee155e30bac8ca885"/>
           <topic label="xErrorDescription" href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a"/>
-          <topic label="xGetElementCount" href="xchange_8c.html#ad35e0d8c0ebbb4948c233f96c54bd8d6"/>
+          <topic label="xGetElementCount" href="xchange_8c.html#abd33468c427ffa1b24c357f652651ae0"/>
           <topic label="xIsCharSequence" href="xchange_8c.html#adcc86baacb3ddebcc529e269223274b8"/>
           <topic label="xIsDecimal" href="xchange_8c.html#abe2b4b1a0b9239eb0e3777644af52f9e"/>
           <topic label="xIsInteger" href="xchange_8c.html#af41871e24afe60ccd56301144f636fa3"/>
@@ -272,7 +272,7 @@
           <topic label="xjsonParseAt" href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3"/>
           <topic label="xjsonParseFieldAt" href="xjson_8c.html#aacd36258562860dac1bcc8154cda47cf"/>
           <topic label="xjsonParseFile" href="xjson_8c.html#a9bdaf6099829f03eb2658342e856f0ad"/>
-          <topic label="xjsonParseFilename" href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075"/>
+          <topic label="xjsonParsePath" href="xjson_8c.html#a10f821e34aeb56f02985ac6cc3a8be89"/>
           <topic label="xjsonSetErrorStream" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea"/>
           <topic label="xjsonSetIndent" href="xjson_8c.html#a1f877c9790a53582cdda10659a3d033a"/>
           <topic label="xjsonToString" href="xjson_8c.html#a53128045970e973134867c96a6465abc"/>
@@ -319,7 +319,7 @@
           <topic label="xGetAsLongAtIndex" href="xstruct_8c.html#a23cc993336df0815333a58476b472713"/>
           <topic label="xGetElementAtIndex" href="xstruct_8c.html#ae683dbdc302ce2ce78f77c5301e09386"/>
           <topic label="xGetField" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d"/>
-          <topic label="xGetFieldCount" href="xstruct_8c.html#a1720e156de63fd0585224738ccbb5688"/>
+          <topic label="xGetFieldCount" href="xstruct_8c.html#aa2db2b2201bca0c646fa26daa44143e3"/>
           <topic label="xGetStringAtIndex" href="xstruct_8c.html#a3035f9e6bd1b2993e0d19e0017f537fe"/>
           <topic label="xGetStringValue" href="xstruct_8c.html#a387880bb4397076346323c0f0a0030f9"/>
           <topic label="xGetSubstruct" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9"/>

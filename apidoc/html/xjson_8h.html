@@ -146,8 +146,8 @@ Functions</h2></td></tr>
 <tr class="separator:ad27c7a065fa6c61354e3293606617889"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b542fdced2080503cdbf2cf9a071324" id="r_a5b542fdced2080503cdbf2cf9a071324"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXStructure.html">XStructure</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xjson_8h.html#a5b542fdced2080503cdbf2cf9a071324">xjsonParseFile</a> (FILE *file, size_t length, int *lineNumber)</td></tr>
 <tr class="separator:a5b542fdced2080503cdbf2cf9a071324"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afff9ee9473a0c939d18dba977cfac075" id="r_afff9ee9473a0c939d18dba977cfac075"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXStructure.html">XStructure</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xjson_8h.html#afff9ee9473a0c939d18dba977cfac075">xjsonParseFilename</a> (const char *fileName, int *lineNumber)</td></tr>
-<tr class="separator:afff9ee9473a0c939d18dba977cfac075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5a54c0bbd41dcd4c82562c25769b398" id="r_af5a54c0bbd41dcd4c82562c25769b398"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXStructure.html">XStructure</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xjson_8h.html#af5a54c0bbd41dcd4c82562c25769b398">xjsonParsePath</a> (const char *fileName, int *lineNumber)</td></tr>
+<tr class="separator:af5a54c0bbd41dcd4c82562c25769b398"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23a7bd364a80bc2bab9ce917ed5f22ea" id="r_a23a7bd364a80bc2bab9ce917ed5f22ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xjson_8h.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream</a> (FILE *fp)</td></tr>
 <tr class="separator:a23a7bd364a80bc2bab9ce917ed5f22ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f877c9790a53582cdda10659a3d033a" id="r_a1f877c9790a53582cdda10659a3d033a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xjson_8h.html#a1f877c9790a53582cdda10659a3d033a">xjsonSetIndent</a> (int nchars)</td></tr>
@@ -273,7 +273,7 @@ Functions</h2></td></tr>
 <dd>
 <a class="el" href="xjson_8c.html#a9bdaf6099829f03eb2658342e856f0ad">xjsonParseFile()</a> </dd>
 <dd>
-<a class="el" href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075">xjsonParseFilename()</a> </dd></dl>
+<a class="el" href="xjson_8c.html#a10f821e34aeb56f02985ac6cc3a8be89">xjsonParsePath()</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="xjson_8c.html#a01bc599d67f70636a813b103a20170ac">xjsonFieldToIndentedString()</a>.</p>
 
@@ -434,7 +434,7 @@ xjsonParseFileName() </dd></dl>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Structured data created from the JSON description, or NULL if there was an error parsing the data (errno is set to EINVAL). The lineNumber argument can be used to determine where the error occurred).</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075">xjsonParseFilename()</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xjson_8c.html#a10f821e34aeb56f02985ac6cc3a8be89">xjsonParsePath()</a> </dd>
 <dd>
 <a class="el" href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3">xjsonParseAt()</a> </dd>
 <dd>
@@ -444,17 +444,17 @@ xjsonParseFileName() </dd></dl>
 
 </div>
 </div>
-<a id="afff9ee9473a0c939d18dba977cfac075" name="afff9ee9473a0c939d18dba977cfac075"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afff9ee9473a0c939d18dba977cfac075">&#9670;&#160;</a></span>xjsonParseFilename()</h2>
+<a id="af5a54c0bbd41dcd4c82562c25769b398" name="af5a54c0bbd41dcd4c82562c25769b398"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5a54c0bbd41dcd4c82562c25769b398">&#9670;&#160;</a></span>xjsonParsePath()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structXStructure.html">XStructure</a> * xjsonParseFilename </td>
+          <td class="memname"><a class="el" href="structXStructure.html">XStructure</a> * xjsonParsePath </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>fileName</em>, </td>
+          <td class="paramname"><em>path</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -472,7 +472,7 @@ xjsonParseFileName() </dd></dl>
 <p>Parses a JSON object from the beginning of a file, returning the described structured data. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream().</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">fileName</td><td>File name/path to parse. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>File name/path to parse. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">lineNumber</td><td>Optional pointer that holds a line number of the parse position, or NULL if not required. Line numbers may be useful to report where the parser run into an error if the parsing failed. Line numbers start at 1, and are counted from the initial parse position.</td></tr>
   </table>
   </dd>
@@ -576,7 +576,7 @@ xjsonParseFileName() </dd></dl>
 <dd>
 <a class="el" href="xjson_8c.html#a9bdaf6099829f03eb2658342e856f0ad">xjsonParseFile()</a> </dd>
 <dd>
-<a class="el" href="xjson_8c.html#afff9ee9473a0c939d18dba977cfac075">xjsonParseFilename()</a> </dd></dl>
+<a class="el" href="xjson_8c.html#a10f821e34aeb56f02985ac6cc3a8be89">xjsonParsePath()</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription()</a>, and <a class="el" href="xchange_8c.html#a01d730a1a98963816de2dd73e72957a5">xStringCopyOf()</a>.</p>
 

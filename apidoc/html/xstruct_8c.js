@@ -28,7 +28,7 @@ var xstruct_8c =
     [ "xGetAsLongAtIndex", "xstruct_8c.html#a23cc993336df0815333a58476b472713", null ],
     [ "xGetElementAtIndex", "xstruct_8c.html#ae683dbdc302ce2ce78f77c5301e09386", null ],
     [ "xGetField", "xstruct_8c.html#a442f155b0c6549549737510ce42bb66d", null ],
-    [ "xGetFieldCount", "xstruct_8c.html#a1720e156de63fd0585224738ccbb5688", null ],
+    [ "xGetFieldCount", "xstruct_8c.html#aa2db2b2201bca0c646fa26daa44143e3", null ],
     [ "xGetStringAtIndex", "xstruct_8c.html#a3035f9e6bd1b2993e0d19e0017f537fe", null ],
     [ "xGetStringValue", "xstruct_8c.html#a387880bb4397076346323c0f0a0030f9", null ],
     [ "xGetSubstruct", "xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9", null ],

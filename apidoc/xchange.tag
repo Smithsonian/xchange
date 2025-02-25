@@ -631,10 +631,10 @@
       <arglist>(const XField *f, int idx)</arglist>
     </member>
     <member kind="function">
-      <type>int</type>
+      <type>long</type>
       <name>xGetElementCount</name>
       <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>ad35e0d8c0ebbb4948c233f96c54bd8d6</anchor>
+      <anchor>abd33468c427ffa1b24c357f652651ae0</anchor>
       <arglist>(int ndim, const int *sizes)</arglist>
     </member>
     <member kind="function">
@@ -645,10 +645,10 @@
       <arglist>(const XStructure *s, const char *name)</arglist>
     </member>
     <member kind="function">
-      <type>int</type>
+      <type>long</type>
       <name>xGetFieldCount</name>
       <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>a1720e156de63fd0585224738ccbb5688</anchor>
+      <anchor>aa2db2b2201bca0c646fa26daa44143e3</anchor>
       <arglist>(const XField *f)</arglist>
     </member>
     <member kind="function">
@@ -1023,9 +1023,9 @@
     </member>
     <member kind="function">
       <type>XStructure *</type>
-      <name>xjsonParseFilename</name>
+      <name>xjsonParsePath</name>
       <anchorfile>xjson_8h.html</anchorfile>
-      <anchor>afff9ee9473a0c939d18dba977cfac075</anchor>
+      <anchor>af5a54c0bbd41dcd4c82562c25769b398</anchor>
       <arglist>(const char *fileName, int *lineNumber)</arglist>
     </member>
     <member kind="function">
@@ -1133,10 +1133,10 @@
       <arglist>(int code)</arglist>
     </member>
     <member kind="function">
-      <type>int</type>
+      <type>long</type>
       <name>xGetElementCount</name>
       <anchorfile>xchange_8c.html</anchorfile>
-      <anchor>ad35e0d8c0ebbb4948c233f96c54bd8d6</anchor>
+      <anchor>abd33468c427ffa1b24c357f652651ae0</anchor>
       <arglist>(int ndim, const int *sizes)</arglist>
     </member>
     <member kind="function">
@@ -1350,10 +1350,10 @@
     </member>
     <member kind="function">
       <type>XStructure *</type>
-      <name>xjsonParseFilename</name>
+      <name>xjsonParsePath</name>
       <anchorfile>xjson_8c.html</anchorfile>
-      <anchor>afff9ee9473a0c939d18dba977cfac075</anchor>
-      <arglist>(const char *fileName, int *lineNumber)</arglist>
+      <anchor>a10f821e34aeb56f02985ac6cc3a8be89</anchor>
+      <arglist>(const char *path, int *lineNumber)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -1662,10 +1662,10 @@
       <arglist>(const XStructure *s, const char *id)</arglist>
     </member>
     <member kind="function">
-      <type>int</type>
+      <type>long</type>
       <name>xGetFieldCount</name>
       <anchorfile>xstruct_8c.html</anchorfile>
-      <anchor>a1720e156de63fd0585224738ccbb5688</anchor>
+      <anchor>aa2db2b2201bca0c646fa26daa44143e3</anchor>
       <arglist>(const XField *f)</arglist>
     </member>
     <member kind="function">

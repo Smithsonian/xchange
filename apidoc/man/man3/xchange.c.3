@@ -46,7 +46,7 @@ src/xchange.c \- A collection of commonly used functions for standard data excha
 .RI "const char * \fBxErrorDescription\fP (int code)"
 .br
 .ti -1c
-.RI "int \fBxGetElementCount\fP (int ndim, const int *sizes)"
+.RI "long \fBxGetElementCount\fP (int ndim, const int *sizes)"
 .br
 .ti -1c
 .RI "\fBboolean\fP \fBxIsCharSequence\fP (\fBXType\fP type)"
@@ -285,7 +285,7 @@ A constant string with the error description\&.
 
 .PP
 References \fBX_ALREADY_OPEN\fP, \fBX_FAILURE\fP, \fBX_GROUP_INVALID\fP, \fBX_INCOMPLETE\fP, \fBX_INTERRUPTED\fP, \fBX_NAME_INVALID\fP, \fBX_NO_BLOCKED_READ\fP, \fBX_NO_INIT\fP, \fBX_NO_PIPELINE\fP, \fBX_NO_SERVICE\fP, \fBX_NOT_ENOUGH_TOKENS\fP, \fBX_NULL\fP, \fBX_PARSE_ERROR\fP, \fBX_SIZE_INVALID\fP, \fBX_SUCCESS\fP, \fBX_TIMEDOUT\fP, and \fBX_TYPE_INVALID\fP\&.
-.SS "int xGetElementCount (int ndim, const int * sizes)"
+.SS "long xGetElementCount (int ndim, const int * sizes)"
 Returns the total element count specified by along a number of dimensions\&. It ignores dimensions that have size components <= 0;
 .PP
 \fBParameters\fP

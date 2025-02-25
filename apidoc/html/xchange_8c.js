@@ -10,7 +10,7 @@ var xchange_8c =
     [ "xElementSizeOf", "xchange_8c.html#af5ec26d18b20fc0da9ec9032af73fa9e", null ],
     [ "xError", "xchange_8c.html#a606c4844e51124bee155e30bac8ca885", null ],
     [ "xErrorDescription", "xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a", null ],
-    [ "xGetElementCount", "xchange_8c.html#ad35e0d8c0ebbb4948c233f96c54bd8d6", null ],
+    [ "xGetElementCount", "xchange_8c.html#abd33468c427ffa1b24c357f652651ae0", null ],
     [ "xIsCharSequence", "xchange_8c.html#adcc86baacb3ddebcc529e269223274b8", null ],
     [ "xIsDecimal", "xchange_8c.html#abe2b4b1a0b9239eb0e3777644af52f9e", null ],
     [ "xIsInteger", "xchange_8c.html#af41871e24afe60ccd56301144f636fa3", null ],

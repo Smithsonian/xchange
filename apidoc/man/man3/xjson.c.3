@@ -48,7 +48,7 @@ src/xjson.c \- A set of functions for parsing and creating JSON description of d
 .RI "\fBXStructure\fP * \fBxjsonParseFile\fP (FILE *fp, size_t length, int *lineNumber)"
 .br
 .ti -1c
-.RI "\fBXStructure\fP * \fBxjsonParseFilename\fP (const char *fileName, int *lineNumber)"
+.RI "\fBXStructure\fP * \fBxjsonParsePath\fP (const char *path, int *lineNumber)"
 .br
 .ti -1c
 .RI "void \fBxjsonSetErrorStream\fP (FILE *fp)"
@@ -151,7 +151,7 @@ String JSON representation, or NULL if there was an error (errno set to EINVAL)\
 .PP
 \fBxjsonParseFile()\fP 
 .PP
-\fBxjsonParseFilename()\fP 
+\fBxjsonParsePath()\fP 
 .RE
 .PP
 
@@ -250,7 +250,7 @@ Structured data created from the JSON description, or NULL if there was an error
 .PP
 \fBSee also\fP
 .RS 4
-\fBxjsonParseFilename()\fP 
+\fBxjsonParsePath()\fP 
 .PP
 \fBxjsonParseAt()\fP 
 .PP
@@ -260,12 +260,12 @@ Structured data created from the JSON description, or NULL if there was an error
 
 .PP
 References \fBx_error()\fP\&.
-.SS "\fBXStructure\fP * xjsonParseFilename (const char * fileName, int * lineNumber)"
+.SS "\fBXStructure\fP * xjsonParsePath (const char * path, int * lineNumber)"
 Parses a JSON object from the beginning of a file, returning the described structured data\&. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream()\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIfileName\fP File name/path to parse\&. 
+\fIpath\fP File name/path to parse\&. 
 .br
 \fIlineNumber\fP Optional pointer that holds a line number of the parse position, or NULL if not required\&. Line numbers may be useful to report where the parser run into an error if the parsing failed\&. Line numbers start at 1, and are counted from the initial parse position\&.
 .RE
@@ -339,7 +339,7 @@ String JSON representation, or NULL if there was an error (errno set to EINVAL)\
 .PP
 \fBxjsonParseFile()\fP 
 .PP
-\fBxjsonParseFilename()\fP 
+\fBxjsonParsePath()\fP 
 .RE
 .PP
 

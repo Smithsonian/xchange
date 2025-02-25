@@ -9,7 +9,7 @@ var xjson_8h =
     [ "xjsonParseAt", "xjson_8h.html#acdb7d242c80b4c9dbeedc62b479bfcc7", null ],
     [ "xjsonParseFieldAt", "xjson_8h.html#ad27c7a065fa6c61354e3293606617889", null ],
     [ "xjsonParseFile", "xjson_8h.html#a5b542fdced2080503cdbf2cf9a071324", null ],
-    [ "xjsonParseFilename", "xjson_8h.html#afff9ee9473a0c939d18dba977cfac075", null ],
+    [ "xjsonParsePath", "xjson_8h.html#af5a54c0bbd41dcd4c82562c25769b398", null ],
     [ "xjsonSetErrorStream", "xjson_8h.html#a23a7bd364a80bc2bab9ce917ed5f22ea", null ],
     [ "xjsonSetIndent", "xjson_8h.html#a1f877c9790a53582cdda10659a3d033a", null ],
     [ "xjsonToString", "xjson_8h.html#a53128045970e973134867c96a6465abc", null ],
