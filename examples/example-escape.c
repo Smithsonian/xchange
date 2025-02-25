@@ -21,7 +21,7 @@
 int main() {
   const char *cstring = "\\Hello \n\tWorld!";    // A C string contained special characters
 
-  char *escaped, *escaped5;   // JSON escaped strings
+  char *escaped, *escaped6;   // JSON escaped strings
   char *unescaped;            // Unescaped C string
 
   printf(" Original  : '%s'\n", cstring);
@@ -40,11 +40,11 @@ int main() {
   free(escaped);
 
   // Obtained an escaped representation of the first 5 characters of the C-string
-  escaped5 = xjsonEscape(cstring, 5);
-  printf(" Escaped5  : '%s'\n", escaped5);
+  escaped6 = xjsonEscape(cstring, 6);
+  printf(" Escaped6  : '%s'\n", escaped6);
 
   // Discard created strings when no longer needed
-  free(escaped5);
+  free(escaped6);
 
   return 0;
 }
