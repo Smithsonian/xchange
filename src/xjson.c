@@ -749,11 +749,19 @@ static void *ParsePrimitive(char **pos, XType *type, int *lineNumber) {
       *type = X_INT;
       return value;
     }
+    else if(ll == (long) ll) {
+      // If we can represent as long, then prefer it.
+      long *value = (long *) malloc(sizeof(long));
+      x_check_alloc(value);
+      *value = (long) ll;
+      *type = X_LONG;
+      return value;
+    }
     else {
       long long *value = (long long *) malloc(sizeof(long long));
       x_check_alloc(value);
       *value = ll;
-      *type = X_LONG;
+      *type = X_LLONG;
       return value;
     }
   }
@@ -817,9 +825,9 @@ static XType GetCommonType(XType t1, XType t2) {
   if(t1 == X_STRING || t2 == X_STRING) return X_FIELD;
   if(t1 == X_DOUBLE || t2 == X_DOUBLE) return X_DOUBLE;
   if(t1 == X_FLOAT || t2 == X_FLOAT) return X_FLOAT;
-  if(t1 == X_LONG || t2 == X_LONG) return X_LONG;
-  if(t1 == X_INT || t2 == X_INT) return X_INT;
-  if(t1 == X_SHORT || t2 == X_SHORT) return X_SHORT;
+  if(t1 == X_INT64 || t2 == X_INT64) return X_INT64;
+  if(t1 == X_INT32 || t2 == X_INT32) return X_INT32;
+  if(t1 == X_INT16 || t2 == X_INT16) return X_INT16;
   if(t1 == X_BYTE || t2 == X_BYTE) return X_BYTE;
   if(t1 == X_BOOLEAN || t2 == X_BOOLEAN) return X_BOOLEAN;
   return X_UNKNOWN;
@@ -1284,14 +1292,17 @@ static int PrintPrimitive(const void *ptr, XType type, char *str) {
     case X_UNKNOWN: return sprintf(str, JSON_NULL);
     case X_BOOLEAN: return sprintf(str, (*(boolean *)ptr ? JSON_TRUE : JSON_FALSE));
     case X_BYTE: return sprintf(str, "%hhu", *(unsigned char *) ptr);
-    case X_SHORT: return sprintf(str, "%hd", *(short *) ptr);
-    case X_INT: return sprintf(str, "%d", *(int *) ptr);
-    case X_LONG: return sprintf(str, "%lld", *(long long *) ptr);
     case X_FLOAT: return sprintf(str, "%.8g , ", *(float *) ptr);
     case X_DOUBLE: return xPrintDouble(str, *(double *) ptr);
     case X_STRING:
     case X_RAW: return PrintString(*(char **) ptr, TERMINATED_STRING, str);
-    default: return x_error(X_TYPE_INVALID, EINVAL, fn, "invalid type: %d", type);
+    default:
+      if(type == X_SHORT) return sprintf(str, "%hd", *(short *) ptr);
+      else if(type == X_INT) return sprintf(str, "%d", *(int *) ptr);
+      else if(type == X_LONG) return sprintf(str, "%ld", *(long *) ptr);
+      else if(type == X_LLONG) return sprintf(str, "%lld", *(long long *) ptr);
+
+      return x_error(X_TYPE_INVALID, EINVAL, fn, "invalid type: %d", type);
   }
 }
 
