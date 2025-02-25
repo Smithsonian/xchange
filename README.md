@@ -483,7 +483,7 @@ Alternatively, you can also create partial JSON fragments for individual fields,
 For example, for a numerical array field with 4 elements the above might generate something like:
 
 ```json
-  "my-numbers": [ 1, 2, 3, 4]
+  "my-numbers": [ 1, 2, 3, 4 ]
 ```
 
 
