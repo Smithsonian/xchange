@@ -83,7 +83,7 @@ int main() {
   printf("%s", str);
 
   next = str;
-  s1 = xjsonParseAt(&next, NULL);
+  s1 = xjsonParseAt(&next);
 
   str1 = xjsonToString(s1);
   if(strcmp(str1, str) != 0) {

@@ -185,11 +185,11 @@ int main() {
   // -------------------------------------------------------------------------
   // Parse the JSON representation back into a structure
   pos = json;                           // Start parsing at the head of the JSON string
-  parsed = xjsonParseAt(&pos, NULL);    // Parse the JSON, and update the parse position
+  parsed = xjsonParseAt(&pos);          // Parse the JSON, and update the parse position
   printf(" Parsed %d bytes\n", (int) (pos - json));
 
   // Alternatively, you can parse JSON from a file, e.g.:
-  //parsed = xjsonParsePath("/path/to/my.json", NULL);
+  //parsed = xjsonParsePath("/path/to/my.json");
 
 
 

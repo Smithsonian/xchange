@@ -241,9 +241,6 @@ char *xjsonFieldToString(const XField *f) {
  *
  * @param[in,out] pos           Pointer to current parse position, which will be updated to point to after the last character consumed
  *                              by the JSON parser.
- * @param[out]    lineNumber    Optional pointer that holds a line number of the parse position, or NULL if not required.
- *                              Line numbers may be useful to report where the parser run into an error if the parsing failed.
- *                              Line numbers start at 1, and are counted from the initial parse position.
  *
  * @return        Structured data created from the JSON description, or NULL if there was an error parsing the data (errno is
  *                set to EINVAL).
@@ -254,8 +251,8 @@ char *xjsonFieldToString(const XField *f) {
  * @sa xjsonParseFile()
  * @sa xjsonParseFileName()
  */
-XStructure *xjsonParseAt(char **pos, int *lineNumber) {
-  int n;
+XStructure *xjsonParseAt(char **pos) {
+  int lineNumber = 0;
 
   if(!pos) {
     x_error(0, EINVAL, "xjsonParseAt", "'pos' parameter is NULL");
@@ -264,10 +261,8 @@ XStructure *xjsonParseAt(char **pos, int *lineNumber) {
 
   if(!xerr) xerr = stderr;
 
-  if(!lineNumber) lineNumber = &n;
-  *lineNumber = 1;      // Start at line 1...
 
-  return ParseObject(pos, lineNumber);
+  return ParseObject(pos, &lineNumber);
 }
 
 /**
@@ -278,9 +273,6 @@ XStructure *xjsonParseAt(char **pos, int *lineNumber) {
  *
  * @param[in,out] pos           Pointer to current parse position, which will be updated to point to after the last character consumed
  *                              by the JSON parser.
- * @param[out]    lineNumber    Optional pointer that holds a line number of the parse position, or NULL if not required.
- *                              Line numbers may be useful to report where the parser run into an error if the parsing failed.
- *                              Line numbers start at 1, and are counted from the initial parse position.
  *
  * @return        Structured data created from the JSON description, or NULL if there was an error parsing the data (errno is
  *                set to EINVAL).
@@ -291,8 +283,8 @@ XStructure *xjsonParseAt(char **pos, int *lineNumber) {
  * @sa xjsonParseFile()
  * @sa xjsonParseFileName()
  */
-XField *xjsonParseFieldAt(char **pos, int *lineNumber) {
-  int n;
+XField *xjsonParseFieldAt(char **pos) {
+  int lineNumber = 0;
 
   if(!pos) {
     x_error(0, EINVAL, "xjsonParseAt", "'pos' parameter is NULL");
@@ -301,10 +293,7 @@ XField *xjsonParseFieldAt(char **pos, int *lineNumber) {
 
   if(!xerr) xerr = stderr;
 
-  if(!lineNumber) lineNumber = &n;
-  *lineNumber = 1;      // Start at line 1...
-
-  return ParseField(pos, lineNumber);
+  return ParseField(pos, &lineNumber);
 }
 
 /**
@@ -313,9 +302,6 @@ XField *xjsonParseFieldAt(char **pos, int *lineNumber) {
  *
  *
  * @param[in]  path         File name/path to parse.
- * @param[out] lineNumber   Optional pointer that holds a line number of the parse position, or NULL if not required.
- *                          Line numbers may be useful to report where the parser run into an error if the parsing failed.
- *                          Line numbers start at 1, and are counted from the initial parse position.
  *
  * @return     Structured data created from the JSON description, or NULL if there was an error parsing the data
  *             (errno is set to EINVAL). The lineNumber argument can be used to determine where the error occurred).
@@ -324,7 +310,7 @@ XField *xjsonParseFieldAt(char **pos, int *lineNumber) {
  * @sa xjsonParseAt()
  * @sa xjsonToString()
  */
-XStructure *xjsonParsePath(const char *path, int *lineNumber) {
+XStructure *xjsonParsePath(const char *path) {
   FILE *fp;
   struct stat st;
   XStructure *s;
@@ -339,12 +325,11 @@ XStructure *xjsonParsePath(const char *path, int *lineNumber) {
   fp = fopen(path, "r");
   if(!fp) {
     Error("Cannot open file (%s).\n", strerror(errno));
-    *lineNumber = -1;
     return NULL;
   }
 
   stat(path, &st);
-  s = xjsonParseFile(fp, st.st_size, lineNumber);
+  s = xjsonParseFile(fp, st.st_size);
 
   fclose(fp);
 
@@ -359,7 +344,7 @@ XStructure *xjsonParsePath(const char *path, int *lineNumber) {
  *
  * @param[in]  fp           File pointer, opened with read permission ("r").
  * @param[in]  length       [bytes] The number of bytes to parse / available, or 0 to read to the end
- *                          of the file. (In the latter case the file must support fseek with SEEK_END to automatically
+ *                          of the file. (In the latter case the file must support `fseek()` with `SEEK_END` to automatically
  *                          determine the length, or else this function will return NULL).
  * @param[out] lineNumber   Optional pointer that holds a line number of the parse position, or NULL if not required.
  *                          Line numbers may be useful to report where the parser run into an error if the parsing failed.
@@ -372,11 +357,11 @@ XStructure *xjsonParsePath(const char *path, int *lineNumber) {
  * @sa xjsonParseAt()
  * @sa xjsonToString()
  */
-XStructure *xjsonParseFile(FILE *fp, size_t length, int *lineNumber) {
+XStructure *xjsonParseFile(FILE *fp, size_t length) {
   static const char *fn = "xjsonParseFile";
 
   XStructure *s;
-  int n;
+  int lineNumber = 0;
   long L;
   char *str;
   volatile char *pos;
@@ -401,14 +386,10 @@ XStructure *xjsonParseFile(FILE *fp, size_t length, int *lineNumber) {
     }
   }
 
-  if(!lineNumber) lineNumber = &n;
-  *lineNumber = 1;      // Start at line 1...
-
   pos = str = malloc(length + 1);
   if(!str){
     Error("Out of memory (read %ld bytes).\n", (long) (length + 1));
     fclose(fp);
-    *lineNumber = -1;
     return NULL;
   }
 
@@ -432,13 +413,12 @@ XStructure *xjsonParseFile(FILE *fp, size_t length, int *lineNumber) {
 
   if(L < 0) {
     free(str);
-    *lineNumber = -1;
     return NULL;
   }
 
   str[L] = '\0';
 
-  s = ParseObject((char **) &pos, lineNumber);
+  s = ParseObject((char **) &pos, &lineNumber);
 
   free(str);
 

@@ -454,9 +454,9 @@ The above produces a proper JSON document. Or, you can do the reverse and create
 representation, either from a string (a 0-terminated `char` array):
 
 ```c
-  int lineNumber = 0;
-  XStructure *s1 = xjsonParseAt(json, &lineNumber);
-  if (s1 == NULL) {
+  char *pos = json;                     // Parse position
+  XStructure *s = xjsonParseAt(&pos);
+  if (s == NULL) {
      // Oops, there was some problem...
   }
 ```
@@ -464,8 +464,8 @@ representation, either from a string (a 0-terminated `char` array):
 or parse it from a file, which contains a JSON definition of the structured data:
 
 ```c
-  XStructure *s1 = xjsonParsePath("my-data.json", &lineNumber);
-  if (s1 == NULL) {
+  XStructure *s = xjsonParsePath("my-data.json");
+  if (s == NULL) {
      // Oops, there was some problem...
   }
 ```
