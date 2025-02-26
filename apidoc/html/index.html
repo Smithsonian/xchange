@@ -139,7 +139,7 @@ Table of Contents</h2>
 <p><a class="anchor" id="xchange-introduction"></a> </p>
 <h2><a class="anchor" id="autotoc_md5"></a>
 Introduction</h2>
-<p>The <b>xchange</b> library provides a free framework structured data representation and exchange in C/C++, and includes support for JSON parsing and generation. It is free to use, in any way you like, without licensing restrictions.</p>
+<p>The <b>xchange</b> library provides structured data representation and exchange in C/C++, and includes support for JSON parsing and generation. It is free to use, in any way you like, without licensing restrictions.</p>
 <p>For JSON parsing end emitting, <b>xchange</b> provides a higher-level data model than <b>cjson</b>, with high-level functions for accessing and manipulating data both with less code and with cleaner code.</p>
 <p>The <b>xchange</b> library was created, and is maintained, by Attila Kovács at the Center for Astrophysics | Harvard &amp; Smithsonian, and it is available through the <a href="https://github.com/Smithsonian/xchange">Smithsonian/xchange</a> repository on GitHub.</p>
 <hr  />
@@ -193,43 +193,43 @@ Basic data types</h3>
 <p>The <b>xchange</b> library supports most basic (primitive) data types used across programming languages. The table below shows the unique <b>xchange</b> types recognized by the library and the corresponding pointer/array type values:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone"><code>XType</code>   </th><th class="markdownTableHeadNone">element type   </th><th class="markdownTableHeadNone">Comment / example    </th></tr>
+<th class="markdownTableHeadLeft"><code>XType</code>   </th><th class="markdownTableHeadCenter">element type   </th><th class="markdownTableHeadLeft">Comment / example    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_BOOLEAN</code>   </td><td class="markdownTableBodyNone"><code>boolean</code>   </td><td class="markdownTableBodyNone">'<code>true</code>' or '<code>false</code>'    </td></tr>
+<td class="markdownTableBodyLeft"><code>X_BOOLEAN</code>   </td><td class="markdownTableBodyCenter"><code>boolean</code>   </td><td class="markdownTableBodyLeft">'<code>true</code>' or '<code>false</code>'    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>X_BYTE</code>   </td><td class="markdownTableBodyNone"><code>char</code>   </td><td class="markdownTableBodyNone">'<code>-128</code>' to '<code>127</code>'    </td></tr>
+<td class="markdownTableBodyLeft"><code>X_BYTE</code>   </td><td class="markdownTableBodyCenter"><code>char</code>   </td><td class="markdownTableBodyLeft">'<code>-128</code>' to '<code>127</code>'    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_INT16</code>   </td><td class="markdownTableBodyNone"><code>int16_t</code>   </td><td class="markdownTableBodyNone">'<code>-32768</code>' to '<code>32767</code>'    </td></tr>
+<td class="markdownTableBodyLeft"><code>X_INT16</code>   </td><td class="markdownTableBodyCenter"><code>int16_t</code>   </td><td class="markdownTableBodyLeft">'<code>-32768</code>' to '<code>32767</code>'    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>X_INT32</code>   </td><td class="markdownTableBodyNone"><code>int32_t</code>   </td><td class="markdownTableBodyNone">'<code>-2,147,483,648</code>' to '<code>2,147,483,647</code>'    </td></tr>
+<td class="markdownTableBodyLeft"><code>X_INT32</code>   </td><td class="markdownTableBodyCenter"><code>int32_t</code>   </td><td class="markdownTableBodyLeft">'<code>-2,147,483,648</code>' to '<code>2,147,483,647</code>'    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_INT64</code>   </td><td class="markdownTableBodyNone"><code>int64_t</code>   </td><td class="markdownTableBodyNone">'<code>-9,223,372,036,854,775,808</code>' to '<code>9,223,372,036,854,775,807</code>'    </td></tr>
+<td class="markdownTableBodyLeft"><code>X_INT64</code>   </td><td class="markdownTableBodyCenter"><code>int64_t</code>   </td><td class="markdownTableBodyLeft">'<code>-9,223,372,036,854,775,808</code>' to '<code>9,223,372,036,854,775,807</code>'    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>X_FLOAT</code>   </td><td class="markdownTableBodyNone"><code>float</code>   </td><td class="markdownTableBodyNone"><code>1</code>, <code>1.0</code>, <code>-1.234567e-28</code>    </td></tr>
+<td class="markdownTableBodyLeft"><code>X_FLOAT</code>   </td><td class="markdownTableBodyCenter"><code>float</code>   </td><td class="markdownTableBodyLeft"><code>1</code>, <code>1.0</code>, <code>-1.234567e-28</code>    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_DOUBLE</code>   </td><td class="markdownTableBodyNone"><code>double</code>   </td><td class="markdownTableBodyNone"><code>1</code>, <code>1.0</code>, <code>-1.2345678901234567e-111</code>    </td></tr>
+<td class="markdownTableBodyLeft"><code>X_DOUBLE</code>   </td><td class="markdownTableBodyCenter"><code>double</code>   </td><td class="markdownTableBodyLeft"><code>1</code>, <code>1.0</code>, <code>-1.2345678901234567e-111</code>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>X_STRING</code>   </td><td class="markdownTableBodyNone"><code>char *</code>   </td><td class="markdownTableBodyNone"><code>Hello world!</code>, <code>line1\nline2\n</code> (0-terminated)    </td></tr>
+<td class="markdownTableBodyLeft"><code>X_STRING</code>   </td><td class="markdownTableBodyCenter"><code>char *</code>   </td><td class="markdownTableBodyLeft"><code>Hello world!</code>, <code>line1\nline2\n</code> (0-terminated)    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code><a class="el" href="xchange_8h.html#a76d723969626d4e25235eb24533e3e3a" title="A fixed-size sequence of &#39;length&#39; bytes.">X_CHARS(n)</a></code>   </td><td class="markdownTableBodyNone"><code>char[n]</code>   </td><td class="markdownTableBodyNone">Fixed-length character arrays (also w/o termination)    </td></tr>
+<td class="markdownTableBodyLeft"><code><a class="el" href="xchange_8h.html#a76d723969626d4e25235eb24533e3e3a" title="A fixed-size sequence of &#39;length&#39; bytes.">X_CHARS(n)</a></code>   </td><td class="markdownTableBodyCenter"><code>char[n]</code>   </td><td class="markdownTableBodyLeft">Fixed-length character arrays (also w/o termination)    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>X_FIELD</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code>   </td><td class="markdownTableBodyNone">For irregular and/or heterogeneous arrays    </td></tr>
+<td class="markdownTableBodyLeft"><code>X_FIELD</code>   </td><td class="markdownTableBodyCenter"><code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code>   </td><td class="markdownTableBodyLeft">For irregular and/or heterogeneous arrays    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_STRUCT</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code>   </td><td class="markdownTableBodyNone">substructure   </td></tr>
+<td class="markdownTableBodyLeft"><code>X_STRUCT</code>   </td><td class="markdownTableBodyCenter"><code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code>   </td><td class="markdownTableBodyLeft">substructure   </td></tr>
 </table>
 <p>The <code>boolean</code> type is defined in <code><a class="el" href="xchange_8h.html">xchange.h</a></code>. The <code><a class="el" href="structXField.html#a0f61d63b009d0880a89c843bd50d8d76">XField.value</a></code> is a pointer / array of the given element type. So, an <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> of type <code>X_DOUBLE</code> will have a <code>value</code> field that should be cast a <code>(double *)</code>, while for type <code>X_STRING</code> the value field shall be cast as <code>(char **)</code>.</p>
-<p>Additionally, the <b>xchange</b> also defines derivatives types, for native integer types, whose widths are platform dependent. Hence, these alias the matching unique types by the C preprocessor during compilation:</p>
+<p>Additionally, the <b>xchange</b> also defines derivative <code>XType</code> values for native integer storage types, whose widths depend on the particular CPU architecture. Hence, these are aliased to matching unique types (above) by the C preprocessor during compilation:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone"><code>XType</code>   </th><th class="markdownTableHeadNone">native type   </th><th class="markdownTableHeadNone">Comment / example    </th></tr>
+<th class="markdownTableHeadLeft"><code>XType</code>   </th><th class="markdownTableHeadCenter">element type   </th><th class="markdownTableHeadCenter">width   </th><th class="markdownTableHeadLeft">alias    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_SHORT</code>   </td><td class="markdownTableBodyNone"><code>short</code>   </td><td class="markdownTableBodyNone">at least 16-bits    </td></tr>
+<td class="markdownTableBodyLeft"><code>X_SHORT</code>   </td><td class="markdownTableBodyCenter"><code>short</code>   </td><td class="markdownTableBodyCenter">&gt;= 16-bits   </td><td class="markdownTableBodyLeft">typically <code>X_INT16</code>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>X_INT</code>   </td><td class="markdownTableBodyNone"><code>int</code>   </td><td class="markdownTableBodyNone">at least 16-bits    </td></tr>
+<td class="markdownTableBodyLeft"><code>X_INT</code>   </td><td class="markdownTableBodyCenter"><code>int</code>   </td><td class="markdownTableBodyCenter">&gt;= 16-bits   </td><td class="markdownTableBodyLeft">often <code>X_INT32</code>    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>X_LONG</code>   </td><td class="markdownTableBodyNone"><code>long</code>   </td><td class="markdownTableBodyNone">at least 32-bits    </td></tr>
+<td class="markdownTableBodyLeft"><code>X_LONG</code>   </td><td class="markdownTableBodyCenter"><code>long</code>   </td><td class="markdownTableBodyCenter">&gt;= 32-bits   </td><td class="markdownTableBodyLeft">typically <code>X_INT32</code> or <code>X_INT64</code>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>X_LLONG</code>   </td><td class="markdownTableBodyNone"><code>long long</code>   </td><td class="markdownTableBodyNone">at least 64-bits   </td></tr>
+<td class="markdownTableBodyLeft"><code>X_LLONG</code>   </td><td class="markdownTableBodyCenter"><code>long long</code>   </td><td class="markdownTableBodyCenter">&gt;= 64-bits   </td><td class="markdownTableBodyLeft">typically <code>X_INT64</code>   </td></tr>
 </table>
 <p><a class="anchor" id="xchange-strings"></a> </p>
 <h4><a class="anchor" id="autotoc_md13"></a>
@@ -251,12 +251,12 @@ Scalars</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Create &quot;description&quot; as a string</span></div>
 <div class="line"><a class="code hl_struct" href="structXField.html">XField</a> *fs = <a class="code hl_function" href="xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6">xCreateStringField</a>(<span class="stringliteral">&quot;description&quot;</span>, <span class="stringliteral">&quot;blah-blah-blah&quot;</span>);</div>
-<div class="ttc" id="astructXField_html"><div class="ttname"><a href="structXField.html">XField</a></div><div class="ttdoc">An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...</div><div class="ttdef"><b>Definition</b> xchange.h:166</div></div>
+<div class="ttc" id="astructXField_html"><div class="ttname"><a href="structXField.html">XField</a></div><div class="ttdoc">An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...</div><div class="ttdef"><b>Definition</b> xchange.h:165</div></div>
 <div class="ttc" id="axjson_8c_html_aa8cecfc5c5c054d2875c03e77b7be15d"><div class="ttname"><a href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a></div><div class="ttdeci">#define TRUE</div><div class="ttdoc">Boolean 'true' in case it isn't already defined.</div><div class="ttdef"><b>Definition</b> xjson.c:23</div></div>
-<div class="ttc" id="axstruct_8c_html_a9dc77bed0d8b738ba615019721a6a2b6"><div class="ttname"><a href="xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6">xCreateStringField</a></div><div class="ttdeci">XField * xCreateStringField(const char *name, const char *value)</div><div class="ttdef"><b>Definition</b> xstruct.c:828</div></div>
-<div class="ttc" id="axstruct_8c_html_aa4405d56659397e044b6d4fdda394dfa"><div class="ttname"><a href="xstruct_8c.html#aa4405d56659397e044b6d4fdda394dfa">xCreateIntField</a></div><div class="ttdeci">XField * xCreateIntField(const char *name, int value)</div><div class="ttdef"><b>Definition</b> xstruct.c:781</div></div>
-<div class="ttc" id="axstruct_8c_html_ab7ac206d0ec3608a0872f09c7f7bc189"><div class="ttname"><a href="xstruct_8c.html#ab7ac206d0ec3608a0872f09c7f7bc189">xCreateDoubleField</a></div><div class="ttdeci">XField * xCreateDoubleField(const char *name, double value)</div><div class="ttdef"><b>Definition</b> xstruct.c:765</div></div>
-<div class="ttc" id="axstruct_8c_html_ad2fa86a7d296f1efa6b41079bc2a6b65"><div class="ttname"><a href="xstruct_8c.html#ad2fa86a7d296f1efa6b41079bc2a6b65">xCreateBooleanField</a></div><div class="ttdeci">XField * xCreateBooleanField(const char *name, boolean value)</div><div class="ttdef"><b>Definition</b> xstruct.c:812</div></div>
+<div class="ttc" id="axstruct_8c_html_a9dc77bed0d8b738ba615019721a6a2b6"><div class="ttname"><a href="xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6">xCreateStringField</a></div><div class="ttdeci">XField * xCreateStringField(const char *name, const char *value)</div><div class="ttdef"><b>Definition</b> xstruct.c:824</div></div>
+<div class="ttc" id="axstruct_8c_html_aa4405d56659397e044b6d4fdda394dfa"><div class="ttname"><a href="xstruct_8c.html#aa4405d56659397e044b6d4fdda394dfa">xCreateIntField</a></div><div class="ttdeci">XField * xCreateIntField(const char *name, int value)</div><div class="ttdef"><b>Definition</b> xstruct.c:777</div></div>
+<div class="ttc" id="axstruct_8c_html_ab7ac206d0ec3608a0872f09c7f7bc189"><div class="ttname"><a href="xstruct_8c.html#ab7ac206d0ec3608a0872f09c7f7bc189">xCreateDoubleField</a></div><div class="ttdeci">XField * xCreateDoubleField(const char *name, double value)</div><div class="ttdef"><b>Definition</b> xstruct.c:761</div></div>
+<div class="ttc" id="axstruct_8c_html_ad2fa86a7d296f1efa6b41079bc2a6b65"><div class="ttname"><a href="xstruct_8c.html#ad2fa86a7d296f1efa6b41079bc2a6b65">xCreateBooleanField</a></div><div class="ttdeci">XField * xCreateBooleanField(const char *name, boolean value)</div><div class="ttdef"><b>Definition</b> xstruct.c:808</div></div>
 </div><!-- fragment --><p>Under the hood, scalar values are a special case of arrays containing a single element. Scalars have dimension zero i.e., a shape defined by an empty integer array, e.g. <code>int shape[0]</code> in a corresponding <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> element.</p>
 <p>In this way scalars are distinguished from true arrays containing just a single elements, which have dimensionality &lt;=1 and shapes e.g., <code>int shape[1] = {1}</code> or <code>int shape[2] = {1, 1}</code>. The difference, while subtle, becomes more obvious when serializing the array, e.g. to JSON. A scalar floating point value of 1.04, for example, will appear as <code>1.04</code> in JSON, whereas the 1D and 2D single-element arrays will be serialized as <code>{ 1.04 }</code> or <code>{{ 1.04 }}</code>, respectively.</p>
 <p><a class="anchor" id="xchange-arrays"></a> </p>
@@ -269,7 +269,7 @@ Arrays</h3>
 <div class="line"><span class="comment">// Create a field for the 3-dimensional array with the specified shape.</span></div>
 <div class="line"><a class="code hl_struct" href="structXField.html">XField</a> *f = <a class="code hl_function" href="xstruct_8c.html#a42e4e75cbf8f721ef4b251c692dcd7cb">xCreateField</a>(<span class="stringliteral">&quot;my-array&quot;</span>, <a class="code hl_define" href="xchange_8h.html#a849c7ccb02f63d8554323a889a3d8b4d">X_DOUBLE</a>, 3, sizes, data);</div>
 <div class="ttc" id="axchange_8h_html_a849c7ccb02f63d8554323a889a3d8b4d"><div class="ttname"><a href="xchange_8h.html#a849c7ccb02f63d8554323a889a3d8b4d">X_DOUBLE</a></div><div class="ttdeci">#define X_DOUBLE</div><div class="ttdoc">double-precision (64) bit floating point XType</div><div class="ttdef"><b>Definition</b> xchange.h:93</div></div>
-<div class="ttc" id="axstruct_8c_html_a42e4e75cbf8f721ef4b251c692dcd7cb"><div class="ttname"><a href="xstruct_8c.html#a42e4e75cbf8f721ef4b251c692dcd7cb">xCreateField</a></div><div class="ttdeci">XField * xCreateField(const char *name, XType type, int ndim, const int *sizes, const void *value)</div><div class="ttdef"><b>Definition</b> xstruct.c:640</div></div>
+<div class="ttc" id="axstruct_8c_html_a42e4e75cbf8f721ef4b251c692dcd7cb"><div class="ttname"><a href="xstruct_8c.html#a42e4e75cbf8f721ef4b251c692dcd7cb">xCreateField</a></div><div class="ttdeci">XField * xCreateField(const char *name, XType type, int ndim, const int *sizes, const void *value)</div><div class="ttdef"><b>Definition</b> xstruct.c:636</div></div>
 </div><!-- fragment --><p>Note, that there is no requirement that the native array has the same dimensionality as it's nominal format in the field. We could have declared <code>data</code> as a 1D array <code>double data[2 * 3 * 4] = ...</code>, or really any array (pointer) containing doubles with storage for at least 24 elements. It is the <code>sizes</code> array, along with the dimensionality, which together define the number of elements used from it, and the shape of the array for <b>xchange</b>.</p>
 <p>Arrays of irregular shape or mixed element types can be represented by fields containing an array of <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> entries:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXField.html">XField</a> *row1, row2, ...          <span class="comment">// Heterogeneous entries, each wrapped in an `XField`</span></div>
@@ -297,14 +297,14 @@ Creating structure</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Set the &quot;property&quot; field in &quot;subsystem&quot;.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField</a>(sub, <span class="stringliteral">&quot;property&quot;</span>, <a class="code hl_function" href="xstruct_8c.html#a9dc77bed0d8b738ba615019721a6a2b6">xCreateStringField</a>(<span class="stringliteral">&quot;some value here&quot;</span>));</div>
-<div class="ttc" id="astructXStructure_html"><div class="ttname"><a href="structXStructure.html">XStructure</a></div><div class="ttdoc">SMA-X structure object, containing a linked-list of XField elements.</div><div class="ttdef"><b>Definition</b> xchange.h:193</div></div>
+<div class="ttc" id="astructXStructure_html"><div class="ttname"><a href="structXStructure.html">XStructure</a></div><div class="ttdoc">SMA-X structure object, containing a linked-list of XField elements.</div><div class="ttdef"><b>Definition</b> xchange.h:192</div></div>
 <div class="ttc" id="axstruct_8c_html_a12112584a34e07f9ef7b08f6ef1bc865"><div class="ttname"><a href="xstruct_8c.html#a12112584a34e07f9ef7b08f6ef1bc865">xCreateStruct</a></div><div class="ttdeci">XStructure * xCreateStruct()</div><div class="ttdef"><b>Definition</b> xstruct.c:28</div></div>
-<div class="ttc" id="axstruct_8c_html_ab1cb91bd6aa14c0dae9d24bfbe7b76f4"><div class="ttname"><a href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField</a></div><div class="ttdeci">XField * xSetField(XStructure *s, XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:1085</div></div>
-<div class="ttc" id="axstruct_8c_html_ad84cbb4639f2fbfb604b698a86caf944"><div class="ttname"><a href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct</a></div><div class="ttdeci">XField * xSetSubstruct(XStructure *s, const char *name, XStructure *substruct)</div><div class="ttdef"><b>Definition</b> xstruct.c:940</div></div>
+<div class="ttc" id="axstruct_8c_html_ab1cb91bd6aa14c0dae9d24bfbe7b76f4"><div class="ttname"><a href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField</a></div><div class="ttdeci">XField * xSetField(XStructure *s, XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:1081</div></div>
+<div class="ttc" id="axstruct_8c_html_ad84cbb4639f2fbfb604b698a86caf944"><div class="ttname"><a href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct</a></div><div class="ttdeci">XField * xSetSubstruct(XStructure *s, const char *name, XStructure *substruct)</div><div class="ttdef"><b>Definition</b> xstruct.c:936</div></div>
 </div><!-- fragment --><p>and then eventually destroyed after use as:</p>
 <div class="fragment"><div class="line"><span class="comment">// Free up all resources used by the structure &#39;s&#39;</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct</a>(s);</div>
-<div class="ttc" id="axstruct_8c_html_afe3fda2f392bae11e136e8c0c90f086d"><div class="ttname"><a href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct</a></div><div class="ttdeci">void xDestroyStruct(XStructure *s)</div><div class="ttdef"><b>Definition</b> xstruct.c:1159</div></div>
+<div class="ttc" id="axstruct_8c_html_afe3fda2f392bae11e136e8c0c90f086d"><div class="ttname"><a href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct</a></div><div class="ttdeci">void xDestroyStruct(XStructure *s)</div><div class="ttdef"><b>Definition</b> xstruct.c:1155</div></div>
 </div><!-- fragment --><p><a class="anchor" id="xchange-aggregate-ids"></a> </p>
 <h3><a class="anchor" id="autotoc_md17"></a>
 Aggregate IDs</h3>
@@ -326,7 +326,7 @@ Accessing substructures and elements</h3>
 <div class="ttc" id="axstruct_8c_html_a442f155b0c6549549737510ce42bb66d"><div class="ttname"><a href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField</a></div><div class="ttdeci">XField * xGetField(const XStructure *s, const char *id)</div><div class="ttdef"><b>Definition</b> xstruct.c:254</div></div>
 </div><!-- fragment --><p>or to retrieve the "subsystem" structure from within:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *sub = <a class="code hl_function" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct</a>(s, <span class="stringliteral">&quot;system:subsystem&quot;</span>);</div>
-<div class="ttc" id="axstruct_8c_html_a97a58e33c4730e272af459dfb7f016f9"><div class="ttname"><a href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct</a></div><div class="ttdeci">XStructure * xGetSubstruct(const XStructure *s, const char *id)</div><div class="ttdef"><b>Definition</b> xstruct.c:602</div></div>
+<div class="ttc" id="axstruct_8c_html_a97a58e33c4730e272af459dfb7f016f9"><div class="ttname"><a href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct</a></div><div class="ttdeci">XStructure * xGetSubstruct(const XStructure *s, const char *id)</div><div class="ttdef"><b>Definition</b> xstruct.c:598</div></div>
 </div><!-- fragment --><p>Conversely you can set / update fields in a structure using <code><a class="el" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField()</a></code> / <code><a class="el" href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct()</a></code>, e.g.:</p>
 <div class="fragment"><div class="line">XStructrure *newsub = ...     <span class="comment">// The new substructure</span></div>
 <div class="line"><a class="code hl_struct" href="structXField.html">XField</a> *newfield = ...        <span class="comment">// A new field to set</span></div>
@@ -338,11 +338,11 @@ Accessing substructures and elements</h3>
 <div class="fragment"><div class="line"><span class="comment">// Destroy the replaced fields if they are no longer needed.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(oldfield);</div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(oldsub);</div>
-<div class="ttc" id="axstruct_8c_html_ae0ce99c867b11bd14971031eec8ba4ad"><div class="ttname"><a href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a></div><div class="ttdeci">void xDestroyField(XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:1212</div></div>
+<div class="ttc" id="axstruct_8c_html_ae0ce99c867b11bd14971031eec8ba4ad"><div class="ttname"><a href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a></div><div class="ttdeci">void xDestroyField(XField *f)</div><div class="ttdef"><b>Definition</b> xstruct.c:1208</div></div>
 </div><!-- fragment --><p>You can also remove existing fields from structures using <code><a class="el" href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField()</a></code>, e.g.</p>
 <div class="fragment"><div class="line"><span class="comment">// Remove and then destroy the field named &quot;blah&quot; in structure &#39;s&#39;.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(<a class="code hl_function" href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a>(s, <span class="stringliteral">&quot;blah&quot;</span>));</div>
-<div class="ttc" id="axstruct_8c_html_aec9f913cdb79d8653668a5d9bdda6ab1"><div class="ttname"><a href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a></div><div class="ttdeci">XField * xRemoveField(XStructure *s, const char *name)</div><div class="ttdef"><b>Definition</b> xstruct.c:987</div></div>
+<div class="ttc" id="axstruct_8c_html_aec9f913cdb79d8653668a5d9bdda6ab1"><div class="ttname"><a href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a></div><div class="ttdeci">XField * xRemoveField(XStructure *s, const char *name)</div><div class="ttdef"><b>Definition</b> xstruct.c:983</div></div>
 </div><!-- fragment --><h4><a class="anchor" id="autotoc_md19"></a>
 Large structures</h4>
 <p>The normal <code><a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a></code> and <code><a class="el" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct()</a></code> functions have computational costs that scale linearly with the number of direct fields in the structure. It is not much of an issue for structures that contain dozens of, or even a couple hundred, fields (per layer). For much larger structures, which have a fixed layout, there is an option for a potentially much more efficient hash-based lookup also. E.g. instead of <code><a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a></code> you may use <code><a class="el" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField()</a></code>:</p>
@@ -371,8 +371,8 @@ Iterating over elements</h4>
 <div class="line">  <span class="comment">// Process each field &#39;f&#39; here...</span></div>
 <div class="line">  ...</div>
 <div class="line">}</div>
-<div class="ttc" id="astructXField_html_ae1ebaf87eb62e6266b14908eee28e565"><div class="ttname"><a href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a></div><div class="ttdeci">struct XField * next</div><div class="ttdoc">Pointer to the next linked element (if inside an XStructure).</div><div class="ttdef"><b>Definition</b> xchange.h:178</div></div>
-<div class="ttc" id="astructXStructure_html_a501ae8af2201d9cfaa60e3af21ff58fc"><div class="ttname"><a href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a></div><div class="ttdeci">XField * firstField</div><div class="ttdoc">Pointer to the first field in this structure or NULL if the structure is empty.</div><div class="ttdef"><b>Definition</b> xchange.h:194</div></div>
+<div class="ttc" id="astructXField_html_ae1ebaf87eb62e6266b14908eee28e565"><div class="ttname"><a href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a></div><div class="ttdeci">struct XField * next</div><div class="ttdoc">Pointer to the next linked element (if inside an XStructure).</div><div class="ttdef"><b>Definition</b> xchange.h:177</div></div>
+<div class="ttc" id="astructXStructure_html_a501ae8af2201d9cfaa60e3af21ff58fc"><div class="ttname"><a href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a></div><div class="ttdeci">XField * firstField</div><div class="ttdoc">Pointer to the first field in this structure or NULL if the structure is empty.</div><div class="ttdef"><b>Definition</b> xchange.h:193</div></div>
 </div><!-- fragment --><p><a class="anchor" id="sorting-fields"></a> </p>
 <h3><a class="anchor" id="autotoc_md21"></a>
 Sorting fields</h3>
@@ -384,7 +384,7 @@ Sorting fields</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Reverse the order, recursively</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a>(s, <a class="code hl_define" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>);</div>
-<div class="ttc" id="axstruct_8c_html_ad32d8a3f211a3b101142879ae31146ec"><div class="ttname"><a href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a></div><div class="ttdeci">int xReverseFieldOrder(XStructure *s, boolean recursive)</div><div class="ttdef"><b>Definition</b> xstruct.c:1670</div></div>
+<div class="ttc" id="axstruct_8c_html_ad32d8a3f211a3b101142879ae31146ec"><div class="ttname"><a href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a></div><div class="ttdeci">int xReverseFieldOrder(XStructure *s, boolean recursive)</div><div class="ttdef"><b>Definition</b> xstruct.c:1666</div></div>
 </div><!-- fragment --><hr  />
 <p><a class="anchor" id="json-interchange"></a> </p>
 <h2><a class="anchor" id="autotoc_md23"></a>
@@ -416,7 +416,7 @@ Snippets</h3>
 <div class="line">char *json = <a class="code hl_function" href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f">xjsonFieldToString</a>(f);</div>
 <div class="ttc" id="axjson_8c_html_a42101fa63cb1c6e265f317e9b8719d5f"><div class="ttname"><a href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f">xjsonFieldToString</a></div><div class="ttdeci">char * xjsonFieldToString(const XField *f)</div><div class="ttdef"><b>Definition</b> xjson.c:232</div></div>
 </div><!-- fragment --><p>For example, for a numerical array field with 4 elements the above might generate something like:</p>
-<div class="fragment"><div class="line">&quot;my-numbers&quot;: [ 1, 2, 3, 4]</div>
+<div class="fragment"><div class="line">&quot;my-numbers&quot;: [ 1, 2, 3, 4 ]</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md25"></a>
 Escaped string representations</h3>
 <p>You might just want to use JSON-style escaping for strings, and <code><a class="el" href="xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2">xjsonEscape()</a></code> / <code><a class="el" href="xjson_8c.html#aa94ae687d4c1775d35b03614ae2fcf62">xjsonUnescape()</a></code> can help with that too. Suppose you have a C string that you want to escape...</p>
@@ -446,8 +446,8 @@ Error handling</h2>
 <div class="line">  fprintf(stderr, <span class="stringliteral">&quot;WARNING! %s&quot;</span>, <a class="code hl_function" href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription</a>(status));</div>
 <div class="line">  ...</div>
 <div class="line">}</div>
-<div class="ttc" id="axchange_8c_html_a7e2e177c11fe7f44ca5ce11f316c0ad9"><div class="ttname"><a href="xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9">xParseDouble</a></div><div class="ttdeci">double xParseDouble(const char *str, char **tail)</div><div class="ttdef"><b>Definition</b> xchange.c:565</div></div>
-<div class="ttc" id="axchange_8c_html_acc701c734a3b95d356660ca5ee16a96a"><div class="ttname"><a href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription</a></div><div class="ttdeci">const char * xErrorDescription(int code)</div><div class="ttdef"><b>Definition</b> xchange.c:699</div></div>
+<div class="ttc" id="axchange_8c_html_a7e2e177c11fe7f44ca5ce11f316c0ad9"><div class="ttname"><a href="xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9">xParseDouble</a></div><div class="ttdeci">double xParseDouble(const char *str, char **tail)</div><div class="ttdef"><b>Definition</b> xchange.c:559</div></div>
+<div class="ttc" id="axchange_8c_html_acc701c734a3b95d356660ca5ee16a96a"><div class="ttname"><a href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription</a></div><div class="ttdeci">const char * xErrorDescription(int code)</div><div class="ttdef"><b>Definition</b> xchange.c:693</div></div>
 <div class="ttc" id="axchange_8h_html_a7b2679c964ea5f2160380ed55654b873"><div class="ttname"><a href="xchange_8h.html#a7b2679c964ea5f2160380ed55654b873">X_SUCCESS</a></div><div class="ttdeci">#define X_SUCCESS</div><div class="ttdoc">hooray!</div><div class="ttdef"><b>Definition</b> xchange.h:59</div></div>
 </div><!-- fragment --><p>The JSON parser can also sink its error messages to a designated file or stream, which can be set by <code><a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream(FILE *)</a></code>.</p>
 <hr  />
