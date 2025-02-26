@@ -143,7 +143,7 @@ shows the unique __xchange__ types recognized by the library and the correspondi
 
  | `XType`       | element type             | Comment / example                                               |
  |:--------------|:------------------------:|:----------------------------------------------------------------|
- | `X_BOOLEAN`   | `boolean`                | '`true`' or '`false`'                                           |
+ | `X_BOOLEAN`   | `boolean`                | `TRUE` (1 or non-zero) or `FALSE` (0)                           |
  | `X_BYTE`      | `char`                   | '`-128`' to  '`127`'                                            |
  | `X_INT16`     | `int16_t`                | '`-32768`' to '`32767`'                                         |
  | `X_INT32`     | `int32_t`                | '`-2,147,483,648`' to '`2,147,483,647`'                         |
