@@ -452,7 +452,7 @@ or parse it from a file, which contains a JSON definition of the structured data
   }
 ```
 
-### Snippets
+### JSON fragments
 
 Alternatively, you can also create partial JSON fragments for individual fields, e.g.:
   

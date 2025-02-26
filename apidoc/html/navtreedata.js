@@ -45,7 +45,7 @@ var NAVTREE =
         [ "Sorting fields", "index.html#autotoc_md21", null ]
       ] ],
       [ "JSON parser and emitter", "index.html#autotoc_md23", [
-        [ "Snippets", "index.html#autotoc_md24", null ],
+        [ "JSON fragments", "index.html#autotoc_md24", null ],
         [ "Escaped string representations", "index.html#autotoc_md25", null ]
       ] ],
       [ "Error handling", "index.html#autotoc_md27", null ],
