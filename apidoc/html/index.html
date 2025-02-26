@@ -263,8 +263,8 @@ Scalars</h3>
 <h3><a class="anchor" id="autotoc_md15"></a>
 Arrays</h3>
 <p>The <b>xchange</b> library supports array data types in one or more dimensions (up to 20 dimensions). For example, to create a field for 2&times;3&times;4 array of <code>double</code>s, you may have something along:</p>
-<div class="fragment"><div class="line"><span class="keywordtype">double</span> data[2][3][4] = ...;       <span class="comment">// The native array in C</span></div>
-<div class="line"><span class="keywordtype">int</span> sizes[] = { 2, 3, 4 };        <span class="comment">// An array containing the dimensions for xchange</span></div>
+<div class="fragment"><div class="line"><span class="keywordtype">double</span> data[2][3][4] = ...;           <span class="comment">// The native array in C</span></div>
+<div class="line"><span class="keywordtype">int</span> sizes[] = { 2, 3, 4 };            <span class="comment">// An array containing the dimensions for xchange</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Create a field for the 3-dimensional array with the specified shape.</span></div>
 <div class="line"><a class="code hl_struct" href="structXField.html">XField</a> *f = <a class="code hl_function" href="xstruct_8c.html#a42e4e75cbf8f721ef4b251c692dcd7cb">xCreateField</a>(<span class="stringliteral">&quot;my-array&quot;</span>, <a class="code hl_define" href="xchange_8h.html#a849c7ccb02f63d8554323a889a3d8b4d">X_DOUBLE</a>, 3, sizes, data);</div>
@@ -272,7 +272,7 @@ Arrays</h3>
 <div class="ttc" id="axstruct_8c_html_a42e4e75cbf8f721ef4b251c692dcd7cb"><div class="ttname"><a href="xstruct_8c.html#a42e4e75cbf8f721ef4b251c692dcd7cb">xCreateField</a></div><div class="ttdeci">XField * xCreateField(const char *name, XType type, int ndim, const int *sizes, const void *value)</div><div class="ttdef"><b>Definition</b> xstruct.c:636</div></div>
 </div><!-- fragment --><p>Note, that there is no requirement that the native array has the same dimensionality as it's nominal format in the field. We could have declared <code>data</code> as a 1D array <code>double data[2 * 3 * 4] = ...</code>, or really any array (pointer) containing doubles with storage for at least 24 elements. It is the <code>sizes</code> array, along with the dimensionality, which together define the number of elements used from it, and the shape of the array for <b>xchange</b>.</p>
 <p>Arrays of irregular shape or mixed element types can be represented by fields containing an array of <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> entries:</p>
-<div class="fragment"><div class="line"><a class="code hl_struct" href="structXField.html">XField</a> *row1, row2, ...          <span class="comment">// Heterogeneous entries, each wrapped in an `XField`</span></div>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structXField.html">XField</a> *row1, *row2, ...                 <span class="comment">// Heterogeneous entries, each wrapped in an `XField`</span></div>
 <div class="line"><a class="code hl_struct" href="structXField.html">XField</a> data[N] = { *row1, *row2, ... };  <span class="comment">// The irregular / mixed-type array. </span></div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_struct" href="structXField.html">XField</a> *f = <a class="code hl_function" href="xstruct_8c.html#a0b37b00634177189d5e717e3c84820e3">xCreateMixed1DField</a>(<span class="stringliteral">&quot;my_array&quot;</span>, N);</div>

@@ -221,8 +221,8 @@ The __xchange__ library supports array data types in one or more dimensions (up 
 create a field for 2&times;3&times;4 array of `double`s, you may have something along:
 
 ```c
-  double data[2][3][4] = ...;		// The native array in C
-  int sizes[] = { 2, 3, 4 };		// An array containing the dimensions for xchange
+  double data[2][3][4] = ...;           // The native array in C
+  int sizes[] = { 2, 3, 4 };            // An array containing the dimensions for xchange
   
   // Create a field for the 3-dimensional array with the specified shape.
   XField *f = xCreateField("my-array", X_DOUBLE, 3, sizes, data);
@@ -237,7 +237,7 @@ Arrays of irregular shape or mixed element types can be represented by fields co
 entries:
 
 ```c
-  XField *row1, row2, ...  		   // Heterogeneous entries, each wrapped in an `XField`
+  XField *row1, *row2, ...                 // Heterogeneous entries, each wrapped in an `XField`
   XField data[N] = { *row1, *row2, ... };  // The irregular / mixed-type array. 
 
   XField *f = xCreateMixed1DField("my_array", N);
