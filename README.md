@@ -46,8 +46,8 @@ Updated for 1.0 and later releases.
 <a name="xchange-introduction"></a>
 ## Introduction
 
-The __xchange__ library provides a free framework structured data representation and exchange in C/C++, and includes 
-support for JSON parsing and generation. It is free to use, in any way you like, without licensing restrictions.
+The __xchange__ library provides structured data representation and exchange in C/C++, and includes support for 
+JSON parsing and generation. It is free to use, in any way you like, without licensing restrictions.
 
 For JSON parsing end emitting, __xchange__ provides a higher-level data model than __cjson__, with high-level 
 functions for accessing and manipulating data both with less code and with cleaner code.
@@ -160,8 +160,8 @@ The __xchange__ library supports most basic (primitive) data types used across p
 shows the unique __xchange__ types recognized by the library and the corresponding pointer/array type values:
 
  | `XType`       | element type             | Comment / example                                               |
- |---------------|--------------------------|-----------------------------------------------------------------|
- | `X_BOOLEAN`   | `boolean`                | '`true`' or '`false`'                                           |
+ |:--------------|:------------------------:|:----------------------------------------------------------------|
+ | `X_BOOLEAN`   | `boolean`                | `TRUE` (1 or non-zero) or `FALSE` (0)                           |
  | `X_BYTE`      | `char`                   | '`-128`' to  '`127`'                                            |
  | `X_INT16`     | `int16_t`                | '`-32768`' to '`32767`'                                         |
  | `X_INT32`     | `int32_t`                | '`-2,147,483,648`' to '`2,147,483,647`'                         |
@@ -177,15 +177,16 @@ The `boolean` type is defined in `xchange.h`. The `XField.value` is a pointer / 
 an `XField` of type `X_DOUBLE` will have a `value` field that should be cast a `(double *)`, while for type `X_STRING`
 the value field shall be cast as `(char **)`.
 
-Additionally, the __xchange__ also defines derivatives types, for native integer types, whose widths are platform
-dependent. Hence, these alias the matching unique types by the C preprocessor during compilation:
+Additionally, the __xchange__ also defines derivative `XType` values for native integer storage types, whose widths 
+depend on the particular CPU architecture. Hence, these are aliased to matching unique types (above) by the C 
+preprocessor during compilation:
 
- | `XType`       | native type              | Comment / example                                               |
- |---------------|--------------------------|-----------------------------------------------------------------|
- | `X_SHORT`     | `short`                  | at least 16-bits                                                |
- | `X_INT`       | `int`                    | at least 16-bits                                                |
- | `X_LONG`      | `long`                   | at least 32-bits                                                |
- | `X_LLONG`     | `long long`              | at least 64-bits                                                |
+ | `XType`       | element type             | width            | alias of                                   |
+ |:--------------|:------------------------:|:----------------:|:-------------------------------------------|
+ | `X_SHORT`     | `short`                  |   &gt;= 16-bits  | typically `X_INT16`                        |
+ | `X_INT`       | `int`                    |   &gt;= 16-bits  | often `X_INT32`                            |
+ | `X_LONG`      | `long`                   |   &gt;= 32-bits  | typically `X_INT32` or `X_INT64`           |
+ | `X_LLONG`     | `long long`              |   &gt;= 64-bits  | typically `X_INT64`                        |
 
 
 <a name="xchange-strings"></a>
@@ -238,8 +239,8 @@ The __xchange__ library supports array data types in one or more dimensions (up 
 create a field for 2&times;3&times;4 array of `double`s, you may have something along:
 
 ```c
-  double data[2][3][4] = ...;		// The native array in C
-  int sizes[] = { 2, 3, 4 };		// An array containing the dimensions for xchange
+  double data[2][3][4] = ...;           // The native array in C
+  int sizes[] = { 2, 3, 4 };            // An array containing the dimensions for xchange
   
   // Create a field for the 3-dimensional array with the specified shape.
   XField *f = xCreateField("my-array", X_DOUBLE, 3, sizes, data);
@@ -254,7 +255,7 @@ Arrays of irregular shape or mixed element types can be represented by fields co
 entries:
 
 ```c
-  XField *row1, row2, ...  		   // Heterogeneous entries, each wrapped in an `XField`
+  XField *row1, *row2, ...                 // Heterogeneous entries, each wrapped in an `XField`
   XField data[N] = { *row1, *row2, ... };  // The irregular / mixed-type array. 
 
   XField *f = xCreateMixed1DField("my_array", N);
@@ -469,7 +470,7 @@ or parse it from a file, which contains a JSON definition of the structured data
   }
 ```
 
-### Snippets
+### JSON fragments
 
 Alternatively, you can also create partial JSON fragments for individual fields, e.g.:
   
