@@ -239,8 +239,8 @@ char *xjsonFieldToString(const XField *f) {
  * stream set by xSetErrorStream().
  *
  *
- * @param[in,out] pos           Pointer to current parse position, which will be updated to point to after the last character consumed
- *                              by the JSON parser.
+ * @param str           Pointer to string from which to parse JSON
+ * @param[out] tail     Pointer to return parse position, or NULL if not required.
  *
  * @return        Structured data created from the JSON description, or NULL if there was an error parsing the data (errno is
  *                set to EINVAL).
@@ -251,8 +251,10 @@ char *xjsonFieldToString(const XField *f) {
  * @sa xjsonParseFile()
  * @sa xjsonParseFileName()
  */
-XStructure *xjsonParseAt(char **pos) {
+XStructure *xjsonParseString(const char *str, char **tail) {
   int lineNumber = 0;
+  char *pos = (char *) str;
+  XStructure *s;
 
   if(!pos) {
     x_error(0, EINVAL, "xjsonParseAt", "'pos' parameter is NULL");
@@ -261,8 +263,9 @@ XStructure *xjsonParseAt(char **pos) {
 
   if(!xerr) xerr = stderr;
 
-
-  return ParseObject(pos, &lineNumber);
+  s = ParseObject(&pos, &lineNumber);
+  if(tail) *tail = pos;
+  return s;
 }
 
 /**
@@ -271,8 +274,8 @@ XStructure *xjsonParseAt(char **pos) {
  * stream set by xSetErrorStream().
  *
  *
- * @param[in,out] pos           Pointer to current parse position, which will be updated to point to after the last character consumed
- *                              by the JSON parser.
+ * @param str         String pointer from which to parse.
+ * @param[out] tail   Pointer in which to return parse position after.
  *
  * @return        Structured data created from the JSON description, or NULL if there was an error parsing the data (errno is
  *                set to EINVAL).
@@ -283,8 +286,10 @@ XStructure *xjsonParseAt(char **pos) {
  * @sa xjsonParseFile()
  * @sa xjsonParseFileName()
  */
-XField *xjsonParseFieldAt(char **pos) {
+XField *xjsonParseField(const char *str, char **tail) {
   int lineNumber = 0;
+  char *pos = (char *) str;
+  XField *f;
 
   if(!pos) {
     x_error(0, EINVAL, "xjsonParseAt", "'pos' parameter is NULL");
@@ -293,7 +298,9 @@ XField *xjsonParseFieldAt(char **pos) {
 
   if(!xerr) xerr = stderr;
 
-  return ParseField(pos, &lineNumber);
+  f = ParseField(&pos, &lineNumber);
+  if(tail) *tail = pos;
+  return f;
 }
 
 /**
@@ -346,9 +353,6 @@ XStructure *xjsonParsePath(const char *path) {
  * @param[in]  length       [bytes] The number of bytes to parse / available, or 0 to read to the end
  *                          of the file. (In the latter case the file must support `fseek()` with `SEEK_END` to automatically
  *                          determine the length, or else this function will return NULL).
- * @param[out] lineNumber   Optional pointer that holds a line number of the parse position, or NULL if not required.
- *                          Line numbers may be useful to report where the parser run into an error if the parsing failed.
- *                          Line numbers start at 1, and are counted from the initial parse position.
  *
  * @return     Structured data created from the JSON description, or NULL if there was an error parsing the data
  *             (errno is set to EINVAL). The lineNumber argument can be used to determine where the error occurred).

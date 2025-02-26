@@ -25,10 +25,10 @@ int xjsonGetIndent();
 char *xjsonToString(const XStructure *s);
 char *xjsonFieldToString(const XField *f);
 char *xjsonFieldToIndentedString(int indent, const XField *f);
+XStructure *xjsonParseString(const char *src, char **tail);
 XStructure *xjsonParsePath(const char *fileName);
 XStructure *xjsonParseFile(FILE *file, size_t length);
-XStructure *xjsonParseAt(char **src);
-XField *xjsonParseFieldAt(char **src);
+XField *xjsonParseField(const char *src, char **tail);
 void xjsonSetErrorStream(FILE *fp);
 
 char *xjsonEscape(const char *src, int maxLength);

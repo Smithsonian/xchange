@@ -58,7 +58,7 @@ static XStructure *createStruct() {
 
 int main() {
   XStructure *s = createStruct(), *s1;
-  char *str, *next, *str1;
+  char *str, *str1;
 
   char *specials = "\\\"\r\n\t\b\f";
 
@@ -82,8 +82,7 @@ int main() {
   str = xjsonToString(s);
   printf("%s", str);
 
-  next = str;
-  s1 = xjsonParseAt(&next);
+  s1 = xjsonParseString(str, NULL);
 
   str1 = xjsonToString(s1);
   if(strcmp(str1, str) != 0) {

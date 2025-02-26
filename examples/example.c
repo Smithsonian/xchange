@@ -111,7 +111,7 @@ int main() {
   XStructure *parsed; // Parsed back data structure.
   XField *f;          // A field
   char *json;         // JSON string representation
-  char *pos;          // String parse position
+  char *pos = NULL;   // String parse position
 
   int ival;           // an integer value
   double dval;        // a double-precision value
@@ -184,8 +184,7 @@ int main() {
 
   // -------------------------------------------------------------------------
   // Parse the JSON representation back into a structure
-  pos = json;                           // Start parsing at the head of the JSON string
-  parsed = xjsonParseAt(&pos);          // Parse the JSON, and update the parse position
+  parsed = xjsonParseString(json, &pos);          // Parse the JSON, and update the parse position
   printf(" Parsed %d bytes\n", (int) (pos - json));
 
   // Alternatively, you can parse JSON from a file, e.g.:
