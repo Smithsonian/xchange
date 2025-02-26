@@ -163,7 +163,7 @@ Additionally, the __xchange__ also defines derivative `XType` values for native 
 depend on the particular CPU architecture. Hence, these are aliased to matching unique types (above) by the C 
 preprocessor during compilation:
 
- | `XType`       | element type             | width            | alias                                      |
+ | `XType`       | element type             | width            | aliased to                                 |
  |:--------------|:------------------------:|:----------------:|:-------------------------------------------|
  | `X_SHORT`     | `short`                  |   &gt;= 16-bits  | typically `X_INT16`                        |
  | `X_INT`       | `int`                    |   &gt;= 16-bits  | often `X_INT32`                            |
