@@ -446,7 +446,7 @@ representation, either from a string (a 0-terminated `char` array):
 or parse it from a file, which contains a JSON definition of the structured data:
 
 ```c
-  XStructure *s1 = xjsonParseFilename("my-data.json", &lineNumber);
+  XStructure *s1 = xjsonParsePath("my-data.json", &lineNumber);
   if (s1 == NULL) {
      // Oops, there was some problem...
   }

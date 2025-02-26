@@ -403,10 +403,11 @@ JSON parser and emitter</h2>
 <div class="line">}</div>
 <div class="ttc" id="axjson_8c_html_af180900a4afeef713a3fdaeb77a9cba3"><div class="ttname"><a href="xjson_8c.html#af180900a4afeef713a3fdaeb77a9cba3">xjsonParseAt</a></div><div class="ttdeci">XStructure * xjsonParseAt(char **pos, int *lineNumber)</div><div class="ttdef"><b>Definition</b> xjson.c:257</div></div>
 </div><!-- fragment --><p>or parse it from a file, which contains a JSON definition of the structured data:</p>
-<div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s1 = xjsonParseFilename(<span class="stringliteral">&quot;my-data.json&quot;</span>, &amp;lineNumber);</div>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s1 = <a class="code hl_function" href="xjson_8c.html#a10f821e34aeb56f02985ac6cc3a8be89">xjsonParsePath</a>(<span class="stringliteral">&quot;my-data.json&quot;</span>, &amp;lineNumber);</div>
 <div class="line"><span class="keywordflow">if</span> (s1 == NULL) {</div>
 <div class="line">   <span class="comment">// Oops, there was some problem...</span></div>
 <div class="line">}</div>
+<div class="ttc" id="axjson_8c_html_a10f821e34aeb56f02985ac6cc3a8be89"><div class="ttname"><a href="xjson_8c.html#a10f821e34aeb56f02985ac6cc3a8be89">xjsonParsePath</a></div><div class="ttdeci">XStructure * xjsonParsePath(const char *path, int *lineNumber)</div><div class="ttdef"><b>Definition</b> xjson.c:327</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md24"></a>
 JSON fragments</h3>
 <p>Alternatively, you can also create partial JSON fragments for individual fields, e.g.:</p>
