@@ -1029,32 +1029,32 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>XStructure *</type>
-      <name>xjsonParseAt</name>
-      <anchorfile>xjson_8h.html</anchorfile>
-      <anchor>acdb7d242c80b4c9dbeedc62b479bfcc7</anchor>
-      <arglist>(char **src, int *lineNumber)</arglist>
-    </member>
-    <member kind="function">
       <type>XField *</type>
-      <name>xjsonParseFieldAt</name>
+      <name>xjsonParseField</name>
       <anchorfile>xjson_8h.html</anchorfile>
-      <anchor>ad27c7a065fa6c61354e3293606617889</anchor>
-      <arglist>(char **src, int *lineNumber)</arglist>
+      <anchor>a396bfc01249665592a3b377b77163171</anchor>
+      <arglist>(const char *src, char **tail)</arglist>
     </member>
     <member kind="function">
       <type>XStructure *</type>
       <name>xjsonParseFile</name>
       <anchorfile>xjson_8h.html</anchorfile>
-      <anchor>a5b542fdced2080503cdbf2cf9a071324</anchor>
-      <arglist>(FILE *file, size_t length, int *lineNumber)</arglist>
+      <anchor>af7e81009df5566ee81bcc676c3c67026</anchor>
+      <arglist>(FILE *file, size_t length)</arglist>
     </member>
     <member kind="function">
       <type>XStructure *</type>
       <name>xjsonParsePath</name>
       <anchorfile>xjson_8h.html</anchorfile>
-      <anchor>af5a54c0bbd41dcd4c82562c25769b398</anchor>
-      <arglist>(const char *fileName, int *lineNumber)</arglist>
+      <anchor>aa16eb28a96f3dfd329980bedb240f29a</anchor>
+      <arglist>(const char *fileName)</arglist>
+    </member>
+    <member kind="function">
+      <type>XStructure *</type>
+      <name>xjsonParseString</name>
+      <anchorfile>xjson_8h.html</anchorfile>
+      <anchor>ac5f731519191769307b8feefb56cf89c</anchor>
+      <arglist>(const char *src, char **tail)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -1356,32 +1356,32 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>XStructure *</type>
-      <name>xjsonParseAt</name>
-      <anchorfile>xjson_8c.html</anchorfile>
-      <anchor>af180900a4afeef713a3fdaeb77a9cba3</anchor>
-      <arglist>(char **pos, int *lineNumber)</arglist>
-    </member>
-    <member kind="function">
       <type>XField *</type>
-      <name>xjsonParseFieldAt</name>
+      <name>xjsonParseField</name>
       <anchorfile>xjson_8c.html</anchorfile>
-      <anchor>aacd36258562860dac1bcc8154cda47cf</anchor>
-      <arglist>(char **pos, int *lineNumber)</arglist>
+      <anchor>a49ceaf0db661ce9388af875d03320800</anchor>
+      <arglist>(const char *str, char **tail)</arglist>
     </member>
     <member kind="function">
       <type>XStructure *</type>
       <name>xjsonParseFile</name>
       <anchorfile>xjson_8c.html</anchorfile>
-      <anchor>a9bdaf6099829f03eb2658342e856f0ad</anchor>
-      <arglist>(FILE *fp, size_t length, int *lineNumber)</arglist>
+      <anchor>a29d259d7ac20ad3d5d9ce2af421a476e</anchor>
+      <arglist>(FILE *fp, size_t length)</arglist>
     </member>
     <member kind="function">
       <type>XStructure *</type>
       <name>xjsonParsePath</name>
       <anchorfile>xjson_8c.html</anchorfile>
-      <anchor>a10f821e34aeb56f02985ac6cc3a8be89</anchor>
-      <arglist>(const char *path, int *lineNumber)</arglist>
+      <anchor>a9a9cad9405eeff3a088e5f809fa50529</anchor>
+      <arglist>(const char *path)</arglist>
+    </member>
+    <member kind="function">
+      <type>XStructure *</type>
+      <name>xjsonParseString</name>
+      <anchorfile>xjson_8c.html</anchorfile>
+      <anchor>a5101534a5573eefbdbc584cb6bedfd8e</anchor>
+      <arglist>(const char *str, char **tail)</arglist>
     </member>
     <member kind="function">
       <type>void</type>

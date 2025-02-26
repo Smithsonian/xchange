@@ -426,6 +426,8 @@ structure (and its substructures) in descending alphabetical order:
 Once you have an `XStructure` data object, you can easily convert it to JSON string representation, as:
 
 ```c
+  #include <xjson.h>
+
   XStructure *s = ...
 
   // Obtain a JSON string representation of the structure 's'.
@@ -436,9 +438,11 @@ The above produces a proper JSON document. Or, you can do the reverse and create
 representation, either from a string (a 0-terminated `char` array):
 
 ```c
-  int lineNumber = 0;
-  XStructure *s1 = xjsonParseAt(json, &lineNumber);
-  if (s1 == NULL) {
+  #include <xjson.h>
+
+  char *tail;    // for return parse position
+  XStructure *s = xjsonParseString(json, &tail);
+  if (s == NULL) {
      // Oops, there was some problem...
   }
 ```
@@ -446,8 +450,10 @@ representation, either from a string (a 0-terminated `char` array):
 or parse it from a file, which contains a JSON definition of the structured data:
 
 ```c
-  XStructure *s1 = xjsonParsePath("my-data.json", &lineNumber);
-  if (s1 == NULL) {
+  #include <xjson.h>
+
+  XStructure *s = xjsonParsePath("my-data.json");
+  if (s == NULL) {
      // Oops, there was some problem...
   }
 ```

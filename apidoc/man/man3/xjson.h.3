@@ -34,16 +34,16 @@ include/xjson.h
 .RI "int \fBxjsonGetIndent\fP ()"
 .br
 .ti -1c
-.RI "\fBXStructure\fP * \fBxjsonParseAt\fP (char **src, int *lineNumber)"
+.RI "\fBXField\fP * \fBxjsonParseField\fP (const char *src, char **tail)"
 .br
 .ti -1c
-.RI "\fBXField\fP * \fBxjsonParseFieldAt\fP (char **src, int *lineNumber)"
+.RI "\fBXStructure\fP * \fBxjsonParseFile\fP (FILE *file, size_t length)"
 .br
 .ti -1c
-.RI "\fBXStructure\fP * \fBxjsonParseFile\fP (FILE *file, size_t length, int *lineNumber)"
+.RI "\fBXStructure\fP * \fBxjsonParsePath\fP (const char *fileName)"
 .br
 .ti -1c
-.RI "\fBXStructure\fP * \fBxjsonParsePath\fP (const char *fileName, int *lineNumber)"
+.RI "\fBXStructure\fP * \fBxjsonParseString\fP (const char *src, char **tail)"
 .br
 .ti -1c
 .RI "void \fBxjsonSetErrorStream\fP (FILE *fp)"
@@ -140,7 +140,7 @@ String JSON representation, or NULL if there was an error (errno set to EINVAL)\
 .PP
 \fBxjsonSetIndent()\fP 
 .PP
-\fBxjsonParseAt()\fP 
+xjsonParseAt() 
 .PP
 \fBxjsonParseFile()\fP 
 .PP
@@ -166,43 +166,14 @@ Returns the number of spaces per indentation when emitting JSON formatted output
 .RE
 .PP
 
-.SS "\fBXStructure\fP * xjsonParseAt (char ** pos, int * lineNumber)"
-Parses a JSON object from the given parse position, returning the structured data and updating the parse position\&. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream()\&.
-.PP
-\fBParameters\fP
-.RS 4
-\fIpos\fP Pointer to current parse position, which will be updated to point to after the last character consumed by the JSON parser\&. 
-.br
-\fIlineNumber\fP Optional pointer that holds a line number of the parse position, or NULL if not required\&. Line numbers may be useful to report where the parser run into an error if the parsing failed\&. Line numbers start at 1, and are counted from the initial parse position\&.
-.RE
-.PP
-\fBReturns\fP
-.RS 4
-Structured data created from the JSON description, or NULL if there was an error parsing the data (errno is set to EINVAL)\&. The lineNumber argument can be used to determine where the error occurred\&.
-.RE
-.PP
-\fBSee also\fP
-.RS 4
-\fBxjsonParseFieldAt()\fP 
-.PP
-\fBxjsonToString()\fP 
-.PP
-\fBxjsonParseFile()\fP 
-.PP
-xjsonParseFileName() 
-.RE
-.PP
-
-.PP
-References \fBx_error()\fP\&.
-.SS "\fBXField\fP * xjsonParseFieldAt (char ** pos, int * lineNumber)"
+.SS "\fBXField\fP * xjsonParseField (const char * str, char ** tail)"
 Parses a JSON field from the given parse position, returning the field's data in the xchange format and updating the parse position\&. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream()\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIpos\fP Pointer to current parse position, which will be updated to point to after the last character consumed by the JSON parser\&. 
+\fIstr\fP String pointer from which to parse\&. 
 .br
-\fIlineNumber\fP Optional pointer that holds a line number of the parse position, or NULL if not required\&. Line numbers may be useful to report where the parser run into an error if the parsing failed\&. Line numbers start at 1, and are counted from the initial parse position\&.
+\fItail\fP Pointer in which to return parse position after\&.
 .RE
 .PP
 \fBReturns\fP
@@ -212,7 +183,7 @@ Structured data created from the JSON description, or NULL if there was an error
 .PP
 \fBSee also\fP
 .RS 4
-\fBxjsonParseAt()\fP 
+xjsonParseAt() 
 .PP
 \fBxjsonToString()\fP 
 .PP
@@ -224,16 +195,14 @@ xjsonParseFileName()
 
 .PP
 References \fBx_error()\fP\&.
-.SS "\fBXStructure\fP * xjsonParseFile (FILE * fp, size_t length, int * lineNumber)"
+.SS "\fBXStructure\fP * xjsonParseFile (FILE * fp, size_t length)"
 Parses a JSON object from the current position in a file, returning the described structured data\&. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream()\&.
 .PP
 \fBParameters\fP
 .RS 4
 \fIfp\fP File pointer, opened with read permission ('r')\&. 
 .br
-\fIlength\fP [bytes] The number of bytes to parse / available, or 0 to read to the end of the file\&. (In the latter case the file must support fseek with SEEK_END to automatically determine the length, or else this function will return NULL)\&. 
-.br
-\fIlineNumber\fP Optional pointer that holds a line number of the parse position, or NULL if not required\&. Line numbers may be useful to report where the parser run into an error if the parsing failed\&. Line numbers start at 1, and are counted from the initial parse position\&.
+\fIlength\fP [bytes] The number of bytes to parse / available, or 0 to read to the end of the file\&. (In the latter case the file must support \fCfseek()\fP with \fCSEEK_END\fP to automatically determine the length, or else this function will return NULL)\&.
 .RE
 .PP
 \fBReturns\fP
@@ -245,7 +214,7 @@ Structured data created from the JSON description, or NULL if there was an error
 .RS 4
 \fBxjsonParsePath()\fP 
 .PP
-\fBxjsonParseAt()\fP 
+xjsonParseAt() 
 .PP
 \fBxjsonToString()\fP 
 .RE
@@ -253,14 +222,12 @@ Structured data created from the JSON description, or NULL if there was an error
 
 .PP
 References \fBx_error()\fP\&.
-.SS "\fBXStructure\fP * xjsonParsePath (const char * path, int * lineNumber)"
+.SS "\fBXStructure\fP * xjsonParsePath (const char * path)"
 Parses a JSON object from the beginning of a file, returning the described structured data\&. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream()\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIpath\fP File name/path to parse\&. 
-.br
-\fIlineNumber\fP Optional pointer that holds a line number of the parse position, or NULL if not required\&. Line numbers may be useful to report where the parser run into an error if the parsing failed\&. Line numbers start at 1, and are counted from the initial parse position\&.
+\fIpath\fP File name/path to parse\&.
 .RE
 .PP
 \fBReturns\fP
@@ -272,7 +239,7 @@ Structured data created from the JSON description, or NULL if there was an error
 .RS 4
 \fBxjsonParseFile()\fP 
 .PP
-\fBxjsonParseAt()\fP 
+xjsonParseAt() 
 .PP
 \fBxjsonToString()\fP 
 .RE
@@ -280,6 +247,35 @@ Structured data created from the JSON description, or NULL if there was an error
 
 .PP
 References \fBx_error()\fP, \fBxIsVerbose()\fP, and \fBxjsonParseFile()\fP\&.
+.SS "\fBXStructure\fP * xjsonParseString (const char * str, char ** tail)"
+Parses a JSON object from the given parse position, returning the structured data and updating the parse position\&. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream()\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIstr\fP Pointer to string from which to parse JSON 
+.br
+\fItail\fP Pointer to return parse position, or NULL if not required\&.
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Structured data created from the JSON description, or NULL if there was an error parsing the data (errno is set to EINVAL)\&. The lineNumber argument can be used to determine where the error occurred\&.
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+xjsonParseFieldAt() 
+.PP
+\fBxjsonToString()\fP 
+.PP
+\fBxjsonParseFile()\fP 
+.PP
+xjsonParseFileName() 
+.RE
+.PP
+
+.PP
+References \fBx_error()\fP\&.
 .SS "void xjsonSetErrorStream (FILE * fp)"
 Change the file to which XJSON reports errors\&. By default it will use stderr\&.
 .PP
@@ -328,7 +324,7 @@ String JSON representation, or NULL if there was an error (errno set to EINVAL)\
 .PP
 \fBxjsonSetIndent()\fP 
 .PP
-\fBxjsonParseAt()\fP 
+xjsonParseAt() 
 .PP
 \fBxjsonParseFile()\fP 
 .PP
