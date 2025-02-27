@@ -234,7 +234,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Converts an <a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a> into its JSON representation, with the specified indentation of white spaces in front of every line. Conversion errors are reported to stderr or the altenate stream set by xSetErrorStream().</p>
+<p>Converts an <a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a> into its JSON representation, with the specified indentation of white spaces in front of every line. Conversion errors are reported to stderr or the altenate stream set by <a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">indent</td><td>Number of white spaces to insert in front of each line. </td></tr>
@@ -264,7 +264,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Converts an <a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a> into its JSON representation. Conversion errors are reported to stderr or the altenate stream set by xSetErrorStream().</p>
+<p>Converts an <a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a> into its JSON representation. Conversion errors are reported to stderr or the altenate stream set by <a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">f</td><td>Pointer to field </td></tr>
@@ -333,7 +333,7 @@ xjsonParseAt() </dd>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parses a JSON field from the given parse position, returning the field's data in the xchange format and updating the parse position. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream().</p>
+<p>Parses a JSON field from the given parse position, returning the field's data in the xchange format and updating the parse position. Parse errors are reported to stderr or the alternate stream set by <a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">str</td><td>String pointer from which to parse. </td></tr>
@@ -379,7 +379,7 @@ xjsonParseFileName() </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parses a JSON object from the current position in a file, returning the described structured data. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream().</p>
+<p>Parses a JSON object from the current position in a file, returning the described structured data. Parse errors are reported to stderr or the alternate stream set by <a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">fp</td><td>File pointer, opened with read permission ("r"). </td></tr>
@@ -413,7 +413,7 @@ xjsonParseAt() </dd>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parses a JSON object from the beginning of a file, returning the described structured data. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream().</p>
+<p>Parses a JSON object from the beginning of a file, returning the described structured data. Parse errors are reported to stderr or the alternate stream set by <a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>File name/path to parse.</td></tr>
@@ -456,7 +456,7 @@ xjsonParseAt() </dd>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parses a JSON object from the given parse position, returning the structured data and updating the parse position. Parse errors are reported to stderr or the alternate stream set by xSetErrorStream().</p>
+<p>Parses a JSON object from the given parse position, returning the structured data and updating the parse position. Parse errors are reported to stderr or the alternate stream set by <a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">str</td><td>Pointer to string from which to parse JSON </td></tr>
@@ -549,7 +549,7 @@ xjsonParseFileName() </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Converts structured data into its JSON representation. Conversion errors are reported to stderr or the altenate stream set by xSetErrorStream().</p>
+<p>Converts structured data into its JSON representation. Conversion errors are reported to stderr or the altenate stream set by <a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">s</td><td>Pointer to structured data </td></tr>
