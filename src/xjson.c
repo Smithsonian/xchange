@@ -120,7 +120,7 @@ static char *GetIndent() {
 
 /**
  * Converts structured data into its JSON representation. Conversion errors are reported to stderr
- * or the altenate stream set by xSetErrorStream().
+ * or the altenate stream set by xjsonSetErrorStream().
  *
  * @param s     Pointer to structured data
  * @return      String JSON representation, or NULL if there was an error (errno set to EINVAL).
@@ -165,7 +165,7 @@ char *xjsonToString(const XStructure *s) {
 /**
  * Converts an XField into its JSON representation, with the specified indentation of white spaces
  * in front of every line. Conversion errors are reported to stderr or the altenate stream set by
- * xSetErrorStream().
+ * xjsonSetErrorStream().
  *
  * @param indent  Number of white spaces to insert in front of each line.
  * @param f       Pointer to field
@@ -218,7 +218,7 @@ char *xjsonFieldToIndentedString(int indent, const XField *f) {
 
 /**
  * Converts an XField into its JSON representation. Conversion errors are reported to stderr
- * or the altenate stream set by xSetErrorStream().
+ * or the altenate stream set by xjsonSetErrorStream().
  *
  * @param f     Pointer to field
  * @return      String JSON representation, or NULL if there was an error (errno set to EINVAL).
@@ -236,7 +236,7 @@ char *xjsonFieldToString(const XField *f) {
 /**
  * Parses a JSON object from the given parse position, returning the structured data
  * and updating the parse position. Parse errors are reported to stderr or the alternate
- * stream set by xSetErrorStream().
+ * stream set by xjsonSetErrorStream().
  *
  *
  * @param str           Pointer to string from which to parse JSON
@@ -271,7 +271,7 @@ XStructure *xjsonParseString(const char *str, char **tail) {
 /**
  * Parses a JSON field from the given parse position, returning the field's data in the xchange
  * format and updating the parse position. Parse errors are reported to stderr or the alternate
- * stream set by xSetErrorStream().
+ * stream set by xjsonSetErrorStream().
  *
  *
  * @param str         String pointer from which to parse.
@@ -305,7 +305,7 @@ XField *xjsonParseField(const char *str, char **tail) {
 
 /**
  * Parses a JSON object from the beginning of a file, returning the described structured data.
- * Parse errors are reported to stderr or the alternate stream set by xSetErrorStream().
+ * Parse errors are reported to stderr or the alternate stream set by xjsonSetErrorStream().
  *
  *
  * @param[in]  path         File name/path to parse.
@@ -346,7 +346,7 @@ XStructure *xjsonParsePath(const char *path) {
 
 /**
  * Parses a JSON object from the current position in a file, returning the described structured data.
- * Parse errors are reported to stderr or the alternate stream set by xSetErrorStream().
+ * Parse errors are reported to stderr or the alternate stream set by xjsonSetErrorStream().
  *
  *
  * @param[in]  fp           File pointer, opened with read permission ("r").
