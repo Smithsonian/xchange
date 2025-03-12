@@ -31,18 +31,20 @@ else
   $(info WARNING! Doxygen is not available. Will skip 'dox' target) 
 endif
 
+# Build static or shared libs
+ifeq ($(STATICLINK),1)
+  LIBSTYLE = static
+else
+  LIBSTYLE = shared
+endif
+
 INSTALL_TARGETS := install-headers
 
 export
 
 # Build for distribution
 .PHONY: distro
-ifeq ($(STATICLINK),1)
-distro: static
-else
-distro: shared
-endif
-distro: $(DOC_TARGETS)
+distro: $(LIBSTYLE) $(DOC_TARGETS)
 
 # Shared libraries (versioned and unversioned)
 .PHONY: shared
