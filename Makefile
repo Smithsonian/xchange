@@ -31,20 +31,13 @@ else
   $(info WARNING! Doxygen is not available. Will skip 'dox' target) 
 endif
 
-# Build static or shared libs
-ifeq ($(STATICLINK),1)
-  LIBSTYLE = static
-else
-  LIBSTYLE = shared
-endif
-
 INSTALL_TARGETS := install-headers
 
 export
 
 # Build for distribution
 .PHONY: distro
-distro: $(LIBSTYLE) $(DOC_TARGETS)
+distro: $(LIBXCHANGE) $(DOC_TARGETS)
 
 # Shared libraries (versioned and unversioned)
 .PHONY: shared
@@ -91,15 +84,17 @@ tests: $(BIN)/test-struct $(BIN)/test-lookup $(BIN)/test-json
 
 # Run tests
 .PHONY: run
+run: LD_LIBRARY_PATH := $(LIB)
 run: static tests
 	$(BIN)/test-struct
 	$(BIN)/test-lookup
 	$(BIN)/test-json
 
 # Compile tests
-$(BIN)/test-%: $(OBJ)/test-%.o $(LIB)/libxchange.a
+$(BIN)/test-%: LDFLAGS := $(LDFLAGS) -L$(LIB)
+$(BIN)/test-%: $(OBJ)/test-%.o $(LIBXCHANGE)
 	$(MAKE) $(BIN)
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS) -lxchange
 
 .PHONY: clean-test
 clean-test:
