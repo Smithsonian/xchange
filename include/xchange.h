@@ -12,6 +12,8 @@
 #ifndef XCHANGE_H_
 #define XCHANGE_H_
 
+#define __STDC_LIMIT_MACROS         ///< for fixed-width integer limits
+
 #include <stdint.h>
 #include <limits.h>
 
