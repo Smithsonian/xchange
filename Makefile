@@ -148,6 +148,9 @@ ps:
 .PHONY: pdf
 pdf:
 
+# The package name to use for installation paths
+PACKAGE_NAME ?= xchange
+
 # Default values for install locations
 # See https://www.gnu.org/prep/standards/html_node/Directory-Variables.html 
 prefix ?= /usr
@@ -156,8 +159,8 @@ libdir ?= $(exec_prefix)/lib
 includedir ?= $(prefix)/include
 datarootdir ?= $(prefix)/share
 datadir ?= $(datarootdir)
-mydatadir ?= $(datadir)/xchange
-docdir ?= $(datarootdir)/doc/xchange
+mydatadir ?= $(datadir)/$(PACKAGE_NAME)
+docdir ?= $(datarootdir)/doc/$(PACKAGE_NAME)
 htmldir ?= $(docdir)/html
 
 # Standard install commands
