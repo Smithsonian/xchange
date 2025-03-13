@@ -566,4 +566,4 @@ existing ones are especially welcome!
  
 
 -----------------------------------------------------------------------------
-Copyright (C) 2024 Attila Kovács
+Copyright (C) 2025 Attila Kovács

@@ -51,7 +51,7 @@ var NAVTREE =
       [ "Error handling", "index.html#autotoc_md27", null ],
       [ "Debugging support", "index.html#autotoc_md29", null ],
       [ "Future plans", "index.html#autotoc_md30", null ],
-      [ "[1.0.0-rc5] - 2025-03-04", "md_CHANGELOG.html#autotoc_md1", null ]
+      [ "[1.0.0-rc6] - 2025-03-13", "md_CHANGELOG.html#autotoc_md1", null ]
     ] ],
     [ "Contributing to the xchange library", "md_CONTRIBUTING.html", null ],
     [ "Data Structures", "annotated.html", [
@@ -78,7 +78,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"xjson_8h.html#a01bc599d67f70636a813b103a20170ac"
+"xjson_8h.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

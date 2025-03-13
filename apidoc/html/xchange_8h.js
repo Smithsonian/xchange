@@ -3,6 +3,7 @@ var xchange_8h =
     [ "XField", "structXField.html", "structXField" ],
     [ "XLookupTable", "structXLookupTable.html", "structXLookupTable" ],
     [ "XStructure", "structXStructure.html", "structXStructure" ],
+    [ "__STDC_LIMIT_MACROS", "xchange_8h.html#aeb7e7a856ab7a794b05b6b63ef36ea3e", null ],
     [ "_TYPEDEF_BOOLEAN", "xchange_8h.html#adbb2c6827fb22c643243e54992da6c70", null ],
     [ "FALSE", "xchange_8h.html#aa93f0eb578d23995850d61f7d61c55c1", null ],
     [ "INFINITY", "xchange_8h.html#a956e2723d559858d08644ac99146e910", null ],

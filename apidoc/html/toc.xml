@@ -25,7 +25,7 @@
     <topic label="Future plans" href="index.html#autotoc_md30"/>
   </topic>
   <topic label="Changelog" href="md_CHANGELOG.html">
-    <topic label="[1.0.0-rc5] - 2025-03-04" href="md_CHANGELOG.html#autotoc_md1"/>
+    <topic label="[1.0.0-rc6] - 2025-03-13" href="md_CHANGELOG.html#autotoc_md1"/>
   </topic>
   <topic label="Contributing to the xchange library" href="md_CONTRIBUTING.html"/>
   <topic label="Data Structures" href="annotated.html">
@@ -75,6 +75,7 @@
             <topic label="firstField" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc"/>
             <topic label="parent" href="structXStructure.html#a82ba053944ce97d83d41c05f68ec4f3d"/>
           </topic>
+          <topic label="__STDC_LIMIT_MACROS" href="xchange_8h.html#aeb7e7a856ab7a794b05b6b63ef36ea3e"/>
           <topic label="_TYPEDEF_BOOLEAN" href="xchange_8h.html#adbb2c6827fb22c643243e54992da6c70"/>
           <topic label="FALSE" href="xchange_8h.html#aa93f0eb578d23995850d61f7d61c55c1"/>
           <topic label="INFINITY" href="xchange_8h.html#a956e2723d559858d08644ac99146e910"/>

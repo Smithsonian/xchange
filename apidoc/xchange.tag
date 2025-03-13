@@ -9,6 +9,13 @@
     <class kind="struct">XStructure</class>
     <member kind="define">
       <type>#define</type>
+      <name>__STDC_LIMIT_MACROS</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>aeb7e7a856ab7a794b05b6b63ef36ea3e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>_TYPEDEF_BOOLEAN</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>adbb2c6827fb22c643243e54992da6c70</anchor>
