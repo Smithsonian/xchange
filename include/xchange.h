@@ -103,7 +103,7 @@ typedef int XType;          ///< SMA-X data type.
 #  define X_SHORT             X_INT16     ///< \hideinitializer native `short` XType
 #elif SHRT_MAX == INT32_MAX
 #  define X_SHORT             X_INT32     ///< \hideinitializer native `short` XType
-#elif SHRT_MAX == INT64_MAX
+#else
 #  define X_SHORT             X_INT64     ///< \hideinitializer native `short` XType
 #endif
 
@@ -111,18 +111,20 @@ typedef int XType;          ///< SMA-X data type.
 #  define X_INT               X_INT16     ///< \hideinitializer native `int` XType
 #elif INT_MAX == INT32_MAX
 #  define X_INT               X_INT32     ///< \hideinitializer native `int` XType
-#elif INT_MAX == INT64_MAX
+#else
 #  define X_INT               X_INT64     ///< \hideinitializer native `int` XType
 #endif
 
 #if LONG_MAX == INT32_MAX
 #  define X_LONG              X_INT32     ///< \hideinitializer native `long` XType
-#elif LONG_MAX == INT64_MAX
+#else
 #  define X_LONG              X_INT64     ///< \hideinitializer native `long` XType
 #endif
 
-#if LLONG_MAX == INT64_MAX
+#if !defined(LLONG_MAX) || LLONG_MAX == INT64_MAX
 #  define X_LLONG             X_INT64     ///< \hideinitializer native `long long` XType
+#else
+#  define X_LLONG            X_UNDEFINED ///< \hideinitializer no native `long long` XType
 #endif
 
 #define X_SEP               ":"             ///< sepatator for patterning of notification channels, e.g. "changed:<table>:<key>"
