@@ -47,13 +47,9 @@ shared: $(LIB)/libxchange.so
 .PHONY: static
 static: $(LIB)/libxchange.a
 
-# Build libraries
-.PHONY: libs
-libs: shared static
-
 # Build everything...
 .PHONY: all
-all: libs $(DOC_TARGETS) check
+all: $(LIBXCHANGE) $(DOC_TARGETS) check
 
 # Run regression tests
 .PHONY: test
@@ -66,7 +62,7 @@ check: test analyze
 # Static code analysis via Facebook's infer
 .PHONY: infer
 infer: clean
-	infer run -- $(MAKE) shared
+	infer run -- $(MAKE) $(LIBXCHANGE)
 
 # Remove intermediates
 .PHONY: clean
