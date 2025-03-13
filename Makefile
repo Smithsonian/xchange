@@ -85,7 +85,7 @@ tests: $(BIN)/test-struct $(BIN)/test-lookup $(BIN)/test-json
 # Run tests
 .PHONY: run
 run: LD_LIBRARY_PATH := $(LIB)
-run: static tests
+run: $(LIBXCHANGE) tests
 	$(BIN)/test-struct
 	$(BIN)/test-lookup
 	$(BIN)/test-json
