@@ -33,13 +33,17 @@ ifeq ($(WEXTRA), 1)
   CFLAGS += -Wextra
 endif
 
+# Add source code fortification checks
+ifdef FORTIFY 
+  CFLAGS += -D_FORTIFY_SOURCE=$(FORTIFY)
+endif
+
 # Extra linker flags to use
 #LDFLAGS =
 
 # cppcheck options for 'check' target
 CHECKOPTS ?= --enable=performance,warning,portability,style --language=c \
             --error-exitcode=1 --inline-suppr --std=c99 $(CHECKEXTRA)
-
 
 # Exhaustive checking for newer cppcheck
 #CHECKOPTS += --check-level=exhaustive
