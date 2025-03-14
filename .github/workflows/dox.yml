@@ -56,7 +56,7 @@ jobs:
     - name: Generate headless README
       run: make README-xchange.md
         
-    - uses: mattnotmitt/doxygen-action@v1.9.8
+    - uses: mattnotmitt/doxygen-action@v1.11.0
       with:
         additional-packages: font-roboto
        
