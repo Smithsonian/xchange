@@ -28,6 +28,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
+      FORTIFY: 3
       LIB: ${{ github.workspace }}/lib
       LD_LIBRARY_PATH: ${{ github.workspace }}/lib
     steps:
