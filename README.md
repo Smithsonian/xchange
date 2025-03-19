@@ -86,6 +86,10 @@ prior to invoking `make`. The following build variables can be configured:
 
  - `CHECKEXTRA`: Extra options to pass to `cppcheck` for the `make check` target
 
+ - `DOXYGEN`: Specify the `doxygen` executable to use for generating documentation. If not set (default), `make` will
+   use `doxygen` in your `PATH` (if any). You can also set it to `none` to disable document generation and the
+   checking for a usable `doxygen` version entirely.
+ 
  
 After configuring, you can simply run `make`, which will build the `shared` (`lib/libxchange.so[.1]`) and `static` 
 (`lib/libxchange.a`) libraries, local HTML documentation (provided `doxygen` is available), and performs static
