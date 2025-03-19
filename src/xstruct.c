@@ -156,6 +156,7 @@ XField *xCopyOfField(const XField *f) {
   *copy = *f;
   copy->value = NULL;       // To be assigned below...
   copy->next = NULL;        // Clear the link of the copy to avoid corrupted structures.
+  copy->subtype = xStringCopyOf(f->subtype);
 
   if(f->name) {
     copy->name = xStringCopyOf(f->name);
