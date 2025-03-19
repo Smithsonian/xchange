@@ -247,7 +247,7 @@ A fully independent (deep) copy of the argument or NULL if the input field is NU
 .PP
 
 .PP
-References \fBXField::isSerialized\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, \fBx_trace_null()\fP, \fBxCopyOfStruct()\fP, \fBxDestroyField()\fP, \fBxElementSizeOf()\fP, \fBxGetFieldCount()\fP, and \fBxStringCopyOf()\fP\&.
+References \fBXField::isSerialized\fP, \fBXField::name\fP, \fBXField::next\fP, \fBXField::subtype\fP, \fBXField::type\fP, \fBXField::value\fP, \fBx_error()\fP, \fBX_RAW\fP, \fBX_STRING\fP, \fBX_STRUCT\fP, \fBx_trace_null()\fP, \fBxCopyOfStruct()\fP, \fBxDestroyField()\fP, \fBxElementSizeOf()\fP, \fBxGetFieldCount()\fP, and \fBxStringCopyOf()\fP\&.
 .SS "\fBXStructure\fP * xCopyOfStruct (const \fBXStructure\fP * s)"
 Returns a deep copy of the supplied structure\&. Note that this only works with vanilla xchange structures with native storage fields\&. For example, SMA-X structures store data in serialized forms, and therefore it needs its own implementation for making deep copies of structs!
 .PP

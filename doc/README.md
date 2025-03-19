@@ -60,11 +60,18 @@ prior to invoking `make`. The following build variables can be configured:
    defined then `-std=$(CSTANDARD)` is added to `CFLAGS` automatically.
    
  - `WEXTRA`: If set to 1, `-Wextra` is added to `CFLAGS` automatically.
+
+ - `FORTIFY`: If set it will set the `_FORTIFY_SOURCE` macro to the specified value (`gcc` supports values 1 
+   through 3). It affords varying levels of extra compile time / runtime checks.
    
  - `LDFLAGS`: Extra linker flags (default: _not set_). Note, `-lm -lpthread` will be added automatically.
 
  - `CHECKEXTRA`: Extra options to pass to `cppcheck` for the `make check` target
 
+ - `DOXYGEN`: Specify the `doxygen` executable to use for generating documentation. If not set (default), `make` will
+   use `doxygen` in your `PATH` (if any). You can also set it to `none` to disable document generation and the
+   checking for a usable `doxygen` version entirely.
+ 
  
 After configuring, you can simply run `make`, which will build the `shared` (`lib/libxchange.so[.1]`) and `static` 
 (`lib/libxchange.a`) libraries, local HTML documentation (provided `doxygen` is available), and performs static
