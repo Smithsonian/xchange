@@ -149,7 +149,7 @@ XField *xCopyOfField(const XField *f) {
     return NULL;
   }
 
-  copy = (XField *) malloc(sizeof(XField));
+  copy = (XField *) calloc(1, sizeof(XField));
   x_check_alloc(copy);
 
   // Start with a clone...
@@ -1192,7 +1192,7 @@ void xClearField(XField *f) {
   }
 
   if(f->name != NULL) free(f->name);
-  if(f->subtype) free(f->subtype);
+  if(f->subtype != NULL) free(f->subtype);
 
   memset(f, 0, sizeof(XField));
 }
