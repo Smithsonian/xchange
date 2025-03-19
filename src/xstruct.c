@@ -154,14 +154,24 @@ XField *xCopyOfField(const XField *f) {
 
   // Start with a clone...
   *copy = *f;
+
+  copy->name = NULL;        // To be assigned below...
+  copy->subtype = NULL;     // To be assigned below...
   copy->value = NULL;       // To be assigned below...
   copy->next = NULL;        // Clear the link of the copy to avoid corrupted structures.
-  copy->subtype = xStringCopyOf(f->subtype);
 
   if(f->name) {
     copy->name = xStringCopyOf(f->name);
     if(!copy->name) {
-      free(copy);
+      xDestroyField(copy);
+      return x_trace_null(fn, f->name);
+    }
+  }
+
+  if(f->subtype) {
+    copy->subtype = xStringCopyOf(f->subtype);
+    if(!copy->subtype) {
+      xDestroyField(copy);
       return x_trace_null(fn, f->name);
     }
   }
