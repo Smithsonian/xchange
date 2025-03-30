@@ -51,7 +51,7 @@ var NAVTREE =
       [ "Error handling", "index.html#autotoc_md27", null ],
       [ "Debugging support", "index.html#autotoc_md29", null ],
       [ "Future plans", "index.html#autotoc_md30", null ],
-      [ "[1.0.0-rc7] - 2025-03-20", "md_CHANGELOG.html#autotoc_md1", null ]
+      [ "[1.0.0] - 2025-03-31", "md_CHANGELOG.html#autotoc_md1", null ]
     ] ],
     [ "Contributing to the xchange library", "md_CONTRIBUTING.html", null ],
     [ "Data Structures", "annotated.html", [

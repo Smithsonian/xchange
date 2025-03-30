@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['max_5fdebug_5ferror_5fcount_0',['MAX_DEBUG_ERROR_COUNT',['../xchange_8h.html#a73012d5991cc49ef05bf1d621a1cde55',1,'xchange.h']]]
+  ['large_20structures_0',['Large structures',['../index.html#autotoc_md19',1,'']]],
+  ['library_1',['Contributing to the xchange library',['../md_CONTRIBUTING.html',1,'']]],
+  ['linking_20your_20application_20against_20tt_20xchange_20tt_2',['Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;',['../index.html#autotoc_md9',1,'']]]
 ];

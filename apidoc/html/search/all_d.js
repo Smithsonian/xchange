@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['large_20structures_0',['Large structures',['../index.html#autotoc_md19',1,'']]],
-  ['library_1',['Contributing to the xchange library',['../md_CONTRIBUTING.html',1,'']]],
-  ['linking_20your_20application_20against_20tt_20xchange_20tt_2',['Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;',['../index.html#autotoc_md9',1,'']]]
+  ['json_20fragments_0',['JSON fragments',['../index.html#autotoc_md24',1,'']]],
+  ['json_20parser_20and_20emitter_1',['JSON parser and emitter',['../index.html#autotoc_md23',1,'']]]
 ];
