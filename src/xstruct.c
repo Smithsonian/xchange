@@ -904,6 +904,7 @@ long xGetFieldCount(const XField *f) {
     x_error(0, EINVAL, "xGetFieldCount", "input field is NULL");
     return 0;
   }
+  if(f->type == X_RAW) return 1;
   return xGetElementCount(f->ndim, f->sizes);
 }
 
