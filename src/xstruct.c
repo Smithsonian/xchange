@@ -244,10 +244,9 @@ XField *xCopyOfField(const XField *f) {
       dst[k] = *tmp;  // Copy to destination with references.
       free(tmp);      // Empty the temporary container.
     }
-
   }
 
-  if(f->type == X_RAW) {
+  else if(f->type == X_RAW) {
     // raw value is single string pointer
     char **src = (char **) f->value;
     if(*src) {
@@ -256,7 +255,7 @@ XField *xCopyOfField(const XField *f) {
     }
   }
 
-  else if(f->type == X_STRING || f->type == X_RAW) {
+  else if(f->type == X_STRING) {
     char **src = (char **) f->value;
     char **dst = (char **) copy->value;
     for(k = 0; k < eCount; k++) dst[k] = xStringCopyOf(src[k]);
@@ -1198,26 +1197,36 @@ void xClearField(XField *f) {
   if(!f) return;
 
   if(f->value != NULL) {
-    if(f->type == X_STRUCT) {
-      XStructure *sub = (XStructure *) f->value;
-      int i = xGetFieldCount(f);
-      while(--i >= 0) xClearStruct(&sub[i]);
-    }
-    else if(f->type == X_FIELD) {
-      XField *array = (XField *) f->value;
-      int i;
-      for(i = xGetFieldCount(f); --i >=0;) xClearField(&array[i]);
-    }
-    else if(f->type == X_RAW) {
-      // raw value is single string pointer
-      char **str = (char **) f->value;
-      if(*str) free(*str);
-    }
-    else if(f->type == X_STRING && !f->isSerialized) {
-      // value is an array of string pointers...
-      char **str = (char **) f->value;
-      int i = xGetFieldCount(f);
-      while(--i >= 0) if(str[i]) free(str[i]);
+    switch(f->type) {
+      case X_STRUCT: {
+        XStructure *sub = (XStructure *) f->value;
+        int i = xGetFieldCount(f);
+        while(--i >= 0) xClearStruct(&sub[i]);
+        break;
+      }
+
+      case X_FIELD: {
+        XField *array = (XField *) f->value;
+        int i;
+        for(i = xGetFieldCount(f); --i >=0;) xClearField(&array[i]);
+        break;
+      }
+
+      case X_RAW: {
+        // raw value is single string pointer
+        char **str = (char **) f->value;
+        if(*str) free(*str);
+        break;
+      }
+
+      case X_STRING:
+        if(!f->isSerialized) {
+          // value is an array of string pointers...
+          char **str = (char **) f->value;
+          int i = xGetFieldCount(f);
+          while(--i >= 0) if(str[i]) free(str[i]);
+        }
+        break;
     }
 
     free(f->value);
