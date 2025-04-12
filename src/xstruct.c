@@ -684,6 +684,8 @@ XField *xCreateField(const char *name, XType type, int ndim, const int *sizes, c
     return NULL;
   }
 
+  if(type == X_RAW) ndim = 0;
+
   count = xGetElementCount(ndim, sizes);
   n = count * xElementSizeOf(type);
 
@@ -904,7 +906,6 @@ long xGetFieldCount(const XField *f) {
     x_error(0, EINVAL, "xGetFieldCount", "input field is NULL");
     return 0;
   }
-  if(f->type == X_RAW) return 1;
   return xGetElementCount(f->ndim, f->sizes);
 }
 

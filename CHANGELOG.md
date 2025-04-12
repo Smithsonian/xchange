@@ -15,6 +15,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
  
  - Handling of heterogeneous arrays (type `X_FIELD`) in `xCopyOfField()`.
  
+ 
+### Changes
+
+ - `xCreateField()` to treat `X_RAW` types always as scalars, ignoring the dimensions provided.
+ 
 
 ## [1.0.0] - 2025-03-31
 
