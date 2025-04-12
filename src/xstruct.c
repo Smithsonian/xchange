@@ -236,7 +236,27 @@ XField *xCopyOfField(const XField *f) {
     return NULL;
   }
 
-  if(f->type == X_STRING || f->type == X_RAW) {
+  if(f->type == X_FIELD) {
+    XField *src = (XField *) f->value;
+    XField *dst = (XField *) copy->value;
+    for(k = 0; k < eCount; k++) {
+      XField *tmp = xCopyOfField(&src[k]);
+      dst[k] = *tmp;  // Copy to destination with references.
+      free(tmp);      // Empty the temporary container.
+    }
+
+  }
+
+  if(f->type == X_RAW) {
+    // raw value is single string pointer
+    char **src = (char **) f->value;
+    if(*src) {
+      char *str = xStringCopyOf(*src);
+      if(*src) copy->value =  &str;
+    }
+  }
+
+  else if(f->type == X_STRING || f->type == X_RAW) {
     char **src = (char **) f->value;
     char **dst = (char **) copy->value;
     for(k = 0; k < eCount; k++) dst[k] = xStringCopyOf(src[k]);
@@ -393,11 +413,8 @@ long xGetAsLongAtIndex(const XField *f, int idx, long defaultValue) {
       errno = 0;
       d = strtod(ptr, NULL);
       return (errno ? defaultValue : d);
-
     }
     default:
-
-
       return defaultValue;
   }
 }
@@ -1186,14 +1203,18 @@ void xClearField(XField *f) {
       int i = xGetFieldCount(f);
       while(--i >= 0) xClearStruct(&sub[i]);
     }
-
-    if(f->type == X_FIELD) {
+    else if(f->type == X_FIELD) {
       XField *array = (XField *) f->value;
       int i;
       for(i = xGetFieldCount(f); --i >=0;) xClearField(&array[i]);
     }
-
-    if(f->type == X_STRING || f->type == X_RAW) {
+    else if(f->type == X_RAW) {
+      // raw value is single string pointer
+      char **str = (char **) f->value;
+      if(*str) free(*str);
+    }
+    else if(f->type == X_STRING && !f->isSerialized) {
+      // value is an array of string pointers...
       char **str = (char **) f->value;
       int i = xGetFieldCount(f);
       while(--i >= 0) if(str[i]) free(str[i]);

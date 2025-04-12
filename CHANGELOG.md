@@ -7,6 +7,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+
+### Fixes
+
+ - Handling of serialized strings in `xClearField()` and `xCopyOfField()`.
+ 
+ - Handling of heterogeneous arrays (type `X_FIELD`) in `xCopyOfField()`.
+ 
+
 ## [1.0.0] - 2025-03-31
 
 Initial public release.
