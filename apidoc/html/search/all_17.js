@@ -51,7 +51,7 @@ var searchData=
   ['xalloclookup_48',['xalloclookup',['../xlookup_8c.html#a01a94b3210aed984dbee956fbb26fcfd',1,'xAllocLookup(unsigned int size):&#160;xlookup.c'],['../xchange_8h.html#a01a94b3210aed984dbee956fbb26fcfd',1,'xAllocLookup(unsigned int size):&#160;xlookup.c']]],
   ['xchange_49',['xchange',['../index.html',1,'']]],
   ['xchange_20library_50',['Contributing to the xchange library',['../md_CONTRIBUTING.html',1,'']]],
-  ['xchange_20tt_51',['Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;',['../index.html#autotoc_md9',1,'']]],
+  ['xchange_20tt_51',['Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;',['../index.html#autotoc_md12',1,'']]],
   ['xchange_2ec_52',['xchange.c',['../xchange_8c.html',1,'']]],
   ['xchange_2eh_53',['xchange.h',['../xchange_8h.html',1,'']]],
   ['xchange_5fmajor_5fversion_54',['XCHANGE_MAJOR_VERSION',['../xchange_8h.html#a13ea68e798d0cd9cab06667707737055',1,'xchange.h']]],

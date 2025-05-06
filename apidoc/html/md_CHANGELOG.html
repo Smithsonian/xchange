@@ -118,6 +118,19 @@ $(document).ready(function(){initNavTree('md_CHANGELOG.html',''); initResizable(
 <div class="textblock"><p><a class="anchor" id="autotoc_md0"></a> All notable changes to the <a href="https://github.com/Smithsonian/xchange">Smithsonian/xchange</a> library will be documented in this file.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
+[1.0.1-rc1] - 2025-05-06</h1>
+<h2><a class="anchor" id="autotoc_md2"></a>
+Fixes</h2>
+<ul>
+<li>Handling of serialized strings in <code><a class="el" href="xstruct_8c.html#a2b81d2bbe48788a9741e815cdaa336eb">xClearField()</a></code> and <code><a class="el" href="xstruct_8c.html#afdb31906269568772fdf63adb6685fbc">xCopyOfField()</a></code>.</li>
+<li>Handling of heterogeneous arrays (type <code>X_FIELD</code>) in <code><a class="el" href="xstruct_8c.html#afdb31906269568772fdf63adb6685fbc">xCopyOfField()</a></code>.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md3"></a>
+Changes</h2>
+<ul>
+<li><code><a class="el" href="xstruct_8c.html#a42e4e75cbf8f721ef4b251c692dcd7cb">xCreateField()</a></code> to treat <code>X_RAW</code> types always as scalars, ignoring the dimensions provided.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md4"></a>
 [1.0.0] - 2025-03-31</h1>
 <p>Initial public release. </p>
 </div></div><!-- contents -->

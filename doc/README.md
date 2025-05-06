@@ -1,6 +1,6 @@
 <img src="/xchange/resources/CfA-logo.png" alt="CfA logo" width="400" height="67" align="right">
 <br clear="all">
-[![DOI](https://zenodo.org/badge/796202092.svg)](https://doi.org/10.5281/zenodo.14634824)
+[![DOI](resources/796202092.svg)](https://doi.org/10.5281/zenodo.14634824)
 
 Structured data representation and JSON support for C/C++.
 
