@@ -1,4 +1,6 @@
 name: API documentation
+  contents: read
+  pull-requests: write
 
 on:
   release:

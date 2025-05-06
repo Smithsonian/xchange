@@ -1,4 +1,6 @@
 name: Examples
+  contents: read
+  pull-requests: write
 
 on:
   push:

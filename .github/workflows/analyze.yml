@@ -1,4 +1,6 @@
 name: Static Analysis
+  contents: read
+  pull-requests: write
 
 on:
   push:
