@@ -467,14 +467,21 @@ XField *xLookupField(const XLookupTable *tab, const char *id) {
 }
 
 
+
+
 /**
- * Destroys a lookup table, freeing up it's in-memory resources.
+ * Destroys a lookup table, freeing up it's in-memory resources. Depending on the option
+ * argument, the fields referenced by the lookup table may also be destroyed, or else
+ * left to remain, in case they are referenced externally also.
  *
- * @param tab     Pointer to the lookup table to destroy.
+ * @param tab             Pointer to the lookup table to destroy.
+ * @param destroyFields   Whether to destroy the field data that is referenced also.
  *
+ * @sa xDestroyLookup()
+ * @sa xDestroyLookupAndData()
  * @sa xCreateLookup()
  */
-void xDestroyLookup(XLookupTable *tab) {
+static void xDestroyLookupOption(XLookupTable *tab, boolean destroyFields) {
   XLookupPrivate *p;
 
   if(!tab) return;
@@ -491,6 +498,7 @@ void xDestroyLookup(XLookupTable *tab) {
       while(e != NULL) {
         XLookupEntry *next = e->next;
         if(e->key) free(e->key);
+        if(destroyFields) xDestroyField(e->field);
         free(e);
         e = next;
       }
@@ -501,4 +509,33 @@ void xDestroyLookup(XLookupTable *tab) {
   }
 
   free(tab);
+}
+
+/**
+ * Destroys a lookup table, freeing up it's in-memory resources, including the data
+ * that is referenced in the lookup table.
+ *
+ * @param tab     Pointer to the lookup table to destroy.
+ *
+ * @sa xDestroyLookup()
+ * @sa xCreateLookup()
+ *
+ * @since 1.1
+ */
+void xDestroyLookupAndData(XLookupTable *tab) {
+  xDestroyLookupOption(tab, TRUE);
+}
+
+/**
+ * Destroys a lookup table, freeing up it's in-memory resources. However, since the
+ * lookup table contains references to XField fata, which may be used elsewhere, the
+ * values themselves are not destroyed.
+ *
+ * @param tab     Pointer to the lookup table to destroy.
+ *
+ * @sa xDestroyLookupAndData()
+ * @sa xCreateLookup()
+ */
+void xDestroyLookup(XLookupTable *tab) {
+  xDestroyLookupOption(tab, FALSE);
 }

@@ -9,14 +9,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-### Fixes
+### Fixed
 
  - Handling of serialized strings in `xClearField()` and `xCopyOfField()`.
  
  - Handling of heterogeneous arrays (type `X_FIELD`) in `xCopyOfField()`.
+
+### Added
  
+ - `xDestroyLookupAndData()` to destroy a lookup table _including_ all the data that was referenced inside it. 
  
-### Changes
+### Changed
 
  - `xCreateField()` to treat `X_RAW` types always as scalars, ignoring the dimensions provided.
  

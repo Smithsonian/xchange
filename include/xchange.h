@@ -275,6 +275,7 @@ int xLookupPutAll(XLookupTable *tab, const char *prefix, const XStructure *s, bo
 int xLookupRemoveAll(XLookupTable *tab, const char *prefix, const XStructure *s, boolean recursive);
 long xLookupCount(const XLookupTable *tab);
 void xDestroyLookup(XLookupTable *tab);
+void xDestroyLookupAndData(XLookupTable *tab);
 
 // Convenience field creator methods
 XField *xCreateDoubleField(const char *name, double value);
