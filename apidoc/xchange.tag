@@ -597,6 +597,13 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>xDestroyLookupAndData</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a01f3e8af10b2ef8979eac5d7534648c1</anchor>
+      <arglist>(XLookupTable *tab)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>xDestroyStruct</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>afe3fda2f392bae11e136e8c0c90f086d</anchor>
@@ -1450,6 +1457,13 @@
       <name>xDestroyLookup</name>
       <anchorfile>xlookup_8c.html</anchorfile>
       <anchor>a02ea2d67e4c540ad706edcc1b3a0431e</anchor>
+      <arglist>(XLookupTable *tab)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>xDestroyLookupAndData</name>
+      <anchorfile>xlookup_8c.html</anchorfile>
+      <anchor>a01f3e8af10b2ef8979eac5d7534648c1</anchor>
       <arglist>(XLookupTable *tab)</arglist>
     </member>
     <member kind="function">

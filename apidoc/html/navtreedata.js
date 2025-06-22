@@ -26,36 +26,37 @@ var NAVTREE =
 [
   [ "xchange", "index.html", [
     [ "Changelog", "md_CHANGELOG.html", [
-      [ "Table of Contents", "index.html#autotoc_md6", null ],
-      [ "Introduction", "index.html#autotoc_md8", null ],
-      [ "Building", "index.html#autotoc_md10", null ],
-      [ "Linking your application against <tt>xchange</tt>", "index.html#autotoc_md12", null ],
-      [ "Structured data", "index.html#autotoc_md14", [
-        [ "Basic data types", "index.html#autotoc_md15", [
-          [ "Strings", "index.html#autotoc_md16", null ]
+      [ "Table of Contents", "index.html#autotoc_md7", null ],
+      [ "Introduction", "index.html#autotoc_md9", null ],
+      [ "Building", "index.html#autotoc_md11", null ],
+      [ "Linking your application against <tt>xchange</tt>", "index.html#autotoc_md13", null ],
+      [ "Structured data", "index.html#autotoc_md15", [
+        [ "Basic data types", "index.html#autotoc_md16", [
+          [ "Strings", "index.html#autotoc_md17", null ]
         ] ],
-        [ "Scalars", "index.html#autotoc_md17", null ],
-        [ "Arrays", "index.html#autotoc_md18", null ],
-        [ "Creating structure", "index.html#autotoc_md19", null ],
-        [ "Aggregate IDs", "index.html#autotoc_md20", null ],
-        [ "Accessing substructures and elements", "index.html#autotoc_md21", [
-          [ "Large structures", "index.html#autotoc_md22", null ],
-          [ "Iterating over elements", "index.html#autotoc_md23", null ]
+        [ "Scalars", "index.html#autotoc_md18", null ],
+        [ "Arrays", "index.html#autotoc_md19", null ],
+        [ "Creating structure", "index.html#autotoc_md20", null ],
+        [ "Aggregate IDs", "index.html#autotoc_md21", null ],
+        [ "Accessing substructures and elements", "index.html#autotoc_md22", [
+          [ "Large structures", "index.html#autotoc_md23", null ],
+          [ "Iterating over elements", "index.html#autotoc_md24", null ]
         ] ],
-        [ "Sorting fields", "index.html#autotoc_md24", null ]
+        [ "Sorting fields", "index.html#autotoc_md25", null ]
       ] ],
-      [ "JSON parser and emitter", "index.html#autotoc_md26", [
-        [ "JSON fragments", "index.html#autotoc_md27", null ],
-        [ "Escaped string representations", "index.html#autotoc_md28", null ]
+      [ "JSON parser and emitter", "index.html#autotoc_md27", [
+        [ "JSON fragments", "index.html#autotoc_md28", null ],
+        [ "Escaped string representations", "index.html#autotoc_md29", null ]
       ] ],
-      [ "Error handling", "index.html#autotoc_md30", null ],
-      [ "Debugging support", "index.html#autotoc_md32", null ],
-      [ "Future plans", "index.html#autotoc_md33", null ],
-      [ "[1.0.1-rc1] - 2025-05-06", "md_CHANGELOG.html#autotoc_md1", [
-        [ "Fixes", "md_CHANGELOG.html#autotoc_md2", null ],
-        [ "Changes", "md_CHANGELOG.html#autotoc_md3", null ]
+      [ "Error handling", "index.html#autotoc_md31", null ],
+      [ "Debugging support", "index.html#autotoc_md33", null ],
+      [ "Future plans", "index.html#autotoc_md34", null ],
+      [ "[Unreleased]", "md_CHANGELOG.html#autotoc_md1", [
+        [ "Fixed", "md_CHANGELOG.html#autotoc_md2", null ],
+        [ "Added", "md_CHANGELOG.html#autotoc_md3", null ],
+        [ "Changed", "md_CHANGELOG.html#autotoc_md4", null ]
       ] ],
-      [ "[1.0.0] - 2025-03-31", "md_CHANGELOG.html#autotoc_md4", null ]
+      [ "[1.0.0] - 2025-03-31", "md_CHANGELOG.html#autotoc_md5", null ]
     ] ],
     [ "Contributing to the xchange library", "md_CONTRIBUTING.html", null ],
     [ "Data Structures", "annotated.html", [
@@ -82,7 +83,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1"
+"xjson_8c.html#a9f11227a58e797a4a335331d94c8e888"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

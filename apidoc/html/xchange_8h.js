@@ -87,6 +87,7 @@ var xchange_8h =
     [ "xDeepCountFields", "xchange_8h.html#a789489313df89d33aa50de911e1e42ff", null ],
     [ "xDestroyField", "xchange_8h.html#ae0ce99c867b11bd14971031eec8ba4ad", null ],
     [ "xDestroyLookup", "xchange_8h.html#a02ea2d67e4c540ad706edcc1b3a0431e", null ],
+    [ "xDestroyLookupAndData", "xchange_8h.html#a01f3e8af10b2ef8979eac5d7534648c1", null ],
     [ "xDestroyStruct", "xchange_8h.html#afe3fda2f392bae11e136e8c0c90f086d", null ],
     [ "xElementSizeOf", "xchange_8h.html#af5ec26d18b20fc0da9ec9032af73fa9e", null ],
     [ "xError", "xchange_8h.html#a606c4844e51124bee155e30bac8ca885", null ],

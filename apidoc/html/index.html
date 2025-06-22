@@ -123,7 +123,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </ul>
 <p>Author: Attila Kovacs</p>
 <p>Updated for 1.0 and later releases.</p>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md7"></a>
 Table of Contents</h2>
 <ul>
 <li><a class="el" href="index.html#xchange-introduction">Introduction</a></li>
@@ -137,14 +137,14 @@ Table of Contents</h2>
 </ul>
 <hr  />
 <p><a class="anchor" id="xchange-introduction"></a> </p>
-<h2><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md9"></a>
 Introduction</h2>
 <p>The <b>xchange</b> library provides structured data representation and exchange in C/C++, and includes support for JSON parsing and generation. It is free to use, in any way you like, without licensing restrictions.</p>
 <p>For JSON parsing end emitting, <b>xchange</b> provides a higher-level data model than <b>cjson</b>, with high-level functions for accessing and manipulating data both with less code and with cleaner code.</p>
 <p>The <b>xchange</b> library was created, and is maintained, by Attila Kovács at the Center for Astrophysics | Harvard &amp; Smithsonian, and it is available through the <a href="https://github.com/Smithsonian/xchange">Smithsonian/xchange</a> repository on GitHub.</p>
 <hr  />
 <p><a class="anchor" id="building-xchange"></a> </p>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<h2><a class="anchor" id="autotoc_md11"></a>
 Building</h2>
 <p>The <b>xchange</b> library can be built either as a shared (<code>libxchange.so[.1]</code>) and as a static (<code>libxchange.a</code>) library, depending on what suits your needs best.</p>
 <p>You can configure the build, either by editing <code>config.mk</code> or else by defining the relevant environment variables prior to invoking <code>make</code>. The following build variables can be configured:</p>
@@ -168,7 +168,7 @@ Building</h2>
 <div class="fragment"><div class="line">$ make DESTDIR=&quot;/tmp/stage&quot; install</div>
 </div><!-- fragment --><hr  />
 <p><a class="anchor" id="xchange-linking"></a> </p>
-<h2><a class="anchor" id="autotoc_md12"></a>
+<h2><a class="anchor" id="autotoc_md13"></a>
 Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;</h2>
 <p>Provided you have installed the shared (<code>libxchange.so</code>) or static (<code>libxchange.a</code>) library in a location that is in your <code>LD_LIBRARY_PATH</code> (e.g. in <code>/usr/lib</code> or <code>/usr/local/lib</code>) you can simply link your program using the <code>-lxchange</code> flag. Your <code>Makefile</code> may look like:</p>
 <div class="fragment"><div class="line">myprog: ...</div>
@@ -176,7 +176,7 @@ Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;</h2>
 </div><!-- fragment --><p>(Or, you might simply add <code>-lxchange</code> to <code>LDFLAGS</code> and use a more standard recipe.) And, in if you installed the <b>xchange</b> library elsewhere, you can simply add the location to <code>LD_LIBRARY_PATH</code> prior to linking.</p>
 <hr  />
 <p><a class="anchor" id="structured-data"></a> </p>
-<h2><a class="anchor" id="autotoc_md14"></a>
+<h2><a class="anchor" id="autotoc_md15"></a>
 Structured data</h2>
 <ul>
 <li><a class="el" href="index.html#xchange-data-types">Basic data types</a></li>
@@ -190,7 +190,7 @@ Structured data</h2>
 <p>The <b>xchange</b> library defines the <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> type to represent structured data. It is defined in <code><a class="el" href="xchange_8h.html">xchange.h</a></code>, but as a user you really do not need to know much about its layout, as you probably want to avoid low-level direct access to its elements. Rather, you should be using the functions of the <b>xchange</b> API to create, modify, or access data within.</p>
 <p>Under the hood, the <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> contains a linked list of fields, each an <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> data type to represent a single element, or an array of elements, of the above mentioned types, including embedded <code>Xstructure</code>s. In this way, an <code>Xstructure</code> can easily represent a multi-level hierarchy of a composite data object. Each <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> has a name/ID, an associated data type, a dimensionality, a shape (for multidimensional arrays).</p>
 <p><a class="anchor" id="xchange-data-types"></a> </p>
-<h3><a class="anchor" id="autotoc_md15"></a>
+<h3><a class="anchor" id="autotoc_md16"></a>
 Basic data types</h3>
 <p>The <b>xchange</b> library supports most basic (primitive) data types used across programming languages. The table below shows the unique <b>xchange</b> types recognized by the library and the corresponding pointer/array type values:</p>
 <table class="markdownTable">
@@ -234,12 +234,12 @@ Basic data types</h3>
 <td class="markdownTableBodyLeft"><code>X_LLONG</code>   </td><td class="markdownTableBodyCenter"><code>long long</code>   </td><td class="markdownTableBodyCenter">&gt;= 64-bits   </td><td class="markdownTableBodyLeft">typically <code>X_INT64</code>   </td></tr>
 </table>
 <p><a class="anchor" id="xchange-strings"></a> </p>
-<h4><a class="anchor" id="autotoc_md16"></a>
+<h4><a class="anchor" id="autotoc_md17"></a>
 Strings</h4>
 <p>Strings can be either fixed-width or else a 0-terminated sequence of ASCII characters. At its basic level the library does not impose any restriction of what ASCII characters may be used. However, we recommend that users stick to the JSON convention, and represent special characters in escaped form. E.g. carriage return (<code>0xd</code>) as <code>\</code> followed by <code>n</code>, tabs as <code>\</code> followed by <code>t</code>, etc. As a result a single backslash should also be escaped as two consecutive <code>\</code> characters. You might use <code>xjsonEscapeString()</code> or <code>xjsonUnescapeString()</code> to perform the conversion to/from standard JSON representation.</p>
 <p>Fixed-width strings of up to <em>n</em> characters are represented internally as the <code>XCHAR(n)</code> type. They may be 0-terminated as appropriate, or else represent exactly <em>n</em> ASCII characters without explicit termination. Alternatively, the <code>X_STRING</code> type represents ASCII strings of arbitrary length, up to the 0-termination character.</p>
 <p><a class="anchor" id="xchange-scalars"></a> </p>
-<h3><a class="anchor" id="autotoc_md17"></a>
+<h3><a class="anchor" id="autotoc_md18"></a>
 Scalars</h3>
 <p>You can create scalar fields easily, e.g.:</p>
 <div class="fragment"><div class="line"><span class="comment">// Create &quot;is_ok&quot; as a boolean field with TRUE</span></div>
@@ -262,7 +262,7 @@ Scalars</h3>
 </div><!-- fragment --><p>Under the hood, scalar values are a special case of arrays containing a single element. Scalars have dimension zero i.e., a shape defined by an empty integer array, e.g. <code>int shape[0]</code> in a corresponding <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> element.</p>
 <p>In this way scalars are distinguished from true arrays containing just a single elements, which have dimensionality &lt;=1 and shapes e.g., <code>int shape[1] = {1}</code> or <code>int shape[2] = {1, 1}</code>. The difference, while subtle, becomes more obvious when serializing the array, e.g. to JSON. A scalar floating point value of 1.04, for example, will appear as <code>1.04</code> in JSON, whereas the 1D and 2D single-element arrays will be serialized as <code>{ 1.04 }</code> or <code>{{ 1.04 }}</code>, respectively.</p>
 <p><a class="anchor" id="xchange-arrays"></a> </p>
-<h3><a class="anchor" id="autotoc_md18"></a>
+<h3><a class="anchor" id="autotoc_md19"></a>
 Arrays</h3>
 <p>The <b>xchange</b> library supports array data types in one or more dimensions (up to 20 dimensions). For example, to create a field for 2&times;3&times;4 array of <code>double</code>s, you may have something along:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">double</span> data[2][3][4] = ...;           <span class="comment">// The native array in C</span></div>
@@ -281,7 +281,7 @@ Arrays</h3>
 <div class="ttc" id="axstruct_8c_html_a0b37b00634177189d5e717e3c84820e3"><div class="ttname"><a href="xstruct_8c.html#a0b37b00634177189d5e717e3c84820e3">xCreateMixed1DField</a></div><div class="ttdeci">XField * xCreateMixed1DField(const char *name, int size, XField *array)</div><div class="ttdef"><b>Definition</b> xstruct.c:77</div></div>
 </div><!-- fragment --><p>Or, use <code><a class="el" href="xstruct_8c.html#a7bb186343d1ff6dab01cc39e233b9069">xCreateMixedArrayField()</a></code> to create a multi-dimensional array of heterogeneous elements the same way.</p>
 <p><a class="anchor" id="xchange-creating-structure"></a> </p>
-<h3><a class="anchor" id="autotoc_md19"></a>
+<h3><a class="anchor" id="autotoc_md20"></a>
 Creating structure</h3>
 <p>Structures should always be created by calling <code><a class="el" href="xstruct_8c.html#a12112584a34e07f9ef7b08f6ef1bc865">xCreateStruct()</a></code> (or else by an appropriate de-serialization function such as <code>xjsonParseAt()</code>, or as a copy via <code>xCopyStruct()</code>). Once the structure is no longer used it should be explicitly destroyed (freed) by calling <code><a class="el" href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct()</a></code>. Named substructures can be added to any structure with <code><a class="el" href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct()</a></code>, and named fields via <code><a class="el" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField()</a></code>. That is the gist of it. So for example, the skeleton structure from the example above can be created programatically as:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s, *sys, *sub;</div>
@@ -308,7 +308,7 @@ Creating structure</h3>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct</a>(s);</div>
 <div class="ttc" id="axstruct_8c_html_afe3fda2f392bae11e136e8c0c90f086d"><div class="ttname"><a href="xstruct_8c.html#afe3fda2f392bae11e136e8c0c90f086d">xDestroyStruct</a></div><div class="ttdeci">void xDestroyStruct(XStructure *s)</div><div class="ttdef"><b>Definition</b> xstruct.c:1184</div></div>
 </div><!-- fragment --><p><a class="anchor" id="xchange-aggregate-ids"></a> </p>
-<h3><a class="anchor" id="autotoc_md20"></a>
+<h3><a class="anchor" id="autotoc_md21"></a>
 Aggregate IDs</h3>
 <p>Since the <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> data type can represent hierarchies of arbitrary depth, and named at every level of the hierarchy, we can uniquely identify any particular field, at any level, with an aggregate ID, which concatenates the field names each every level, top-down, with a separator. The convention of <b>xchange</b> is to use colon (':') as the separator. Consider an example structure (in JSON notation):</p>
 <div class="fragment"><div class="line">{</div>
@@ -320,7 +320,7 @@ Aggregate IDs</h3>
 <div class="line">}</div>
 </div><!-- fragment --><p>Then, the leaf "property" entry can be 'addressed' with the aggregate ID of <code>system:subsystem:property</code> from the top level. The <code><a class="el" href="xstruct_8c.html#a2cbbd824406d862b2018e28a466ff318">xGetAggregateID()</a></code> function is provided to construct such aggregate IDs by gluing together a leading and trailing component.</p>
 <p><a class="anchor" id="accessing-data"></a> </p>
-<h3><a class="anchor" id="autotoc_md21"></a>
+<h3><a class="anchor" id="autotoc_md22"></a>
 Accessing substructures and elements</h3>
 <p>Once a structure is populated &ndash; either by having constructed it programatically, or e.g. by parsing a JSON definition of it from a string or file &ndash; you can access its content and/or modify it.</p>
 <p>E.g., to retrieve the "property" field from the above example structure:</p>
@@ -345,7 +345,7 @@ Accessing substructures and elements</h3>
 <div class="fragment"><div class="line"><span class="comment">// Remove and then destroy the field named &quot;blah&quot; in structure &#39;s&#39;.</span></div>
 <div class="line"><a class="code hl_function" href="xstruct_8c.html#ae0ce99c867b11bd14971031eec8ba4ad">xDestroyField</a>(<a class="code hl_function" href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a>(s, <span class="stringliteral">&quot;blah&quot;</span>));</div>
 <div class="ttc" id="axstruct_8c_html_aec9f913cdb79d8653668a5d9bdda6ab1"><div class="ttname"><a href="xstruct_8c.html#aec9f913cdb79d8653668a5d9bdda6ab1">xRemoveField</a></div><div class="ttdeci">XField * xRemoveField(XStructure *s, const char *name)</div><div class="ttdef"><b>Definition</b> xstruct.c:1012</div></div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md22"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md23"></a>
 Large structures</h4>
 <p>The normal <code><a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a></code> and <code><a class="el" href="xstruct_8c.html#a97a58e33c4730e272af459dfb7f016f9">xGetSubstruct()</a></code> functions have computational costs that scale linearly with the number of direct fields in the structure. It is not much of an issue for structures that contain dozens of, or even a couple hundred, fields (per layer). For much larger structures, which have a fixed layout, there is an option for a potentially much more efficient hash-based lookup also. E.g. instead of <code><a class="el" href="xstruct_8c.html#a442f155b0c6549549737510ce42bb66d">xGetField()</a></code> you may use <code><a class="el" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField()</a></code>:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s = ...</div>
@@ -363,7 +363,7 @@ Large structures</h4>
 <div class="ttc" id="axlookup_8c_html_a5e3a316b7d0c5c40ed079f3df2d9fcc9"><div class="ttname"><a href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField</a></div><div class="ttdeci">XField * xLookupField(const XLookupTable *tab, const char *id)</div><div class="ttdef"><b>Definition</b> xlookup.c:441</div></div>
 </div><!-- fragment --><p>Note however, that preparing the lookup table has significant <em>O(N)</em> computational cost also. Therefore, a lookup table is practical only if you are going to use it repeatedly, many times over. As a rule of thumb, lookups may have the advantage if accessing fields in a structure by name hundreds of times, or more.</p>
 <p>The same performance limitation also applies to building large structures, since the <code><a class="el" href="xstruct_8c.html#ab1cb91bd6aa14c0dae9d24bfbe7b76f4">xSetField()</a></code> and <code><a class="el" href="xstruct_8c.html#ad84cbb4639f2fbfb604b698a86caf944">xSetSubstruct()</a></code> functions iterate over the existing fields to check if a prior field by the same name was already present, and which should be removed before the new field is set (hence the time to build up a structure with <em>N</em> fields will scale as _O(N<sup>2</sup>)_ in general). The user may consider using <code><a class="el" href="xstruct_8c.html#ad6249db6da0a1294d5621cd9fd829f7a">xInsertField()</a></code> instead, which is much more scalable for building large structures, since it does not check for duplicates (hence scales as <em>O(N)</em> overall). However, <code><a class="el" href="xstruct_8c.html#ad6249db6da0a1294d5621cd9fd829f7a">xInsertField()</a></code> also makes the ordering of fields less intuitive, and it is left up to the caller to ensure that field names added this way are never duplicated. (Tip: if you used <code>InsertField()</code> consistently, you may call <code><a class="el" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder()</a></code> at the end, so the fields will appear in the same order in which they were inserted.)</p>
-<h4><a class="anchor" id="autotoc_md23"></a>
+<h4><a class="anchor" id="autotoc_md24"></a>
 Iterating over elements</h4>
 <p>You can easily iterate over the elements also. This is one application where you may want to know the internal layout of <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code>, namely that it contains a simple linked-list of <code><a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a></code> fields. One way to iterate over a structures elements is with a <code>for</code> loop, e.g.:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s = ...</div>
@@ -376,7 +376,7 @@ Iterating over elements</h4>
 <div class="ttc" id="astructXField_html_ae1ebaf87eb62e6266b14908eee28e565"><div class="ttname"><a href="structXField.html#ae1ebaf87eb62e6266b14908eee28e565">XField::next</a></div><div class="ttdeci">struct XField * next</div><div class="ttdoc">Pointer to the next linked element (if inside an XStructure).</div><div class="ttdef"><b>Definition</b> xchange.h:181</div></div>
 <div class="ttc" id="astructXStructure_html_a501ae8af2201d9cfaa60e3af21ff58fc"><div class="ttname"><a href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc">XStructure::firstField</a></div><div class="ttdeci">XField * firstField</div><div class="ttdoc">Pointer to the first field in this structure or NULL if the structure is empty.</div><div class="ttdef"><b>Definition</b> xchange.h:197</div></div>
 </div><!-- fragment --><p><a class="anchor" id="sorting-fields"></a> </p>
-<h3><a class="anchor" id="autotoc_md24"></a>
+<h3><a class="anchor" id="autotoc_md25"></a>
 Sorting fields</h3>
 <p>You can easily sort fields by name using <code><a class="el" href="xstruct_8c.html#a74d1f6b9b92ebe82353e75a3d7e9daae">xSortFieldsByName()</a></code>, or with using a custom comparator function with <code><a class="el" href="xstruct_8c.html#aa1d006a2788adeb0fc9b4799297a69ff">xSortFields()</a></code>. You can also reverse the order with <code><a class="el" href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder()</a></code>. For example to sort fields in a structure (and its substructures) in descending alphabetical order:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXStructure.html">XStructure</a> *s = ...</div>
@@ -389,7 +389,7 @@ Sorting fields</h3>
 <div class="ttc" id="axstruct_8c_html_ad32d8a3f211a3b101142879ae31146ec"><div class="ttname"><a href="xstruct_8c.html#ad32d8a3f211a3b101142879ae31146ec">xReverseFieldOrder</a></div><div class="ttdeci">int xReverseFieldOrder(XStructure *s, boolean recursive)</div><div class="ttdef"><b>Definition</b> xstruct.c:1709</div></div>
 </div><!-- fragment --><hr  />
 <p><a class="anchor" id="json-interchange"></a> </p>
-<h2><a class="anchor" id="autotoc_md26"></a>
+<h2><a class="anchor" id="autotoc_md27"></a>
 JSON parser and emitter</h2>
 <p>Once you have an <code><a class="el" href="structXStructure.html" title="SMA-X structure object, containing a linked-list of XField elements.">XStructure</a></code> data object, you can easily convert it to JSON string representation, as:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="xjson_8h.html">xjson.h</a>&gt;</span></div>
@@ -417,7 +417,7 @@ JSON parser and emitter</h2>
 <div class="line">   <span class="comment">// Oops, there was some problem...</span></div>
 <div class="line">}</div>
 <div class="ttc" id="axjson_8c_html_a9a9cad9405eeff3a088e5f809fa50529"><div class="ttname"><a href="xjson_8c.html#a9a9cad9405eeff3a088e5f809fa50529">xjsonParsePath</a></div><div class="ttdeci">XStructure * xjsonParsePath(const char *path)</div><div class="ttdef"><b>Definition</b> xjson.c:320</div></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md27"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md28"></a>
 JSON fragments</h3>
 <p>Alternatively, you can also create partial JSON fragments for individual fields, e.g.:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structXField.html">XField</a> *f = ...</div>
@@ -427,7 +427,7 @@ JSON fragments</h3>
 <div class="ttc" id="axjson_8c_html_a42101fa63cb1c6e265f317e9b8719d5f"><div class="ttname"><a href="xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f">xjsonFieldToString</a></div><div class="ttdeci">char * xjsonFieldToString(const XField *f)</div><div class="ttdef"><b>Definition</b> xjson.c:232</div></div>
 </div><!-- fragment --><p>For example, for a numerical array field with 4 elements the above might generate something like:</p>
 <div class="fragment"><div class="line">&quot;my-numbers&quot;: [ 1, 2, 3, 4 ]</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md28"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md29"></a>
 Escaped string representations</h3>
 <p>You might just want to use JSON-style escaping for strings, and <code><a class="el" href="xjson_8c.html#a92336f3031a90784e8667aaa7ad07ca2">xjsonEscape()</a></code> / <code><a class="el" href="xjson_8c.html#aa94ae687d4c1775d35b03614ae2fcf62">xjsonUnescape()</a></code> can help with that too. Suppose you have a C string that you want to escape...</p>
 <div class="fragment"><div class="line"><span class="keywordtype">char</span> *<span class="keywordtype">string</span> = <span class="stringliteral">&quot;\&quot;This has some\n\t special characters\&quot;&quot;</span>;</div>
@@ -446,7 +446,7 @@ Escaped string representations</h3>
 <div class="ttc" id="axjson_8c_html_aa94ae687d4c1775d35b03614ae2fcf62"><div class="ttname"><a href="xjson_8c.html#aa94ae687d4c1775d35b03614ae2fcf62">xjsonUnescape</a></div><div class="ttdeci">char * xjsonUnescape(const char *str)</div><div class="ttdef"><b>Definition</b> xjson.c:1428</div></div>
 </div><!-- fragment --><hr  />
 <p><a class="anchor" id="xchange-error-handling"></a> </p>
-<h2><a class="anchor" id="autotoc_md30"></a>
+<h2><a class="anchor" id="autotoc_md31"></a>
 Error handling</h2>
 <p>The functions that can encounter an error will return either one of the error codes defined in <code><a class="el" href="xchange_8h.html">xchange.h</a></code>, or <code>NULL</code> pointers. String descriptions for the error codes can be produced by <code><a class="el" href="xchange_8c.html#acc701c734a3b95d356660ca5ee16a96a">xErrorDescription(int)</a></code>. For example,</p>
 <div class="fragment"><div class="line"><span class="keywordtype">char</span> *text = ...</div>
@@ -462,12 +462,12 @@ Error handling</h2>
 </div><!-- fragment --><p>The JSON parser can also sink its error messages to a designated file or stream, which can be set by <code><a class="el" href="xjson_8c.html#a23a7bd364a80bc2bab9ce917ed5f22ea">xjsonSetErrorStream(FILE *)</a></code>.</p>
 <hr  />
 <p><a class="anchor" id="xchange-debugging-support"></a> </p>
-<h2><a class="anchor" id="autotoc_md32"></a>
+<h2><a class="anchor" id="autotoc_md33"></a>
 Debugging support</h2>
 <p>You can enable verbose output of the <b>xchange</b> library with <code><a class="el" href="xchange_8c.html#afbe85067ddbc92577cd00ac8f6e3026f">xSetVerbose(boolean)</a></code>. When enabled, it will produce status messages to <code>stderr</code>so you can follow what's going on. In addition (or alternatively), you can enable debug messages with <code><a class="el" href="xchange_8c.html#a6c1304b59a5882b2286e86c6837faead">xSetDebug(boolean)</a></code>. When enabled, all errors encountered by the library (such as invalid arguments passed) will be printed to <code>stderr</code>, including call traces, so you can walk back to see where the error may have originated from. (You can also enable debug messages by default by defining the <code>DEBUG</code> constant for the compiler, e.g. by adding <code>-DDEBUG</code> to <code>CFLAGS</code> prior to calling <code>make</code>).</p>
 <p>For helping to debug your application, the <b>xchange</b> library provides two macros: <code><a class="el" href="xchange_8h.html#a1f038bf7ddb58819805cfc44162cb403" title="Use for generating verbose output.">xvprintf()</a></code> and <code><a class="el" href="xchange_8h.html#a2b0edfea798e9e08122f09dba5f189f8" title="Use for generating debug output.">xdprintf()</a></code>, for printing verbose and debug messages to <code>stderr</code>. Both work just like <code>printf()</code>, but they are conditional on verbosity being enabled via <code><a class="el" href="xchange_8c.html#afbe85067ddbc92577cd00ac8f6e3026f">xSetVerbose(boolean)</a></code> and <code><a class="el" href="xchange_8c.html#a6c1304b59a5882b2286e86c6837faead">xSetDebug(boolean)</a></code>, respectively. Applications using <b>xchange</b> may use these macros to produce their own verbose and/or debugging outputs conditional on the same global settings.</p>
 <p><a class="anchor" id="xchange-future-plans"></a> </p>
-<h2><a class="anchor" id="autotoc_md33"></a>
+<h2><a class="anchor" id="autotoc_md34"></a>
 Future plans</h2>
 <p>There are a number of ways this little library can evolve and grow in the not too distant future. Some of the obvious paths forward are:</p>
 <ul>

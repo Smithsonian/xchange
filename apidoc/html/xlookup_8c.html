@@ -134,6 +134,8 @@ Functions</h2></td></tr>
 <tr class="separator:af8bee9eeac947d7e36ea436252e8dc2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02ea2d67e4c540ad706edcc1b3a0431e" id="r_a02ea2d67e4c540ad706edcc1b3a0431e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xlookup_8c.html#a02ea2d67e4c540ad706edcc1b3a0431e">xDestroyLookup</a> (<a class="el" href="structXLookupTable.html">XLookupTable</a> *tab)</td></tr>
 <tr class="separator:a02ea2d67e4c540ad706edcc1b3a0431e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01f3e8af10b2ef8979eac5d7534648c1" id="r_a01f3e8af10b2ef8979eac5d7534648c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xlookup_8c.html#a01f3e8af10b2ef8979eac5d7534648c1">xDestroyLookupAndData</a> (<a class="el" href="structXLookupTable.html">XLookupTable</a> *tab)</td></tr>
+<tr class="separator:a01f3e8af10b2ef8979eac5d7534648c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13e81b8f1bf3e1c3572ca74edb2836fe" id="r_a13e81b8f1bf3e1c3572ca74edb2836fe"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xlookup_8c.html#a13e81b8f1bf3e1c3572ca74edb2836fe">xLookupCount</a> (const <a class="el" href="structXLookupTable.html">XLookupTable</a> *tab)</td></tr>
 <tr class="separator:a13e81b8f1bf3e1c3572ca74edb2836fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e3a316b7d0c5c40ed079f3df2d9fcc9" id="r_a5e3a316b7d0c5c40ed079f3df2d9fcc9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structXField.html">XField</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9">xLookupField</a> (const <a class="el" href="structXLookupTable.html">XLookupTable</a> *tab, const char *id)</td></tr>
@@ -242,16 +244,49 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Destroys a lookup table, freeing up it's in-memory resources.</p>
+<p>Destroys a lookup table, freeing up it's in-memory resources. However, since the lookup table contains references to <a class="el" href="structXField.html" title="An SMA-X field, typically as part of an XStructure. A field may be a reference to a nested XStructure...">XField</a> fata, which may be used elsewhere, the values themselves are not destroyed.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tab</td><td>Pointer to the lookup table to destroy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#af8bee9eeac947d7e36ea436252e8dc2d">xCreateLookup()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#a01f3e8af10b2ef8979eac5d7534648c1">xDestroyLookupAndData()</a> </dd>
+<dd>
+<a class="el" href="xlookup_8c.html#af8bee9eeac947d7e36ea436252e8dc2d">xCreateLookup()</a> </dd></dl>
 
-<p class="reference">References <a class="el" href="structXLookupTable.html#a8b6505c37d4ff95854b8b00527e4d9fa">XLookupTable::priv</a>.</p>
+<p class="reference">References <a class="el" href="xjson_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>.</p>
+
+</div>
+</div>
+<a id="a01f3e8af10b2ef8979eac5d7534648c1" name="a01f3e8af10b2ef8979eac5d7534648c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01f3e8af10b2ef8979eac5d7534648c1">&#9670;&#160;</a></span>xDestroyLookupAndData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xDestroyLookupAndData </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structXLookupTable.html">XLookupTable</a> *&#160;</td>
+          <td class="paramname"><em>tab</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Destroys a lookup table, freeing up it's in-memory resources, including the data that is referenced in the lookup table.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tab</td><td>Pointer to the lookup table to destroy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xlookup_8c.html#a02ea2d67e4c540ad706edcc1b3a0431e">xDestroyLookup()</a> </dd>
+<dd>
+<a class="el" href="xlookup_8c.html#af8bee9eeac947d7e36ea436252e8dc2d">xCreateLookup()</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>1.1 </dd></dl>
+
+<p class="reference">References <a class="el" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>.</p>
 
 </div>
 </div>

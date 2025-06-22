@@ -1,35 +1,36 @@
 <toc label="xchange" topic="index.html">
-    <topic label="Table of Contents" href="index.html#autotoc_md6"/>
-    <topic label="Introduction" href="index.html#autotoc_md8"/>
-    <topic label="Building" href="index.html#autotoc_md10"/>
-    <topic label="Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;" href="index.html#autotoc_md12"/>
-    <topic label="Structured data" href="index.html#autotoc_md14">
-      <topic label="Basic data types" href="index.html#autotoc_md15">
-        <topic label="Strings" href="index.html#autotoc_md16"/>
-      <topic label="Scalars" href="index.html#autotoc_md17"/>
-      <topic label="Arrays" href="index.html#autotoc_md18"/>
-      <topic label="Creating structure" href="index.html#autotoc_md19"/>
-      <topic label="Aggregate IDs" href="index.html#autotoc_md20"/>
-      <topic label="Accessing substructures and elements" href="index.html#autotoc_md21">
-        <topic label="Large structures" href="index.html#autotoc_md22"/>
-        <topic label="Iterating over elements" href="index.html#autotoc_md23"/>
+    <topic label="Table of Contents" href="index.html#autotoc_md7"/>
+    <topic label="Introduction" href="index.html#autotoc_md9"/>
+    <topic label="Building" href="index.html#autotoc_md11"/>
+    <topic label="Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;" href="index.html#autotoc_md13"/>
+    <topic label="Structured data" href="index.html#autotoc_md15">
+      <topic label="Basic data types" href="index.html#autotoc_md16">
+        <topic label="Strings" href="index.html#autotoc_md17"/>
+      <topic label="Scalars" href="index.html#autotoc_md18"/>
+      <topic label="Arrays" href="index.html#autotoc_md19"/>
+      <topic label="Creating structure" href="index.html#autotoc_md20"/>
+      <topic label="Aggregate IDs" href="index.html#autotoc_md21"/>
+      <topic label="Accessing substructures and elements" href="index.html#autotoc_md22">
+        <topic label="Large structures" href="index.html#autotoc_md23"/>
+        <topic label="Iterating over elements" href="index.html#autotoc_md24"/>
       </topic>
-      <topic label="Sorting fields" href="index.html#autotoc_md24"/>
+      <topic label="Sorting fields" href="index.html#autotoc_md25"/>
     </topic>
-    <topic label="JSON parser and emitter" href="index.html#autotoc_md26">
-      <topic label="JSON fragments" href="index.html#autotoc_md27"/>
-      <topic label="Escaped string representations" href="index.html#autotoc_md28"/>
+    <topic label="JSON parser and emitter" href="index.html#autotoc_md27">
+      <topic label="JSON fragments" href="index.html#autotoc_md28"/>
+      <topic label="Escaped string representations" href="index.html#autotoc_md29"/>
     </topic>
-    <topic label="Error handling" href="index.html#autotoc_md30"/>
-    <topic label="Debugging support" href="index.html#autotoc_md32"/>
-    <topic label="Future plans" href="index.html#autotoc_md33"/>
+    <topic label="Error handling" href="index.html#autotoc_md31"/>
+    <topic label="Debugging support" href="index.html#autotoc_md33"/>
+    <topic label="Future plans" href="index.html#autotoc_md34"/>
   </topic>
   <topic label="Changelog" href="md_CHANGELOG.html">
-    <topic label="[1.0.1-rc1] - 2025-05-06" href="md_CHANGELOG.html#autotoc_md1">
-      <topic label="Fixes" href="md_CHANGELOG.html#autotoc_md2"/>
-      <topic label="Changes" href="md_CHANGELOG.html#autotoc_md3"/>
+    <topic label="[Unreleased]" href="md_CHANGELOG.html#autotoc_md1">
+      <topic label="Fixed" href="md_CHANGELOG.html#autotoc_md2"/>
+      <topic label="Added" href="md_CHANGELOG.html#autotoc_md3"/>
+      <topic label="Changed" href="md_CHANGELOG.html#autotoc_md4"/>
     </topic>
-    <topic label="[1.0.0] - 2025-03-31" href="md_CHANGELOG.html#autotoc_md4"/>
+    <topic label="[1.0.0] - 2025-03-31" href="md_CHANGELOG.html#autotoc_md5"/>
   </topic>
   <topic label="Contributing to the xchange library" href="md_CONTRIBUTING.html"/>
   <topic label="Data Structures" href="annotated.html">
@@ -163,6 +164,7 @@
           <topic label="xDeepCountFields" href="xchange_8h.html#a789489313df89d33aa50de911e1e42ff"/>
           <topic label="xDestroyField" href="xchange_8h.html#ae0ce99c867b11bd14971031eec8ba4ad"/>
           <topic label="xDestroyLookup" href="xchange_8h.html#a02ea2d67e4c540ad706edcc1b3a0431e"/>
+          <topic label="xDestroyLookupAndData" href="xchange_8h.html#a01f3e8af10b2ef8979eac5d7534648c1"/>
           <topic label="xDestroyStruct" href="xchange_8h.html#afe3fda2f392bae11e136e8c0c90f086d"/>
           <topic label="xElementSizeOf" href="xchange_8h.html#af5ec26d18b20fc0da9ec9032af73fa9e"/>
           <topic label="xError" href="xchange_8h.html#a606c4844e51124bee155e30bac8ca885"/>
@@ -292,6 +294,7 @@
           <topic label="xAllocLookup" href="xlookup_8c.html#a01a94b3210aed984dbee956fbb26fcfd"/>
           <topic label="xCreateLookup" href="xlookup_8c.html#af8bee9eeac947d7e36ea436252e8dc2d"/>
           <topic label="xDestroyLookup" href="xlookup_8c.html#a02ea2d67e4c540ad706edcc1b3a0431e"/>
+          <topic label="xDestroyLookupAndData" href="xlookup_8c.html#a01f3e8af10b2ef8979eac5d7534648c1"/>
           <topic label="xLookupCount" href="xlookup_8c.html#a13e81b8f1bf3e1c3572ca74edb2836fe"/>
           <topic label="xLookupField" href="xlookup_8c.html#a5e3a316b7d0c5c40ed079f3df2d9fcc9"/>
           <topic label="xLookupPut" href="xlookup_8c.html#a3b423bf135d2ed42319abff99fda78e4"/>
