@@ -51,7 +51,7 @@ var NAVTREE =
       [ "Error handling", "index.html#autotoc_md31", null ],
       [ "Debugging support", "index.html#autotoc_md33", null ],
       [ "Future plans", "index.html#autotoc_md34", null ],
-      [ "[Unreleased]", "md_CHANGELOG.html#autotoc_md1", [
+      [ "[1.0.1] - 2025-07-01", "md_CHANGELOG.html#autotoc_md1", [
         [ "Fixed", "md_CHANGELOG.html#autotoc_md2", null ],
         [ "Added", "md_CHANGELOG.html#autotoc_md3", null ],
         [ "Changed", "md_CHANGELOG.html#autotoc_md4", null ]
