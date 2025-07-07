@@ -562,7 +562,7 @@ static int CompareToken(const char *a, const char *b) {
  */
 float xParseFloat(const char *str, char **tail) {
   if(!str) {
-    x_error(0, EINVAL, "xParseDouble", "input string is NULL");
+    x_error(0, EINVAL, "xParseFloat", "input string is NULL");
     return (float) NAN;
   }
 
