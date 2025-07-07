@@ -549,12 +549,71 @@ static int CompareToken(const char *a, const char *b) {
 #endif
 
 /**
+ * Same as strtof() on C99, but with explicit parsing of NaN and Infinity values on older platforms also.
+ *
+ * @param str       String to parse floating-point value from
+ * @param tail      (optional) reference to pointed in which to return the parse position after successfully
+ *                  parsing a floating-point value.
+ * @return          the floating-point value at the head of the string, or NAN if the input string is NULL.
+ *
+ * @since 1.1
+ *
+ * @sa xParseDouble()
+ */
+float xParseFloat(const char *str, char **tail) {
+  if(!str) {
+    x_error(0, EINVAL, "xParseDouble", "input string is NULL");
+    return (float) NAN;
+  }
+
+#if EXPLCIT_PARSE_SPECIAL_DOUBLES
+  {
+    char *next = (char *) str;
+    int sign = 1;
+
+    while(isspace(*next)) next++;
+
+    if(*next == '+') next++;          // Skip sign (if any)
+    else if(*next == '-') {
+      sign = -1;
+      next++;          // Skip sign (if any)
+    }
+
+    // If leading character is not a number or a decimal point, then check for special values.
+    if(*next) if((*next < '0' || *next > '9') && *next != '.') {
+      if(!CompareToken("nan", next)) {
+        if(tail) *tail = next + sizeof("nan") - 1;
+        return (float) NAN;
+      }
+      if(!CompareToken("inf", next)) {
+        if(tail) *tail = next + sizeof("inf") - 1;
+        // cppcheck-suppress nanInArithmeticExpression
+        return sign > 0 ? (float) INFINITY : (float) -INFINITY;
+      }
+      if(!CompareToken("infinity", next)) {
+        if(tail) *tail = next + sizeof("infinity") - 1;
+        // cppcheck-suppress nanInArithmeticExpression
+        return sign > 0 ? (float) INFINITY : (float) -INFINITY;
+      }
+    }
+  }
+#endif
+
+  errno = 0;
+  return strtof(str, tail);
+}
+
+
+
+/**
  * Same as strtod() on C99, but with explicit parsing of NaN and Infinity values on older platforms also.
  *
  * @param str       String to parse floating-point value from
  * @param tail      (optional) reference to pointed in which to return the parse position after successfully
  *                  parsing a floating-point value.
  * @return          the floating-point value at the head of the string, or NAN if the input string is NULL.
+ *
+ * @sa xParseFloat()
  */
 double xParseDouble(const char *str, char **tail) {
   if(!str) {

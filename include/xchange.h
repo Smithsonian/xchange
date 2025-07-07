@@ -21,13 +21,13 @@
 #define XCHANGE_MAJOR_VERSION  1
 
 /// API minor version
-#define XCHANGE_MINOR_VERSION  0
+#define XCHANGE_MINOR_VERSION  1
 
 /// Integer sub version of the release
-#define XCHANGE_PATCHLEVEL     1
+#define XCHANGE_PATCHLEVEL     0
 
 /// Additional release information in version, e.g. "-1", or "-rc1".
-#define XCHANGE_RELEASE_STRING ""
+#define XCHANGE_RELEASE_STRING "-devel"
 
 
 #ifdef str_2
@@ -290,6 +290,7 @@ int xSetSubtype(XField *f, const char *type);
 
 // Parsers / formatters
 boolean xParseBoolean(char *str, char **end);
+float xParseFloat(const char *str, char **tail);
 double xParseDouble(const char *str, char **tail);
 int xPrintDouble(char *str, double value);
 int xPrintFloat(char *str, float value);
