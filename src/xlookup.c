@@ -139,7 +139,7 @@ long xLookupCount(const XLookupTable *tab) {
  * @sa xLookupRemove()
  */
 int xLookupPut(XLookupTable *tab, const char *prefix, const XField *field, XField **oldValue) {
-  static const char *fn = "xLookupPutField";
+  static const char *fn = "xLookupPut";
 
   XLookupPrivate *p;
   int res;
@@ -169,7 +169,7 @@ int xLookupPut(XLookupTable *tab, const char *prefix, const XField *field, XFiel
  * @sa xLookupPut()
  */
 XField *xLookupRemove(XLookupTable *tab, const char *id) {
-  static const char *fn = "xLookupRemoveField";
+  static const char *fn = "xLookupRemove";
 
   XLookupPrivate *p;
   XField *f;
