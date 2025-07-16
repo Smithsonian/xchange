@@ -14,8 +14,8 @@
 
 #define __STDC_LIMIT_MACROS         ///< for fixed-width integer limits
 
-#include <stdint.h>
 #include <limits.h>
+#include <stdint.h>
 
 /// API major version
 #define XCHANGE_MAJOR_VERSION  1
