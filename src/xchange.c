@@ -599,11 +599,22 @@ float xParseFloat(const char *str, char **tail) {
   }
 #endif
 
+#if _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
   errno = 0;
   return strtof(str, tail);
+#else
+  {
+    float f = 0.0F;
+    int n = 0;
+
+    if(tail) *tail = (char *) str;
+    if(sscanf(str, "%f%n", &f, &n) < 1) return 0.0F;
+    if(tail) *tail += n;
+
+    return f;
+  }
+#endif
 }
-
-
 
 /**
  * Same as strtod() on C99, but with explicit parsing of NaN and Infinity values on older platforms also.
