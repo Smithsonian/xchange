@@ -7,6 +7,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+
+### Added
+
+ - `xParseFloat()` to parse floats without rounding errors that might result if parsing as `double` and then casting 
+   as `float`.
+
+
 ## [1.0.1] - 2025-07-01
 
 ### Fixed
