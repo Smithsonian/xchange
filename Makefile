@@ -78,12 +78,13 @@ distclean: clean
 
 # Test programs
 .PHONY: tests
-tests: $(BIN)/test-struct $(BIN)/test-lookup $(BIN)/test-json
+tests: $(BIN)/test-parse $(BIN)/test-struct $(BIN)/test-lookup $(BIN)/test-json
 
 # Run tests
 .PHONY: run
 run: LD_LIBRARY_PATH := $(LIB)
 run: $(LIBXCHANGE) tests
+	$(BIN)/test-parse
 	$(BIN)/test-struct
 	$(BIN)/test-lookup
 	$(BIN)/test-json

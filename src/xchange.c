@@ -554,7 +554,11 @@ static int CompareToken(const char *a, const char *b) {
  * @param str       String to parse floating-point value from
  * @param tail      (optional) reference to pointed in which to return the parse position after successfully
  *                  parsing a floating-point value.
- * @return          the floating-point value at the head of the string, or NAN if the input string is NULL.
+ * @return          the floating-point value at the head of the string, or NAN if the input string is NULL, or
+ *                  0.0 if the string does not start with a numerical value, or is a value near zero that
+ *                  cannot be represented by a float (underflow) or +/- INFINITY (or `HUGE_VAL` if INFINITY is
+ *                  not defined in math.h) if the value exceeds the float range (overflow). In cases of
+ *                  underflow or overflow errno will be set to ERANGE.
  *
  * @sa xParseFloat()
  * @sa xPrintDouble()
@@ -615,7 +619,11 @@ double xParseDouble(const char *str, char **tail) {
  * @param str       String to parse floating-point value from
  * @param tail      (optional) reference to pointed in which to return the parse position after successfully
  *                  parsing a floating-point value.
- * @return          the floating-point value at the head of the string, or NAN if the input string is NULL.
+ * @return          the floating-point value at the head of the string, or NAN if the input string is NULL, or
+ *                  0.0F if the string does not start with a numerical value, or is a value near zero that
+ *                  cannot be represented by a float (underflow) or +/- INFINITY (or `HUGE_VAL` if INFINITY is
+ *                  not defined in math.h) if the value exceeds the float range (overflow). In cases of
+ *                  underflow or overflow errno will be set to ERANGE.
  *
  * @since 1.1
  *
@@ -634,9 +642,6 @@ float xParseFloat(const char *str, char **tail) {
   return strtof(str, tail);
 #else
   {
-    // Parse as double, check and return as float.
-    // When printing back the returned value as a float, the last
-    // digit may differ from the original due to a rounding 'error'.
     double d = xParseDouble(str, tail);
 
     if(d > FLT_MAX) {
@@ -646,6 +651,10 @@ float xParseFloat(const char *str, char **tail) {
     if(d < -FLT_MAX) {
       errno = ERANGE;
       return (float) -INFINITY;
+    }
+    if(d != 0.0 && d > -FLT_MIN && d < FLT_MIN) {
+      errno = ERANGE;
+      return 0.0F;
     }
 
     return (float) d;
@@ -698,7 +707,7 @@ int xPrintFloat(char *str, float value) {
   else if(isnan(value)) return sprintf(str, "nan");
   else if(value < FLT_MIN) if(value > -FLT_MIN) return sprintf(str, "0");
 
-  return sprintf(str, "%.8g", value);
+  return sprintf(str, "%.7g", value);
 }
 
 /**
