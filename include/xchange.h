@@ -153,7 +153,7 @@ typedef int boolean;               ///< boolean TRUE/FALSE data type.
 #  ifdef _INFINITY
 #    define INFINITY _INFINITY     ///< Infinity in case it's not already defined in math.h
 #  else
-#    define INFINITY (1.0/0.0)     ///< Infinity in case it's not already defined in math.h
+#    define INFINITY HUGE_VAL      ///< Infinity in case it's not already defined in math.h (uses C89 `HUGE_VAL`)
 #  endif
 #endif
 

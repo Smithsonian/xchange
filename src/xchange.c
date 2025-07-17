@@ -21,18 +21,16 @@
 #include <math.h>
 #include <errno.h>
 
+// Check if we need to parse special floating point values, such as 'nan', 'infinity' or 'inf'...
+// These were added in the C99 standard, at the same time as the constant INFINITY was added.
+#ifndef INFINITY
+#  define EXPLICIT_PARSE_SPECIAL_DOUBLES   TRUE   ///< Use our own parser for NAN/INF values.
+#else
+#  define EXPLICIT_PARSE_SPECIAL_DOUBLES   FALSE  ///< rely on strtod()/strtof() for NAN/INF parsing
+#endif
+
 #define __XCHANGE_INTERNAL_API__      ///< Use internal definitions
 #include "xchange.h"
-
-#ifndef INFINITY
-/// Check if we need to parse special floating point values, such as 'nan', 'infinity' or 'inf'...
-/// These were added in the C99 standard, at the same time as the constant INFINITY was added.
-#define EIXPLICIT_PARSE_SPECIAL_DOUBLES   TRUE
-#else
-/// Check if we need to parse special floating point values, such as 'nan', 'infinity' or 'inf'...
-/// These were added in the C99 standard, at the same time as the constant INFINITY was added.
-#define EIXPLICIT_PARSE_SPECIAL_DOUBLES   FALSE
-#endif
 
 boolean xVerbose;
 
@@ -525,7 +523,7 @@ boolean xParseBoolean(char *str, char **end) {
 }
 
 
-#if EXPLCIT_PARSE_SPECIAL_DOUBLES
+#if EXPLICIT_PARSE_SPECIAL_DOUBLES
 static int CompareToken(const char *a, const char *b) {
   int i;
 
@@ -533,7 +531,7 @@ static int CompareToken(const char *a, const char *b) {
 
   if(!a || !b) return b > a ? 1 : -1;       // one is NULL
 
-  for(i=0; a[i] && !isspace(a[i]); i++) {
+  for(i = 0; a[i] && !isspace(a[i]); i++) {
     char A = tolower(a[i]);
     char B = tolower(b[i]);
 
@@ -544,80 +542,14 @@ static int CompareToken(const char *a, const char *b) {
   }
 
   if(b[i] && !isspace(b[i])) return 1;      // B is longer...
-  return 0;                                 // OK, they are the same up.
+  return 0;                                 // OK, they are the same.
 }
 #endif
 
 /**
- * Same as strtof() on C99, but with explicit parsing of NaN and Infinity values on older platforms also.
- *
- * @param str       String to parse floating-point value from
- * @param tail      (optional) reference to pointed in which to return the parse position after successfully
- *                  parsing a floating-point value.
- * @return          the floating-point value at the head of the string, or NAN if the input string is NULL.
- *
- * @since 1.1
- *
- * @sa xParseDouble()
- */
-float xParseFloat(const char *str, char **tail) {
-  if(!str) {
-    x_error(0, EINVAL, "xParseFloat", "input string is NULL");
-    return (float) NAN;
-  }
-
-#if EXPLCIT_PARSE_SPECIAL_DOUBLES
-  {
-    char *next = (char *) str;
-    int sign = 1;
-
-    while(isspace(*next)) next++;
-
-    if(*next == '+') next++;          // Skip sign (if any)
-    else if(*next == '-') {
-      sign = -1;
-      next++;          // Skip sign (if any)
-    }
-
-    // If leading character is not a number or a decimal point, then check for special values.
-    if(*next) if((*next < '0' || *next > '9') && *next != '.') {
-      if(!CompareToken("nan", next)) {
-        if(tail) *tail = next + sizeof("nan") - 1;
-        return (float) NAN;
-      }
-      if(!CompareToken("inf", next)) {
-        if(tail) *tail = next + sizeof("inf") - 1;
-        // cppcheck-suppress nanInArithmeticExpression
-        return sign > 0 ? (float) INFINITY : (float) -INFINITY;
-      }
-      if(!CompareToken("infinity", next)) {
-        if(tail) *tail = next + sizeof("infinity") - 1;
-        // cppcheck-suppress nanInArithmeticExpression
-        return sign > 0 ? (float) INFINITY : (float) -INFINITY;
-      }
-    }
-  }
-#endif
-
-#if _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
-  errno = 0;
-  return strtof(str, tail);
-#else
-  {
-    float f = 0.0F;
-    int n = 0;
-
-    if(tail) *tail = (char *) str;
-    if(sscanf(str, "%f%n", &f, &n) < 1) return 0.0F;
-    if(tail) *tail += n;
-
-    return f;
-  }
-#endif
-}
-
-/**
- * Same as strtod() on C99, but with explicit parsing of NaN and Infinity values on older platforms also.
+ * Parses a double-precision floating point value from its decimal string representation. Effectively the same as
+ * strtod() on C99, but checks the input string for NULL, resets errno before parsing so you dnot' have to, and will
+ * parse Infinity values even on older platforms that do not have built-in support for these.
  *
  * @param str       String to parse floating-point value from
  * @param tail      (optional) reference to pointed in which to return the parse position after successfully
@@ -632,7 +564,7 @@ double xParseDouble(const char *str, char **tail) {
     return NAN;
   }
 
-#if EXPLCIT_PARSE_SPECIAL_DOUBLES
+#if EXPLICIT_PARSE_SPECIAL_DOUBLES
   {
     char *next = (char *) str;
     int sign = 1;
@@ -667,6 +599,51 @@ double xParseDouble(const char *str, char **tail) {
 
   errno = 0;
   return strtod(str, tail);
+}
+
+/**
+ * Parses a single-precision floating point value from its decimal string representation. Effectively the same as or
+ * similar to strtof(), but checks the input string for NULL, resets errno before parsing so you dont' have to, and
+ * will parse Infinity values even on older platforms that do not have built-in support for these.
+ *
+ * @param str       String to parse floating-point value from
+ * @param tail      (optional) reference to pointed in which to return the parse position after successfully
+ *                  parsing a floating-point value.
+ * @return          the floating-point value at the head of the string, or NAN if the input string is NULL.
+ *
+ * @since 1.1
+ *
+ * @sa xParseDouble()
+ */
+float xParseFloat(const char *str, char **tail) {
+  if(!str) {
+    x_error(0, EINVAL, "xParseFloat", "input string is NULL");
+    return (float) NAN;
+  }
+
+  errno = 0;
+
+#if _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+  return strtof(str, tail);
+#else
+  {
+    // Parse as double, check and return as float.
+    // When printing back the returned value as a float, the last
+    // digit may differ from the original due to a rounding 'error'.
+    double d = strtod(str, tail);
+
+    if(d > FLT_MAX) {
+      errno = ERANGE;
+      return (float) INFINITY;
+    }
+    if(d < -FLT_MAX) {
+      errno = ERANGE;
+      return (float) -INFINITY;
+    }
+
+    return (float) d;
+  }
+#endif
 }
 
 /**
