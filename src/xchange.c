@@ -548,8 +548,8 @@ static int CompareToken(const char *a, const char *b) {
 
 /**
  * Parses a double-precision floating point value from its decimal string representation. Effectively the same as
- * strtod() on C99, but checks the input string for NULL, resets errno before parsing so you dnot' have to, and will
- * parse Infinity values even on older platforms that do not have built-in support for these.
+ * strtod() on C99, but it checks the input string for NULL, resets errno before parsing so you don't have to, and
+ * will parse Infinity values even on older platforms that do not have built-in support for these.
  *
  * @param str       String to parse floating-point value from
  * @param tail      (optional) reference to pointed in which to return the parse position after successfully
@@ -557,6 +557,7 @@ static int CompareToken(const char *a, const char *b) {
  * @return          the floating-point value at the head of the string, or NAN if the input string is NULL.
  *
  * @sa xParseFloat()
+ * @sa xPrintDouble()
  */
 double xParseDouble(const char *str, char **tail) {
   if(!str) {
@@ -603,8 +604,13 @@ double xParseDouble(const char *str, char **tail) {
 
 /**
  * Parses a single-precision floating point value from its decimal string representation. Effectively the same as or
- * similar to strtof(), but checks the input string for NULL, resets errno before parsing so you dont' have to, and
+ * similar to strtof(), but it checks the input string for NULL, resets errno before parsing so you don't have to, and
  * will parse Infinity values even on older platforms that do not have built-in support for these.
+ *
+ * On older platforms, which do not have a builtin `strtof()` function, this will parse the string as as double,
+ * before checking for range and returning the result recast as a float. The conversion may result in a decimal
+ * rounding 'error' if the  returned value is then printed, whereby the last decimal digit may differ by one from the
+ * original input string.
  *
  * @param str       String to parse floating-point value from
  * @param tail      (optional) reference to pointed in which to return the parse position after successfully
@@ -614,6 +620,7 @@ double xParseDouble(const char *str, char **tail) {
  * @since 1.1
  *
  * @sa xParseDouble()
+ * @sa xPrintFloat()
  */
 float xParseFloat(const char *str, char **tail) {
   if(!str) {
@@ -623,14 +630,14 @@ float xParseFloat(const char *str, char **tail) {
 
   errno = 0;
 
-#if _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+#if ( _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L ) && !EXPLICIT_PARSE_SPECIAL_DOUBLES
   return strtof(str, tail);
 #else
   {
     // Parse as double, check and return as float.
     // When printing back the returned value as a float, the last
     // digit may differ from the original due to a rounding 'error'.
-    double d = strtod(str, tail);
+    double d = xParseDouble(str, tail);
 
     if(d > FLT_MAX) {
       errno = ERANGE;
