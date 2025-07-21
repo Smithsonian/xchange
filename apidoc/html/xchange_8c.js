@@ -1,7 +1,7 @@
 var xchange_8c =
 [
     [ "__XCHANGE_INTERNAL_API__", "xchange_8c.html#ac36bd75f87a1614fb477a0fbcd5df1f3", null ],
-    [ "EIXPLICIT_PARSE_SPECIAL_DOUBLES", "xchange_8c.html#acc843123b41c0889b5b328a538b8c6ca", null ],
+    [ "EXPLICIT_PARSE_SPECIAL_DOUBLES", "xchange_8c.html#a644d78a042d0b3aab5e99ee884cd13a7", null ],
     [ "x_error", "xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7", null ],
     [ "x_trace", "xchange_8c.html#a9b61b8b8b3ef0f7cc0b96ab499265c74", null ],
     [ "x_trace_null", "xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31", null ],
@@ -19,6 +19,7 @@ var xchange_8c =
     [ "xParseBoolean", "xchange_8c.html#a994ae91adbbffc3b55b47b0219338282", null ],
     [ "xParseDims", "xchange_8c.html#a309b9ae681c40121517672ca50ba665b", null ],
     [ "xParseDouble", "xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9", null ],
+    [ "xParseFloat", "xchange_8c.html#a13f9a2ea37f70545aeda01069a8e068c", null ],
     [ "xPrintDims", "xchange_8c.html#aced93c2ca8cef260663ff1f9cfc0140e", null ],
     [ "xPrintDouble", "xchange_8c.html#a3eb8c827cfc2139687d175649284f7be", null ],
     [ "xPrintFloat", "xchange_8c.html#a9ee406a1c0c8d1076620ae4f77695216", null ],

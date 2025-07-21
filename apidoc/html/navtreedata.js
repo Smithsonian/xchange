@@ -26,37 +26,42 @@ var NAVTREE =
 [
   [ "xchange", "index.html", [
     [ "Changelog", "md_CHANGELOG.html", [
-      [ "Table of Contents", "index.html#autotoc_md7", null ],
-      [ "Introduction", "index.html#autotoc_md9", null ],
-      [ "Building", "index.html#autotoc_md11", null ],
-      [ "Linking your application against <tt>xchange</tt>", "index.html#autotoc_md13", null ],
-      [ "Structured data", "index.html#autotoc_md15", [
-        [ "Basic data types", "index.html#autotoc_md16", [
-          [ "Strings", "index.html#autotoc_md17", null ]
+      [ "Table of Contents", "index.html#autotoc_md10", null ],
+      [ "Introduction", "index.html#autotoc_md12", null ],
+      [ "Building", "index.html#autotoc_md14", null ],
+      [ "Linking your application against <tt>xchange</tt>", "index.html#autotoc_md16", null ],
+      [ "Structured data", "index.html#autotoc_md18", [
+        [ "Basic data types", "index.html#autotoc_md19", [
+          [ "Strings", "index.html#autotoc_md20", null ]
         ] ],
-        [ "Scalars", "index.html#autotoc_md18", null ],
-        [ "Arrays", "index.html#autotoc_md19", null ],
-        [ "Creating structure", "index.html#autotoc_md20", null ],
-        [ "Aggregate IDs", "index.html#autotoc_md21", null ],
-        [ "Accessing substructures and elements", "index.html#autotoc_md22", [
-          [ "Large structures", "index.html#autotoc_md23", null ],
-          [ "Iterating over elements", "index.html#autotoc_md24", null ]
+        [ "Scalars", "index.html#autotoc_md21", null ],
+        [ "Arrays", "index.html#autotoc_md22", null ],
+        [ "Creating structure", "index.html#autotoc_md23", null ],
+        [ "Aggregate IDs", "index.html#autotoc_md24", null ],
+        [ "Accessing substructures and elements", "index.html#autotoc_md25", [
+          [ "Large structures", "index.html#autotoc_md26", null ],
+          [ "Iterating over elements", "index.html#autotoc_md27", null ]
         ] ],
-        [ "Sorting fields", "index.html#autotoc_md25", null ]
+        [ "Sorting fields", "index.html#autotoc_md28", null ]
       ] ],
-      [ "JSON parser and emitter", "index.html#autotoc_md27", [
-        [ "JSON fragments", "index.html#autotoc_md28", null ],
-        [ "Escaped string representations", "index.html#autotoc_md29", null ]
+      [ "JSON parser and emitter", "index.html#autotoc_md30", [
+        [ "JSON fragments", "index.html#autotoc_md31", null ],
+        [ "Escaped string representations", "index.html#autotoc_md32", null ]
       ] ],
-      [ "Error handling", "index.html#autotoc_md31", null ],
-      [ "Debugging support", "index.html#autotoc_md33", null ],
-      [ "Future plans", "index.html#autotoc_md34", null ],
-      [ "[1.0.1] - 2025-07-01", "md_CHANGELOG.html#autotoc_md1", [
+      [ "Error handling", "index.html#autotoc_md34", null ],
+      [ "Debugging support", "index.html#autotoc_md36", null ],
+      [ "Future plans", "index.html#autotoc_md38", null ],
+      [ "Release schedule", "index.html#autotoc_md40", null ],
+      [ "[Unreleased]", "md_CHANGELOG.html#autotoc_md1", [
         [ "Fixed", "md_CHANGELOG.html#autotoc_md2", null ],
-        [ "Added", "md_CHANGELOG.html#autotoc_md3", null ],
-        [ "Changed", "md_CHANGELOG.html#autotoc_md4", null ]
+        [ "Added", "md_CHANGELOG.html#autotoc_md3", null ]
       ] ],
-      [ "[1.0.0] - 2025-03-31", "md_CHANGELOG.html#autotoc_md5", null ]
+      [ "[1.0.1] - 2025-07-01", "md_CHANGELOG.html#autotoc_md4", [
+        [ "Fixed", "md_CHANGELOG.html#autotoc_md5", null ],
+        [ "Added", "md_CHANGELOG.html#autotoc_md6", null ],
+        [ "Changed", "md_CHANGELOG.html#autotoc_md7", null ]
+      ] ],
+      [ "[1.0.0] - 2025-03-31", "md_CHANGELOG.html#autotoc_md8", null ]
     ] ],
     [ "Contributing to the xchange library", "md_CONTRIBUTING.html", null ],
     [ "Data Structures", "annotated.html", [
@@ -83,7 +88,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"xjson_8c.html#a9f11227a58e797a4a335331d94c8e888"
+"xjson_8c.html#a42101fa63cb1c6e265f317e9b8719d5f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

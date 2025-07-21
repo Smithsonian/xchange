@@ -20,7 +20,8 @@ Updated for 1.0 and later releases.
  - [JSON parser and emitter](#json-interchange)
  - [Error handling](#xchange-error-handling)
  - [Debugging support](#xchange-debugging-support)
- - [Future plans](#xchange-future-plans) 
+ - [Future plans](#xchange-future-plans)
+ - [Release schedule](#release-schedule)
 
 
 -----------------------------------------------------------------------------
@@ -539,7 +540,7 @@ example,
 The JSON parser can also sink its error messages to a designated file or stream, which can be set by 
 `xjsonSetErrorStream(FILE *)`.
  
- -----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
  
 <a name="xchange-debugging-support"></a>
 ## Debugging support
@@ -557,6 +558,7 @@ verbosity being enabled via `xSetVerbose(boolean)` and `xSetDebug(boolean)`, res
 __xchange__ may use these macros to produce their own verbose and/or debugging outputs conditional on the same global 
 settings. 
 
+-----------------------------------------------------------------------------
 
 <a name="xchange-future-plans"></a>
 ## Future plans
@@ -571,6 +573,31 @@ paths forward are:
 If you have an idea for a must have feature, please let me (Attila) know. Pull requests, for new features or fixes to
 existing ones are especially welcome! 
  
+-----------------------------------------------------------------------------
+
+<a name="release-schedule"></a>
+## Release schedule
+
+A predictable release schedule and process can help manage expectations and reduce stress on adopters and developers 
+alike.
+
+The __xchange__ library will try to follow a quarterly release schedule. You may expect upcoming releases to be 
+published around __February 1__, __May 1__, __August 1__, and/or __November 1__ each year, on an as-needed basis. That 
+means that if there are outstanding bugs, or new pull requests (PRs), you may expect a release that addresses these in 
+the upcoming quarter. The dates are placeholders only, with no guarantee that a new release will actually be available 
+every quarter. If nothing of note comes up, a potential release date may pass without a release being published.
+
+New features are generally reserved for the feature releases (e.g. __1.x.0__ version bumps), although they may also be 
+rolled out in bug-fix releases as long as they do not affect the existing API -- in line with the desire to keep 
+bug-fix releases fully backwards compatible with their parent versions.
+
+In the weeks and month(s) preceding releases one or more _release candidates_ (e.g. `1.0.1-rc3`) will be published 
+temporarily on GitHub, under [Releases](https://github.com/Smithsonian/xchange/releases), so that changes can be 
+tested by adopters before the releases are finalized. Please use due diligence to test such release candidates with 
+your code when they become available to avoid unexpected surprises when the finalized release is published. Release 
+candidates are typically available for one week only before they are superseded either by another, or by the finalized 
+release.
+
 
 -----------------------------------------------------------------------------
 Copyright (C) 2025 Attila Kovács

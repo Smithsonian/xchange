@@ -122,6 +122,7 @@ var xchange_8h =
     [ "xParseBoolean", "xchange_8h.html#a994ae91adbbffc3b55b47b0219338282", null ],
     [ "xParseDims", "xchange_8h.html#a309b9ae681c40121517672ca50ba665b", null ],
     [ "xParseDouble", "xchange_8h.html#a7e2e177c11fe7f44ca5ce11f316c0ad9", null ],
+    [ "xParseFloat", "xchange_8h.html#a13f9a2ea37f70545aeda01069a8e068c", null ],
     [ "xPrintDims", "xchange_8h.html#aced93c2ca8cef260663ff1f9cfc0140e", null ],
     [ "xPrintDouble", "xchange_8h.html#a3eb8c827cfc2139687d175649284f7be", null ],
     [ "xPrintFloat", "xchange_8h.html#a9ee406a1c0c8d1076620ae4f77695216", null ],

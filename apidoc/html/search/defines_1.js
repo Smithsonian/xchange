@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['eixplicit_5fparse_5fspecial_5fdoubles_0',['EIXPLICIT_PARSE_SPECIAL_DOUBLES',['../xchange_8c.html#acc843123b41c0889b5b328a538b8c6ca',1,'xchange.c']]]
+  ['explicit_5fparse_5fspecial_5fdoubles_0',['EXPLICIT_PARSE_SPECIAL_DOUBLES',['../xchange_8c.html#a644d78a042d0b3aab5e99ee884cd13a7',1,'xchange.c']]]
 ];

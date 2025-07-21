@@ -841,6 +841,13 @@
       <arglist>(const char *str, char **tail)</arglist>
     </member>
     <member kind="function">
+      <type>float</type>
+      <name>xParseFloat</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a13f9a2ea37f70545aeda01069a8e068c</anchor>
+      <arglist>(const char *str, char **tail)</arglist>
+    </member>
+    <member kind="function">
       <type>int</type>
       <name>xPrintDims</name>
       <anchorfile>xchange_8h.html</anchorfile>
@@ -1113,9 +1120,9 @@
     </member>
     <member kind="define">
       <type>#define</type>
-      <name>EIXPLICIT_PARSE_SPECIAL_DOUBLES</name>
+      <name>EXPLICIT_PARSE_SPECIAL_DOUBLES</name>
       <anchorfile>xchange_8c.html</anchorfile>
-      <anchor>acc843123b41c0889b5b328a538b8c6ca</anchor>
+      <anchor>a644d78a042d0b3aab5e99ee884cd13a7</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
@@ -1235,6 +1242,13 @@
       <name>xParseDouble</name>
       <anchorfile>xchange_8c.html</anchorfile>
       <anchor>a7e2e177c11fe7f44ca5ce11f316c0ad9</anchor>
+      <arglist>(const char *str, char **tail)</arglist>
+    </member>
+    <member kind="function">
+      <type>float</type>
+      <name>xParseFloat</name>
+      <anchorfile>xchange_8c.html</anchorfile>
+      <anchor>a13f9a2ea37f70545aeda01069a8e068c</anchor>
       <arglist>(const char *str, char **tail)</arglist>
     </member>
     <member kind="function">
@@ -1971,5 +1985,6 @@
     <docanchor file="index.html">xchange-error-handling</docanchor>
     <docanchor file="index.html">xchange-debugging-support</docanchor>
     <docanchor file="index.html">xchange-future-plans</docanchor>
+    <docanchor file="index.html">release-schedule</docanchor>
   </compound>
 </tagfile>

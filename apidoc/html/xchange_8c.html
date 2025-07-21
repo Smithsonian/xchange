@@ -129,8 +129,10 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>__XCHANGE_INTERNAL_API__</b></td></tr>
 <tr class="memdesc:ac36bd75f87a1614fb477a0fbcd5df1f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use internal definitions. <br /></td></tr>
 <tr class="separator:ac36bd75f87a1614fb477a0fbcd5df1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc843123b41c0889b5b328a538b8c6ca" id="r_acc843123b41c0889b5b328a538b8c6ca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8c.html#acc843123b41c0889b5b328a538b8c6ca">EIXPLICIT_PARSE_SPECIAL_DOUBLES</a>&#160;&#160;&#160;<a class="el" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a></td></tr>
-<tr class="separator:acc843123b41c0889b5b328a538b8c6ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a644d78a042d0b3aab5e99ee884cd13a7" id="r_a644d78a042d0b3aab5e99ee884cd13a7"><td class="memItemLeft" align="right" valign="top"><a id="a644d78a042d0b3aab5e99ee884cd13a7" name="a644d78a042d0b3aab5e99ee884cd13a7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>EXPLICIT_PARSE_SPECIAL_DOUBLES</b>&#160;&#160;&#160;<a class="el" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a></td></tr>
+<tr class="memdesc:a644d78a042d0b3aab5e99ee884cd13a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use our own parser for NAN/INF values. <br /></td></tr>
+<tr class="separator:a644d78a042d0b3aab5e99ee884cd13a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -168,6 +170,8 @@ Functions</h2></td></tr>
 <tr class="separator:a309b9ae681c40121517672ca50ba665b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e2e177c11fe7f44ca5ce11f316c0ad9" id="r_a7e2e177c11fe7f44ca5ce11f316c0ad9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9">xParseDouble</a> (const char *str, char **tail)</td></tr>
 <tr class="separator:a7e2e177c11fe7f44ca5ce11f316c0ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13f9a2ea37f70545aeda01069a8e068c" id="r_a13f9a2ea37f70545aeda01069a8e068c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8c.html#a13f9a2ea37f70545aeda01069a8e068c">xParseFloat</a> (const char *str, char **tail)</td></tr>
+<tr class="separator:a13f9a2ea37f70545aeda01069a8e068c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aced93c2ca8cef260663ff1f9cfc0140e" id="r_aced93c2ca8cef260663ff1f9cfc0140e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8c.html#aced93c2ca8cef260663ff1f9cfc0140e">xPrintDims</a> (char *dst, int ndim, const int *sizes)</td></tr>
 <tr class="separator:aced93c2ca8cef260663ff1f9cfc0140e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3eb8c827cfc2139687d175649284f7be" id="r_a3eb8c827cfc2139687d175649284f7be"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="xchange_8c.html#a3eb8c827cfc2139687d175649284f7be">xPrintDouble</a> (char *str, double value)</td></tr>
@@ -202,23 +206,7 @@ Variables</h2></td></tr>
 <div class="textblock"><p>A collection of commonly used functions for standard data exchange for scalars and arrays, and ASCII representations. </p>
 <dl class="section date"><dt>Date</dt><dd>Nov 25, 2020 </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Attila Kovacs</dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="acc843123b41c0889b5b328a538b8c6ca" name="acc843123b41c0889b5b328a538b8c6ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc843123b41c0889b5b328a538b8c6ca">&#9670;&#160;</a></span>EIXPLICIT_PARSE_SPECIAL_DOUBLES</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define EIXPLICIT_PARSE_SPECIAL_DOUBLES&#160;&#160;&#160;<a class="el" href="xjson_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Check if we need to parse special floating point values, such as 'nan', 'infinity' or 'inf'... These were added in the C99 standard, at the same time as the constant INFINITY was added. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="ae73aaf705dc4e7d58dfb0fd81f4805c7" name="ae73aaf705dc4e7d58dfb0fd81f4805c7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae73aaf705dc4e7d58dfb0fd81f4805c7">&#9670;&#160;</a></span>x_error()</h2>
 
@@ -835,7 +823,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Same as strtod() on C99, but with explicit parsing of NaN and Infinity values on older platforms also.</p>
+<p>Parses a double-precision floating point value from its decimal string representation. Effectively the same as strtod() on C99, but it checks the input string for NULL, resets errno before parsing so you don't have to, and will parse Infinity values even on older platforms that do not have built-in support for these.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>String to parse floating-point value from </td></tr>
@@ -843,9 +831,56 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the floating-point value at the head of the string, or NAN if the input string is NULL. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the floating-point value at the head of the string, or NAN if the input string is NULL, or 0.0 if the string does not start with a numerical value, or is a value near zero that cannot be represented by a float (underflow) or +/- INFINITY (or <code>HUGE_VAL</code> if INFINITY is not defined in math.h) if the value exceeds the float range (overflow). In cases of underflow or overflow errno will be set to ERANGE.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xchange_8c.html#a13f9a2ea37f70545aeda01069a8e068c">xParseFloat()</a> </dd>
+<dd>
+<a class="el" href="xchange_8c.html#a3eb8c827cfc2139687d175649284f7be">xPrintDouble()</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="xchange_8h.html#a956e2723d559858d08644ac99146e910">INFINITY</a>, <a class="el" href="xchange_8h.html#a8abfcc76130f3f991d124dd22d7e69bc">NAN</a>, and <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>.</p>
+
+</div>
+</div>
+<a id="a13f9a2ea37f70545aeda01069a8e068c" name="a13f9a2ea37f70545aeda01069a8e068c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13f9a2ea37f70545aeda01069a8e068c">&#9670;&#160;</a></span>xParseFloat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float xParseFloat </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>tail</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parses a single-precision floating point value from its decimal string representation. Effectively the same as or similar to strtof(), but it checks the input string for NULL, resets errno before parsing so you don't have to, and will parse Infinity values even on older platforms that do not have built-in support for these.</p>
+<p>On older platforms, which do not have a builtin <code>strtof()</code> function, this will parse the string as as double, before checking for range and returning the result recast as a float. The conversion may result in a decimal rounding 'error' if the returned value is then printed, whereby the last decimal digit may differ by one from the original input string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to parse floating-point value from </td></tr>
+    <tr><td class="paramname">tail</td><td>(optional) reference to pointed in which to return the parse position after successfully parsing a floating-point value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the floating-point value at the head of the string, or NAN if the input string is NULL, or 0.0F if the string does not start with a numerical value, or is a value near zero that cannot be represented by a float (underflow) or +/- INFINITY (or <code>HUGE_VAL</code> if INFINITY is not defined in math.h) if the value exceeds the float range (overflow). In cases of underflow or overflow errno will be set to ERANGE.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>1.1</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9">xParseDouble()</a> </dd>
+<dd>
+<a class="el" href="xchange_8c.html#a9ee406a1c0c8d1076620ae4f77695216">xPrintFloat()</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="xchange_8h.html#a956e2723d559858d08644ac99146e910">INFINITY</a>, <a class="el" href="xchange_8h.html#a8abfcc76130f3f991d124dd22d7e69bc">NAN</a>, <a class="el" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7">x_error()</a>, and <a class="el" href="xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9">xParseDouble()</a>.</p>
 
 </div>
 </div>

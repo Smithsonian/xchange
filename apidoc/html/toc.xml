@@ -1,36 +1,41 @@
 <toc label="xchange" topic="index.html">
-    <topic label="Table of Contents" href="index.html#autotoc_md7"/>
-    <topic label="Introduction" href="index.html#autotoc_md9"/>
-    <topic label="Building" href="index.html#autotoc_md11"/>
-    <topic label="Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;" href="index.html#autotoc_md13"/>
-    <topic label="Structured data" href="index.html#autotoc_md15">
-      <topic label="Basic data types" href="index.html#autotoc_md16">
-        <topic label="Strings" href="index.html#autotoc_md17"/>
-      <topic label="Scalars" href="index.html#autotoc_md18"/>
-      <topic label="Arrays" href="index.html#autotoc_md19"/>
-      <topic label="Creating structure" href="index.html#autotoc_md20"/>
-      <topic label="Aggregate IDs" href="index.html#autotoc_md21"/>
-      <topic label="Accessing substructures and elements" href="index.html#autotoc_md22">
-        <topic label="Large structures" href="index.html#autotoc_md23"/>
-        <topic label="Iterating over elements" href="index.html#autotoc_md24"/>
+    <topic label="Table of Contents" href="index.html#autotoc_md10"/>
+    <topic label="Introduction" href="index.html#autotoc_md12"/>
+    <topic label="Building" href="index.html#autotoc_md14"/>
+    <topic label="Linking your application against &lt;tt&gt;xchange&lt;/tt&gt;" href="index.html#autotoc_md16"/>
+    <topic label="Structured data" href="index.html#autotoc_md18">
+      <topic label="Basic data types" href="index.html#autotoc_md19">
+        <topic label="Strings" href="index.html#autotoc_md20"/>
+      <topic label="Scalars" href="index.html#autotoc_md21"/>
+      <topic label="Arrays" href="index.html#autotoc_md22"/>
+      <topic label="Creating structure" href="index.html#autotoc_md23"/>
+      <topic label="Aggregate IDs" href="index.html#autotoc_md24"/>
+      <topic label="Accessing substructures and elements" href="index.html#autotoc_md25">
+        <topic label="Large structures" href="index.html#autotoc_md26"/>
+        <topic label="Iterating over elements" href="index.html#autotoc_md27"/>
       </topic>
-      <topic label="Sorting fields" href="index.html#autotoc_md25"/>
+      <topic label="Sorting fields" href="index.html#autotoc_md28"/>
     </topic>
-    <topic label="JSON parser and emitter" href="index.html#autotoc_md27">
-      <topic label="JSON fragments" href="index.html#autotoc_md28"/>
-      <topic label="Escaped string representations" href="index.html#autotoc_md29"/>
+    <topic label="JSON parser and emitter" href="index.html#autotoc_md30">
+      <topic label="JSON fragments" href="index.html#autotoc_md31"/>
+      <topic label="Escaped string representations" href="index.html#autotoc_md32"/>
     </topic>
-    <topic label="Error handling" href="index.html#autotoc_md31"/>
-    <topic label="Debugging support" href="index.html#autotoc_md33"/>
-    <topic label="Future plans" href="index.html#autotoc_md34"/>
+    <topic label="Error handling" href="index.html#autotoc_md34"/>
+    <topic label="Debugging support" href="index.html#autotoc_md36"/>
+    <topic label="Future plans" href="index.html#autotoc_md38"/>
+    <topic label="Release schedule" href="index.html#autotoc_md40"/>
   </topic>
   <topic label="Changelog" href="md_CHANGELOG.html">
-    <topic label="[1.0.1] - 2025-07-01" href="md_CHANGELOG.html#autotoc_md1">
+    <topic label="[Unreleased]" href="md_CHANGELOG.html#autotoc_md1">
       <topic label="Fixed" href="md_CHANGELOG.html#autotoc_md2"/>
       <topic label="Added" href="md_CHANGELOG.html#autotoc_md3"/>
-      <topic label="Changed" href="md_CHANGELOG.html#autotoc_md4"/>
     </topic>
-    <topic label="[1.0.0] - 2025-03-31" href="md_CHANGELOG.html#autotoc_md5"/>
+    <topic label="[1.0.1] - 2025-07-01" href="md_CHANGELOG.html#autotoc_md4">
+      <topic label="Fixed" href="md_CHANGELOG.html#autotoc_md5"/>
+      <topic label="Added" href="md_CHANGELOG.html#autotoc_md6"/>
+      <topic label="Changed" href="md_CHANGELOG.html#autotoc_md7"/>
+    </topic>
+    <topic label="[1.0.0] - 2025-03-31" href="md_CHANGELOG.html#autotoc_md8"/>
   </topic>
   <topic label="Contributing to the xchange library" href="md_CONTRIBUTING.html"/>
   <topic label="Data Structures" href="annotated.html">
@@ -199,6 +204,7 @@
           <topic label="xParseBoolean" href="xchange_8h.html#a994ae91adbbffc3b55b47b0219338282"/>
           <topic label="xParseDims" href="xchange_8h.html#a309b9ae681c40121517672ca50ba665b"/>
           <topic label="xParseDouble" href="xchange_8h.html#a7e2e177c11fe7f44ca5ce11f316c0ad9"/>
+          <topic label="xParseFloat" href="xchange_8h.html#a13f9a2ea37f70545aeda01069a8e068c"/>
           <topic label="xPrintDims" href="xchange_8h.html#aced93c2ca8cef260663ff1f9cfc0140e"/>
           <topic label="xPrintDouble" href="xchange_8h.html#a3eb8c827cfc2139687d175649284f7be"/>
           <topic label="xPrintFloat" href="xchange_8h.html#a9ee406a1c0c8d1076620ae4f77695216"/>
@@ -242,7 +248,7 @@
       <topic label="src" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">
         <topic label="xchange.c" href="xchange_8c.html">
           <topic label="__XCHANGE_INTERNAL_API__" href="xchange_8c.html#ac36bd75f87a1614fb477a0fbcd5df1f3"/>
-          <topic label="EIXPLICIT_PARSE_SPECIAL_DOUBLES" href="xchange_8c.html#acc843123b41c0889b5b328a538b8c6ca"/>
+          <topic label="EXPLICIT_PARSE_SPECIAL_DOUBLES" href="xchange_8c.html#a644d78a042d0b3aab5e99ee884cd13a7"/>
           <topic label="x_error" href="xchange_8c.html#ae73aaf705dc4e7d58dfb0fd81f4805c7"/>
           <topic label="x_trace" href="xchange_8c.html#a9b61b8b8b3ef0f7cc0b96ab499265c74"/>
           <topic label="x_trace_null" href="xchange_8c.html#ac39ae03ca89b115d49a12f633522dc31"/>
@@ -260,6 +266,7 @@
           <topic label="xParseBoolean" href="xchange_8c.html#a994ae91adbbffc3b55b47b0219338282"/>
           <topic label="xParseDims" href="xchange_8c.html#a309b9ae681c40121517672ca50ba665b"/>
           <topic label="xParseDouble" href="xchange_8c.html#a7e2e177c11fe7f44ca5ce11f316c0ad9"/>
+          <topic label="xParseFloat" href="xchange_8c.html#a13f9a2ea37f70545aeda01069a8e068c"/>
           <topic label="xPrintDims" href="xchange_8c.html#aced93c2ca8cef260663ff1f9cfc0140e"/>
           <topic label="xPrintDouble" href="xchange_8c.html#a3eb8c827cfc2139687d175649284f7be"/>
           <topic label="xPrintFloat" href="xchange_8c.html#a9ee406a1c0c8d1076620ae4f77695216"/>
