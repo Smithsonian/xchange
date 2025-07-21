@@ -21,7 +21,7 @@ Updated for 1.0 and later releases.
  - [Error handling](#xchange-error-handling)
  - [Debugging support](#xchange-debugging-support)
  - [Future plans](#xchange-future-plans)
- - [Release schedule](#release-schedule)
+ - [Release schedule](#xchange-release-schedule)
 
 
 -----------------------------------------------------------------------------
@@ -575,7 +575,7 @@ existing ones are especially welcome!
  
 -----------------------------------------------------------------------------
 
-<a name="release-schedule"></a>
+<a name="xchange-release-schedule"></a>
 ## Release schedule
 
 A predictable release schedule and process can help manage expectations and reduce stress on adopters and developers 

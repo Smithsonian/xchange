@@ -1985,6 +1985,6 @@
     <docanchor file="index.html">xchange-error-handling</docanchor>
     <docanchor file="index.html">xchange-debugging-support</docanchor>
     <docanchor file="index.html">xchange-future-plans</docanchor>
-    <docanchor file="index.html">release-schedule</docanchor>
+    <docanchor file="index.html">xchange-release-schedule</docanchor>
   </compound>
 </tagfile>
