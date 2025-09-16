@@ -14,8 +14,8 @@
 
 #define __STDC_LIMIT_MACROS         ///< for fixed-width integer limits
 
-#include <limits.h>
 #include <stdint.h>
+#include <limits.h>
 
 /// API major version
 #define XCHANGE_MAJOR_VERSION  1
@@ -98,33 +98,52 @@ typedef int XType;          ///< SMA-X data type.
 #define X_STRUCT            'X'     ///< \hideinitializer XType for an XStructure or array thereof
 #define X_FIELD             '-'     ///< \hideinitializer XType for an XField or array thereof
 
+// Fixed-width integer limits, in case they are undefined despite our best efforts...
+#ifndef INT16_MAX
+#  define INT16_MAX         32767                   ///< Largest 16-bit integer value
+#endif
+
+#ifndef INT32_MAX
+#  define INT32_MAX         2147483647              ///< Largest 32-bit integer value
+#endif
+
+#ifndef INT64_MAX
+#  define INT64_MAX         9223372036854775807LL   ///< Largest 64-bit integer value
+#endif
+
 // Platform-specific width integer types
 #if SHRT_MAX == INT16_MAX
 #  define X_SHORT             X_INT16     ///< \hideinitializer native `short` XType
 #elif SHRT_MAX == INT32_MAX
 #  define X_SHORT             X_INT32     ///< \hideinitializer native `short` XType
-#else
+#elif SHRT_MAX == INT64_MAX
 #  define X_SHORT             X_INT64     ///< \hideinitializer native `short` XType
+#else
+#  error "xchange.h: Unmatched SHRT_MAX"
 #endif
 
 #if INT_MAX == INT16_MAX
 #  define X_INT               X_INT16     ///< \hideinitializer native `int` XType
 #elif INT_MAX == INT32_MAX
 #  define X_INT               X_INT32     ///< \hideinitializer native `int` XType
-#else
+#elif INT_MAX == INT64_MAX
 #  define X_INT               X_INT64     ///< \hideinitializer native `int` XType
+#else
+#  error "xchange.h: Unmatched INT_MAX"
 #endif
 
 #if LONG_MAX == INT32_MAX
 #  define X_LONG              X_INT32     ///< \hideinitializer native `long` XType
-#else
+#elif LONG_MAX == INT64_MAX
 #  define X_LONG              X_INT64     ///< \hideinitializer native `long` XType
+#else
+#  error "xchange.h: Unmatched LONG_MAX"
 #endif
 
 #if !defined(LLONG_MAX) || LLONG_MAX == INT64_MAX
 #  define X_LLONG             X_INT64     ///< \hideinitializer native `long long` XType
 #else
-#  define X_LLONG            X_UNDEFINED ///< \hideinitializer no native `long long` XType
+#  define X_LLONG             X_UNDEFINED ///< \hideinitializer no native `long long` XType
 #endif
 
 #define X_SEP               ":"             ///< sepatator for patterning of notification channels, e.g. "changed:<table>:<key>"
