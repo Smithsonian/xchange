@@ -12,8 +12,6 @@
 #ifndef XCHANGE_H_
 #define XCHANGE_H_
 
-#define __STDC_LIMIT_MACROS         ///< for fixed-width integer limits
-
 #include <stdint.h>
 #include <limits.h>
 
@@ -98,53 +96,53 @@ typedef int XType;          ///< SMA-X data type.
 #define X_STRUCT            'X'     ///< \hideinitializer XType for an XStructure or array thereof
 #define X_FIELD             '-'     ///< \hideinitializer XType for an XField or array thereof
 
-// Fixed-width integer limits, in case they are undefined despite our best efforts...
-#ifndef INT16_MAX
-#  define INT16_MAX         32767                   ///< Largest 16-bit integer value
-#endif
+// Fixed-width integer limits. While these are also in stdint.h, they need __STDC_LIMIT_MACROS
+// defined to unlock. We can do it here, but then if someone includes stdint.h before us, it
+// won't do anything. So, it's effect will depend on the header include order. Therefore it's
+// best to define our own non-conflicting limit macros instead.
+#define X_INT16_MAX         32767                   ///< Largest 16-bit integer value
+#define X_INT32_MAX         2147483647              ///< Largest 32-bit integer value
+#define X_INT64_MAX         9223372036854775807LL   ///< Largest 64-bit integer value
 
-#ifndef INT32_MAX
-#  define INT32_MAX         2147483647              ///< Largest 32-bit integer value
-#endif
-
-#ifndef INT64_MAX
-#  define INT64_MAX         9223372036854775807LL   ///< Largest 64-bit integer value
-#endif
-
-// Platform-specific width integer types
-#if SHRT_MAX == INT16_MAX
+// Match platform-specific integer types to fixed width types
+#if SHRT_MAX == X_INT16_MAX
 #  define X_SHORT             X_INT16     ///< \hideinitializer native `short` XType
-#elif SHRT_MAX == INT32_MAX
+#elif SHRT_MAX == X_INT32_MAX
 #  define X_SHORT             X_INT32     ///< \hideinitializer native `short` XType
-#elif SHRT_MAX == INT64_MAX
+#elif SHRT_MAX == X_INT64_MAX
 #  define X_SHORT             X_INT64     ///< \hideinitializer native `short` XType
 #else
-#  error "xchange.h: Unmatched SHRT_MAX"
+#  error "xchange.h: Unmatched X_SHORT"
 #endif
 
-#if INT_MAX == INT16_MAX
+#if INT_MAX == X_INT16_MAX
 #  define X_INT               X_INT16     ///< \hideinitializer native `int` XType
-#elif INT_MAX == INT32_MAX
+#elif INT_MAX == X_INT32_MAX
 #  define X_INT               X_INT32     ///< \hideinitializer native `int` XType
-#elif INT_MAX == INT64_MAX
+#elif INT_MAX == X_INT64_MAX
 #  define X_INT               X_INT64     ///< \hideinitializer native `int` XType
 #else
-#  error "xchange.h: Unmatched INT_MAX"
+#  error "xchange.h: Unmatched X_INT"
 #endif
 
-#if LONG_MAX == INT32_MAX
+#if LONG_MAX == X_INT32_MAX
 #  define X_LONG              X_INT32     ///< \hideinitializer native `long` XType
-#elif LONG_MAX == INT64_MAX
+#elif LONG_MAX == X_INT64_MAX
 #  define X_LONG              X_INT64     ///< \hideinitializer native `long` XType
 #else
-#  error "xchange.h: Unmatched LONG_MAX"
+#  error "xchange.h: Unmatched X_LONG"
 #endif
 
-#if !defined(LLONG_MAX) || LLONG_MAX == INT64_MAX
+#if !defined(LLONG_MAX) || LLONG_MAX == X_INT64_MAX
 #  define X_LLONG             X_INT64     ///< \hideinitializer native `long long` XType
 #else
 #  define X_LLONG             X_UNDEFINED ///< \hideinitializer no native `long long` XType
 #endif
+
+// We only needed the limits up to here, no need to export them...
+#undef X_INT16_MAX
+#undef X_INT32_MAX
+#undef X_INT64_MAX
 
 #define X_SEP               ":"             ///< sepatator for patterning of notification channels, e.g. "changed:<table>:<key>"
 #define X_SEP_LENGTH         (sizeof(X_SEP) - 1)    ///< String length of hierarchical separator.
