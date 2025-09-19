@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [1.1.0-rc1] - 2025-09-19
+## [Unreleased]
 
 Minor feature release with bug fixes.
 
@@ -15,10 +15,10 @@ Minor feature release with bug fixes.
 
  - #15: `xPrintFloat()` printed an extra digit, which would appear as a 'rounding error' in decimal representations.
 
- - Width detection of platform-specific built-in integer types (i.e., `short`, `int`, `long`, and `long long`). The 
-   previous implementation included `stdint.h` with `__STDC_LIMIT_MACROS` defined. However, if the application source, 
-   then included `stdint.h` _before_ `xchange.h`, then the fixed-width integer limits were left undefined. As a 
-   result, we no longer rely on `stdint.h` providing these limits.
+ - #16: Width detection of platform-specific built-in integer types (i.e., `short`, `int`, `long`, and `long long`). 
+   The previous implementation included `stdint.h` with `__STDC_LIMIT_MACROS` defined. However, if the application 
+   source, then included `stdint.h` _before_ `xchange.h`, then the fixed-width integer limits were left undefined. As 
+   a result, we no longer rely on `stdint.h` providing these limits.
 
 ### Added
 
