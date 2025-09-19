@@ -118,11 +118,13 @@ $(document).ready(function(){initNavTree('md_CHANGELOG.html',''); initResizable(
 <div class="textblock"><p><a class="anchor" id="autotoc_md0"></a> All notable changes to the <a href="https://github.com/Smithsonian/xchange">Smithsonian/xchange</a> library will be documented in this file.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
-[Unreleased]</h1>
+[1.1.0-rc1] - 2025-09-19</h1>
+<p>Minor feature release with bug fixes.</p>
 <h2><a class="anchor" id="autotoc_md2"></a>
 Fixed</h2>
 <ul>
 <li>#15: <code><a class="el" href="xchange_8c.html#a9ee406a1c0c8d1076620ae4f77695216">xPrintFloat()</a></code> printed an extra digit, which would appear as a 'rounding error' in decimal representations.</li>
+<li>Width detection of platform-specific built-in integer types (i.e., <code>short</code>, <code>int</code>, <code>long</code>, and <code>long long</code>). The previous implementation included <code>stdint.h</code> with <code>__STDC_LIMIT_MACROS</code> defined. However, if the application source, then included <code>stdint.h</code> <em>before</em> <code><a class="el" href="xchange_8h.html">xchange.h</a></code>, then the fixed-width integer limits were left undefined. As a result, we no longer rely on <code>stdint.h</code> providing these limits.</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md3"></a>
 Added</h2>

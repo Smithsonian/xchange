@@ -26,7 +26,7 @@
     <topic label="Release schedule" href="index.html#autotoc_md40"/>
   </topic>
   <topic label="Changelog" href="md_CHANGELOG.html">
-    <topic label="[Unreleased]" href="md_CHANGELOG.html#autotoc_md1">
+    <topic label="[1.1.0-rc1] - 2025-09-19" href="md_CHANGELOG.html#autotoc_md1">
       <topic label="Fixed" href="md_CHANGELOG.html#autotoc_md2"/>
       <topic label="Added" href="md_CHANGELOG.html#autotoc_md3"/>
     </topic>
@@ -85,7 +85,6 @@
             <topic label="firstField" href="structXStructure.html#a501ae8af2201d9cfaa60e3af21ff58fc"/>
             <topic label="parent" href="structXStructure.html#a82ba053944ce97d83d41c05f68ec4f3d"/>
           </topic>
-          <topic label="__STDC_LIMIT_MACROS" href="xchange_8h.html#aeb7e7a856ab7a794b05b6b63ef36ea3e"/>
           <topic label="_TYPEDEF_BOOLEAN" href="xchange_8h.html#adbb2c6827fb22c643243e54992da6c70"/>
           <topic label="FALSE" href="xchange_8h.html#aa93f0eb578d23995850d61f7d61c55c1"/>
           <topic label="INFINITY" href="xchange_8h.html#a956e2723d559858d08644ac99146e910"/>
@@ -105,13 +104,14 @@
           <topic label="X_FLOAT" href="xchange_8h.html#a99605e05158426b1b44e924e42a1162c"/>
           <topic label="X_GROUP_INVALID" href="xchange_8h.html#a48c78a0e8290b2fd3701031ebce3fa15"/>
           <topic label="X_INCOMPLETE" href="xchange_8h.html#a888dbfa464548f0b65794e172713160b"/>
-          <topic label="X_INT" href="xchange_8h.html#a4003d7fe06200f77805c52cc7db56784"/>
           <topic label="X_INT16" href="xchange_8h.html#a3bb3051d3e40b57dc6ef5f1592cc8c75"/>
+          <topic label="X_INT16_MAX" href="xchange_8h.html#aabe0e9c885960aaa25b5f6344131546d"/>
           <topic label="X_INT32" href="xchange_8h.html#a247a3094d14d18583d42abba83d0d9a5"/>
+          <topic label="X_INT32_MAX" href="xchange_8h.html#a805abf3832ea0c88ef3ed803eed95059"/>
           <topic label="X_INT64" href="xchange_8h.html#ad9343538ba7ef4aff10d4bed7353be9d"/>
+          <topic label="X_INT64_MAX" href="xchange_8h.html#a44937132e92cb7ae4ec2414db86d252e"/>
           <topic label="X_INTERRUPTED" href="xchange_8h.html#a3942401de37f774e72393ffa73c9fb9f"/>
           <topic label="X_LLONG" href="xchange_8h.html#a32d6187065d543d5d6fb6e1bcd33efdc"/>
-          <topic label="X_LONG" href="xchange_8h.html#a36405f1834eb7cd51a17f103b2942e21"/>
           <topic label="X_MAX_DIMS" href="xchange_8h.html#a910ee1c8cd983bf127f7ca2c705d7894"/>
           <topic label="X_MAX_ELEMENTS" href="xchange_8h.html#a7a5743ece908b043528077f499c42d57"/>
           <topic label="X_MAX_STRING_DIMS" href="xchange_8h.html#a319ecdfb71bd7ccda1c7049965a64d6d"/>
@@ -126,7 +126,6 @@
           <topic label="X_RAW" href="xchange_8h.html#adb72c72467963a6ace1632638a8a6a7b"/>
           <topic label="X_SEP" href="xchange_8h.html#a923cd66e2074f32817a3468c5617a440"/>
           <topic label="X_SEP_LENGTH" href="xchange_8h.html#a28120364666ec6054159012a58ba27af"/>
-          <topic label="X_SHORT" href="xchange_8h.html#adfdc22097b12d42c040dcce8700d64b8"/>
           <topic label="X_SIZE_INVALID" href="xchange_8h.html#a816c5dad11d9bfd91a795ed1af30e732"/>
           <topic label="X_STRING" href="xchange_8h.html#a2443dd783d2728a3559361fba845e533"/>
           <topic label="X_STRUCT" href="xchange_8h.html#a63de1f3edab36b1a53ee312ac0711cbb"/>

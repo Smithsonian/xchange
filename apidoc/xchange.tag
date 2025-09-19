@@ -9,13 +9,6 @@
     <class kind="struct">XStructure</class>
     <member kind="define">
       <type>#define</type>
-      <name>__STDC_LIMIT_MACROS</name>
-      <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>aeb7e7a856ab7a794b05b6b63ef36ea3e</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
       <name>_TYPEDEF_BOOLEAN</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>adbb2c6827fb22c643243e54992da6c70</anchor>
@@ -149,16 +142,16 @@
     </member>
     <member kind="define">
       <type>#define</type>
-      <name>X_INT</name>
+      <name>X_INT16</name>
       <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>a4003d7fe06200f77805c52cc7db56784</anchor>
+      <anchor>a3bb3051d3e40b57dc6ef5f1592cc8c75</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
-      <name>X_INT16</name>
+      <name>X_INT16_MAX</name>
       <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>a3bb3051d3e40b57dc6ef5f1592cc8c75</anchor>
+      <anchor>aabe0e9c885960aaa25b5f6344131546d</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
@@ -170,9 +163,23 @@
     </member>
     <member kind="define">
       <type>#define</type>
+      <name>X_INT32_MAX</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a805abf3832ea0c88ef3ed803eed95059</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>X_INT64</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>ad9343538ba7ef4aff10d4bed7353be9d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>X_INT64_MAX</name>
+      <anchorfile>xchange_8h.html</anchorfile>
+      <anchor>a44937132e92cb7ae4ec2414db86d252e</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
@@ -187,13 +194,6 @@
       <name>X_LLONG</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>a32d6187065d543d5d6fb6e1bcd33efdc</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>X_LONG</name>
-      <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>a36405f1834eb7cd51a17f103b2942e21</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
@@ -292,13 +292,6 @@
       <name>X_SEP_LENGTH</name>
       <anchorfile>xchange_8h.html</anchorfile>
       <anchor>a28120364666ec6054159012a58ba27af</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>X_SHORT</name>
-      <anchorfile>xchange_8h.html</anchorfile>
-      <anchor>adfdc22097b12d42c040dcce8700d64b8</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
