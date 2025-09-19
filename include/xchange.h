@@ -25,7 +25,7 @@
 #define XCHANGE_PATCHLEVEL     0
 
 /// Additional release information in version, e.g. "-1", or "-rc1".
-#define XCHANGE_RELEASE_STRING "-devel"
+#define XCHANGE_RELEASE_STRING "-rc1"
 
 
 #ifdef str_2
