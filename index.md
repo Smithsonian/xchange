@@ -50,7 +50,7 @@ __vcpkg Registry__
 You can also install the __xchange__ library with `vcpkg` on Linux, MacOS, Windows, and Android as:
 
 ```bash
-  $ vcpkg install xchange
+  $ vcpkg install libxchange
 ```
 
 __Homebrew__ 
