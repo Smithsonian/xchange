@@ -451,6 +451,16 @@ XStructure *xjsonParseFile(FILE *fp, size_t length) {
   return s;
 }
 
+#ifdef XMUT_INITIALIZER
+  static xmut_type mutex = XMUT_INITIALIZER;
+#elif __STDC_VERSION__ >= 201112L
+  static xmut_type mutex
+
+  static void init_mutex() {
+    xmut_init(&mutex);
+  }
+#endif
+
 /**
  * Change the file to which XJSON reports errors. By default it will use stderr.
  *
@@ -458,15 +468,12 @@ XStructure *xjsonParseFile(FILE *fp, size_t length) {
  */
 void xjsonSetErrorStream(FILE *fp) {
   // cppcheck-suppress unusedVariable
-  static xmut_type mutex;
-  static int initialized;
-
   static int local;     // If using a file opened by this call...
 
-  if(!initialized) {
-    xmut_init(&mutex);
-    initialized = 1;
-  }
+#if !defined XMUT_INITIALIZER && __STDC_VERSION__ >= 201112L
+  static once_flag mutex_once = ONCE_FLAG_INIT;
+  call_once(&mutex_once, init_mutex);
+#endif
 
   xmut_lock(&mutex);
 
